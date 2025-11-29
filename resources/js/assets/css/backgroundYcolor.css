@@ -1,0 +1,35 @@
+@import "./variables.css";
+
+.bg-secundario {
+    background-color: var(--bg7);
+}
+
+.bg-dark-gray {
+    background-color: var(--bgDarkGray);
+}
+
+table .bg-principal,
+.bg-principal {
+    background-color: var(--bg3);
+    color: white;
+}
+table .bg-dark-principal,
+.bg-dark-principal {
+    background-color: var(--bgDarkPrincipal);
+    color: white;
+}
+
+.nav-header.bg-principal {
+    background-color: var(--bgDark);
+    color: white;
+}
+
+.modal-body.bg-principal b,
+.modal-body.bg-principal .fot-weight-bold {
+    color: var(--bg6);
+}
+.modal-body.bg-principal .text-white,
+.modal-body.bg-principal .text-white,
+.text-white {
+    color: white !important;
+}

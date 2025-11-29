@@ -1,0 +1,162 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\RoleStoreRequest;
+use App\Http\Requests\RoleUpdateRequest;
+use App\Models\HistorialAccion;
+use App\Models\Modulo;
+use App\Models\Permiso;
+use App\Models\Role;
+use App\Models\User;
+use App\Services\RoleService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Validation\ValidationException;
+use Inertia\Inertia;
+use Inertia\Response as ResponseInertia;
+
+class RoleController extends Controller
+{
+
+    public function __construct(private RoleService $roleService) {}
+
+    /**
+     * Listado de roles sin ids: 1 y 2
+     *
+     * @return JsonResponse
+     */
+    public function listado(): JsonResponse
+    {
+        Log::debug("ASDSD");
+        return response()->JSON([
+            "roles" => $this->roleService->listado()
+        ]);
+    }
+
+    public function paginado(Request $request)
+    {
+        $perPage = $request->perPage;
+        $page = (int)($request->input("page", 1));
+        $search = (string)$request->input("search", "");
+        $orderByCol = $request->orderByCol;
+        $desc = $request->desc;
+
+        $columnsSerachLike = [
+            "descripcion"
+        ];
+        $columnsFilter = [];
+        $columnsBetweenFilter = [];
+        $arrayOrderBy = [];
+        if ($orderByCol && $desc) {
+            $arrayOrderBy = [
+                [$orderByCol, $desc]
+            ];
+        }
+
+        $roles = $this->roleService->listadoPaginado($perPage, $page, $search, $columnsSerachLike, $columnsFilter, $columnsBetweenFilter, $arrayOrderBy);
+        return response()->JSON([
+            "data" => $roles->items(),
+            "total" => $roles->total(),
+            "lastPage" => $roles->lastPage()
+        ]);
+    }
+
+
+    /**
+     * Endpoint para obtener la lista de roles paginado para datatable
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function api(Request $request): JsonResponse
+    {
+
+        return response()->JSON([]);
+    }
+
+    /**
+     * Registrar un nuevo role
+     *
+     * @param RoleStoreRequest $request
+     * @return RedirectResponse|Response
+     */
+    public function store(RoleStoreRequest $request): Response|JsonResponse
+    {
+        DB::beginTransaction();
+        try {
+            // crear el Role
+            $this->roleService->crear($request->validated());
+            DB::commit();
+            return response()->JSON([
+                "sw" => true,
+                "message" => "Proceso realizado con éxito"
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw ValidationException::withMessages([
+                'error' =>  $e->getMessage(),
+            ]);
+        }
+    }
+
+    /**
+     * Mostrar un role
+     *
+     * @param Role $role
+     * @return JsonResponse
+     */
+    public function show(Role $role): JsonResponse
+    {
+        return response()->JSON($role);
+    }
+
+    public function update(Role $role, RoleUpdateRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+            // actualizar role
+            $this->roleService->actualizar($request->validated(), $role);
+            DB::commit();
+            return response()->JSON([
+                "sw" => true,
+                "message" => "Proceso realizado con éxito"
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            // Log::debug($e->getMessage());
+            throw ValidationException::withMessages([
+                'error' =>  $e->getMessage(),
+            ]);
+        }
+    }
+
+    /**
+     * Eliminar role
+     *
+     * @param Role $role
+     * @return JsonResponse|Response
+     */
+    public function destroy(Role $role): JsonResponse|Response
+    {
+        DB::beginTransaction();
+        try {
+            $this->roleService->eliminar($role);
+            DB::commit();
+            return response()->JSON([
+                "sw" => true,
+                'message' => 'El registro se eliminó correctamente'
+            ], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw ValidationException::withMessages([
+                'error' =>  $e->getMessage(),
+            ]);
+        }
+    }
+}

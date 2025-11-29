@@ -1,0 +1,49 @@
+form .v-input {
+    /* height: 40px; */
+}
+
+form .v-input.v-input--error {
+    /* height: 60px; */
+}
+
+/* Contenedor relativo para que el label se posicione dentro */
+.form-floating {
+    position: relative;
+}
+
+/* Input básico */
+.form-floating input {
+    width: 100%;
+    padding: 1rem 0.5rem 0.5rem 0.5rem; /* espacio superior para el label */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: none;
+    font-size: 1rem;
+}
+
+/* Label posicionado sobre el input */
+.form-floating label {
+    position: absolute;
+    top: 0.5rem; /* posición inicial dentro del input */
+    left: 0.1rem;
+    color: #999;
+    font-size: 1rem;
+    pointer-events: none; /* para que el click pase al input */
+    transition: all 0.2s ease-out;
+}
+
+/* Cuando el input está enfocado o tiene texto */
+.form-floating input:focus + label,
+.form-floating input:not(:placeholder-shown) + label {
+    top: -0.5rem; /* sube el label */
+    left: 0rem;
+    font-size: 0.75rem; /* se hace más pequeño */
+    color: #333;
+    background-color: white;
+    padding: 0 0.25rem; /* para que no se superponga con el borde */
+}
+
+/* Ocultar placeholder */
+.form-floating input::placeholder {
+    color: transparent;
+}
