@@ -6,13 +6,14 @@ namespace App\Models;
 
 use App\Services\PermisoService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     // Rest omitted for brevity
 
@@ -48,17 +49,25 @@ class User extends Authenticatable implements JWTSubject
         "materno",
         "ci",
         "ci_exp",
-        "dir",
-        "correo",
+        "grupo_san",
+        "sexo",
+        "nacionalidad",
+        "profesion",
+        "cel",
         "fono",
+        "cel_dom",
+        "dir",
+        "latitud",
+        "longitud",
+        "correo",
+        "foto",
+        "carnet",
         "password",
-        "acceso",
         "tipo",
         "role_id",
-        "foto",
+        "acceso",
         "fecha_registro",
         "status",
-        "codigo",
     ];
 
     protected $appends = ["permisos", "url_foto", "foto_b64", "full_name", "full_ci", "fecha_registro_t", "usuario_abrev"];

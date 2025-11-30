@@ -37,7 +37,7 @@ class UserTableSeeder extends Seeder
             "acceso" => 1,
             "tipo" => "ADMINISTRADOR",
             "fecha_registro" => date("Y-m-d"),
-            "status" => 1,
+            "estado" => 1,
         ]);
     }
 }

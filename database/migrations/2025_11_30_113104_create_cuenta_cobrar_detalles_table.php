@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('cuenta_cobrar_detalles', function (Blueprint $table) {
             $table->id();
-            $table->string("nombre", 255);
-            $table->integer("permisos")->default(0);
-            $table->integer("usuarios")->default(1);
-            $table->integer("estado")->default(1);
+            $table->unsignedBigInteger("cuenta_cobrar_id");
+            $table->decimal("cancelado", 24, 2);
+            $table->date("fecha");
+            $table->time("hora");
             $table->softDeletes();
             $table->timestamps();
+            $table->foreign("cuenta_cobrar_id")->on("cuenta_cobrars")->references("id");
         });
     }
 
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('cuenta_cobrar_detalles');
     }
 };

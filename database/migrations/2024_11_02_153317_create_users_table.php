@@ -32,13 +32,13 @@ return new class extends Migration
             $table->string("correo", 255)->nullable();
             $table->string("foto", 255)->nullable();
             $table->string("carnet", 255)->nullable();
-            $table->string("doc_adicional", 255)->nullable();
             $table->string('password');
             $table->string("tipo")->nullable();
             $table->unsignedBigInteger("role_id")->nullable();
             $table->integer("acceso");
             $table->date("fecha_registro");
-            $table->integer("status")->default(1);
+            $table->integer("estado")->default(1);
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign("role_id")->on("roles")->references("id");

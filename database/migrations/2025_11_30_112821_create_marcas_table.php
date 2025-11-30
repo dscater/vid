@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('marcas', function (Blueprint $table) {
             $table->id();
-            $table->string("nombre", 255);
-            $table->integer("permisos")->default(0);
-            $table->integer("usuarios")->default(1);
-            $table->integer("estado")->default(1);
+            $table->string("nombre");
             $table->softDeletes();
             $table->timestamps();
         });
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('marcas');
     }
 };

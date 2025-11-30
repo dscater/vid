@@ -164,15 +164,23 @@ class UserService
             "nombre" => mb_strtoupper($datos["nombre"]),
             "paterno" => mb_strtoupper($datos["paterno"]),
             "materno" => mb_strtoupper($datos["materno"]),
-            "dir" => mb_strtoupper($datos["dir"]),
+            "grupo_san" => mb_strtoupper($datos["grupo_san"]),
             "ci" => $datos["ci"],
             "ci_exp" => $datos["ci_exp"],
+            "sexo" => mb_strtoupper($datos["sexo"]),
+            "nacionalidad" => mb_strtoupper($datos["nacionalidad"]),
+            "profesion" => mb_strtoupper($datos["profesion"]),
+            "cel" => $datos["cel"],
             "fono" => $datos["fono"],
+            "cel_dom" => $datos["cel_dom"],
+            "dir" => mb_strtoupper($datos["dir"]),
+            "latitud" => $datos["latitud"],
+            "longitud" => $datos["longitud"],
             "correo" => $datos["correo"],
-            "usuario" => $this->getNombreUsuario($datos["nombre"], $datos["paterno"]),
+            "usuario" => $datos["correo"],
             "password" => $datos["ci"],
             "role_id" => $datos["role_id"],
-            "tipo" => "ADMINISTRATIVO",
+            "tipo" => $datos["tipo"],
             "acceso" => $datos["acceso"],
             "fecha_registro" => date("Y-m-d")
         ]);
@@ -180,6 +188,11 @@ class UserService
         // cargar foto
         if ($datos["foto"] && !is_string($datos["foto"])) {
             $this->cargarFoto($user, $datos["foto"]);
+        }
+
+        // cargar carnet
+        if ($datos["carnet"] && !is_string($datos["carnet"])) {
+            $this->cargarFoto($user, $datos["carnet"]);
         }
 
         // registrar accion
