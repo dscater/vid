@@ -21,11 +21,11 @@ class UserUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $validacion = [
             "nombre" => "required|min:2",
             "paterno" => "required|min:1",
             "materno" => "nullable|min:1",
-            "ci" => "required|numeric|digits_between:6,10|unique:users,ci",
+            "ci" => "required|numeric|digits_between:6,10|unique:users,ci," . $this->user->id,
             "ci_exp" => "required",
             "grupo_san" => "required",
             "sexo" => "required",
@@ -37,16 +37,20 @@ class UserUpdateRequest extends FormRequest
             "dir" => "required",
             "latitud" => "required",
             "longitud" => "required",
-            "correo" => "required|email|unique:users,correo",
+            "correo" => "required|email|unique:users,correo," . $this->user->id,
             "foto" => "nullable|image|mimes:png,jpg,jpeg,webp|max:4096",
             "tipo" => "required",
-            "role_id" => "required",
-            "acceso" => "required",
-            "certificados" => "nullable|array",
-            "adicional" => "nullable|array"
+            "certificados" => ["nullable", "array", new CertificadoRule()],
+            "documentos" => ["nullable", "array", new DocumentoRule()],
         ];
-    }
 
+        if ($this->tipo == 'USUARIO') {
+            $validacion["role_id"] = "required";
+            $validacion["acceso"] = "required";
+        }
+
+        return $validacion;
+    }
     /**
      * Mensages validacion
      *

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Certificado;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\UploadedFile;
@@ -13,7 +14,7 @@ class UserService
 {
     private $modulo = "USUARIOS";
 
-    public function __construct(private  CargarArchivoService $cargarArchivoService, private HistorialAccionService $historialAccionService) {}
+    public function __construct(private  CargarArchivoService $cargarArchivoService, private HistorialAccionService $historialAccionService, private CertificadoService $certificadoService, private DocumentoService $documentoService) {}
 
 
     /**
@@ -32,7 +33,6 @@ class UserService
             ->join("roles", "roles.id", "=", "users.role_id")
             ->where("users.id", "!=", 1);
         $users->where("users.tipo", "!=", "POSTULANTE");
-        $users->where("users.status", 1);
 
         // Filtros exactos
         foreach ($columnsFilter as $key => $value) {
@@ -85,7 +85,6 @@ class UserService
         $users = User::select("users.*")
             ->where("id", "!=", 1);
         $users->where("tipo", "!=", "POSTULANTE");
-        $users->where("status", 0);
 
         // Filtros exactos
         foreach ($columnsFilter as $key => $value) {
@@ -195,8 +194,22 @@ class UserService
             $this->cargarFoto($user, $datos["carnet"]);
         }
 
+        // registrar certificados
+        if (!empty($datos["certificados"])) {
+            foreach ($datos["certificados"] as $key => $archivo) {
+                $this->certificadoService->guardarCertificado($user, $archivo["file"], $key);
+            }
+        }
+
+        // registrar documentos
+        if (!empty($datos["documentos"])) {
+            foreach ($datos["documentos"] as $key => $archivo) {
+                $this->documentoService->guardarDocumento($user, $archivo["file"], $key);
+            }
+        }
+
         // registrar accion
-        $this->historialAccionService->registrarAccion($this->modulo, "CREACIÓN", "REGISTRO UN USUARIO", $user);
+        $this->historialAccionService->registrarAccion($this->modulo, "CREACIÓN", "REGISTRO UN USUARIO", $user, null, ["certificados", "documentos"]);
 
         return $user;
     }
@@ -215,15 +228,25 @@ class UserService
             "nombre" => mb_strtoupper($datos["nombre"]),
             "paterno" => mb_strtoupper($datos["paterno"]),
             "materno" => mb_strtoupper($datos["materno"]),
-            "dir" => mb_strtoupper($datos["dir"]),
+            "grupo_san" => mb_strtoupper($datos["grupo_san"]),
             "ci" => $datos["ci"],
             "ci_exp" => $datos["ci_exp"],
+            "sexo" => mb_strtoupper($datos["sexo"]),
+            "nacionalidad" => mb_strtoupper($datos["nacionalidad"]),
+            "profesion" => mb_strtoupper($datos["profesion"]),
+            "cel" => $datos["cel"],
             "fono" => $datos["fono"],
+            "cel_dom" => $datos["cel_dom"],
+            "dir" => mb_strtoupper($datos["dir"]),
+            "latitud" => $datos["latitud"],
+            "longitud" => $datos["longitud"],
             "correo" => $datos["correo"],
-            "usuario" => $this->getNombreUsuario($datos["nombre"], $datos["paterno"]),
+            "usuario" => $datos["correo"],
             "password" => $datos["ci"],
-            "role_id" => $datos["role_id"],
-            "acceso" => $datos["acceso"],
+            "role_id" => $datos["role_id"] ?? null,
+            "tipo" => $datos["tipo"],
+            "acceso" => $datos["acceso"] ?? 0,
+            "fecha_registro" => date("Y-m-d")
         ]);
 
         // cargar foto
@@ -231,8 +254,51 @@ class UserService
             $this->cargarFoto($user, $datos["foto"]);
         }
 
+        // cargar carnet
+        if ($datos["carnet"] && !is_string($datos["carnet"])) {
+            $this->cargarFoto($user, $datos["carnet"]);
+        }
+
+        // actualizar certificados
+        if (!empty($datos["certificados"])) {
+            foreach ($datos["certificados"] as $key => $certificado) {
+                if ($certificado["id"] == 0) {
+                    $this->certificadoService->guardarCertificado($user, $certificado["file"], $key);
+                }
+            }
+        }
+
+        // certificados eliminados
+        if (!empty($datos["eliminados_fotos"])) {
+            foreach ($datos["eliminados_fotos"] as $key => $eliminado) {
+                $certificado = Certificado::find($eliminado);
+                if ($certificado) {
+                    $this->certificadoService->eliminarCertificado($certificado);
+                }
+            }
+        }
+
+        // actualizar documentos
+        if (!empty($datos["documentos"])) {
+            foreach ($datos["documentos"] as $key => $documento) {
+                if ($documento["id"] == 0) {
+                    $this->documentoService->guardarDocumento($user, $documento["file"], $key);
+                }
+            }
+        }
+
+        // documentos eliminados
+        if (!empty($datos["eliminados_fotos"])) {
+            foreach ($datos["eliminados_fotos"] as $key => $eliminado) {
+                $documento = Certificado::find($eliminado);
+                if ($documento) {
+                    $this->documentoService->eliminarDocumento($documento);
+                }
+            }
+        }
+
         // registrar accion
-        $this->historialAccionService->registrarAccion($this->modulo, "MODIFICACIÓN", "ACTUALIZÓ UN USUARIO", $old_user, $user->withoutRelations());
+        $this->historialAccionService->registrarAccion($this->modulo, "MODIFICACIÓN", "ACTUALIZÓ UN USUARIO", $old_user, $user, ["certificados", "documentos"]);
 
         return $user;
     }
@@ -261,7 +327,7 @@ class UserService
     public function cargarFoto(User $user, UploadedFile $foto): void
     {
         if ($user->foto) {
-            \File::delete(public_path("imgs/users/" . $this->user->foto));
+            \File::delete(public_path("imgs/users/" . $user->foto));
         }
 
         $nombre = $user->id . time();
@@ -279,11 +345,10 @@ class UserService
     {
         // no eliminar users predeterminados para el funcionamiento del sistema
         $old_user = User::find($user->id);
-        $user->status = 0;
-        $user->save();
+        $user->delete();
 
         // registrar accion
-        $this->historialAccionService->registrarAccion($this->modulo, "ELIMINACIÓN", "ELIMINÓ AL USUARIO " . $old_user->usuario, $old_user, $user);
+        $this->historialAccionService->registrarAccion($this->modulo, "ELIMINACIÓN", "ELIMINÓ AL USUARIO " . $old_user->usuario, $old_user, $user, ["certificados", "documentos"]);
         return true;
     }
 
@@ -296,7 +361,6 @@ class UserService
     public function reestablecer(User $user): bool
     {
         $old_user = clone $user;
-        $user->status = 1;
         $user->save();
 
         // registrar accion

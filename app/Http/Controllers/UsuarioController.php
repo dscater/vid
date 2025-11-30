@@ -81,15 +81,18 @@ class UsuarioController extends Controller
      * Store user
      *
      * @param UserStoreRequest $request
-     * @return RedirectResponse|Response
+     * @return JsonResponse|Response
      */
-    public function store(UserStoreRequest $request): RedirectResponse|Response
+    public function store(UserStoreRequest $request): JsonResponse|Response
     {
         DB::beginTransaction();
         try {
             $this->userService->crear($request->validated());
             DB::commit();
-            return redirect()->route("usuarios.index")->with("bien", "Registro realizado");
+            return response()->JSON([
+                "sw" => true,
+                "message" => "Proceso realizado con éxito"
+            ]);
         } catch (\Exception $e) {
             DB::rollBack();
             throw ValidationException::withMessages([
@@ -118,15 +121,18 @@ class UsuarioController extends Controller
      *
      * @param User $user
      * @param UserUpdateRequest $request
-     * @return RedirectResponse|Response
+     * @return JsonResponse|Response
      */
-    public function update(User $user, UserUpdateRequest $request): RedirectResponse|Response
+    public function update(User $user, UserUpdateRequest $request): JsonResponse|Response
     {
         DB::beginTransaction();
         try {
             $this->userService->actualizar($request->validated(), $user);
             DB::commit();
-            return redirect()->route("usuarios.index")->with("bien", "Registro actualizado");
+            return response()->JSON([
+                "sw" => true,
+                "message" => "Proceso realizado con éxito"
+            ]);
         } catch (\Exception $e) {
             DB::rollBack();
             // Log::debug($e->getMessage());
