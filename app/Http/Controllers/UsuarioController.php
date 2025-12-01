@@ -103,7 +103,7 @@ class UsuarioController extends Controller
 
     public function show(User $user)
     {
-        return response()->JSON($user->load("persona"));
+        return response()->JSON($user->load("role", "certificados", "documentos"));
     }
 
     public function actualizaAcceso(User $user, Request $request)
@@ -149,10 +149,10 @@ class UsuarioController extends Controller
             $this->userService->actualizarPassword($request->validated(), $user);
             DB::commit();
 
-            if ($user->tipo == 'POSTULANTE') {
-                return redirect()->route($request->redireccion ?? "postulantes.index")->with("bien", "Registro actualizado");
-            }
-            return redirect()->route("usuarios.index")->with("bien", "Registro actualizado");
+            return response()->JSON([
+                "sw" => true,
+                "message" => "Proceso realizado con éxito"
+            ]);
         } catch (\Exception $e) {
             DB::rollBack();
             // Log::debug($e->getMessage());

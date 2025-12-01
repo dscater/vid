@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -30,16 +31,7 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        // return $this->respondWithToken($token);
-
-        $user = auth()->user();
-
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => $user,
-        ]);
+        return $this->respondWithToken($token);
     }
 
     /**
@@ -86,7 +78,18 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => auth()->factory()->getTTL() * 60,
+            "user" => auth()->user()
         ]);
+    }
+
+    public function authCheck()
+    {
+        $valid = auth()->check();
+        $code = 200;
+        if (!$valid) {
+            $code = 401;
+        }
+        return response()->json($valid, $code);
     }
 }

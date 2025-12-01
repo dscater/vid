@@ -15,7 +15,7 @@ class Certificado extends Model
         "file",
     ];
 
-    protected $appends = ["url_file", "name", "ext"];
+    protected $appends = ["url_file", "url_archivo", "name", "ext"];
 
     public function getExtAttribute()
     {
@@ -26,6 +26,11 @@ class Certificado extends Model
     public function getNameAttribute()
     {
         return $this->file;
+    }
+
+    public function getUrlArchivoAttribute()
+    {
+        return asset("/files/certificados/" . $this->file);
     }
 
     public function getUrlFileAttribute()

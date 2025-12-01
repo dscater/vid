@@ -10,6 +10,8 @@ use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout']);
+Route::post('/me', [AuthController::class, 'me']);
 
 Route::get("configuracions/getConfiguracion", [ConfiguracionController::class, 'getConfiguracion'])->name("configuracions.getConfiguracion");
 
@@ -17,8 +19,9 @@ Route::middleware(['auth:api'])->get('/perfil', function () {
     return auth()->user();
 });
 
-Route::middleware(['auth:api'])->prefix("admin")->group(function () {
+Route::get("/authCheck", [AuthController::class, 'authCheck']);
 
+Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     // CONFIGURACION
     Route::resource("configuracions", ConfiguracionController::class)->only(
         ["show", "update"]

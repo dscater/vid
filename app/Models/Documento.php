@@ -15,7 +15,7 @@ class Documento extends Model
         "file",
     ];
 
-    protected $appends = ["url_file", "name", "ext"];
+    protected $appends = ["url_file", "url_archivo", "name", "ext"];
 
     public function getExtAttribute()
     {
@@ -26,6 +26,11 @@ class Documento extends Model
     public function getNameAttribute()
     {
         return $this->file;
+    }
+
+    public function getUrlArchivoAttribute()
+    {
+        return asset("/files/documentos/" . $this->file);
     }
 
     public function getUrlFileAttribute()

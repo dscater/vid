@@ -7,6 +7,8 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Symfony\Component\HttpFoundation\Response;
 use Inertia\Inertia;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Illuminate\Http\Response as ResponseHttp;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -30,6 +32,14 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {
+        // Manejar TokenExpiredException
+        $exceptions->renderable(function (TokenExpiredException $e, $request) {
+            return response()->json([
+                'error' => 'token_expired',
+                'message' => 'El token ha expirado y ya no se puede utilizar.'
+            ], ResponseHttp::HTTP_UNAUTHORIZED);
+        });
+
         $exceptions->respond(function (Response $response) {
             if ($response->getStatusCode() === 401) {
                 return Inertia::render("Errors/401");

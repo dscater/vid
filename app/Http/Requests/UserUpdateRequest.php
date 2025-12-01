@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\CertificadoRule;
+use App\Rules\DocumentoRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserUpdateRequest extends FormRequest
@@ -41,8 +43,18 @@ class UserUpdateRequest extends FormRequest
             "foto" => "nullable|image|mimes:png,jpg,jpeg,webp|max:4096",
             "tipo" => "required",
             "certificados" => ["nullable", "array", new CertificadoRule()],
+            "certificados_eliminados" => "nullable",
             "documentos" => ["nullable", "array", new DocumentoRule()],
+            "documentos_eliminados" => "nullable",
         ];
+
+        if ($this->foto) {
+            $validacion["foto"] = "image|mimes:png,jpg,jpeg,webp|max:4096";
+        }
+
+        if ($this->carnet) {
+            $validacion["carnet"] = "image|mimes:png,jpg,jpeg,webp|max:4096";
+        }
 
         if ($this->tipo == 'USUARIO') {
             $validacion["role_id"] = "required";

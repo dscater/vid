@@ -185,12 +185,12 @@ class UserService
         ]);
 
         // cargar foto
-        if ($datos["foto"] && !is_string($datos["foto"])) {
+        if (isset($datos["foto"]) && !is_string($datos["foto"])) {
             $this->cargarFoto($user, $datos["foto"]);
         }
 
         // cargar carnet
-        if ($datos["carnet"] && !is_string($datos["carnet"])) {
+        if (isset($datos["carnet"]) && !is_string($datos["carnet"])) {
             $this->cargarFoto($user, $datos["carnet"]);
         }
 
@@ -250,12 +250,12 @@ class UserService
         ]);
 
         // cargar foto
-        if ($datos["foto"] && !is_string($datos["foto"])) {
+        if (isset($datos["foto"]) && !is_string($datos["foto"])) {
             $this->cargarFoto($user, $datos["foto"]);
         }
 
         // cargar carnet
-        if ($datos["carnet"] && !is_string($datos["carnet"])) {
+        if (isset($datos["carnet"]) && !is_string($datos["carnet"])) {
             $this->cargarFoto($user, $datos["carnet"]);
         }
 
