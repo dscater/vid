@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserTableSeeder::class,
             ConfiguracionTableSeeder::class,
-            // ModuloTableSeeder::class,
+            ModuloTableSeeder::class,
         ]);
     }
 }

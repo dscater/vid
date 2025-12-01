@@ -113,7 +113,54 @@ class RoleController extends Controller
      */
     public function show(Role $role): JsonResponse
     {
-        return response()->JSON($role);
+
+        $modulos_group = Modulo::select('modulo')->distinct()->pluck('modulo');
+
+        $array_modulos = [];
+        $array_permisos = [];
+        foreach ($modulos_group as $value) {
+            $array_modulos[$value] = Modulo::where("modulo", $value)->get();
+            $array_permisos[$value] = Permiso::select("modulos.nombre", "modulos.accion")->join("modulos", "modulos.id", "=", "permisos.modulo_id")
+                ->where("role_id", $role->id)
+                ->where("modulo", $value)->get();
+        }
+
+        return response()->JSON([
+            "role" => $role,
+            "modulos_group" => $modulos_group,
+            "array_modulos" => $array_modulos,
+            "array_permisos" => $array_permisos
+        ]);
+    }
+    public function actualizaPermiso(Role $role, Request $request)
+    {
+        $sw_cambio = $request->sw_cambio;
+        $modulo = $request->modulo;
+        $accion = $request->accion;
+        $o_modulo = Modulo::where("modulo", $modulo)->where("accion", $accion)->get()->first();
+        $permiso = Permiso::where("role_id", $role->id)
+            ->where("modulo_id", $o_modulo->id)
+            ->get()->first();
+        if ($sw_cambio == 1) {
+            if (!$permiso) {
+                $role->o_permisos()->create([
+                    "modulo_id" => $o_modulo->id
+                ]);
+            }
+        } else {
+            if ($permiso) {
+                $permiso->delete();
+            }
+        }
+
+        $array_permisos = Permiso::select("modulos.nombre", "modulos.accion")
+            ->join("modulos", "modulos.id", "=", "permisos.modulo_id")
+            ->where("role_id", $role->id)
+            ->where("modulos.modulo", $o_modulo->modulo)->get();
+
+        return response()->JSON([
+            "array_permisos" => $array_permisos
+        ]);
     }
 
     public function update(Role $role, RoleUpdateRequest $request)
