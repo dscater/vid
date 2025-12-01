@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 30-11-2025 a las 16:44:39
+-- Tiempo de generación: 01-12-2025 a las 22:40:01
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.2.22
 
@@ -48,6 +48,14 @@ CREATE TABLE `certificados` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `certificados`
+--
+
+INSERT INTO `certificados` (`id`, `user_id`, `file`, `created_at`, `updated_at`) VALUES
+(5, 15, '0151764537188.pdf', '2025-11-30 21:13:08', '2025-11-30 21:13:08'),
+(6, 15, '1151764537188.pdf', '2025-11-30 21:13:08', '2025-11-30 21:13:08');
 
 -- --------------------------------------------------------
 
@@ -236,6 +244,14 @@ CREATE TABLE `documentos` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `documentos`
+--
+
+INSERT INTO `documentos` (`id`, `user_id`, `file`, `created_at`, `updated_at`) VALUES
+(5, 15, '0151764537188.jpeg', '2025-11-30 21:13:08', '2025-11-30 21:13:08'),
+(6, 15, '1151764537188.pdf', '2025-11-30 21:13:08', '2025-11-30 21:13:08');
+
 -- --------------------------------------------------------
 
 --
@@ -279,7 +295,11 @@ CREATE TABLE `historial_accions` (
 
 INSERT INTO `historial_accions` (`id`, `user_id`, `accion`, `descripcion`, `datos_original`, `datos_nuevo`, `modulo`, `fecha`, `hora`, `created_at`, `updated_at`) VALUES
 (1, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UN ROLE', '{\"id\": 2, \"nombre\": \"ADMINISTRADOR\", \"created_at\": \"2025-11-30T16:44:28.000000Z\", \"updated_at\": \"2025-11-30T16:44:28.000000Z\"}', NULL, 'ROLES', '2025-11-30', '12:44:28', '2025-11-30 16:44:28', '2025-11-30 16:44:28'),
-(2, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UN ROLE', '{\"id\": 3, \"nombre\": \"AUXILIAR\", \"created_at\": \"2025-11-30T16:44:33.000000Z\", \"updated_at\": \"2025-11-30T16:44:33.000000Z\"}', NULL, 'ROLES', '2025-11-30', '12:44:33', '2025-11-30 16:44:33', '2025-11-30 16:44:33');
+(2, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UN ROLE', '{\"id\": 3, \"nombre\": \"AUXILIAR\", \"created_at\": \"2025-11-30T16:44:33.000000Z\", \"updated_at\": \"2025-11-30T16:44:33.000000Z\"}', NULL, 'ROLES', '2025-11-30', '12:44:33', '2025-11-30 16:44:33', '2025-11-30 16:44:33'),
+(3, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UN USUARIO', '{\"ci\": \"123456\", \"id\": 15, \"cel\": \"777777\", \"dir\": \"LOS PEDREGALES\", \"fono\": \"22222\", \"foto\": \"151764537188.jpeg\", \"sexo\": \"MASCULINO\", \"tipo\": \"USUARIO\", \"acceso\": \"1\", \"ci_exp\": \"LP\", \"correo\": \"juan@gmail.com\", \"nombre\": \"JUAN\", \"cel_dom\": \"78\", \"latitud\": \"111111111\", \"materno\": \"MAMANI\", \"paterno\": \"PERES\", \"role_id\": \"2\", \"usuario\": \"juan@gmail.com\", \"longitud\": \"1000000000\", \"grupo_san\": \"ORH+\", \"profesion\": \"PROFESION\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"documentos\": [{\"id\": 5, \"ext\": \"jpeg\", \"file\": \"0151764537188.jpeg\", \"name\": \"0151764537188.jpeg\", \"user_id\": 15, \"url_file\": \"http://vid.test/files/documentos/0151764537188.jpeg\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\"}, {\"id\": 6, \"ext\": \"pdf\", \"file\": \"1151764537188.pdf\", \"name\": \"1151764537188.pdf\", \"user_id\": 15, \"url_file\": \"http://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\"}], \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"certificados\": [{\"id\": 5, \"ext\": \"pdf\", \"file\": \"0151764537188.pdf\", \"name\": \"0151764537188.pdf\", \"user_id\": 15, \"url_file\": \"http://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\"}, {\"id\": 6, \"ext\": \"pdf\", \"file\": \"1151764537188.pdf\", \"name\": \"1151764537188.pdf\", \"user_id\": 15, \"url_file\": \"http://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\"}], \"nacionalidad\": \"BOLIVIANO\", \"fecha_registro\": \"2025-11-30\"}', NULL, 'USUARIOS', '2025-11-30', '17:13:08', '2025-11-30 21:13:08', '2025-11-30 21:13:08'),
+(4, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN USUARIO', '{\"ci\": \"123456\", \"id\": 15, \"cel\": \"777777\", \"dir\": \"LOS PEDREGALES\", \"fono\": \"22222\", \"foto\": \"151764537188.jpeg\", \"sexo\": \"MASCULINO\", \"tipo\": \"USUARIO\", \"acceso\": 1, \"carnet\": null, \"ci_exp\": \"LP\", \"correo\": \"juan@gmail.com\", \"estado\": 1, \"nombre\": \"JUAN\", \"cel_dom\": \"78\", \"latitud\": \"111111111\", \"materno\": \"MAMANI\", \"paterno\": \"PERES\", \"role_id\": 2, \"usuario\": \"juan@gmail.com\", \"longitud\": \"1000000000\", \"grupo_san\": \"ORH+\", \"profesion\": \"PROFESION\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"deleted_at\": null, \"documentos\": [{\"id\": 5, \"ext\": \"jpeg\", \"file\": \"0151764537188.jpeg\", \"name\": \"0151764537188.jpeg\", \"user_id\": 15, \"url_file\": \"http://vid.test/files/documentos/0151764537188.jpeg\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"http://vid.test/files/documentos/0151764537188.jpeg\"}, {\"id\": 6, \"ext\": \"pdf\", \"file\": \"1151764537188.pdf\", \"name\": \"1151764537188.pdf\", \"user_id\": 15, \"url_file\": \"http://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"http://vid.test/files/documentos/1151764537188.pdf\"}], \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"certificados\": [{\"id\": 5, \"ext\": \"pdf\", \"file\": \"0151764537188.pdf\", \"name\": \"0151764537188.pdf\", \"user_id\": 15, \"url_file\": \"http://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"http://vid.test/files/certificados/0151764537188.pdf\"}, {\"id\": 6, \"ext\": \"pdf\", \"file\": \"1151764537188.pdf\", \"name\": \"1151764537188.pdf\", \"user_id\": 15, \"url_file\": \"http://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"http://vid.test/files/certificados/1151764537188.pdf\"}], \"nacionalidad\": \"BOLIVIANO\", \"fecha_registro\": \"2025-11-30\"}', '{\"ci\": \"123456\", \"id\": 15, \"cel\": \"777777\", \"dir\": \"LOS PEDREGALES\", \"fono\": \"22222\", \"foto\": \"151764595251.jpg\", \"sexo\": \"MASCULINO\", \"tipo\": \"USUARIO\", \"acceso\": \"1\", \"carnet\": null, \"ci_exp\": \"LP\", \"correo\": \"juan@gmail.com\", \"estado\": 1, \"nombre\": \"JUAN\", \"cel_dom\": \"78\", \"latitud\": \"111111111\", \"materno\": \"MAMANI\", \"paterno\": \"PERES\", \"role_id\": \"2\", \"usuario\": \"juan@gmail.com\", \"longitud\": \"1000000000\", \"grupo_san\": \"ORH+\", \"profesion\": \"PROFESION\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"deleted_at\": null, \"documentos\": [{\"id\": 5, \"ext\": \"jpeg\", \"file\": \"0151764537188.jpeg\", \"name\": \"0151764537188.jpeg\", \"user_id\": 15, \"url_file\": \"http://vid.test/files/documentos/0151764537188.jpeg\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"http://vid.test/files/documentos/0151764537188.jpeg\"}, {\"id\": 6, \"ext\": \"pdf\", \"file\": \"1151764537188.pdf\", \"name\": \"1151764537188.pdf\", \"user_id\": 15, \"url_file\": \"http://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"http://vid.test/files/documentos/1151764537188.pdf\"}], \"updated_at\": \"2025-12-01T13:20:51.000000Z\", \"certificados\": [{\"id\": 5, \"ext\": \"pdf\", \"file\": \"0151764537188.pdf\", \"name\": \"0151764537188.pdf\", \"user_id\": 15, \"url_file\": \"http://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"http://vid.test/files/certificados/0151764537188.pdf\"}, {\"id\": 6, \"ext\": \"pdf\", \"file\": \"1151764537188.pdf\", \"name\": \"1151764537188.pdf\", \"user_id\": 15, \"url_file\": \"http://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"http://vid.test/files/certificados/1151764537188.pdf\"}], \"nacionalidad\": \"BOLIVIANO\", \"fecha_registro\": \"2025-12-01\"}', 'USUARIOS', '2025-12-01', '09:20:51', '2025-12-01 13:20:51', '2025-12-01 13:20:51'),
+(5, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN USUARIO', '{\"ci\": \"123456\", \"id\": 15, \"cel\": \"777777\", \"dir\": \"LOS PEDREGALES\", \"fono\": \"22222\", \"foto\": \"151764595251.jpg\", \"sexo\": \"MASCULINO\", \"tipo\": \"USUARIO\", \"acceso\": 1, \"carnet\": null, \"ci_exp\": \"LP\", \"correo\": \"juan@gmail.com\", \"estado\": 1, \"nombre\": \"JUAN\", \"cel_dom\": \"78\", \"latitud\": \"111111111\", \"materno\": \"MAMANI\", \"paterno\": \"PERES\", \"role_id\": 2, \"usuario\": \"juan@gmail.com\", \"longitud\": \"1000000000\", \"grupo_san\": \"ORH+\", \"profesion\": \"PROFESION\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"deleted_at\": null, \"documentos\": [{\"id\": 5, \"ext\": \"jpeg\", \"file\": \"0151764537188.jpeg\", \"name\": \"0151764537188.jpeg\", \"user_id\": 15, \"url_file\": \"http://vid.test/files/documentos/0151764537188.jpeg\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"http://vid.test/files/documentos/0151764537188.jpeg\"}, {\"id\": 6, \"ext\": \"pdf\", \"file\": \"1151764537188.pdf\", \"name\": \"1151764537188.pdf\", \"user_id\": 15, \"url_file\": \"http://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"http://vid.test/files/documentos/1151764537188.pdf\"}], \"updated_at\": \"2025-12-01T13:25:20.000000Z\", \"certificados\": [{\"id\": 5, \"ext\": \"pdf\", \"file\": \"0151764537188.pdf\", \"name\": \"0151764537188.pdf\", \"user_id\": 15, \"url_file\": \"http://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"http://vid.test/files/certificados/0151764537188.pdf\"}, {\"id\": 6, \"ext\": \"pdf\", \"file\": \"1151764537188.pdf\", \"name\": \"1151764537188.pdf\", \"user_id\": 15, \"url_file\": \"http://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"http://vid.test/files/certificados/1151764537188.pdf\"}], \"nacionalidad\": \"BOLIVIANO\", \"fecha_registro\": \"2025-12-01\"}', '{\"ci\": \"123456\", \"id\": 15, \"cel\": \"777777\", \"dir\": \"LOS PEDREGALES\", \"fono\": \"22222\", \"foto\": \"151764595251.jpg\", \"sexo\": \"MASCULINO\", \"tipo\": \"USUARIO\", \"acceso\": \"0\", \"carnet\": null, \"ci_exp\": \"LP\", \"correo\": \"juan@gmail.com\", \"estado\": 1, \"nombre\": \"JUAN\", \"cel_dom\": \"78\", \"latitud\": \"111111111\", \"materno\": \"MAMANI\", \"paterno\": \"PERES\", \"role_id\": \"2\", \"usuario\": \"juan@gmail.com\", \"longitud\": \"1000000000\", \"grupo_san\": \"ORH+\", \"profesion\": \"PROFESION\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"deleted_at\": null, \"documentos\": [{\"id\": 5, \"ext\": \"jpeg\", \"file\": \"0151764537188.jpeg\", \"name\": \"0151764537188.jpeg\", \"user_id\": 15, \"url_file\": \"http://vid.test/files/documentos/0151764537188.jpeg\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"http://vid.test/files/documentos/0151764537188.jpeg\"}, {\"id\": 6, \"ext\": \"pdf\", \"file\": \"1151764537188.pdf\", \"name\": \"1151764537188.pdf\", \"user_id\": 15, \"url_file\": \"http://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"http://vid.test/files/documentos/1151764537188.pdf\"}], \"updated_at\": \"2025-12-01T13:26:56.000000Z\", \"certificados\": [{\"id\": 5, \"ext\": \"pdf\", \"file\": \"0151764537188.pdf\", \"name\": \"0151764537188.pdf\", \"user_id\": 15, \"url_file\": \"http://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"http://vid.test/files/certificados/0151764537188.pdf\"}, {\"id\": 6, \"ext\": \"pdf\", \"file\": \"1151764537188.pdf\", \"name\": \"1151764537188.pdf\", \"user_id\": 15, \"url_file\": \"http://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"http://vid.test/files/certificados/1151764537188.pdf\"}], \"nacionalidad\": \"BOLIVIANO\", \"fecha_registro\": \"2025-12-01\"}', 'USUARIOS', '2025-12-01', '09:26:56', '2025-12-01 13:26:56', '2025-12-01 13:26:56'),
+(6, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN USUARIO', '{\"ci\": \"123456\", \"id\": 15, \"cel\": \"777777\", \"dir\": \"LOS PEDREGALES\", \"fono\": \"22222\", \"foto\": \"151764595251.jpg\", \"sexo\": \"MASCULINO\", \"tipo\": \"USUARIO\", \"acceso\": 0, \"carnet\": null, \"ci_exp\": \"LP\", \"correo\": \"juan@gmail.com\", \"estado\": 1, \"nombre\": \"JUAN\", \"cel_dom\": \"78\", \"latitud\": \"111111111\", \"materno\": \"MAMANI\", \"paterno\": \"PERES\", \"role_id\": 2, \"usuario\": \"juan@gmail.com\", \"longitud\": \"1000000000\", \"grupo_san\": \"ORH+\", \"profesion\": \"PROFESION\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"deleted_at\": null, \"documentos\": [{\"id\": 5, \"ext\": \"jpeg\", \"file\": \"0151764537188.jpeg\", \"name\": \"0151764537188.jpeg\", \"user_id\": 15, \"url_file\": \"http://vid.test/files/documentos/0151764537188.jpeg\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"http://vid.test/files/documentos/0151764537188.jpeg\"}, {\"id\": 6, \"ext\": \"pdf\", \"file\": \"1151764537188.pdf\", \"name\": \"1151764537188.pdf\", \"user_id\": 15, \"url_file\": \"http://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"http://vid.test/files/documentos/1151764537188.pdf\"}], \"updated_at\": \"2025-12-01T13:29:56.000000Z\", \"certificados\": [{\"id\": 5, \"ext\": \"pdf\", \"file\": \"0151764537188.pdf\", \"name\": \"0151764537188.pdf\", \"user_id\": 15, \"url_file\": \"http://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"http://vid.test/files/certificados/0151764537188.pdf\"}, {\"id\": 6, \"ext\": \"pdf\", \"file\": \"1151764537188.pdf\", \"name\": \"1151764537188.pdf\", \"user_id\": 15, \"url_file\": \"http://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"http://vid.test/files/certificados/1151764537188.pdf\"}], \"nacionalidad\": \"BOLIVIANO\", \"fecha_registro\": \"2025-12-01\"}', '{\"ci\": \"123456\", \"id\": 15, \"cel\": \"777777\", \"dir\": \"LOS PEDREGALES\", \"fono\": \"22222\", \"foto\": \"151764595251.jpg\", \"sexo\": \"MASCULINO\", \"tipo\": \"USUARIO\", \"acceso\": \"1\", \"carnet\": null, \"ci_exp\": \"LP\", \"correo\": \"juan@gmail.com\", \"estado\": 1, \"nombre\": \"JUAN\", \"cel_dom\": \"78\", \"latitud\": \"111111111\", \"materno\": \"MAMANI\", \"paterno\": \"PERES\", \"role_id\": \"2\", \"usuario\": \"juan@gmail.com\", \"longitud\": \"1000000000\", \"grupo_san\": \"ORH+\", \"profesion\": \"PROFESION\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"deleted_at\": null, \"documentos\": [{\"id\": 5, \"ext\": \"jpeg\", \"file\": \"0151764537188.jpeg\", \"name\": \"0151764537188.jpeg\", \"user_id\": 15, \"url_file\": \"http://vid.test/files/documentos/0151764537188.jpeg\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"http://vid.test/files/documentos/0151764537188.jpeg\"}, {\"id\": 6, \"ext\": \"pdf\", \"file\": \"1151764537188.pdf\", \"name\": \"1151764537188.pdf\", \"user_id\": 15, \"url_file\": \"http://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"http://vid.test/files/documentos/1151764537188.pdf\"}], \"updated_at\": \"2025-12-01T13:30:08.000000Z\", \"certificados\": [{\"id\": 5, \"ext\": \"pdf\", \"file\": \"0151764537188.pdf\", \"name\": \"0151764537188.pdf\", \"user_id\": 15, \"url_file\": \"http://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"http://vid.test/files/certificados/0151764537188.pdf\"}, {\"id\": 6, \"ext\": \"pdf\", \"file\": \"1151764537188.pdf\", \"name\": \"1151764537188.pdf\", \"user_id\": 15, \"url_file\": \"http://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"http://vid.test/files/certificados/1151764537188.pdf\"}], \"nacionalidad\": \"BOLIVIANO\", \"fecha_registro\": \"2025-12-01\"}', 'USUARIOS', '2025-12-01', '09:30:08', '2025-12-01 13:30:08', '2025-12-01 13:30:08');
 
 -- --------------------------------------------------------
 
@@ -363,6 +383,107 @@ CREATE TABLE `modulos` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `modulos`
+--
+
+INSERT INTO `modulos` (`id`, `modulo`, `nombre`, `accion`, `descripcion`, `created_at`, `updated_at`) VALUES
+(1, 'Gestión de usuarios', 'usuarios.index', 'VER', 'VER LA LISTA DE USUARIOS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(2, 'Gestión de usuarios', 'usuarios.create', 'CREAR', 'CREAR USUARIOS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(3, 'Gestión de usuarios', 'usuarios.edit', 'EDITAR', 'EDITAR USUARIOS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(4, 'Gestión de usuarios', 'usuarios.destroy', 'ELIMINAR', 'ELIMINAR USUARIOS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(5, 'Roles y Permisos', 'roles.index', 'VER', 'VER LA LISTA DE ROLES Y PERMISOS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(6, 'Roles y Permisos', 'roles.create', 'CREAR', 'CREAR ROLES Y PERMISOS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(7, 'Roles y Permisos', 'roles.edit', 'EDITAR', 'EDITAR ROLES Y PERMISOS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(8, 'Roles y Permisos', 'roles.destroy', 'ELIMINAR', 'ELIMINAR ROLES Y PERMISOS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(9, 'Configuración', 'configuracions.index', 'VER', 'VER INFORMACIÓN DE LA CONFIGURACIÓN DEL SISTEMA', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(10, 'Configuración', 'configuracions.edit', 'EDITAR', 'EDITAR LA CONFIGURACIÓN DEL SISTEMA', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(11, 'Sucursales', 'sucursals.index', 'VER', 'VER LA LISTA DE SUCURSALES', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(12, 'Sucursales', 'sucursals.create', 'CREAR', 'CREAR SUCURSALES', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(13, 'Sucursales', 'sucursals.edit', 'EDITAR', 'EDITAR SUCURSALES', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(14, 'Sucursales', 'sucursals.destroy', 'ELIMINAR', 'ELIMINAR SUCURSALES', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(15, 'Categorías', 'categorias.index', 'VER', 'VER LA LISTA DE CATEGORÍAS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(16, 'Categorías', 'categorias.create', 'CREAR', 'CREAR CATEGORÍAS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(17, 'Categorías', 'categorias.edit', 'EDITAR', 'EDITAR CATEGORÍAS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(18, 'Categorías', 'categorias.destroy', 'ELIMINAR', 'ELIMINAR CATEGORÍAS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(19, 'Subcategorías', 'sub_categorias.index', 'VER', 'VER LA LISTA DE SUBCATEGORÍAS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(20, 'Subcategorías', 'sub_categorias.create', 'CREAR', 'CREAR SUBCATEGORÍAS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(21, 'Subcategorías', 'sub_categorias.edit', 'EDITAR', 'EDITAR SUBCATEGORÍAS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(22, 'Subcategorías', 'sub_categorias.destroy', 'ELIMINAR', 'ELIMINAR SUBCATEGORÍAS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(23, 'Marcas', 'marcas.index', 'VER', 'VER LA LISTA DE MARCAS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(24, 'Marcas', 'marcas.create', 'CREAR', 'CREAR MARCAS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(25, 'Marcas', 'marcas.edit', 'EDITAR', 'EDITAR MARCAS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(26, 'Marcas', 'marcas.destroy', 'ELIMINAR', 'ELIMINAR MARCAS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(27, 'Unidades de Medida', 'unidad_medidas.index', 'VER', 'VER LA LISTA DE UNIDADES DE MEDIDA', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(28, 'Unidades de Medida', 'unidad_medidas.create', 'CREAR', 'CREAR UNIDADES DE MEDIDA', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(29, 'Unidades de Medida', 'unidad_medidas.edit', 'EDITAR', 'EDITAR UNIDADES DE MEDIDA', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(30, 'Unidades de Medida', 'unidad_medidas.destroy', 'ELIMINAR', 'ELIMINAR UNIDADES DE MEDIDA', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(31, 'Productos', 'productos.index', 'VER', 'VER LA LISTA DE PRODUCTOS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(32, 'Productos', 'productos.create', 'CREAR', 'CREAR PRODUCTOS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(33, 'Productos', 'productos.edit', 'EDITAR', 'EDITAR PRODUCTOS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(34, 'Productos', 'productos.destroy', 'ELIMINAR', 'ELIMINAR PRODUCTOS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(35, 'Clientes', 'clientes.index', 'VER', 'VER LA LISTA DE CLIENTES', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(36, 'Clientes', 'clientes.create', 'CREAR', 'CREAR CLIENTES', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(37, 'Clientes', 'clientes.edit', 'EDITAR', 'EDITAR CLIENTES', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(38, 'Clientes', 'clientes.destroy', 'ELIMINAR', 'ELIMINAR CLIENTES', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(39, 'Proveedores', 'proveedors.index', 'VER', 'VER LA LISTA DE PROVEEDORES', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(40, 'Proveedores', 'proveedors.create', 'CREAR', 'CREAR PROVEEDORES', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(41, 'Proveedores', 'proveedors.edit', 'EDITAR', 'EDITAR PROVEEDORES', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(42, 'Proveedores', 'proveedors.destroy', 'ELIMINAR', 'ELIMINAR PROVEEDORES', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(43, 'Solicitud de Ingresos', 'solicitud_ingresos.index', 'VER', 'VER LA LISTA DE SOLICITUD DE INGRESOS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(44, 'Solicitud de Ingresos', 'solicitud_ingresos.create', 'CREAR', 'CREAR SOLICITUD DE INGRESOS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(45, 'Solicitud de Ingresos', 'solicitud_ingresos.edit', 'EDITAR', 'EDITAR SOLICITUD DE INGRESOS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(46, 'Solicitud de Ingresos', 'solicitud_ingresos.destroy', 'ELIMINAR', 'ELIMINAR SOLICITUD DE INGRESOS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(47, 'Ordenes de Salida', 'orden_salidas.index', 'VER', 'VER LA LISTA DE ORDENES DE SALIDA', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(48, 'Ordenes de Salida', 'orden_salidas.create', 'CREAR', 'CREAR ORDENES DE SALIDA', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(49, 'Ordenes de Salida', 'orden_salidas.edit', 'EDITAR', 'EDITAR ORDENES DE SALIDA', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(50, 'Ordenes de Salida', 'orden_salidas.destroy', 'ELIMINAR', 'ELIMINAR ORDENES DE SALIDA', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(51, 'Devolución de Stock', 'devolucion_stocks.index', 'VER', 'VER LA LISTA DE DEVOLUCIÓN DE STOCK', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(52, 'Devolución de Stock', 'devolucion_stocks.create', 'CREAR', 'CREAR DEVOLUCIÓN DE STOCK', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(53, 'Devolución de Stock', 'devolucion_stocks.edit', 'EDITAR', 'EDITAR DEVOLUCIÓN DE STOCK', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(54, 'Devolución de Stock', 'devolucion_stocks.destroy', 'ELIMINAR', 'ELIMINAR DEVOLUCIÓN DE STOCK', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(55, 'Ordenes de Venta', 'orden_ventas.index', 'VER', 'VER LA LISTA DE ORDENDES DE VENTA', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(56, 'Ordenes de Venta', 'orden_ventas.create', 'CREAR', 'CREAR ORDENDES DE VENTA', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(57, 'Ordenes de Venta', 'orden_ventas.edit', 'EDITAR', 'EDITAR ORDENDES DE VENTA', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(58, 'Ordenes de Venta', 'orden_ventas.destroy', 'ELIMINAR', 'ELIMINAR ORDENDES DE VENTA', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(59, 'Transferencias de Stock', 'transferencias.index', 'VER', 'VER LA LISTA DE TRANSFERENCIAS DE STOCK', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(60, 'Transferencias de Stock', 'transferencias.create', 'CREAR', 'CREAR TRANSFERENCIAS DE STOCK', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(61, 'Transferencias de Stock', 'transferencias.edit', 'EDITAR', 'EDITAR TRANSFERENCIAS DE STOCK', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(62, 'Transferencias de Stock', 'transferencias.destroy', 'ELIMINAR', 'ELIMINAR TRANSFERENCIAS DE STOCK', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(63, 'Devolución de Clientes', 'devolucion_clientes.index', 'VER', 'VER LA LISTA DE DEVOLUCIÓN DE CLIENTES', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(64, 'Devolución de Clientes', 'devolucion_clientes.create', 'CREAR', 'CREAR DEVOLUCIÓN DE CLIENTES', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(65, 'Devolución de Clientes', 'devolucion_clientes.edit', 'EDITAR', 'EDITAR DEVOLUCIÓN DE CLIENTES', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(66, 'Devolución de Clientes', 'devolucion_clientes.destroy', 'ELIMINAR', 'ELIMINAR DEVOLUCIÓN DE CLIENTES', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(67, 'Cuentas por Cobrar', 'cuenta_cobrars.index', 'VER', 'VER LA LISTA DE CUENTAS POR COBRAR', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(68, 'Cuentas por Cobrar', 'cuenta_cobrars.create', 'CREAR', 'CREAR CUENTAS POR COBRAR', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(69, 'Cuentas por Cobrar', 'cuenta_cobrars.edit', 'EDITAR', 'EDITAR CUENTAS POR COBRAR', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(70, 'Cuentas por Cobrar', 'cuenta_cobrars.destroy', 'ELIMINAR', 'ELIMINAR CUENTAS POR COBRAR', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(71, 'Registro de Gastos', 'gastos.index', 'VER', 'VER LA LISTA DE REGISTRO DE GASTOS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(72, 'Registro de Gastos', 'gastos.create', 'CREAR', 'CREAR REGISTRO DE GASTOS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(73, 'Registro de Gastos', 'gastos.edit', 'EDITAR', 'EDITAR REGISTRO DE GASTOS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(74, 'Registro de Gastos', 'gastos.destroy', 'ELIMINAR', 'ELIMINAR REGISTRO DE GASTOS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(75, 'Proformas', 'proformas.index', 'VER', 'VER LA LISTA DE PROFORMAS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(76, 'Proformas', 'proformas.create', 'CREAR', 'CREAR PROFORMAS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(77, 'Proformas', 'proformas.edit', 'EDITAR', 'EDITAR PROFORMAS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(78, 'Proformas', 'proformas.destroy', 'ELIMINAR', 'ELIMINAR PROFORMAS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(79, 'Reportes', 'reportes.usuarios', 'REPORTE LISTA DE USUARIOS', 'GENERAR REPORTES DE LISTA DE USUARIOS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(80, 'Reportes', 'reportes.productos', 'REPORTE LISTA DE PRODUCTOS', 'GENERAR REPORTES DE LISTA DE PRODUCTOS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(81, 'Reportes', 'reportes.sucursals', 'REPORTE LISTA DE SUCURSALES', 'GENERAR REPORTES DE LISTA DE SUCURSALES', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(82, 'Reportes', 'reportes.clientes', 'REPORTE LISTA DE CLIENTES', 'GENERAR REPORTES DE LISTA DE CLIENTES', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(83, 'Reportes', 'reportes.proveedors', 'REPORTE LISTA DE PROVEEDORES', 'GENERAR REPORTES DE LISTA DE PROVEEDORES', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(84, 'Reportes', 'reportes.inventario', 'REPORTE DE INVENTARIO', 'GENERAR REPORTES DE INVENTARIO', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(85, 'Reportes', 'reportes.movimiento_inventario', 'REPORTE DE MOVIMIENTO DE INVENTARIO', 'GENERAR REPORTES DE MOVIMIENTO DE INVENTARIO', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(86, 'Reportes', 'reportes.solicitud_ingresos', 'REPORTE DE SOLICITUDES DE INGRESO', 'GENERAR REPORTES DE SOLICITUDES DE INGRESO', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(87, 'Reportes', 'reportes.orden_salidas', 'REPORTE DE ORDENES DE SALIDA', 'GENERAR REPORTES DE ORDENES DE SALIDA', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(88, 'Reportes', 'reportes.devolucions', 'REPORTE DE DEVOLUCIONES', 'GENERAR REPORTES DE DEVOLUCIONES', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(89, 'Reportes', 'reportes.orden_ventas', 'REPORTE DE ORDENES DE VENTA', 'GENERAR REPORTES DE ORDENES DE VENTA', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(90, 'Reportes', 'reportes.ejecutivos', 'REPORTE DE EJECUTIVOS/RESUMEN', 'GENERAR REPORTES DE EJECUTIVOS/RESUMEN', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(91, 'Reportes', 'reportes.diario_salidas', 'REPORTE DE DIARIO DE SALIDAS POR SUCURSAL', 'GENERAR REPORTES DE DIARIO DE SALIDAS POR SUCURSAL', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(92, 'Reportes', 'reportes.movimientos_abastecimiento', 'REPORTE DE SEMANAL DE MOVIMIENTOS Y ABASTECIMIENTO', 'GENERAR REPORTES DE SEMANAL DE MOVIMIENTOS Y ABASTECIMIENTO', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(93, 'Reportes', 'reportes.saldos_almacen_central', 'REPORTE DE SALDOS DEL ALMACÉN CENTRAL', 'GENERAR REPORTES DE SALDOS DEL ALMACÉN CENTRAL', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(94, 'Reportes', 'reportes.diario_vehiculos', 'REPORTE DE CONTROL DIARIO DE VEHÍCULOS', 'GENERAR REPORTES DE CONTROL DIARIO DE VEHÍCULOS', '2025-12-01 20:46:14', '2025-12-01 20:46:14'),
+(95, 'Reportes', 'reportes.notas_entrega', 'REPORTE DE NOTAS DE ENTREGA', 'GENERAR REPORTES DE NOTAS DE ENTREGA', '2025-12-01 20:46:14', '2025-12-01 20:46:14');
 
 -- --------------------------------------------------------
 
@@ -466,6 +587,107 @@ CREATE TABLE `permisos` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `permisos`
+--
+
+INSERT INTO `permisos` (`id`, `role_id`, `modulo_id`, `created_at`, `updated_at`) VALUES
+(1, 2, 1, '2025-12-01 21:20:53', '2025-12-01 21:20:53'),
+(2, 2, 2, '2025-12-01 21:21:11', '2025-12-01 21:21:11'),
+(3, 2, 3, '2025-12-01 21:21:12', '2025-12-01 21:21:12'),
+(4, 2, 4, '2025-12-01 21:21:13', '2025-12-01 21:21:13'),
+(5, 2, 5, '2025-12-01 21:21:15', '2025-12-01 21:21:15'),
+(6, 2, 6, '2025-12-01 21:21:15', '2025-12-01 21:21:15'),
+(7, 2, 7, '2025-12-01 21:21:16', '2025-12-01 21:21:16'),
+(8, 2, 8, '2025-12-01 21:21:16', '2025-12-01 21:21:16'),
+(9, 2, 9, '2025-12-01 21:21:17', '2025-12-01 21:21:17'),
+(10, 2, 10, '2025-12-01 21:21:18', '2025-12-01 21:21:18'),
+(11, 2, 11, '2025-12-01 21:21:19', '2025-12-01 21:21:19'),
+(12, 2, 12, '2025-12-01 21:21:19', '2025-12-01 21:21:19'),
+(13, 2, 13, '2025-12-01 21:21:20', '2025-12-01 21:21:20'),
+(14, 2, 14, '2025-12-01 21:21:20', '2025-12-01 21:21:20'),
+(15, 2, 15, '2025-12-01 21:21:21', '2025-12-01 21:21:21'),
+(16, 2, 16, '2025-12-01 21:21:22', '2025-12-01 21:21:22'),
+(17, 2, 17, '2025-12-01 21:21:22', '2025-12-01 21:21:22'),
+(18, 2, 18, '2025-12-01 21:21:22', '2025-12-01 21:21:22'),
+(19, 2, 19, '2025-12-01 21:21:24', '2025-12-01 21:21:24'),
+(21, 2, 20, '2025-12-01 21:21:25', '2025-12-01 21:21:25'),
+(22, 2, 21, '2025-12-01 21:21:26', '2025-12-01 21:21:26'),
+(23, 2, 22, '2025-12-01 21:21:27', '2025-12-01 21:21:27'),
+(24, 2, 23, '2025-12-01 21:21:28', '2025-12-01 21:21:28'),
+(25, 2, 24, '2025-12-01 21:21:29', '2025-12-01 21:21:29'),
+(26, 2, 25, '2025-12-01 21:21:29', '2025-12-01 21:21:29'),
+(27, 2, 26, '2025-12-01 21:21:30', '2025-12-01 21:21:30'),
+(28, 2, 27, '2025-12-01 21:21:30', '2025-12-01 21:21:30'),
+(29, 2, 28, '2025-12-01 21:21:31', '2025-12-01 21:21:31'),
+(30, 2, 29, '2025-12-01 21:21:31', '2025-12-01 21:21:31'),
+(31, 2, 30, '2025-12-01 21:21:32', '2025-12-01 21:21:32'),
+(32, 2, 31, '2025-12-01 21:21:32', '2025-12-01 21:21:32'),
+(33, 2, 32, '2025-12-01 21:21:33', '2025-12-01 21:21:33'),
+(34, 2, 33, '2025-12-01 21:21:33', '2025-12-01 21:21:33'),
+(35, 2, 34, '2025-12-01 21:21:34', '2025-12-01 21:21:34'),
+(36, 2, 35, '2025-12-01 21:21:35', '2025-12-01 21:21:35'),
+(37, 2, 36, '2025-12-01 21:21:35', '2025-12-01 21:21:35'),
+(38, 2, 37, '2025-12-01 21:21:36', '2025-12-01 21:21:36'),
+(39, 2, 38, '2025-12-01 21:21:37', '2025-12-01 21:21:37'),
+(40, 2, 39, '2025-12-01 21:21:50', '2025-12-01 21:21:50'),
+(41, 2, 40, '2025-12-01 21:21:50', '2025-12-01 21:21:50'),
+(42, 2, 41, '2025-12-01 21:21:51', '2025-12-01 21:21:51'),
+(43, 2, 42, '2025-12-01 21:21:52', '2025-12-01 21:21:52'),
+(44, 2, 43, '2025-12-01 21:21:52', '2025-12-01 21:21:52'),
+(45, 2, 44, '2025-12-01 21:21:53', '2025-12-01 21:21:53'),
+(46, 2, 45, '2025-12-01 21:21:53', '2025-12-01 21:21:53'),
+(47, 2, 46, '2025-12-01 21:21:54', '2025-12-01 21:21:54'),
+(48, 2, 47, '2025-12-01 21:21:55', '2025-12-01 21:21:55'),
+(49, 2, 48, '2025-12-01 21:21:55', '2025-12-01 21:21:55'),
+(50, 2, 49, '2025-12-01 21:21:56', '2025-12-01 21:21:56'),
+(51, 2, 50, '2025-12-01 21:21:56', '2025-12-01 21:21:56'),
+(52, 2, 51, '2025-12-01 21:21:57', '2025-12-01 21:21:57'),
+(53, 2, 52, '2025-12-01 21:21:57', '2025-12-01 21:21:57'),
+(54, 2, 53, '2025-12-01 21:21:58', '2025-12-01 21:21:58'),
+(55, 2, 54, '2025-12-01 21:21:58', '2025-12-01 21:21:58'),
+(56, 2, 55, '2025-12-01 21:21:59', '2025-12-01 21:21:59'),
+(57, 2, 56, '2025-12-01 21:21:59', '2025-12-01 21:21:59'),
+(58, 2, 58, '2025-12-01 21:22:00', '2025-12-01 21:22:00'),
+(59, 2, 57, '2025-12-01 21:22:02', '2025-12-01 21:22:02'),
+(60, 2, 59, '2025-12-01 21:22:02', '2025-12-01 21:22:02'),
+(61, 2, 60, '2025-12-01 21:22:03', '2025-12-01 21:22:03'),
+(62, 2, 61, '2025-12-01 21:22:03', '2025-12-01 21:22:03'),
+(63, 2, 62, '2025-12-01 21:22:04', '2025-12-01 21:22:04'),
+(64, 2, 63, '2025-12-01 21:22:05', '2025-12-01 21:22:05'),
+(65, 2, 64, '2025-12-01 21:22:05', '2025-12-01 21:22:05'),
+(66, 2, 65, '2025-12-01 21:22:06', '2025-12-01 21:22:06'),
+(67, 2, 66, '2025-12-01 21:22:06', '2025-12-01 21:22:06'),
+(68, 2, 67, '2025-12-01 21:22:08', '2025-12-01 21:22:08'),
+(69, 2, 68, '2025-12-01 21:22:08', '2025-12-01 21:22:08'),
+(70, 2, 69, '2025-12-01 21:22:08', '2025-12-01 21:22:08'),
+(71, 2, 70, '2025-12-01 21:22:09', '2025-12-01 21:22:09'),
+(72, 2, 71, '2025-12-01 21:22:10', '2025-12-01 21:22:10'),
+(73, 2, 72, '2025-12-01 21:22:10', '2025-12-01 21:22:10'),
+(74, 2, 73, '2025-12-01 21:22:11', '2025-12-01 21:22:11'),
+(75, 2, 74, '2025-12-01 21:22:11', '2025-12-01 21:22:11'),
+(76, 2, 75, '2025-12-01 21:22:12', '2025-12-01 21:22:12'),
+(77, 2, 76, '2025-12-01 21:22:13', '2025-12-01 21:22:13'),
+(78, 2, 77, '2025-12-01 21:22:13', '2025-12-01 21:22:13'),
+(79, 2, 78, '2025-12-01 21:22:13', '2025-12-01 21:22:13'),
+(80, 2, 79, '2025-12-01 21:22:15', '2025-12-01 21:22:15'),
+(81, 2, 80, '2025-12-01 21:22:15', '2025-12-01 21:22:15'),
+(82, 2, 81, '2025-12-01 21:22:15', '2025-12-01 21:22:15'),
+(83, 2, 82, '2025-12-01 21:22:16', '2025-12-01 21:22:16'),
+(84, 2, 83, '2025-12-01 21:22:17', '2025-12-01 21:22:17'),
+(85, 2, 84, '2025-12-01 21:22:17', '2025-12-01 21:22:17'),
+(86, 2, 85, '2025-12-01 21:22:17', '2025-12-01 21:22:17'),
+(87, 2, 86, '2025-12-01 21:22:18', '2025-12-01 21:22:18'),
+(88, 2, 87, '2025-12-01 21:22:19', '2025-12-01 21:22:19'),
+(89, 2, 88, '2025-12-01 21:22:19', '2025-12-01 21:22:19'),
+(90, 2, 89, '2025-12-01 21:22:20', '2025-12-01 21:22:20'),
+(91, 2, 90, '2025-12-01 21:22:21', '2025-12-01 21:22:21'),
+(92, 2, 91, '2025-12-01 21:22:22', '2025-12-01 21:22:22'),
+(93, 2, 92, '2025-12-01 21:22:22', '2025-12-01 21:22:22'),
+(94, 2, 93, '2025-12-01 21:22:23', '2025-12-01 21:22:23'),
+(95, 2, 94, '2025-12-01 21:22:23', '2025-12-01 21:22:23'),
+(96, 2, 95, '2025-12-01 21:22:24', '2025-12-01 21:22:24');
 
 -- --------------------------------------------------------
 
@@ -809,7 +1031,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `usuario`, `nombre`, `paterno`, `materno`, `ci`, `ci_exp`, `grupo_san`, `sexo`, `nacionalidad`, `profesion`, `cel`, `fono`, `cel_dom`, `dir`, `latitud`, `longitud`, `correo`, `foto`, `carnet`, `password`, `tipo`, `role_id`, `acceso`, `fecha_registro`, `estado`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin', 'admin', '', '0', '', '', '', '', '', '', '', '', '', '', '', '', NULL, NULL, '$2y$12$65d4fgZsvBV5Lc/AxNKh4eoUdbGyaczQ4sSco20feSQANshNLuxSC', 'ADMINISTRADOR', 1, 1, '2025-11-30', 1, NULL, '2025-11-30 16:37:59', '2025-11-30 16:37:59');
+(1, 'admin', 'admin', 'admin', '', '0', '', '', '', '', '', '', '', '', '', '', '', '', NULL, NULL, '$2y$12$65d4fgZsvBV5Lc/AxNKh4eoUdbGyaczQ4sSco20feSQANshNLuxSC', 'ADMINISTRADOR', 1, 1, '2025-11-30', 1, NULL, '2025-11-30 16:37:59', '2025-11-30 16:37:59'),
+(15, 'juan@gmail.com', 'JUAN', 'PERES', 'MAMANI', '123456', 'LP', 'ORH+', 'MASCULINO', 'BOLIVIANO', 'PROFESION', '777777', '22222', '78', 'LOS PEDREGALES', '111111111', '1000000000', 'juan@gmail.com', '1764597654_15.jpg', NULL, '$2y$12$x0H.S52203ur4Vgu7POWP.UhZ73..PjPRYyYwToPadVmyH29DbhLO', 'USUARIO', 2, 1, '2025-12-01', 1, NULL, '2025-11-30 21:13:08', '2025-12-01 14:06:53');
 
 --
 -- Índices para tablas volcadas
@@ -1108,7 +1331,7 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de la tabla `certificados`
 --
 ALTER TABLE `certificados`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `clientes`
@@ -1162,7 +1385,7 @@ ALTER TABLE `devolucion_stock_detalles`
 -- AUTO_INCREMENT de la tabla `documentos`
 --
 ALTER TABLE `documentos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `gastos`
@@ -1174,7 +1397,7 @@ ALTER TABLE `gastos`
 -- AUTO_INCREMENT de la tabla `historial_accions`
 --
 ALTER TABLE `historial_accions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `marcas`
@@ -1192,7 +1415,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT de la tabla `modulos`
 --
 ALTER TABLE `modulos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
 -- AUTO_INCREMENT de la tabla `orden_salidas`
@@ -1222,7 +1445,7 @@ ALTER TABLE `orden_venta_detalles`
 -- AUTO_INCREMENT de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
@@ -1312,7 +1535,7 @@ ALTER TABLE `unidad_medidas`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Restricciones para tablas volcadas
