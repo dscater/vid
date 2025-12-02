@@ -20,11 +20,12 @@ return new class extends Migration
             $table->unsignedBigInteger("categoria_id");
             $table->unsignedBigInteger("marca_id");
             $table->decimal("precio", 24, 2);
-            $table->decimal("precio_ppp", 24, 2);
+            $table->decimal("precio_ppp", 24, 2)->nullable();
             $table->integer("ppp")->default(0); // 0:INACTIVO | 1: ACTIVO
             $table->unsignedBigInteger("unidad_medida_id");
             $table->integer("estado")->default(1);
-            $table->string("imagen");
+            $table->string("imagen")->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign("categoria_id")->on("categorias")->references("id");

@@ -9,4 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class UnidadMedida extends Model
 {
     use HasFactory, SoftDeletes;
+
+    protected $fillable = ["nombre"];
 }

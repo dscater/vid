@@ -9,4 +9,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class SubCategoria extends Model
 {
     use HasFactory, SoftDeletes;
+    protected $fillable = ["categoria_id", "nombre"];
+
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class);
+    }
 }

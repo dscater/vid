@@ -1,12 +1,17 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ConfiguracionController;
 use App\Http\Controllers\InicioController;
+use App\Http\Controllers\MarcaController;
+use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SubCategoriaController;
 use App\Http\Controllers\SucursalController;
+use App\Http\Controllers\UnidadMedidaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
@@ -64,6 +69,46 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get("sucursals/paginado", [SucursalController::class, 'paginado'])->name("sucursals.paginado");
     Route::get("sucursals/listado", [SucursalController::class, 'listado'])->name("sucursals.listado");
     Route::resource("sucursals", SucursalController::class)->only(
+        ["index", "store", "edit", "show", "update", "destroy"]
+    );
+
+    // CATEGORIAS
+    Route::get("categorias/api", [CategoriaController::class, 'api'])->name("categorias.api");
+    Route::get("categorias/paginado", [CategoriaController::class, 'paginado'])->name("categorias.paginado");
+    Route::get("categorias/listado", [CategoriaController::class, 'listado'])->name("categorias.listado");
+    Route::resource("categorias", CategoriaController::class)->only(
+        ["index", "store", "edit", "show", "update", "destroy"]
+    );
+
+    // SUBCATEGORIAS
+    Route::get("sub_categorias/api", [SubCategoriaController::class, 'api'])->name("sub_categorias.api");
+    Route::get("sub_categorias/paginado", [SubCategoriaController::class, 'paginado'])->name("sub_categorias.paginado");
+    Route::get("sub_categorias/listado", [SubCategoriaController::class, 'listado'])->name("sub_categorias.listado");
+    Route::resource("sub_categorias", SubCategoriaController::class)->only(
+        ["index", "store", "edit", "show", "update", "destroy"]
+    );
+
+    // MARCAS
+    Route::get("marcas/api", [MarcaController::class, 'api'])->name("marcas.api");
+    Route::get("marcas/paginado", [MarcaController::class, 'paginado'])->name("marcas.paginado");
+    Route::get("marcas/listado", [MarcaController::class, 'listado'])->name("marcas.listado");
+    Route::resource("marcas", MarcaController::class)->only(
+        ["index", "store", "edit", "show", "update", "destroy"]
+    );
+
+    // UNIDADES DE MEDIDA
+    Route::get("unidad_medidas/api", [UnidadMedidaController::class, 'api'])->name("unidad_medidas.api");
+    Route::get("unidad_medidas/paginado", [UnidadMedidaController::class, 'paginado'])->name("unidad_medidas.paginado");
+    Route::get("unidad_medidas/listado", [UnidadMedidaController::class, 'listado'])->name("unidad_medidas.listado");
+    Route::resource("unidad_medidas", UnidadMedidaController::class)->only(
+        ["index", "store", "edit", "show", "update", "destroy"]
+    );
+
+    // PRODUCTOS
+    Route::get("productos/api", [ProductoController::class, 'api'])->name("productos.api");
+    Route::get("productos/paginado", [ProductoController::class, 'paginado'])->name("productos.paginado");
+    Route::get("productos/listado", [ProductoController::class, 'listado'])->name("productos.listado");
+    Route::resource("productos", ProductoController::class)->only(
         ["index", "store", "edit", "show", "update", "destroy"]
     );
 
