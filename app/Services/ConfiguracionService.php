@@ -28,15 +28,13 @@ class ConfiguracionService
         $configuracion = Configuracion::first();
         if (!$configuracion) {
             $configuracion = Configuracion::create([
-                "nombre_sistema" => $datos["nombre_sistema"],
-                "alias" => $datos["alias"],
-                "envio_email" => $datos["envio_email"],
+                "nombre_sistema" => mb_strtoupper($datos["nombre_sistema"]),
+                "alias" => mb_strtoupper($datos["alias"]),
             ]);
         } else {
             $configuracion->update([
-                "nombre_sistema" => $datos["nombre_sistema"],
-                "alias" => $datos["alias"],
-                "envio_email" => $datos["envio_email"],
+                "nombre_sistema" => mb_strtoupper($datos["nombre_sistema"]),
+                "alias" => mb_strtoupper($datos["alias"]),
             ]);
         }
 
@@ -54,7 +52,7 @@ class ConfiguracionService
     public function cargarLogo(Configuracion $configuracion, UploadedFile $logo): void
     {
         if ($configuracion->logo) {
-            \File::delete(public_path("imgs/" . $this->configuracion->logo));
+            \File::delete(public_path("imgs/" . $configuracion->logo));
         }
         $nombre = $configuracion->id . time();
         $configuracion->logo = $this->cargarArchivoService->cargarArchivo($logo, public_path("imgs"), $nombre);

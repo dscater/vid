@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ConfiguracionRequest extends FormRequest
+class SucursalStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,25 +22,23 @@ class ConfiguracionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "nombre_sistema" => "required",
-            "alias" => "required",
-            "logo" => "required",
+            "nombre" => "required",
+            "direccion" => "required",
+            "fono" => "required",
+            "correo" => "nullable|email",
+            "user_id" => "required",
+            "estado" => "boolean|in:0,1",
         ];
     }
 
-    /**
-     * Mensajes validacion
-     *
-     * @return array
-     */
     public function messages(): array
     {
         return [
-            "nombre_sistema.required" => "Debes completar este campo",
-            "alias.required" => "Debes completar este campo",
-            "logo.required" => "Debes completar este campo",
+            "nombre.required" => "Debes completar este campo",
+            "direccion.required" => "Debes completar este campo",
             "fono.required" => "Debes completar este campo",
-            "dir.required" => "Debes completar este campo",
+            "correo.required" => "Debes completar este campo",
+            "user_id.required" => "Debes completar este campo",
         ];
     }
 }

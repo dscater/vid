@@ -13,24 +13,7 @@ class Configuracion extends Model
         "nombre_sistema",
         "alias",
         "logo",
-        "envio_email",
     ];
-
-    protected $casts = [
-        'envio_email' => 'array',
-    ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'envio_email' => "array",
-        ];
-    }
 
     protected $appends = ["url_logo", "logo_b64"];
 

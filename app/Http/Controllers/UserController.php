@@ -2,13 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Area;
-use App\Models\Inscripcion;
-use App\Models\Material;
-use App\Models\Postulante;
-use App\Models\Producto;
-use App\Models\Publicacion;
-use App\Models\Tarea;
+use App\Models\Cliente;
 use App\Models\User;
 use App\Services\PermisoService;
 use Illuminate\Support\Facades\Auth;
@@ -43,21 +37,43 @@ class UserController extends Controller
             if ($permisos == '*' || (is_array($permisos) && in_array('usuarios.index', $permisos))) {
                 $array_infos[] = [
                     'label' => 'USUARIOS',
-                    'cantidad' => User::where('id', '!=', 1)->where("tipo", "!=", "POSTULANTE")->where("status", 1)->count(),
-                    'color' => 'bg-principal',
+                    'cantidad' => User::where('id', '!=', 1)->count(),
+                    'color' => 'bg-secundario',
                     'icon' => "fa-users",
                     "url" => "usuarios.index"
                 ];
             }
 
-            if ($permisos == '*' || (is_array($permisos) && in_array('postulantes.index', $permisos))) {
-                $total = Inscripcion::where("status", 1)->count();
+            if ($permisos == '*' || (is_array($permisos) && in_array('clientes.index', $permisos))) {
+                $total = Cliente::count();
                 $array_infos[] = [
-                    'label' => 'POSTULANTES',
+                    'label' => 'CLIENTES',
                     'cantidad' => $total,
-                    'color' => 'bg-principal',
+                    'color' => 'bg-secundario',
                     'icon' => "fa-list",
-                    "url" => "postulantes.index"
+                    "url" => "clientes.index"
+                ];
+            }
+
+            if ($permisos == '*' || (is_array($permisos) && in_array('proveedors.index', $permisos))) {
+                $total = Cliente::count();
+                $array_infos[] = [
+                    'label' => 'PROVEEDORES',
+                    'cantidad' => $total,
+                    'color' => 'bg-secundario',
+                    'icon' => "fa-list",
+                    "url" => "proveedors.index"
+                ];
+            }
+
+            if ($permisos == '*' || (is_array($permisos) && in_array('productos.index', $permisos))) {
+                $total = Cliente::count();
+                $array_infos[] = [
+                    'label' => 'PRODUCTOS',
+                    'cantidad' => $total,
+                    'color' => 'bg-secundario',
+                    'icon' => "fa-list",
+                    "url" => "productos.index"
                 ];
             }
         }

@@ -28,21 +28,9 @@ class InicioController extends Controller
     public function inicio()
     {
         $array_infos = UserController::getInfoBoxUser();
-
-        if (Auth::user()->tipo == 'POSTULANTE') {
-            $listDescargaDocumentos = DescargaDocumento::all();
-            $listVideos = [
-                [
-                    "descripcion" => "Video 1",
-                    "url_video" => asset("videos/video1.mp4"),
-                    "ext" => "mp4"
-                ],
-            ];
-
-            return Inertia::render('Admin/Postulante/Inicio', compact("listDescargaDocumentos", "listVideos"));
-        }
-
-        return Inertia::render('Admin/Home', compact('array_infos'));
+        return response()->JSON([
+            "array_infos" => $array_infos,
+        ]);
     }
 
     public function evaluaciones()

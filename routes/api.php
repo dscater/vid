@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ConfiguracionController;
+use App\Http\Controllers\InicioController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +24,7 @@ Route::middleware(['auth:api'])->get('/perfil', function () {
 Route::get("/authCheck", [AuthController::class, 'authCheck']);
 
 Route::middleware(['auth:api'])->prefix("admin")->group(function () {
+    Route::get('inicio', [InicioController::class, 'inicio'])->name('inicio');
     // CONFIGURACION
     Route::resource("configuracions", ConfiguracionController::class)->only(
         ["show", "update"]
@@ -56,13 +59,13 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
         ["store", "show", "update", "destroy"]
     );
 
-    // TIPO DE HABITACIONES
-    // Route::get("tipo_habitacions/api", [TipoHabitacionController::class, 'api'])->name("tipo_habitacions.api");
-    // Route::get("tipo_habitacions/paginado", [TipoHabitacionController::class, 'paginado'])->name("tipo_habitacions.paginado");
-    // Route::get("tipo_habitacions/listado", [TipoHabitacionController::class, 'listado'])->name("tipo_habitacions.listado");
-    // Route::resource("tipo_habitacions", TipoHabitacionController::class)->only(
-    //     ["index", "store", "edit", "show", "update", "destroy"]
-    // );
+    // SUCURSALES
+    Route::get("sucursals/api", [SucursalController::class, 'api'])->name("sucursals.api");
+    Route::get("sucursals/paginado", [SucursalController::class, 'paginado'])->name("sucursals.paginado");
+    Route::get("sucursals/listado", [SucursalController::class, 'listado'])->name("sucursals.listado");
+    Route::resource("sucursals", SucursalController::class)->only(
+        ["index", "store", "edit", "show", "update", "destroy"]
+    );
 
     // REPORTES
     Route::get('reportes/r_usuarios', [ReporteController::class, 'r_usuarios'])->name("reportes.r_usuarios");

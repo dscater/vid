@@ -33,7 +33,6 @@ class RoleController extends Controller
      */
     public function listado(): JsonResponse
     {
-        Log::debug("ASDSD");
         return response()->JSON([
             "roles" => $this->roleService->listado()
         ]);

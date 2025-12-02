@@ -34,7 +34,10 @@ class ConfiguracionController extends Controller
         try {
             $this->configuracionService->actualizar($request->validated(), $configuracion);
             DB::commit();
-            return redirect()->route("configuracions.index")->with("success", "Registro correcto");
+            return response()->JSON([
+                "sw" => true,
+                "message" => "Proceso realizado con éxito"
+            ]);
         } catch (\Exception $e) {
             DB::rollBack();
             throw ValidationException::withMessages([
