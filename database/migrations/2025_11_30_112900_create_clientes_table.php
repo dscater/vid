@@ -26,10 +26,7 @@ return new class extends Migration
             $table->string("latitud");
             $table->string("longitud");
             $table->string("ciudad");
-            $table->string("nombre_con");
-            $table->string("fono_cor")->nullable();
-            $table->string("cel_con")->nullable();
-            $table->text("observaciones")->nullable();
+            $table->json("contactos")->nullable();
             $table->integer("estado")->default(1);
             $table->softDeletes();
             $table->timestamps();

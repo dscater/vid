@@ -24,8 +24,9 @@ return new class extends Migration
             $table->string("tipo");
             $table->integer("estado")->default(1);
             $table->text("observaciones");
-            $table->json("categorias");
-            $table->json("marcas");
+            $table->json("categorias")->nullable();
+            $table->json("marcas")->nullable();
+            $table->json("contactos")->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

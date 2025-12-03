@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 02-12-2025 a las 14:18:18
+-- Tiempo de generación: 03-12-2025 a las 16:17:26
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.2.22
 
@@ -86,15 +86,20 @@ CREATE TABLE `clientes` (
   `latitud` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `longitud` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `ciudad` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombre_con` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `fono_cor` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `cel_con` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `observaciones` text COLLATE utf8mb4_unicode_ci,
+  `contactos` json DEFAULT NULL,
   `estado` int NOT NULL DEFAULT '1',
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `clientes`
+--
+
+INSERT INTO `clientes` (`id`, `razon_social`, `tipo`, `nit`, `nombre_punto`, `nombre_prop`, `ci_prop`, `correo`, `cel`, `fono`, `dir`, `latitud`, `longitud`, `ciudad`, `contactos`, `estado`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 'CLIENTE 1 S.A.', 'EMPRESA', '111111111111', 'PUNTO VENTA C 1', 'JUAN PEREZ', '121212121', 'juanperez@gmail.com', '6767676767', '22222', 'LOS PEDREGALES', '111111111', '11111111111', 'LA PAZ', '[{\"cel\": \"7777777\", \"fono\": \"6767676767\", \"nombre\": \"JUAN GONZALES\", \"observacion\": \"OBS. CONTACTO 1\"}, {\"cel\": \"7866786\", \"fono\": \"667567567\", \"nombre\": \"JORGE RAMIRES\", \"observacion\": null}]', 1, NULL, '2025-12-03 15:46:45', '2025-12-03 15:51:27'),
+(2, 'CLIENTE 2', 'PERSONA', '1111111111111', 'CLIENTE 2 PV', 'MARIA MAMANI', '23123123', NULL, '657756', '222', 'LOS PEDREAGLES1', '111', '2222', 'EL ALTO', '[{\"cel\": \"6757567\", \"fono\": \"222222\", \"nombre\": \"CONTACTO 1\", \"observacion\": null}]', 1, NULL, '2025-12-03 15:52:12', '2025-12-03 15:52:38');
 
 -- --------------------------------------------------------
 
@@ -349,7 +354,17 @@ INSERT INTO `historial_accions` (`id`, `user_id`, `accion`, `descripcion`, `dato
 (45, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN PRODUCTO', '{\"id\": 3, \"ppp\": 0, \"codigo\": \"P001\", \"estado\": 0, \"imagen\": \"31764682791.png\", \"nombre\": \"PRODUCTO 1\", \"precio\": \"300.00\", \"marca_id\": 1, \"created_at\": \"2025-12-02T13:39:51.000000Z\", \"deleted_at\": null, \"precio_ppp\": null, \"updated_at\": \"2025-12-02T13:45:11.000000Z\", \"descripcion\": \"DESCRIPCION\", \"categoria_id\": 1, \"unidades_caja\": 20, \"unidad_medida_id\": 1}', '{\"id\": 3, \"ppp\": 0, \"codigo\": \"P001\", \"estado\": \"1\", \"imagen\": \"31764682791.png\", \"nombre\": \"PRODUCTO 1\", \"precio\": \"300.00\", \"marca_id\": \"1\", \"created_at\": \"2025-12-02T13:39:51.000000Z\", \"deleted_at\": null, \"precio_ppp\": null, \"updated_at\": \"2025-12-02T13:45:17.000000Z\", \"descripcion\": \"DESCRIPCION\", \"categoria_id\": \"1\", \"unidades_caja\": \"20\", \"unidad_medida_id\": \"1\"}', 'PRODUCTOS', '2025-12-02', '09:45:17', '2025-12-02 13:45:17', '2025-12-02 13:45:17'),
 (46, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN PRODUCTO', '{\"id\": 3, \"ppp\": 0, \"codigo\": \"P001\", \"estado\": 1, \"imagen\": \"31764682791.png\", \"nombre\": \"PRODUCTO 1\", \"precio\": \"300.00\", \"marca_id\": 1, \"created_at\": \"2025-12-02T13:39:51.000000Z\", \"deleted_at\": null, \"precio_ppp\": null, \"updated_at\": \"2025-12-02T13:45:17.000000Z\", \"descripcion\": \"DESCRIPCION\", \"categoria_id\": 1, \"unidades_caja\": 20, \"unidad_medida_id\": 1}', '{\"id\": 3, \"ppp\": 0, \"codigo\": \"P001\", \"estado\": \"0\", \"imagen\": \"31764682791.png\", \"nombre\": \"PRODUCTO 1\", \"precio\": \"300.00\", \"marca_id\": \"1\", \"created_at\": \"2025-12-02T13:39:51.000000Z\", \"deleted_at\": null, \"precio_ppp\": null, \"updated_at\": \"2025-12-02T13:46:02.000000Z\", \"descripcion\": \"DESCRIPCION\", \"categoria_id\": \"1\", \"unidades_caja\": \"20\", \"unidad_medida_id\": \"1\"}', 'PRODUCTOS', '2025-12-02', '09:46:02', '2025-12-02 13:46:02', '2025-12-02 13:46:02'),
 (47, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN PRODUCTO', '{\"id\": 3, \"ppp\": 0, \"codigo\": \"P001\", \"estado\": 0, \"imagen\": \"31764682791.png\", \"nombre\": \"PRODUCTO 1\", \"precio\": \"300.00\", \"marca_id\": 1, \"created_at\": \"2025-12-02T13:39:51.000000Z\", \"deleted_at\": null, \"precio_ppp\": null, \"updated_at\": \"2025-12-02T13:46:02.000000Z\", \"descripcion\": \"DESCRIPCION\", \"categoria_id\": 1, \"unidades_caja\": 20, \"unidad_medida_id\": 1}', '{\"id\": 3, \"ppp\": 0, \"codigo\": \"P001\", \"estado\": \"1\", \"imagen\": \"31764682791.png\", \"nombre\": \"PRODUCTO 1\", \"precio\": \"300.00\", \"marca_id\": \"1\", \"created_at\": \"2025-12-02T13:39:51.000000Z\", \"deleted_at\": null, \"precio_ppp\": null, \"updated_at\": \"2025-12-02T13:46:05.000000Z\", \"descripcion\": \"DESCRIPCION\", \"categoria_id\": \"1\", \"unidades_caja\": \"20\", \"unidad_medida_id\": \"1\"}', 'PRODUCTOS', '2025-12-02', '09:46:05', '2025-12-02 13:46:05', '2025-12-02 13:46:05'),
-(48, 1, 'ELIMINACIÓN', 'EL USUARIO admin ELIMINÓ UN PRODUCTO', '{\"id\": 3, \"ppp\": 0, \"codigo\": \"P001\", \"estado\": 1, \"imagen\": \"31764682791.png\", \"nombre\": \"PRODUCTO 1\", \"precio\": \"300.00\", \"marca_id\": 1, \"created_at\": \"2025-12-02T13:39:51.000000Z\", \"deleted_at\": null, \"precio_ppp\": null, \"updated_at\": \"2025-12-02T13:46:05.000000Z\", \"descripcion\": \"DESCRIPCION\", \"categoria_id\": 1, \"unidades_caja\": 20, \"unidad_medida_id\": 1}', NULL, 'PRODUCTOS', '2025-12-02', '09:46:07', '2025-12-02 13:46:07', '2025-12-02 13:46:07');
+(48, 1, 'ELIMINACIÓN', 'EL USUARIO admin ELIMINÓ UN PRODUCTO', '{\"id\": 3, \"ppp\": 0, \"codigo\": \"P001\", \"estado\": 1, \"imagen\": \"31764682791.png\", \"nombre\": \"PRODUCTO 1\", \"precio\": \"300.00\", \"marca_id\": 1, \"created_at\": \"2025-12-02T13:39:51.000000Z\", \"deleted_at\": null, \"precio_ppp\": null, \"updated_at\": \"2025-12-02T13:46:05.000000Z\", \"descripcion\": \"DESCRIPCION\", \"categoria_id\": 1, \"unidades_caja\": 20, \"unidad_medida_id\": 1}', NULL, 'PRODUCTOS', '2025-12-02', '09:46:07', '2025-12-02 13:46:07', '2025-12-02 13:46:07'),
+(49, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UN CLIENTE', '{\"id\": 1, \"cel\": \"6767676767\", \"dir\": \"LOS PEDREGALES\", \"nit\": \"111111111111\", \"fono\": \"22222\", \"tipo\": \"EMPRESA\", \"ciudad\": \"LA PAZ\", \"correo\": \"juanperez@gmail.com\", \"estado\": \"1\", \"ci_prop\": \"121212121\", \"latitud\": \"111111111\", \"longitud\": \"11111111111\", \"contactos\": [{\"cel\": \"7777777\", \"fono\": \"6767676767\", \"nombre\": \"JUAN PERES\", \"observacion\": \"OBS. 1\"}, {\"cel\": \"7866786\", \"fono\": \"667567567\", \"nombre\": \"JORGE RAMIRES\", \"observacion\": null}], \"created_at\": \"2025-12-03T15:46:45.000000Z\", \"updated_at\": \"2025-12-03T15:46:45.000000Z\", \"nombre_prop\": \"JUAN PEREZ\", \"nombre_punto\": \"PUNTO VENTA C 1\", \"razon_social\": \"CLIENTE 1 S.A.\"}', NULL, 'CLIENTES', '2025-12-03', '11:46:45', '2025-12-03 15:46:45', '2025-12-03 15:46:45'),
+(50, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN CLIENTE', '{\"id\": 1, \"cel\": \"6767676767\", \"dir\": \"LOS PEDREGALES\", \"nit\": \"111111111111\", \"fono\": \"22222\", \"tipo\": \"EMPRESA\", \"ciudad\": \"LA PAZ\", \"correo\": \"juanperez@gmail.com\", \"estado\": 1, \"ci_prop\": \"121212121\", \"latitud\": \"111111111\", \"longitud\": \"11111111111\", \"contactos\": [{\"cel\": \"7777777\", \"fono\": \"6767676767\", \"nombre\": \"JUAN PERES\", \"observacion\": \"OBS. 1\"}, {\"cel\": \"7866786\", \"fono\": \"667567567\", \"nombre\": \"JORGE RAMIRES\", \"observacion\": null}], \"created_at\": \"2025-12-03T15:46:45.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-03T15:46:45.000000Z\", \"nombre_prop\": \"JUAN PEREZ\", \"nombre_punto\": \"PUNTO VENTA C 1\", \"razon_social\": \"CLIENTE 1 S.A.\"}', '{\"id\": 1, \"cel\": \"6767676767\", \"dir\": \"LOS PEDREGALES\", \"nit\": \"111111111111\", \"fono\": \"22222\", \"tipo\": \"EMPRESA\", \"ciudad\": \"LA PAZ\", \"correo\": \"juanperez@gmail.com\", \"estado\": \"1\", \"ci_prop\": \"121212121\", \"latitud\": \"111111111\", \"longitud\": \"11111111111\", \"contactos\": [{\"cel\": \"7777777\", \"fono\": \"6767676767\", \"nombre\": \"JUAN GONZALES\", \"observacion\": \"OBS. CONTACTO 1\"}, {\"cel\": \"7866786\", \"fono\": \"667567567\", \"nombre\": \"JORGE RAMIRES\", \"observacion\": null}], \"created_at\": \"2025-12-03T15:46:45.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-03T15:50:13.000000Z\", \"nombre_prop\": \"JUAN PEREZ\", \"nombre_punto\": \"PUNTO VENTA C 1\", \"razon_social\": \"CLIENTE 1 S.A.\"}', 'CLIENTES', '2025-12-03', '11:50:13', '2025-12-03 15:50:13', '2025-12-03 15:50:13'),
+(51, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN CLIENTE', '{\"id\": 1, \"cel\": \"6767676767\", \"dir\": \"LOS PEDREGALES\", \"nit\": \"111111111111\", \"fono\": \"22222\", \"tipo\": \"EMPRESA\", \"ciudad\": \"LA PAZ\", \"correo\": \"juanperez@gmail.com\", \"estado\": 1, \"ci_prop\": \"121212121\", \"latitud\": \"111111111\", \"longitud\": \"11111111111\", \"contactos\": [{\"cel\": \"7777777\", \"fono\": \"6767676767\", \"nombre\": \"JUAN GONZALES\", \"observacion\": \"OBS. CONTACTO 1\"}, {\"cel\": \"7866786\", \"fono\": \"667567567\", \"nombre\": \"JORGE RAMIRES\", \"observacion\": null}], \"created_at\": \"2025-12-03T15:46:45.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-03T15:50:13.000000Z\", \"nombre_prop\": \"JUAN PEREZ\", \"nombre_punto\": \"PUNTO VENTA C 1\", \"razon_social\": \"CLIENTE 1 S.A.\"}', '{\"id\": 1, \"cel\": \"6767676767\", \"dir\": \"LOS PEDREGALES\", \"nit\": \"111111111111\", \"fono\": \"22222\", \"tipo\": \"EMPRESA\", \"ciudad\": \"LA PAZ\", \"correo\": \"juanperez@gmail.com\", \"estado\": \"0\", \"ci_prop\": \"121212121\", \"latitud\": \"111111111\", \"longitud\": \"11111111111\", \"contactos\": [{\"cel\": \"7777777\", \"fono\": \"6767676767\", \"nombre\": \"JUAN GONZALES\", \"observacion\": \"OBS. CONTACTO 1\"}, {\"cel\": \"7866786\", \"fono\": \"667567567\", \"nombre\": \"JORGE RAMIRES\", \"observacion\": null}], \"created_at\": \"2025-12-03T15:46:45.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-03T15:50:30.000000Z\", \"nombre_prop\": \"JUAN PEREZ\", \"nombre_punto\": \"PUNTO VENTA C 1\", \"razon_social\": \"CLIENTE 1 S.A.\"}', 'CLIENTES', '2025-12-03', '11:50:30', '2025-12-03 15:50:30', '2025-12-03 15:50:30'),
+(52, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN CLIENTE', '{\"id\": 1, \"cel\": \"6767676767\", \"dir\": \"LOS PEDREGALES\", \"nit\": \"111111111111\", \"fono\": \"22222\", \"tipo\": \"EMPRESA\", \"ciudad\": \"LA PAZ\", \"correo\": \"juanperez@gmail.com\", \"estado\": 0, \"ci_prop\": \"121212121\", \"latitud\": \"111111111\", \"longitud\": \"11111111111\", \"contactos\": [{\"cel\": \"7777777\", \"fono\": \"6767676767\", \"nombre\": \"JUAN GONZALES\", \"observacion\": \"OBS. CONTACTO 1\"}, {\"cel\": \"7866786\", \"fono\": \"667567567\", \"nombre\": \"JORGE RAMIRES\", \"observacion\": null}], \"created_at\": \"2025-12-03T15:46:45.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-03T15:50:30.000000Z\", \"nombre_prop\": \"JUAN PEREZ\", \"nombre_punto\": \"PUNTO VENTA C 1\", \"razon_social\": \"CLIENTE 1 S.A.\"}', '{\"id\": 1, \"cel\": \"6767676767\", \"dir\": \"LOS PEDREGALES\", \"nit\": \"111111111111\", \"fono\": \"22222\", \"tipo\": \"EMPRESA\", \"ciudad\": \"LA PAZ\", \"correo\": \"juanperez@gmail.com\", \"estado\": \"1\", \"ci_prop\": \"121212121\", \"latitud\": \"111111111\", \"longitud\": \"11111111111\", \"contactos\": [{\"cel\": \"7777777\", \"fono\": \"6767676767\", \"nombre\": \"JUAN GONZALES\", \"observacion\": \"OBS. CONTACTO 1\"}, {\"cel\": \"7866786\", \"fono\": \"667567567\", \"nombre\": \"JORGE RAMIRES\", \"observacion\": null}], \"created_at\": \"2025-12-03T15:46:45.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-03T15:51:27.000000Z\", \"nombre_prop\": \"JUAN PEREZ\", \"nombre_punto\": \"PUNTO VENTA C 1\", \"razon_social\": \"CLIENTE 1 S.A.\"}', 'CLIENTES', '2025-12-03', '11:51:27', '2025-12-03 15:51:27', '2025-12-03 15:51:27'),
+(53, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UN CLIENTE', '{\"id\": 2, \"cel\": \"657756\", \"dir\": \"LOS PEDREAGLES1\", \"nit\": \"1111111111111\", \"fono\": \"222\", \"tipo\": \"PERSONA\", \"ciudad\": \"EL ALTO\", \"correo\": null, \"estado\": \"1\", \"ci_prop\": \"23123123\", \"latitud\": \"111\", \"longitud\": \"2222\", \"contactos\": [{\"cel\": \"6757567\", \"fono\": \"222222\", \"nombre\": \"CONTACTO 1\", \"observacion\": null}], \"created_at\": \"2025-12-03T15:52:12.000000Z\", \"updated_at\": \"2025-12-03T15:52:12.000000Z\", \"nombre_prop\": \"MARIA MAMANI\", \"nombre_punto\": \"CLIENTE 2 PV\", \"razon_social\": \"CLIENTE 2\"}', NULL, 'CLIENTES', '2025-12-03', '11:52:12', '2025-12-03 15:52:12', '2025-12-03 15:52:12'),
+(54, 1, 'ELIMINACIÓN', 'EL USUARIO admin ELIMINÓ UN CLIENTE', '{\"id\": 2, \"cel\": \"657756\", \"dir\": \"LOS PEDREAGLES1\", \"nit\": \"1111111111111\", \"fono\": \"222\", \"tipo\": \"PERSONA\", \"ciudad\": \"EL ALTO\", \"correo\": null, \"estado\": 1, \"ci_prop\": \"23123123\", \"latitud\": \"111\", \"longitud\": \"2222\", \"contactos\": [{\"cel\": \"6757567\", \"fono\": \"222222\", \"nombre\": \"CONTACTO 1\", \"observacion\": null}], \"created_at\": \"2025-12-03T15:52:12.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-03T15:52:12.000000Z\", \"nombre_prop\": \"MARIA MAMANI\", \"nombre_punto\": \"CLIENTE 2 PV\", \"razon_social\": \"CLIENTE 2\"}', NULL, 'CLIENTES', '2025-12-03', '11:52:38', '2025-12-03 15:52:38', '2025-12-03 15:52:38'),
+(55, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UN PROVEEDOR', '{\"id\": 1, \"dir\": \"LOS OLIVOS #22\", \"nit\": \"11111111\", \"tipo\": \"PRODUCTOS\", \"ciudad\": \"LA PAZ\", \"correo\": \"proveedor1@gmail.com\", \"estado\": 1, \"marcas\": [1], \"moneda\": \"bolivianos\", \"fono_emp\": \"222222\", \"contactos\": [{\"cel\": \"67676767\", \"fono\": \"74454545\", \"nombre\": \"EDUARDO PEREZ\", \"observacion\": null}], \"categorias\": [1, 2], \"created_at\": \"2025-12-03T16:11:34.000000Z\", \"nombre_com\": \"PROVEEDOR S.A.\", \"updated_at\": \"2025-12-03T16:11:34.000000Z\", \"razon_social\": \"PROVEEDOR 1 S.A.\", \"observaciones\": \"OBSERVACIONES\"}', NULL, 'PROVEEDORES', '2025-12-03', '12:11:34', '2025-12-03 16:11:34', '2025-12-03 16:11:34'),
+(56, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN PROVEEDOR', '{\"id\": 1, \"dir\": \"LOS OLIVOS #22\", \"nit\": \"11111111\", \"tipo\": \"PRODUCTOS\", \"ciudad\": \"LA PAZ\", \"correo\": \"proveedor1@gmail.com\", \"estado\": 1, \"marcas\": [1], \"moneda\": \"bolivianos\", \"fono_emp\": \"222222\", \"contactos\": [{\"cel\": \"67676767\", \"fono\": \"74454545\", \"nombre\": \"EDUARDO PEREZ\", \"observacion\": null}], \"categorias\": [1, 2], \"created_at\": \"2025-12-03T16:11:34.000000Z\", \"deleted_at\": null, \"nombre_com\": \"PROVEEDOR S.A.\", \"updated_at\": \"2025-12-03T16:11:34.000000Z\", \"razon_social\": \"PROVEEDOR 1 S.A.\", \"observaciones\": \"OBSERVACIONES\"}', '{\"id\": 1, \"dir\": \"LOS OLIVOS #22\", \"nit\": \"11111111\", \"tipo\": \"PRODUCTOS\", \"ciudad\": \"LA PAZ\", \"correo\": \"proveedor1@gmail.com\", \"estado\": 1, \"marcas\": [1], \"moneda\": \"bolivianos\", \"fono_emp\": \"222222\", \"contactos\": [{\"cel\": \"67676767\", \"fono\": \"74454545\", \"nombre\": \"EDUARDO PEREZ\", \"observacion\": null}], \"categorias\": [1, 2], \"created_at\": \"2025-12-03T16:11:34.000000Z\", \"deleted_at\": null, \"nombre_com\": \"\", \"updated_at\": \"2025-12-03T16:15:58.000000Z\", \"razon_social\": \"PROVEEDOR 1 S.A.\", \"observaciones\": \"OBSERVACIONES\"}', 'PROVEEDORES', '2025-12-03', '12:15:58', '2025-12-03 16:15:58', '2025-12-03 16:15:58'),
+(57, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN PROVEEDOR', '{\"id\": 1, \"dir\": \"LOS OLIVOS #22\", \"nit\": \"11111111\", \"tipo\": \"PRODUCTOS\", \"ciudad\": \"LA PAZ\", \"correo\": \"proveedor1@gmail.com\", \"estado\": 1, \"marcas\": [1], \"moneda\": \"bolivianos\", \"fono_emp\": \"222222\", \"contactos\": [{\"cel\": \"67676767\", \"fono\": \"74454545\", \"nombre\": \"EDUARDO PEREZ\", \"observacion\": null}], \"categorias\": [1, 2], \"created_at\": \"2025-12-03T16:11:34.000000Z\", \"deleted_at\": null, \"nombre_com\": \"\", \"updated_at\": \"2025-12-03T16:15:58.000000Z\", \"razon_social\": \"PROVEEDOR 1 S.A.\", \"observaciones\": \"OBSERVACIONES\"}', '{\"id\": 1, \"dir\": \"LOS OLIVOS #22\", \"nit\": \"11111111\", \"tipo\": \"PRODUCTOS\", \"ciudad\": \"LA PAZ\", \"correo\": \"proveedor1@gmail.com\", \"estado\": 1, \"marcas\": [1], \"moneda\": \"bolivianos\", \"fono_emp\": \"222222\", \"contactos\": [{\"cel\": \"67676767\", \"fono\": \"74454545\", \"nombre\": \"EDUARDO PEREZ\", \"observacion\": null}], \"categorias\": [1, 2], \"created_at\": \"2025-12-03T16:11:34.000000Z\", \"deleted_at\": null, \"nombre_com\": \"PROVEEDOR S.A.\", \"updated_at\": \"2025-12-03T16:16:02.000000Z\", \"razon_social\": \"PROVEEDOR 1 S.A.\", \"observaciones\": \"OBSERVACIONES\"}', 'PROVEEDORES', '2025-12-03', '12:16:02', '2025-12-03 16:16:02', '2025-12-03 16:16:02'),
+(58, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UN PROVEEDOR', '{\"id\": 2, \"dir\": \"LOS OLIVOS #23\", \"nit\": \"121231\", \"tipo\": \"MIXTO\", \"ciudad\": \"EL ALTO\", \"correo\": \"prove2@gmail.com\", \"estado\": 1, \"marcas\": [2], \"moneda\": \"boliviano\", \"fono_emp\": \"234234234\", \"contactos\": [{\"cel\": \"7878787878\", \"fono\": \"MAMANI\", \"nombre\": \"JUAN\", \"observacion\": null}], \"categorias\": [2], \"created_at\": \"2025-12-03T16:16:35.000000Z\", \"nombre_com\": \"\", \"updated_at\": \"2025-12-03T16:16:35.000000Z\", \"razon_social\": \"PROVEEDOR 2 S.R.L\", \"observaciones\": \"\"}', NULL, 'PROVEEDORES', '2025-12-03', '12:16:35', '2025-12-03 16:16:35', '2025-12-03 16:16:35');
 
 -- --------------------------------------------------------
 
@@ -423,8 +438,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (31, '2025_11_30_113114_create_gastos_table', 1),
 (32, '2025_11_30_113119_create_proformas_table', 1),
 (33, '2025_11_30_113122_create_proforma_detalles_table', 1),
-(34, '2025_11_30_113745_create_sucursal_productos_table', 1),
-(35, '2025_11_30_115337_create_proveedor_contactos_table', 1);
+(34, '2025_11_30_113745_create_sucursal_productos_table', 1);
 
 -- --------------------------------------------------------
 
@@ -844,29 +858,21 @@ CREATE TABLE `proveedors` (
   `tipo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `estado` int NOT NULL DEFAULT '1',
   `observaciones` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `categorias` json NOT NULL,
-  `marcas` json NOT NULL,
+  `categorias` json DEFAULT NULL,
+  `marcas` json DEFAULT NULL,
+  `contactos` json DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- --------------------------------------------------------
-
 --
--- Estructura de tabla para la tabla `proveedor_contactos`
+-- Volcado de datos para la tabla `proveedors`
 --
 
-CREATE TABLE `proveedor_contactos` (
-  `id` bigint UNSIGNED NOT NULL,
-  `proveedor_id` bigint UNSIGNED NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `numero_corp` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cel` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+INSERT INTO `proveedors` (`id`, `razon_social`, `nombre_com`, `nit`, `moneda`, `fono_emp`, `correo`, `dir`, `ciudad`, `tipo`, `estado`, `observaciones`, `categorias`, `marcas`, `contactos`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 'PROVEEDOR 1 S.A.', 'PROVEEDOR S.A.', '11111111', 'bolivianos', '222222', 'proveedor1@gmail.com', 'LOS OLIVOS #22', 'LA PAZ', 'PRODUCTOS', 1, 'OBSERVACIONES', '[1, 2]', '[1]', '[{\"cel\": \"67676767\", \"fono\": \"74454545\", \"nombre\": \"EDUARDO PEREZ\", \"observacion\": null}]', NULL, '2025-12-03 16:11:34', '2025-12-03 16:16:02'),
+(2, 'PROVEEDOR 2 S.R.L', '', '121231', 'boliviano', '234234234', 'prove2@gmail.com', 'LOS OLIVOS #23', 'EL ALTO', 'MIXTO', 1, '', '[2]', '[2]', '[{\"cel\": \"7878787878\", \"fono\": \"MAMANI\", \"nombre\": \"JUAN\", \"observacion\": null}]', NULL, '2025-12-03 16:16:35', '2025-12-03 16:16:35');
 
 -- --------------------------------------------------------
 
@@ -1326,13 +1332,6 @@ ALTER TABLE `proveedors`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `proveedor_contactos`
---
-ALTER TABLE `proveedor_contactos`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `proveedor_contactos_proveedor_id_foreign` (`proveedor_id`);
-
---
 -- Indices de la tabla `roles`
 --
 ALTER TABLE `roles`
@@ -1430,7 +1429,7 @@ ALTER TABLE `certificados`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `configuracions`
@@ -1490,7 +1489,7 @@ ALTER TABLE `gastos`
 -- AUTO_INCREMENT de la tabla `historial_accions`
 --
 ALTER TABLE `historial_accions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT de la tabla `marcas`
@@ -1502,7 +1501,7 @@ ALTER TABLE `marcas`
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de la tabla `modulos`
@@ -1562,13 +1561,7 @@ ALTER TABLE `proforma_detalles`
 -- AUTO_INCREMENT de la tabla `proveedors`
 --
 ALTER TABLE `proveedors`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `proveedor_contactos`
---
-ALTER TABLE `proveedor_contactos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -1757,12 +1750,6 @@ ALTER TABLE `proforma_detalles`
   ADD CONSTRAINT `proforma_detalles_producto_id_foreign` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`),
   ADD CONSTRAINT `proforma_detalles_proforma_id_foreign` FOREIGN KEY (`proforma_id`) REFERENCES `proformas` (`id`),
   ADD CONSTRAINT `proforma_detalles_unidad_medida_id_foreign` FOREIGN KEY (`unidad_medida_id`) REFERENCES `unidad_medidas` (`id`);
-
---
--- Filtros para la tabla `proveedor_contactos`
---
-ALTER TABLE `proveedor_contactos`
-  ADD CONSTRAINT `proveedor_contactos_proveedor_id_foreign` FOREIGN KEY (`proveedor_id`) REFERENCES `proveedors` (`id`);
 
 --
 -- Filtros para la tabla `solicitud_ingresos`

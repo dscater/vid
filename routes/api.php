@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ConfiguracionController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SubCategoriaController;
@@ -109,6 +111,22 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get("productos/paginado", [ProductoController::class, 'paginado'])->name("productos.paginado");
     Route::get("productos/listado", [ProductoController::class, 'listado'])->name("productos.listado");
     Route::resource("productos", ProductoController::class)->only(
+        ["index", "store", "edit", "show", "update", "destroy"]
+    );
+
+    // CLIENTES
+    Route::get("clientes/api", [ClienteController::class, 'api'])->name("clientes.api");
+    Route::get("clientes/paginado", [ClienteController::class, 'paginado'])->name("clientes.paginado");
+    Route::get("clientes/listado", [ClienteController::class, 'listado'])->name("clientes.listado");
+    Route::resource("clientes", ClienteController::class)->only(
+        ["index", "store", "edit", "show", "update", "destroy"]
+    );
+
+    // PROVEEDORES
+    Route::get("proveedors/api", [ProveedorController::class, 'api'])->name("proveedors.api");
+    Route::get("proveedors/paginado", [ProveedorController::class, 'paginado'])->name("proveedors.paginado");
+    Route::get("proveedors/listado", [ProveedorController::class, 'listado'])->name("proveedors.listado");
+    Route::resource("proveedors", ProveedorController::class)->only(
         ["index", "store", "edit", "show", "update", "destroy"]
     );
 
