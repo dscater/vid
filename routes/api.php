@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SolicitudIngresoController;
 use App\Http\Controllers\SubCategoriaController;
 use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\UnidadMedidaController;
@@ -107,6 +108,7 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     );
 
     // PRODUCTOS
+    Route::get("productos/byCodigo", [ProductoController::class, 'byCodigo'])->name("productos.byCodigo");
     Route::get("productos/api", [ProductoController::class, 'api'])->name("productos.api");
     Route::get("productos/paginado", [ProductoController::class, 'paginado'])->name("productos.paginado");
     Route::get("productos/listado", [ProductoController::class, 'listado'])->name("productos.listado");
@@ -127,6 +129,14 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get("proveedors/paginado", [ProveedorController::class, 'paginado'])->name("proveedors.paginado");
     Route::get("proveedors/listado", [ProveedorController::class, 'listado'])->name("proveedors.listado");
     Route::resource("proveedors", ProveedorController::class)->only(
+        ["index", "store", "edit", "show", "update", "destroy"]
+    );
+
+    // SOLICITUD DE INGRESOS
+    Route::get("solicitud_ingresos/api", [SolicitudIngresoController::class, 'api'])->name("solicitud_ingresos.api");
+    Route::get("solicitud_ingresos/paginado", [SolicitudIngresoController::class, 'paginado'])->name("solicitud_ingresos.paginado");
+    Route::get("solicitud_ingresos/listado", [SolicitudIngresoController::class, 'listado'])->name("solicitud_ingresos.listado");
+    Route::resource("solicitud_ingresos", SolicitudIngresoController::class)->only(
         ["index", "store", "edit", "show", "update", "destroy"]
     );
 

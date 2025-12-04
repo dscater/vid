@@ -15,7 +15,6 @@ class RoleService
 {
 
     private $modulo = "ROLES";
-    private $no_delete_role = [1]; // super administrador|cliente
 
     public function __construct(private HistorialAccionService $historialAccionService) {}
 
@@ -118,26 +117,10 @@ class RoleService
      */
     public function eliminar(Role $role): bool|Exception
     {
-        // verificar usos
-        $usos = User::where("role_id", $role->id)->get();
-        if (count($usos) > 0) {
-            throw ValidationException::withMessages([
-                'error' =>  "No es posible eliminar este registro porque esta siendo utilizado por otros registros",
-            ]);
-        }
-
-        // no eliminar roles predeterminados para el funcionamiento del sistema
-        if (!in_array($role->id, $this->no_delete_role)) {
-            $old_role = Role::find($role->id);
-            $role->o_permisos()->delete();
-            $role->delete();
-
-            // registrar accion
-            $this->historialAccionService->registrarAccion($this->modulo, "ELIMINACIÓN", "ELIMINÓ UN ROLE", $old_role);
-
-            return true;
-        }
-
-        throw new Exception("No es posible eliminar este role");
+        $old_role = clone $role;
+        $role->delete();
+        // registrar accion
+        $this->historialAccionService->registrarAccion($this->modulo, "ELIMINACIÓN", "ELIMINÓ UN ROLE", $old_role);
+        return true;
     }
 }

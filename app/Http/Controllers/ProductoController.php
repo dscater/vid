@@ -36,6 +36,15 @@ class ProductoController extends Controller
             "productos" => $this->productoService->listado()
         ]);
     }
+    public function byCodigo(Request $request): JsonResponse
+    {
+        $codigo = $request->input("codigo", "");
+
+        $producto = Producto::where("codigo", $codigo)->get()->first();
+        return response()->JSON($producto);
+    }
+
+
 
     public function paginado(Request $request)
     {
@@ -111,7 +120,7 @@ class ProductoController extends Controller
      */
     public function show(Producto $producto): JsonResponse
     {
-        return response()->JSON($producto);
+        return response()->JSON($producto->load(["producto:id,nombre,precio"]));
     }
     public function actualizaPermiso(Producto $producto, Request $request)
     {
