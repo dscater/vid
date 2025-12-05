@@ -2,20 +2,26 @@
 
 namespace App\Services;
 
+use App\Models\Producto;
 use App\Services\HistorialAccionService;
 use App\Models\SolicitudIngreso;
 use App\Models\SolicitudIngresoDetalle;
+use App\Models\Sucursal;
 use App\Models\User;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class SolicitudIngresoService
 {
     private $modulo = "SOLICITUD DE INGRESO";
-    public function __construct(private HistorialAccionService $historialAccionService) {}
+    public function __construct(
+        private HistorialAccionService $historialAccionService,
+        private KardexProductoService $kardex_producto_service
+    ) {}
 
     public function listado(): Collection
     {
@@ -180,6 +186,41 @@ class SolicitudIngresoService
 
         // registrar accion
         $this->historialAccionService->registrarAccion($this->modulo, "MODIFICACIÓN", "ACTUALIZÓ UNA SOLICITUD DE INGRESO", $old_solicitud_ingreso, $solicitud_ingreso, ["solicitud_ingreso_detalles"]);
+
+        return $solicitud_ingreso;
+    }
+
+
+    public function aprobar(array $datos, SolicitudIngreso $solicitud_ingreso): SolicitudIngreso
+    {
+        $old_solicitud_ingreso = clone $solicitud_ingreso;
+        $old_solicitud_ingreso->loadMissing(["solicitud_ingreso_detalles"]);
+        $txtAprobado = $datos["verificado"] == 1 ? 'APROBADO' : 'APROBADO CON OBSERVACIONES';
+        $solicitud_ingreso->update([
+            "verificado" => $datos["verificado"],
+            "estado" => $txtAprobado,
+        ]);
+
+        $almacen = Sucursal::where("almacen", 1)->get()->first();
+        if (!$almacen) {
+            throw new Exception("Error al actualizar el registro, no se encontró un Almacen");
+        }
+
+        foreach ($datos["solicitud_ingreso_detalles"] as $item) {
+            $solicitud_ingreso_detalle = SolicitudIngresoDetalle::findOrFail($item["id"]);
+            $solicitud_ingreso_detalle->update([
+                "verificado" => $item["verificado"],
+                "sucursal_ajuste" => $item["cantidad"] == $item["cantidad_fisica"] ? $item["sucursal_ajuste"] : null,
+                "motivo" => $item["cantidad"] == $item["cantidad_fisica"] ? $item["motivo"] : null,
+            ]);
+
+            // AUMENTAR STOCK ALMACEN
+            $producto = Producto::findOrFail($item["producto_id"]);
+            $this->kardex_producto_service->registroIngreso($almacen->id, "SOLICITUD INGRESO", $producto, $item["cantidad_fisica"], $producto->precio, "INGRESO POR SOLICITUD", "SolicitudIngresoDetalle", $solicitud_ingreso_detalle->id);
+        }
+
+        // registrar accion
+        $this->historialAccionService->registrarAccion($this->modulo, "MODIFICACIÓN", "APROBO UNA SOLICITUD DE INGRESO", $old_solicitud_ingreso, $solicitud_ingreso, ["solicitud_ingreso_detalles"]);
 
         return $solicitud_ingreso;
     }

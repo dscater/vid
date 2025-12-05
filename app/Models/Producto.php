@@ -47,4 +47,9 @@ class Producto extends Model
     {
         return $this->belongsTo(UnidadMedida::class);
     }
+
+    public function sucursal_productos()
+    {
+        return $this->hasMany(SucursalProducto::class, 'producto_id');
+    }
 }

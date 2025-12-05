@@ -14,6 +14,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SolicitudIngresoController;
 use App\Http\Controllers\SubCategoriaController;
 use App\Http\Controllers\SucursalController;
+use App\Http\Controllers\SucursalProductoController;
 use App\Http\Controllers\UnidadMedidaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UsuarioController;
@@ -71,9 +72,17 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get("sucursals/api", [SucursalController::class, 'api'])->name("sucursals.api");
     Route::get("sucursals/paginado", [SucursalController::class, 'paginado'])->name("sucursals.paginado");
     Route::get("sucursals/listado", [SucursalController::class, 'listado'])->name("sucursals.listado");
+    Route::get("sucursals/listadoSP", [SucursalController::class, 'listadoSP'])->name("sucursals.listadoSP");
     Route::resource("sucursals", SucursalController::class)->only(
         ["index", "store", "edit", "show", "update", "destroy"]
     );
+
+    // SUCURSAL PRODUCTOS
+    Route::get("sucursal_productos/getSucursalProducto", [SucursalProductoController::class, 'getSucursalProducto'])->name("sucursal_productos.getSucursalProducto");
+    Route::get("sucursal_productos/getSucursalProductos", [SucursalProductoController::class, 'getSucursalProductos'])->name("sucursal_productos.getSucursalProductos");
+    Route::get("sucursal_productos/paginado", [SucursalProductoController::class, 'paginado'])->name("sucursal_productos.paginado");
+    Route::get("sucursal_productos/listado", [SucursalProductoController::class, 'listado'])->name("sucursal_productos.listado");
+    Route::put("sucursal_productos/{sucursal_producto}", [SucursalProductoController::class, 'update'])->name("sucursal_productos.update");
 
     // CATEGORIAS
     Route::get("categorias/api", [CategoriaController::class, 'api'])->name("categorias.api");
@@ -136,6 +145,7 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get("solicitud_ingresos/api", [SolicitudIngresoController::class, 'api'])->name("solicitud_ingresos.api");
     Route::get("solicitud_ingresos/paginado", [SolicitudIngresoController::class, 'paginado'])->name("solicitud_ingresos.paginado");
     Route::get("solicitud_ingresos/listado", [SolicitudIngresoController::class, 'listado'])->name("solicitud_ingresos.listado");
+    Route::put("solicitud_ingresos/aprobar/{solicitud_ingreso}", [SolicitudIngresoController::class, 'aprobar'])->name("solicitud_ingresos.aprobar");
     Route::resource("solicitud_ingresos", SolicitudIngresoController::class)->only(
         ["index", "store", "edit", "show", "update", "destroy"]
     );

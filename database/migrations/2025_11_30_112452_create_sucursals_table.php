@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string("direccion", 800);
             $table->string("fono");
             $table->string("correo")->nullable();
-            $table->unsignedBigInteger("user_id");
+            $table->unsignedBigInteger("user_id")->nullable();
+            $table->integer("almacen")->default(0);
             $table->integer("estado")->default(1);
             $table->softDeletes();
             $table->timestamps();

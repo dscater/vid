@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger("sucursal_id");
             $table->unsignedBigInteger("producto_id");
-            $table->double("cantidad_ideal", 8, 2);
-            $table->double("cantidad_minima", 8, 2);
-            $table->double("cantidad_m", 8, 2);
+            $table->double("cantidad_ideal", 8, 2)->default(0);
+            $table->double("cantidad_minima", 8, 2)->default(0);
+            $table->double("stock_actual", 8, 2);
             $table->softDeletes();
             $table->timestamps();
 

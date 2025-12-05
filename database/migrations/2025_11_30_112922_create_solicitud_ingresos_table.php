@@ -29,6 +29,7 @@ return new class extends Migration
             $table->decimal("total", 24, 2);
             $table->string("estado"); // PENDIENTE,APROBADO,APROBADO CON OBSERVACIONES
             $table->unsignedBigInteger("user_id");
+            $table->integer("verificado")->default(0);
             $table->softDeletes();
             $table->timestamps();
 

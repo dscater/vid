@@ -341,6 +341,13 @@ class ModuloTableSeeder extends Seeder
 
         Modulo::create([
             "modulo" => "Solicitud de Ingresos",
+            "nombre" => "solicitud_ingresos.aprobar",
+            "accion" => "APROBAR",
+            "descripcion" => "APROBAR SOLICITUD DE INGRESOS"
+        ]);
+
+        Modulo::create([
+            "modulo" => "Solicitud de Ingresos",
             "nombre" => "solicitud_ingresos.destroy",
             "accion" => "ELIMINAR",
             "descripcion" => "ELIMINAR SOLICITUD DE INGRESOS"
@@ -370,6 +377,13 @@ class ModuloTableSeeder extends Seeder
 
         Modulo::create([
             "modulo" => "Ordenes de Salida",
+            "nombre" => "orden_salidas.aprobar",
+            "accion" => "APROBAR",
+            "descripcion" => "APROBAR ORDENES DE SALIDA"
+        ]);
+
+        Modulo::create([
+            "modulo" => "Ordenes de Salida",
             "nombre" => "orden_salidas.destroy",
             "accion" => "ELIMINAR",
             "descripcion" => "ELIMINAR ORDENES DE SALIDA"
@@ -395,6 +409,13 @@ class ModuloTableSeeder extends Seeder
             "nombre" => "devolucion_stocks.edit",
             "accion" => "EDITAR",
             "descripcion" => "EDITAR DEVOLUCIÓN DE STOCK"
+        ]);
+
+        Modulo::create([
+            "modulo" => "Devolución de Stock",
+            "nombre" => "devolucion_stocks.aprobar",
+            "accion" => "APROBAR",
+            "descripcion" => "APROBAR DEVOLUCIÓN DE STOCK"
         ]);
 
         Modulo::create([
@@ -453,6 +474,13 @@ class ModuloTableSeeder extends Seeder
             "nombre" => "transferencias.edit",
             "accion" => "EDITAR",
             "descripcion" => "EDITAR TRANSFERENCIAS DE STOCK"
+        ]);
+
+        Modulo::create([
+            "modulo" => "Transferencias de Stock",
+            "nombre" => "transferencias.aprobar",
+            "accion" => "APROBAR",
+            "descripcion" => "APROBAR TRANSFERENCIAS DE STOCK"
         ]);
 
         Modulo::create([

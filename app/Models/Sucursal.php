@@ -16,6 +16,7 @@ class Sucursal extends Model
         "fono",
         "correo",
         "user_id",
+        "almacen",
         "estado",
     ];
 

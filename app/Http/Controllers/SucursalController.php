@@ -30,12 +30,20 @@ class SucursalController extends Controller
      *
      * @return JsonResponse
      */
-    public function listado(): JsonResponse
+    public function listado(Request $request): JsonResponse
     {
         return response()->JSON([
-            "sucursals" => $this->sucursalService->listado()
+            "sucursals" => $this->sucursalService->listado($request->input("estado", null))
         ]);
     }
+
+    public function listadoSP(Request $request): JsonResponse
+    {
+        return response()->JSON([
+            "sucursals" => $this->sucursalService->listadoSP($request->input("estado", null))
+        ]);
+    }
+
 
     public function paginado(Request $request)
     {

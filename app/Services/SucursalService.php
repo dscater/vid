@@ -18,11 +18,29 @@ class SucursalService
 
     public function __construct(private HistorialAccionService $historialAccionService) {}
 
-    public function listado(): Collection
+    public function listado($estado = null): Collection
     {
-        $sucursals = Sucursal::select("sucursals.*")->get();
+
+        $sucursals = Sucursal::select("sucursals.*");
+        $sucursals->where("almacen", 0);
+        if ($estado != null) {
+            $sucursals->where("estado", $estado);
+        }
+        $sucursals = $sucursals->get();
         return $sucursals;
     }
+
+    public function listadoSP($estado = null): Collection
+    {
+
+        $sucursals = Sucursal::select("sucursals.*");
+        if ($estado != null) {
+            $sucursals->where("estado", $estado);
+        }
+        $sucursals = $sucursals->get();
+        return $sucursals;
+    }
+
     /**
      * Lista de sucursals paginado con filtros
      *

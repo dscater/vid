@@ -27,6 +27,7 @@ class SolicitudIngreso extends Model
         "total",
         "estado",
         "user_id",
+        "verificado"
     ];
 
     protected $appends = ["fecha_ingreso_t", "hora_ingreso_t", "fecha_c"];
