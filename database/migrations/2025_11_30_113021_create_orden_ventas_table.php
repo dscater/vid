@@ -21,6 +21,13 @@ return new class extends Migration
             $table->time("hora");
             $table->double("cantidad_total", 8, 2);
             $table->decimal("total", 24, 2);
+            $table->integer("solicitud_descuento")->default(0);
+            $table->integer("solicitud_sw")->default(0);
+            $table->decimal("monto_solicitud", 24, 2)->default(0)->nullable();
+            $table->decimal("descuento", 24, 2)->default(0)->nullable();
+            $table->decimal("cancelado", 24, 2)->default(0)->nullable();
+            $table->decimal("total_f", 24, 2);
+            $table->decimal("cambio", 24, 2)->default(0)->nullable();
             $table->string("forma_pago");
             $table->string("cs_f");
             $table->text("observaciones")->nullable();

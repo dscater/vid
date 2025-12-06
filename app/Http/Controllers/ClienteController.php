@@ -37,6 +37,23 @@ class ClienteController extends Controller
         ]);
     }
 
+    public function listadoSelectElementUi(Request $request): JsonResponse
+    {
+        $search = $request->input("search", "");
+        $clientes = Cliente::select("clientes.*");
+        $clientes->where(function ($query) use ($search) {
+            $query->where("razon_social", "LIKE", "%$search%");
+            // ->orWhereRaw("CONCAT(nombre, ' ', paterno, ' ', materno) LIKE ?", ["%$search%"]);
+        });
+        $clientes = $clientes->get();
+        // $clientes->each->append(["full_name"]);
+        $clientes = $clientes->toArray();
+        return response()->JSON([
+            "clientes" => $clientes
+        ]);
+    }
+
+
     public function paginado(Request $request)
     {
         $perPage = $request->perPage;

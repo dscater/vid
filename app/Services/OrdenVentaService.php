@@ -1,0 +1,259 @@
+<?php
+
+namespace App\Services;
+
+use App\Models\Producto;
+use App\Services\HistorialAccionService;
+use App\Models\OrdenVenta;
+use App\Models\OrdenVentaDetalle;
+use App\Models\Sucursal;
+use Exception;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
+
+class OrdenVentaService
+{
+    private $modulo = "ORDEN DE VENTA";
+    public function __construct(
+        private HistorialAccionService $historialAccionService,
+        private KardexProductoService $kardex_producto_service,
+        private SucursalProductoService $sucursal_producto_service
+    ) {}
+
+    public function listado(): Collection
+    {
+        $orden_ventas = OrdenVenta::select("orden_ventas.*")->where("usuarios", 1)->get();
+        return $orden_ventas;
+    }
+    /**
+     * Lista de orden_ventas paginado con filtros
+     *
+     * @param integer $length
+     * @param integer $page
+     * @param string $search
+     * @param array $columnsSerachLike
+     * @param array $columnsFilter
+     * @return LengthAwarePaginator
+     */
+    public function listadoPaginado(int $length, int $page, string $search, array $columnsSerachLike = [], array $columnsFilter = [], array $columnsBetweenFilter = [], array $orderBy = []): LengthAwarePaginator
+    {
+        $orden_ventas = OrdenVenta::select("orden_ventas.*")
+            ->with(["sucursal:id,nombre", "user:id,nombre,paterno,materno", "cliente:id,razon_social"]);
+        // Filtros exactos
+        foreach ($columnsFilter as $key => $value) {
+            if (!is_null($value)) {
+                $orden_ventas->where("orden_ventas.$key", $value);
+            }
+        }
+
+        // Filtros por rango
+        foreach ($columnsBetweenFilter as $key => $value) {
+            if (isset($value[0], $value[1])) {
+                $orden_ventas->whereBetween("orden_ventas.$key", $value);
+            }
+        }
+
+        // Búsqueda en múltiples columnas con LIKE
+        if (!empty($search) && !empty($columnsSerachLike)) {
+            $orden_ventas->where(function ($query) use ($search, $columnsSerachLike) {
+                foreach ($columnsSerachLike as $col) {
+                    $query->orWhere("$col", "LIKE", "%$search%");
+                }
+            });
+        }
+
+        // Ordenamiento
+        foreach ($orderBy as $value) {
+            if (isset($value[0], $value[1])) {
+                $orden_ventas->orderBy($value[0], $value[1]);
+            }
+        }
+
+
+        $orden_ventas = $orden_ventas->paginate($length, ['*'], 'page', $page);
+        return $orden_ventas;
+    }
+
+    /**
+     * Crear orden_venta
+     *
+     * @param array $datos
+     * @return OrdenVenta
+     */
+    public function crear(array $datos): OrdenVenta
+    {
+        $nuevo_codigo = $this->generarCodigo();
+        $orden_venta = OrdenVenta::create([
+            "nro" => $nuevo_codigo[0],
+            "codigo" => $nuevo_codigo[1],
+            "sucursal_id" => $datos["sucursal_id"],
+            "cliente_id" => $datos["cliente_id"],
+            "fecha" => $datos["fecha"],
+            "hora" => $datos["hora"],
+            "cantidad_total" => $datos["cantidad_total"],
+            "cs_f" => $datos["cs_f"],
+            "forma_pago" => $datos["forma_pago"],
+            "cancelado" => $datos["cancelado"],
+            "cambio" => $datos["cambio"],
+            "total" => $datos["total"],
+            "total_f" => $datos["total_f"],
+            // "estado" => "PENDIENTE",
+            "user_id" => Auth::user()->id,
+        ]);
+
+        foreach ($datos["orden_venta_detalles"] as $item) {
+            $orden_venta_detalle = $orden_venta->orden_venta_detalles()->create([
+                "producto_id" => $item["producto_id"],
+                "unidad_medida_id" => $item["unidad_medida_id"],
+                "cantidad" => $item["cantidad"],
+                "precio" => $item["costo"],
+                "subtotal" => $item["subtotal"],
+                "descuento" => $item["descuento"],
+                "subtotal_f" => $item["subtotal_f"],
+            ]);
+
+            $producto = Producto::findOrFail($item["producto_id"]);
+            // VERIFICAR STOCK DEL PRODUCTO
+            $resultado_stock = $this->sucursal_producto_service->verificaStockSucursalProducto($producto->id, $datos["sucursal_id"], $item["cantidad"]);
+
+            if (!$resultado_stock[0]) {
+                throw new Exception("Stock insuficiente del producto " . $producto->nombre . " ; su stock actual es " . $resultado_stock[1]);
+            }
+
+            // DESCONTAR STOCK ALMACEN
+            $this->kardex_producto_service->registroEgreso("ORDEN DE VENTA", $producto, $item["cantidad"], $producto->precio, "EGRESO POR ORDEN DE VENTA", $datos["sucursal_id"], "OrdenVentaDetalle", $orden_venta_detalle->id);
+        }
+
+        // registrar accion
+        $this->historialAccionService->registrarAccion($this->modulo, "CREACIÓN", "REGISTRO UNA ORDEN DE VENTA", $orden_venta);
+
+        return $orden_venta;
+    }
+
+    public function generarCodigo()
+    {
+        $ultimo = OrdenVenta::orderBy("nro")->get()->last();
+        $nro = 1;
+        if ($ultimo) {
+            $nro = (int)$ultimo->nro + 1;
+        }
+        $codigo = "OV." . $nro;
+        return [$nro, $codigo];
+    }
+
+    /**
+     * Actualizar orden_venta
+     *
+     * @param array $datos
+     * @param OrdenVenta $orden_venta
+     * @return OrdenVenta
+     */
+    public function actualizar(array $datos, OrdenVenta $orden_venta): OrdenVenta
+    {
+        $old_orden_venta = clone $orden_venta;
+        $old_orden_venta->loadMissing(["orden_venta_detalles"]);
+        $orden_venta->update([
+            "sucursal_id" => $datos["sucursal_id"],
+            "user_sol" => $datos["user_sol"],
+            "user_ap" => $datos["user_ap"],
+            "fecha" => date("Y-m-d"),
+            "hora" => date("H:i"),
+            "observaciones" => mb_strtoupper($datos["observaciones"]),
+            "cantidad_total" => $datos["cantidad_total"],
+            "total" => $datos["total"],
+            "estado" => "PENDIENTE",
+            // "user_id" => Auth::user()->id,
+        ]);
+
+        foreach ($datos["orden_venta_detalles"] as $item) {
+            $data = [
+                "producto_id" => $item["producto_id"],
+                "cantidad" => $item["cantidad"],
+                "cantidad_fisica" => $item["cantidad"],
+                "costo" => $item["costo"],
+                "subtotal" => $item["subtotal"],
+            ];
+            if ($item["id"] == 0) {
+                $orden_venta->orden_venta_detalles()->create($data);
+            } else {
+                $orden_venta_detalle = OrdenVentaDetalle::findOrFail($item["id"]);
+                $orden_venta_detalle->update($data);
+            }
+        }
+
+        if (isset($datos["eliminados_detalles"]) && !empty($datos["eliminados_detalles"])) {
+            foreach ($datos["eliminados_detalles"] as $item) {
+                $orden_venta_detalle = OrdenVentaDetalle::findOrFail($item);
+                $orden_venta_detalle->delete();
+            }
+        }
+
+        // registrar accion
+        $this->historialAccionService->registrarAccion($this->modulo, "MODIFICACIÓN", "ACTUALIZÓ UNA ORDEN DE VENTA", $old_orden_venta, $orden_venta, ["orden_venta_detalles"]);
+
+        return $orden_venta;
+    }
+
+
+    public function aprobar(array $datos, OrdenVenta $orden_venta): OrdenVenta
+    {
+        $old_orden_venta = clone $orden_venta;
+        $old_orden_venta->loadMissing(["orden_venta_detalles"]);
+        $txtAprobado = $datos["verificado"] == 1 ? 'APROBADO' : 'APROBADO CON OBSERVACIONES';
+        $orden_venta->update([
+            "verificado" => $datos["verificado"],
+            "estado" => $txtAprobado,
+        ]);
+
+        $almacen = Sucursal::where("almacen", 1)->get()->first();
+        if (!$almacen) {
+            throw new Exception("Error al actualizar el registro, no se encontró un Almacen");
+        }
+
+        foreach ($datos["orden_venta_detalles"] as $item) {
+            $orden_venta_detalle = OrdenVentaDetalle::findOrFail($item["id"]);
+            $orden_venta_detalle->update([
+                "verificado" => $item["verificado"],
+                "sucursal_ajuste" => $item["cantidad"] == $item["cantidad_fisica"] ? $item["sucursal_ajuste"] : null,
+                "motivo" => $item["cantidad"] == $item["cantidad_fisica"] ? $item["motivo"] : null,
+            ]);
+
+            $producto = Producto::findOrFail($item["producto_id"]);
+            // VERIFICAR STOCK DEL PRODUCTO
+            $resultado_stock = $this->sucursal_producto_service->verificaStockSucursalProducto($producto->id, $almacen->id, $item["cantidad_fisica"]);
+
+            if (!$resultado_stock[0]) {
+                throw new Exception("Stock insuficiente del producto " . $producto->nombre . " ; su stock actual es " . $resultado_stock[1]);
+            }
+
+            // DESCONTAR STOCK ALMACEN
+            $this->kardex_producto_service->registroEgreso("ORDEN DE VENTA", $producto, $item["cantidad_fisica"], $producto->precio, "EGRESO POR ORDEN DE VENTA", $almacen->id, "OrdenVentaDetalle", $orden_venta_detalle->id);
+
+            // INCREMENTAR STOCK DE SUCURSAL DESTINO
+            $this->kardex_producto_service->registroIngreso($orden_venta->sucursal_id, "ORDEN DE VENTA", $producto, $item["cantidad_fisica"], $producto->precio, "INGRESO POR ORDEN DE VENTA", "OrdenVentaDetalle", $orden_venta_detalle->id);
+        }
+
+        // registrar accion
+        $this->historialAccionService->registrarAccion($this->modulo, "MODIFICACIÓN", "APROBO UNA ORDEN DE VENTA", $old_orden_venta, $orden_venta, ["orden_venta_detalles"]);
+
+        return $orden_venta;
+    }
+
+    /**
+     * Eliminar orden_venta
+     *
+     * @param OrdenVenta $orden_venta
+     * @return boolean
+     */
+    public function eliminar(OrdenVenta $orden_venta): bool|Exception
+    {
+        $old_orden_venta = clone $orden_venta;
+        $orden_venta->delete();
+        // registrar accion
+        $this->historialAccionService->registrarAccion($this->modulo, "ELIMINACIÓN", "ELIMINÓ UNA ORDEN DE VENTA", $old_orden_venta, null, ["orden_venta_detalles"]);
+        return true;
+    }
+}

@@ -8,6 +8,7 @@ use App\Http\Controllers\DevolucionStockController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\OrdenSalidaController;
+use App\Http\Controllers\OrdenVentaController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProveedorController;
@@ -130,6 +131,7 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     // CLIENTES
     Route::get("clientes/api", [ClienteController::class, 'api'])->name("clientes.api");
     Route::get("clientes/paginado", [ClienteController::class, 'paginado'])->name("clientes.paginado");
+    Route::get("clientes/listadoSelectElementUi", [ClienteController::class, 'listadoSelectElementUi'])->name("clientes.listadoSelectElementUi");
     Route::get("clientes/listado", [ClienteController::class, 'listado'])->name("clientes.listado");
     Route::resource("clientes", ClienteController::class)->only(
         ["index", "store", "edit", "show", "update", "destroy"]
@@ -167,6 +169,15 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get("devolucion_stocks/listado", [DevolucionStockController::class, 'listado'])->name("devolucion_stocks.listado");
     Route::put("devolucion_stocks/aprobar/{devolucion_stock}", [DevolucionStockController::class, 'aprobar'])->name("devolucion_stocks.aprobar");
     Route::resource("devolucion_stocks", DevolucionStockController::class)->only(
+        ["index", "store", "edit", "show", "update", "destroy"]
+    );
+
+    // ORDEN DE VENTAS
+    Route::get("orden_ventas/api", [OrdenVentaController::class, 'api'])->name("orden_ventas.api");
+    Route::get("orden_ventas/paginado", [OrdenVentaController::class, 'paginado'])->name("orden_ventas.paginado");
+    Route::get("orden_ventas/listado", [OrdenVentaController::class, 'listado'])->name("orden_ventas.listado");
+    Route::put("orden_ventas/aprobar/{devolucion_stock}", [OrdenVentaController::class, 'aprobar'])->name("orden_ventas.aprobar");
+    Route::resource("orden_ventas", OrdenVentaController::class)->only(
         ["index", "store", "edit", "show", "update", "destroy"]
     );
 
