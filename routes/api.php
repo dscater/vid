@@ -4,8 +4,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ConfiguracionController;
+use App\Http\Controllers\DevolucionStockController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\MarcaController;
+use App\Http\Controllers\OrdenSalidaController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProveedorController;
@@ -147,6 +149,24 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get("solicitud_ingresos/listado", [SolicitudIngresoController::class, 'listado'])->name("solicitud_ingresos.listado");
     Route::put("solicitud_ingresos/aprobar/{solicitud_ingreso}", [SolicitudIngresoController::class, 'aprobar'])->name("solicitud_ingresos.aprobar");
     Route::resource("solicitud_ingresos", SolicitudIngresoController::class)->only(
+        ["index", "store", "edit", "show", "update", "destroy"]
+    );
+
+    // ORDEN DE SALIDA
+    Route::get("orden_salidas/api", [OrdenSalidaController::class, 'api'])->name("orden_salidas.api");
+    Route::get("orden_salidas/paginado", [OrdenSalidaController::class, 'paginado'])->name("orden_salidas.paginado");
+    Route::get("orden_salidas/listado", [OrdenSalidaController::class, 'listado'])->name("orden_salidas.listado");
+    Route::put("orden_salidas/aprobar/{orden_salida}", [OrdenSalidaController::class, 'aprobar'])->name("orden_salidas.aprobar");
+    Route::resource("orden_salidas", OrdenSalidaController::class)->only(
+        ["index", "store", "edit", "show", "update", "destroy"]
+    );
+
+    // DEVOLUCIÓN DE STOCK
+    Route::get("devolucion_stocks/api", [DevolucionStockController::class, 'api'])->name("devolucion_stocks.api");
+    Route::get("devolucion_stocks/paginado", [DevolucionStockController::class, 'paginado'])->name("devolucion_stocks.paginado");
+    Route::get("devolucion_stocks/listado", [DevolucionStockController::class, 'listado'])->name("devolucion_stocks.listado");
+    Route::put("devolucion_stocks/aprobar/{devolucion_stock}", [DevolucionStockController::class, 'aprobar'])->name("devolucion_stocks.aprobar");
+    Route::resource("devolucion_stocks", DevolucionStockController::class)->only(
         ["index", "store", "edit", "show", "update", "destroy"]
     );
 

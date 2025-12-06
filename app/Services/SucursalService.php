@@ -22,7 +22,6 @@ class SucursalService
     {
 
         $sucursals = Sucursal::select("sucursals.*");
-        $sucursals->where("almacen", 0);
         if ($estado != null) {
             $sucursals->where("estado", $estado);
         }
@@ -34,6 +33,7 @@ class SucursalService
     {
 
         $sucursals = Sucursal::select("sucursals.*");
+        $sucursals->where("almacen", 0);
         if ($estado != null) {
             $sucursals->where("estado", $estado);
         }

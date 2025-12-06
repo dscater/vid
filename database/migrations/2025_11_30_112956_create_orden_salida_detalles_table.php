@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer("verificado")->default(0);
             $table->unsignedBigInteger("sucursal_ajuste")->nullable();
             $table->string("motivo")->nullable();
+            $table->softDeletes();
             $table->timestamps();
             $table->foreign("orden_salida_id")->on("orden_salidas")->references("id");
             $table->foreign("producto_id")->on("productos")->references("id");

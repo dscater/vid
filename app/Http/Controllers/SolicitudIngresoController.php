@@ -99,7 +99,9 @@ class SolicitudIngresoController extends Controller
                     ]);
                 } catch (\Exception $e) {
                     DB::rollBack();
-                    return back()->withErrors(["error" => $e->getMessage()]);
+                    throw ValidationException::withMessages([
+                        'error' =>  $e->getMessage()
+                    ]);
                 }
             });
         } catch (ValidationException $ve) {

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->time("hora");
             $table->text("observaciones");
             $table->string("estado"); // PENDIENTE, APROBADO, APROBADO CON OBSERVACIONES
+            $table->integer("verificado")->default(0);
             $table->softDeletes();
             $table->timestamps();
 

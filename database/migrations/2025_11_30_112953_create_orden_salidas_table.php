@@ -21,13 +21,18 @@ return new class extends Migration
             $table->date("fecha");
             $table->time("hora");
             $table->text("observaciones");
+            $table->double("cantidad_total", 8, 2);
+            $table->decimal("total", 24, 2);
             $table->string("estado"); // PENDIENTE, APROBADO, APROBADO CON OBSERVACIONES
+            $table->integer("verificado")->default(0);
+            $table->unsignedBigInteger("user_id");
             $table->softDeletes();
             $table->timestamps();
 
             $table->foreign("sucursal_id")->on("sucursals")->references("id");
             $table->foreign("user_sol")->on("users")->references("id");
             $table->foreign("user_ap")->on("users")->references("id");
+            $table->foreign("user_id")->on("users")->references("id");
         });
     }
 

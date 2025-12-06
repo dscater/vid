@@ -86,11 +86,11 @@ class SolicitudIngresoService
     public function crear(array $datos): SolicitudIngreso
     {
 
-        $nuevo_codigo = $this->generarCodigoSolicitud();
+        $nuevo_codigo = $this->generarCodigo();
         $solicitud_ingreso = SolicitudIngreso::create([
             "nro" => $nuevo_codigo[0],
             "codigo" => $nuevo_codigo[1],
-            "proveedor_id" => mb_strtoupper($datos["proveedor_id"]),
+            "proveedor_id" => $datos["proveedor_id"],
             "fecha_ingreso" => $datos["fecha_ingreso"],
             "hora_ingreso" => $datos["hora_ingreso"],
             "fecha_sis" => date("Y-m-d"),
@@ -122,7 +122,7 @@ class SolicitudIngresoService
         return $solicitud_ingreso;
     }
 
-    public function generarCodigoSolicitud()
+    public function generarCodigo()
     {
         $ultimo = SolicitudIngreso::orderBy("nro")->get()->last();
         $nro = 1;
@@ -145,7 +145,7 @@ class SolicitudIngresoService
         $old_solicitud_ingreso = clone $solicitud_ingreso;
         $old_solicitud_ingreso->loadMissing(["solicitud_ingreso_detalles"]);
         $solicitud_ingreso->update([
-            "proveedor_id" => mb_strtoupper($datos["proveedor_id"]),
+            "proveedor_id" => $datos["proveedor_id"],
             "fecha_ingreso" => $datos["fecha_ingreso"],
             "hora_ingreso" => $datos["hora_ingreso"],
             "fecha_sis" => date("Y-m-d"),
@@ -158,7 +158,7 @@ class SolicitudIngresoService
             "cantidad_total" => $datos["cantidad_total"],
             "total" => $datos["total"],
             "estado" => "PENDIENTE",
-            "user_id" => Auth::user()->id,
+            // "user_id" => Auth::user()->id,
         ]);
 
         foreach ($datos["solicitud_ingreso_detalles"] as $item) {

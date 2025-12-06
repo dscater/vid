@@ -27,9 +27,6 @@ class UsuarioController extends Controller
     public function listado(Request $request): JsonResponse
     {
         $usuarios = User::where("id", "!=", 1);
-        if (isset($request->usuarios) && $request->usuarios) {
-            $usuarios->where("tipo", "USUARIO");
-        }
         $usuarios = $usuarios->get();
         return response()->JSON([
             "usuarios" => $usuarios
@@ -105,7 +102,7 @@ class UsuarioController extends Controller
 
     public function show(User $user)
     {
-        return response()->JSON($user->load("role", "certificados", "documentos"));
+        return response()->JSON($user->load("role"));
     }
 
     public function actualizaAcceso(User $user, Request $request)

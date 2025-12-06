@@ -114,6 +114,21 @@ class ModuloTableSeeder extends Seeder
             "descripcion" => "ELIMINAR SUCURSALES"
         ]);
 
+        // SUCURSAL PRODUCTOS
+        Modulo::create([
+            "modulo" => "Productos Sucursal",
+            "nombre" => "sucursal_productos.index",
+            "accion" => "VER",
+            "descripcion" => "VER LA LISTA DE PRODUCTOS DE SUCURSAL"
+        ]);
+
+        Modulo::create([
+            "modulo" => "Productos Sucursal",
+            "nombre" => "sucursal_productos.edit",
+            "accion" => "EDITAR",
+            "descripcion" => "EDITAR PRODUCTOS DE SUCURSAL"
+        ]);
+
         // CATEGORÍAS
         Modulo::create([
             "modulo" => "Categorías",
