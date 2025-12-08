@@ -21,6 +21,7 @@ return new class extends Migration
             $table->time("hora");
             $table->double("cantidad_total", 8, 2);
             $table->decimal("total", 24, 2);
+            $table->decimal("total_st", 24, 2);
             $table->integer("solicitud_descuento")->default(0);
             $table->integer("solicitud_sw")->default(0);
             $table->decimal("monto_solicitud", 24, 2)->default(0)->nullable();
@@ -31,6 +32,8 @@ return new class extends Migration
             $table->string("forma_pago");
             $table->string("cs_f");
             $table->text("observaciones")->nullable();
+            $table->string("estado"); // para controlar:PENDIENTE, APROBADO, FINALIZADO
+            $table->integer("verificado")->default(0); // 0:PENDIENTE, 1: APROBADO, 2: FINALIZADO
             $table->unsignedBigInteger("user_id");
             $table->softDeletes();
             $table->timestamps();

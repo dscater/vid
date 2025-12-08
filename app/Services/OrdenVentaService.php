@@ -99,8 +99,14 @@ class OrdenVentaService
             "cancelado" => $datos["cancelado"],
             "cambio" => $datos["cambio"],
             "total" => $datos["total"],
+            "total_st" => $datos["total_st"],
+            "solicitud_descuento" => $datos["solicitud_descuento"],
+            "solicitud_sw" => $datos["solicitud_descuento"] == 1 ? 0 : NULL,
+            "monto_solicitud" => $datos["solicitud_descuento"] == 1 ? $datos["descuento"] : NULL,
+            "descuento" => $datos["solicitud_descuento"] == 1 ? $datos["descuento"] : NULL,
             "total_f" => $datos["total_f"],
-            // "estado" => "PENDIENTE",
+            "estado" => $datos["solicitud_descuento"] == 1 ? "PENDIENTE" : "FINALIZADO",
+            "verificado" => $datos["solicitud_descuento"] == 1 ? 0 : 2,
             "user_id" => Auth::user()->id,
         ]);
 
@@ -109,22 +115,24 @@ class OrdenVentaService
                 "producto_id" => $item["producto_id"],
                 "unidad_medida_id" => $item["unidad_medida_id"],
                 "cantidad" => $item["cantidad"],
-                "precio" => $item["costo"],
+                "precio" => $item["precio"],
                 "subtotal" => $item["subtotal"],
                 "descuento" => $item["descuento"],
                 "subtotal_f" => $item["subtotal_f"],
             ]);
 
-            $producto = Producto::findOrFail($item["producto_id"]);
-            // VERIFICAR STOCK DEL PRODUCTO
-            $resultado_stock = $this->sucursal_producto_service->verificaStockSucursalProducto($producto->id, $datos["sucursal_id"], $item["cantidad"]);
+            if ($orden_venta->verificado == 2) {
+                $producto = Producto::findOrFail($item["producto_id"]);
+                // VERIFICAR STOCK DEL PRODUCTO
+                $resultado_stock = $this->sucursal_producto_service->verificaStockSucursalProducto($producto->id, $datos["sucursal_id"], $item["cantidad"]);
 
-            if (!$resultado_stock[0]) {
-                throw new Exception("Stock insuficiente del producto " . $producto->nombre . " ; su stock actual es " . $resultado_stock[1]);
+                if (!$resultado_stock[0]) {
+                    throw new Exception("Stock insuficiente del producto " . $producto->nombre . " ; su stock actual es " . $resultado_stock[1]);
+                }
+
+                // DESCONTAR STOCK DE SUCURSAL
+                $this->kardex_producto_service->registroEgreso("ORDEN DE VENTA", $producto, $item["cantidad"], $producto->precio, "EGRESO POR ORDEN DE VENTA", $datos["sucursal_id"], "OrdenVentaDetalle", $orden_venta_detalle->id);
             }
-
-            // DESCONTAR STOCK ALMACEN
-            $this->kardex_producto_service->registroEgreso("ORDEN DE VENTA", $producto, $item["cantidad"], $producto->precio, "EGRESO POR ORDEN DE VENTA", $datos["sucursal_id"], "OrdenVentaDetalle", $orden_venta_detalle->id);
         }
 
         // registrar accion

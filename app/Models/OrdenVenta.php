@@ -18,6 +18,7 @@ class OrdenVenta extends Model
         "hora",
         "cantidad_total",
         "total",
+        "total_st",
         "solicitud_descuento",
         "solicitud_sw",
         "monto_solicitud",
@@ -28,6 +29,8 @@ class OrdenVenta extends Model
         "cambio",
         "cs_f",
         "observaciones",
+        "estado",
+        "verificado",
         "user_id",
     ];
 

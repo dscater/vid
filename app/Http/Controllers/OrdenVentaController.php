@@ -120,7 +120,7 @@ class OrdenVentaController extends Controller
     public function show(OrdenVenta $orden_venta): JsonResponse
     {
         return response()->JSON([
-            "orden_venta" => $orden_venta->load(["orden_venta_detalles.producto"]),
+            "orden_venta" => $orden_venta->load(["orden_venta_detalles.producto", "cliente"]),
         ]);
     }
 
