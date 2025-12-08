@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Validation\ValidationException;
+use App\library\numero_a_letras\src\NumeroALetras;
 
 class OrdenVentaController extends Controller
 {
@@ -38,8 +39,8 @@ class OrdenVentaController extends Controller
         $perPage = $request->perPage;
         $page = (int)($request->input("page", 1));
         $search = (string)$request->input("search", "");
-        $orderByCol = $request->orderByCol;
-        $desc = $request->desc;
+        $orderByCol = $request->orderBy;
+        $desc = $request->orderAsc;
 
         $columnsSerachLike = [
             "descripcion"
@@ -52,6 +53,7 @@ class OrdenVentaController extends Controller
                 [$orderByCol, $desc]
             ];
         }
+        Log::debug($arrayOrderBy);
 
         $orden_ventas = $this->orden_ventaService->listadoPaginado($perPage, $page, $search, $columnsSerachLike, $columnsFilter, $columnsBetweenFilter, $arrayOrderBy);
         return response()->JSON([
@@ -119,8 +121,16 @@ class OrdenVentaController extends Controller
      */
     public function show(OrdenVenta $orden_venta): JsonResponse
     {
+        $convertir = new NumeroALetras();
+        $array_monto = explode('.', $orden_venta->total_f);
+        $literal = $convertir->convertir($array_monto[0]);
+        $literal .= " " . $array_monto[1];
+        $literal = strtolower($literal);
+        $literal = ucfirst($literal) . "/100." . " Bolivianos";;
+
         return response()->JSON([
-            "orden_venta" => $orden_venta->load(["orden_venta_detalles.producto", "cliente"]),
+            "orden_venta" => $orden_venta->load(["orden_venta_detalles.producto:id,nombre", "orden_venta_detalles.unidad_medida:id,nombre", "cliente:id,razon_social,nit", "user:id,nombre,paterno,materno"]),
+            "literal" => $literal
         ]);
     }
 
@@ -149,10 +159,11 @@ class OrdenVentaController extends Controller
         DB::beginTransaction();
         try {
             // aprobar orden_venta
-            $this->orden_ventaService->aprobar($request->validated(), $orden_venta);
+            $orden_venta = $this->orden_ventaService->aprobar($request->validated(), $orden_venta);
             DB::commit();
             return response()->JSON([
                 "sw" => true,
+                "orden_venta" => $orden_venta,
                 "message" => "Proceso realizado con éxito"
             ]);
         } catch (\Exception $e) {

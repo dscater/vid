@@ -464,6 +464,13 @@ class ModuloTableSeeder extends Seeder
 
         Modulo::create([
             "modulo" => "Ordenes de Venta",
+            "nombre" => "orden_ventas.aprobar_descuentos",
+            "accion" => "APROBAR DESCUENTOS",
+            "descripcion" => "APROBAR DESCUENTOS ORDENDES DE VENTA"
+        ]);
+
+        Modulo::create([
+            "modulo" => "Ordenes de Venta",
             "nombre" => "orden_ventas.destroy",
             "accion" => "ELIMINAR",
             "descripcion" => "ELIMINAR ORDENDES DE VENTA"
@@ -549,11 +556,18 @@ class ModuloTableSeeder extends Seeder
             "descripcion" => "CREAR CUENTAS POR COBRAR"
         ]);
 
+        // Modulo::create([
+        //     "modulo" => "Cuentas por Cobrar",
+        //     "nombre" => "cuenta_cobrars.edit",
+        //     "accion" => "EDITAR",
+        //     "descripcion" => "EDITAR CUENTAS POR COBRAR"
+        // ]);
+
         Modulo::create([
             "modulo" => "Cuentas por Cobrar",
-            "nombre" => "cuenta_cobrars.edit",
-            "accion" => "EDITAR",
-            "descripcion" => "EDITAR CUENTAS POR COBRAR"
+            "nombre" => "orden_ventas.pago",
+            "accion" => "REGISTRAR PAGO",
+            "descripcion" => "REGISTRAR PAGOS DE CUENTAS POR COBRAR"
         ]);
 
         Modulo::create([

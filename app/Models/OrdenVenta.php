@@ -21,6 +21,7 @@ class OrdenVenta extends Model
         "total_st",
         "solicitud_descuento",
         "solicitud_sw",
+        "user_ap",
         "monto_solicitud",
         "descuento",
         "total_f",
@@ -29,8 +30,8 @@ class OrdenVenta extends Model
         "cambio",
         "cs_f",
         "observaciones",
-        "estado",
-        "verificado",
+        "estado", // para controlar:PENDIENTE, APROBADO, FINALIZADO, RECHAZADO
+        "verificado", // 0:PENDIENTE, 1: APROBADO, 2: FINALIZADO, 3: RECHAZADO
         "user_id",
     ];
 
@@ -56,6 +57,11 @@ class OrdenVenta extends Model
         return $this->belongsTo(Sucursal::class);
     }
 
+    public function user_aprobo()
+    {
+        return $this->belongsTo(User::class, "user_ap");
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, "user_id");
@@ -69,5 +75,10 @@ class OrdenVenta extends Model
     public function orden_venta_detalles()
     {
         return $this->hasMany(OrdenVentaDetalle::class, 'orden_venta_id');
+    }
+
+    public function cuenta_cobrar()
+    {
+        return $this->hasOne(CuentaCobrar::class);
     }
 }

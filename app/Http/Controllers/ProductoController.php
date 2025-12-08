@@ -51,8 +51,8 @@ class ProductoController extends Controller
         $perPage = $request->perPage;
         $page = (int)($request->input("page", 1));
         $search = (string)$request->input("search", "");
-        $orderByCol = $request->orderByCol;
-        $desc = $request->desc;
+        $orderByCol = $request->orderBy;
+        $desc = $request->orderAsc;
 
         $columnsSerachLike = [
             "descripcion"

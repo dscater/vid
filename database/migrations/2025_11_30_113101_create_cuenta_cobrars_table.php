@@ -20,6 +20,7 @@ return new class extends Migration
             $table->decimal("saldo", 24, 2);
             $table->date("fecha");
             $table->time("hora");
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign("cliente_id")->on("clientes")->references("id");

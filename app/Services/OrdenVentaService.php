@@ -20,7 +20,8 @@ class OrdenVentaService
     public function __construct(
         private HistorialAccionService $historialAccionService,
         private KardexProductoService $kardex_producto_service,
-        private SucursalProductoService $sucursal_producto_service
+        private SucursalProductoService $sucursal_producto_service,
+        private CuentaCobrarService $cuenta_cobrar_service
     ) {}
 
     public function listado(): Collection
@@ -71,7 +72,6 @@ class OrdenVentaService
                 $orden_ventas->orderBy($value[0], $value[1]);
             }
         }
-
 
         $orden_ventas = $orden_ventas->paginate($length, ['*'], 'page', $page);
         return $orden_ventas;
@@ -135,6 +135,11 @@ class OrdenVentaService
             }
         }
 
+        // TIPO DE PAGO
+        if ($orden_venta->forma_pago == 'CRÉDITO') {
+            $this->cuenta_cobrar_service->nuevo($orden_venta);
+        }
+
         // registrar accion
         $this->historialAccionService->registrarAccion($this->modulo, "CREACIÓN", "REGISTRO UNA ORDEN DE VENTA", $orden_venta);
 
@@ -165,30 +170,51 @@ class OrdenVentaService
         $old_orden_venta->loadMissing(["orden_venta_detalles"]);
         $orden_venta->update([
             "sucursal_id" => $datos["sucursal_id"],
-            "user_sol" => $datos["user_sol"],
-            "user_ap" => $datos["user_ap"],
-            "fecha" => date("Y-m-d"),
-            "hora" => date("H:i"),
-            "observaciones" => mb_strtoupper($datos["observaciones"]),
+            "cliente_id" => $datos["cliente_id"],
+            "fecha" => $datos["fecha"],
+            "hora" => $datos["hora"],
             "cantidad_total" => $datos["cantidad_total"],
+            "cs_f" => $datos["cs_f"],
+            "forma_pago" => $datos["forma_pago"],
+            "cancelado" => $datos["cancelado"],
+            "cambio" => $datos["cambio"],
             "total" => $datos["total"],
-            "estado" => "PENDIENTE",
-            // "user_id" => Auth::user()->id,
+            "total_st" => $datos["total_st"],
+            "monto_solicitud" => $datos["solicitud_descuento"] == 1 ? $datos["descuento"] : NULL,
+            "descuento" => $datos["solicitud_descuento"] == 1 ? $datos["descuento"] : NULL,
+            "total_f" => $datos["total_f"],
+            "estado" => $datos["solicitud_descuento"] == 1 && $orden_venta->solicitud_sw == 0 ? "PENDIENTE" : "FINALIZADO",
+            "verificado" => $datos["solicitud_descuento"] == 1 && $orden_venta->solicitud_sw == 0 ?  0 : 2,
         ]);
 
         foreach ($datos["orden_venta_detalles"] as $item) {
             $data = [
                 "producto_id" => $item["producto_id"],
+                "unidad_medida_id" => $item["unidad_medida_id"],
                 "cantidad" => $item["cantidad"],
-                "cantidad_fisica" => $item["cantidad"],
-                "costo" => $item["costo"],
+                "precio" => $item["precio"],
                 "subtotal" => $item["subtotal"],
+                "descuento" => $item["descuento"],
+                "subtotal_f" => $item["subtotal_f"],
             ];
             if ($item["id"] == 0) {
                 $orden_venta->orden_venta_detalles()->create($data);
             } else {
                 $orden_venta_detalle = OrdenVentaDetalle::findOrFail($item["id"]);
                 $orden_venta_detalle->update($data);
+            }
+
+            if ($orden_venta->verificado == 2) {
+                $producto = Producto::findOrFail($item["producto_id"]);
+                // VERIFICAR STOCK DEL PRODUCTO
+                $resultado_stock = $this->sucursal_producto_service->verificaStockSucursalProducto($producto->id, $datos["sucursal_id"], $item["cantidad"]);
+
+                if (!$resultado_stock[0]) {
+                    throw new Exception("Stock insuficiente del producto " . $producto->nombre . " ; su stock actual es " . $resultado_stock[1]);
+                }
+
+                // DESCONTAR STOCK DE SUCURSAL
+                $this->kardex_producto_service->registroEgreso("ORDEN DE VENTA", $producto, $item["cantidad"], $producto->precio, "EGRESO POR ORDEN DE VENTA", $datos["sucursal_id"], "OrdenVentaDetalle", $orden_venta_detalle->id);
             }
         }
 
@@ -199,9 +225,13 @@ class OrdenVentaService
             }
         }
 
+        // TIPO DE PAGO
+        if ($orden_venta->forma_pago == 'CRÉDITO') {
+            $this->cuenta_cobrar_service->nuevo($orden_venta);
+        }
+
         // registrar accion
         $this->historialAccionService->registrarAccion($this->modulo, "MODIFICACIÓN", "ACTUALIZÓ UNA ORDEN DE VENTA", $old_orden_venta, $orden_venta, ["orden_venta_detalles"]);
-
         return $orden_venta;
     }
 
@@ -210,42 +240,16 @@ class OrdenVentaService
     {
         $old_orden_venta = clone $orden_venta;
         $old_orden_venta->loadMissing(["orden_venta_detalles"]);
-        $txtAprobado = $datos["verificado"] == 1 ? 'APROBADO' : 'APROBADO CON OBSERVACIONES';
         $orden_venta->update([
-            "verificado" => $datos["verificado"],
-            "estado" => $txtAprobado,
+            "verificado" => 1,
+            "solicitud_sw" => 1,
+            "descuento" => $datos["descuento"],
+            "estado" => "APROBADO",
+            "user_ap" => Auth::user()->id,
         ]);
 
-        $almacen = Sucursal::where("almacen", 1)->get()->first();
-        if (!$almacen) {
-            throw new Exception("Error al actualizar el registro, no se encontró un Almacen");
-        }
-
-        foreach ($datos["orden_venta_detalles"] as $item) {
-            $orden_venta_detalle = OrdenVentaDetalle::findOrFail($item["id"]);
-            $orden_venta_detalle->update([
-                "verificado" => $item["verificado"],
-                "sucursal_ajuste" => $item["cantidad"] == $item["cantidad_fisica"] ? $item["sucursal_ajuste"] : null,
-                "motivo" => $item["cantidad"] == $item["cantidad_fisica"] ? $item["motivo"] : null,
-            ]);
-
-            $producto = Producto::findOrFail($item["producto_id"]);
-            // VERIFICAR STOCK DEL PRODUCTO
-            $resultado_stock = $this->sucursal_producto_service->verificaStockSucursalProducto($producto->id, $almacen->id, $item["cantidad_fisica"]);
-
-            if (!$resultado_stock[0]) {
-                throw new Exception("Stock insuficiente del producto " . $producto->nombre . " ; su stock actual es " . $resultado_stock[1]);
-            }
-
-            // DESCONTAR STOCK ALMACEN
-            $this->kardex_producto_service->registroEgreso("ORDEN DE VENTA", $producto, $item["cantidad_fisica"], $producto->precio, "EGRESO POR ORDEN DE VENTA", $almacen->id, "OrdenVentaDetalle", $orden_venta_detalle->id);
-
-            // INCREMENTAR STOCK DE SUCURSAL DESTINO
-            $this->kardex_producto_service->registroIngreso($orden_venta->sucursal_id, "ORDEN DE VENTA", $producto, $item["cantidad_fisica"], $producto->precio, "INGRESO POR ORDEN DE VENTA", "OrdenVentaDetalle", $orden_venta_detalle->id);
-        }
-
         // registrar accion
-        $this->historialAccionService->registrarAccion($this->modulo, "MODIFICACIÓN", "APROBO UNA ORDEN DE VENTA", $old_orden_venta, $orden_venta, ["orden_venta_detalles"]);
+        $this->historialAccionService->registrarAccion($this->modulo, "MODIFICACIÓN", "APROBO EL DESCUENTO DE UNA ORDEN DE VENTA", $old_orden_venta, $orden_venta, ["orden_venta_detalles"]);
 
         return $orden_venta;
     }

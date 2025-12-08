@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ConfiguracionController;
+use App\Http\Controllers\CuentaCobrarController;
 use App\Http\Controllers\DevolucionStockController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\MarcaController;
@@ -77,7 +78,7 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get("sucursals/listado", [SucursalController::class, 'listado'])->name("sucursals.listado");
     Route::get("sucursals/listadoSP", [SucursalController::class, 'listadoSP'])->name("sucursals.listadoSP");
     Route::resource("sucursals", SucursalController::class)->only(
-        ["index", "store", "edit", "show", "update", "destroy"]
+        ["store", "edit", "show", "update", "destroy"]
     );
 
     // SUCURSAL PRODUCTOS
@@ -92,7 +93,7 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get("categorias/paginado", [CategoriaController::class, 'paginado'])->name("categorias.paginado");
     Route::get("categorias/listado", [CategoriaController::class, 'listado'])->name("categorias.listado");
     Route::resource("categorias", CategoriaController::class)->only(
-        ["index", "store", "edit", "show", "update", "destroy"]
+        ["store", "edit", "show", "update", "destroy"]
     );
 
     // SUBCATEGORIAS
@@ -100,7 +101,7 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get("sub_categorias/paginado", [SubCategoriaController::class, 'paginado'])->name("sub_categorias.paginado");
     Route::get("sub_categorias/listado", [SubCategoriaController::class, 'listado'])->name("sub_categorias.listado");
     Route::resource("sub_categorias", SubCategoriaController::class)->only(
-        ["index", "store", "edit", "show", "update", "destroy"]
+        ["store", "edit", "show", "update", "destroy"]
     );
 
     // MARCAS
@@ -108,7 +109,7 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get("marcas/paginado", [MarcaController::class, 'paginado'])->name("marcas.paginado");
     Route::get("marcas/listado", [MarcaController::class, 'listado'])->name("marcas.listado");
     Route::resource("marcas", MarcaController::class)->only(
-        ["index", "store", "edit", "show", "update", "destroy"]
+        ["store", "edit", "show", "update", "destroy"]
     );
 
     // UNIDADES DE MEDIDA
@@ -116,7 +117,7 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get("unidad_medidas/paginado", [UnidadMedidaController::class, 'paginado'])->name("unidad_medidas.paginado");
     Route::get("unidad_medidas/listado", [UnidadMedidaController::class, 'listado'])->name("unidad_medidas.listado");
     Route::resource("unidad_medidas", UnidadMedidaController::class)->only(
-        ["index", "store", "edit", "show", "update", "destroy"]
+        ["store", "edit", "show", "update", "destroy"]
     );
 
     // PRODUCTOS
@@ -125,7 +126,7 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get("productos/paginado", [ProductoController::class, 'paginado'])->name("productos.paginado");
     Route::get("productos/listado", [ProductoController::class, 'listado'])->name("productos.listado");
     Route::resource("productos", ProductoController::class)->only(
-        ["index", "store", "edit", "show", "update", "destroy"]
+        ["store", "edit", "show", "update", "destroy"]
     );
 
     // CLIENTES
@@ -134,7 +135,7 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get("clientes/listadoSelectElementUi", [ClienteController::class, 'listadoSelectElementUi'])->name("clientes.listadoSelectElementUi");
     Route::get("clientes/listado", [ClienteController::class, 'listado'])->name("clientes.listado");
     Route::resource("clientes", ClienteController::class)->only(
-        ["index", "store", "edit", "show", "update", "destroy"]
+        ["store", "edit", "show", "update", "destroy"]
     );
 
     // PROVEEDORES
@@ -142,7 +143,7 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get("proveedors/paginado", [ProveedorController::class, 'paginado'])->name("proveedors.paginado");
     Route::get("proveedors/listado", [ProveedorController::class, 'listado'])->name("proveedors.listado");
     Route::resource("proveedors", ProveedorController::class)->only(
-        ["index", "store", "edit", "show", "update", "destroy"]
+        ["store", "edit", "show", "update", "destroy"]
     );
 
     // SOLICITUD DE INGRESOS
@@ -151,7 +152,7 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get("solicitud_ingresos/listado", [SolicitudIngresoController::class, 'listado'])->name("solicitud_ingresos.listado");
     Route::put("solicitud_ingresos/aprobar/{solicitud_ingreso}", [SolicitudIngresoController::class, 'aprobar'])->name("solicitud_ingresos.aprobar");
     Route::resource("solicitud_ingresos", SolicitudIngresoController::class)->only(
-        ["index", "store", "edit", "show", "update", "destroy"]
+        ["store", "edit", "show", "update", "destroy"]
     );
 
     // ORDEN DE SALIDA
@@ -160,7 +161,7 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get("orden_salidas/listado", [OrdenSalidaController::class, 'listado'])->name("orden_salidas.listado");
     Route::put("orden_salidas/aprobar/{orden_salida}", [OrdenSalidaController::class, 'aprobar'])->name("orden_salidas.aprobar");
     Route::resource("orden_salidas", OrdenSalidaController::class)->only(
-        ["index", "store", "edit", "show", "update", "destroy"]
+        ["store", "edit", "show", "update", "destroy"]
     );
 
     // DEVOLUCIÓN DE STOCK
@@ -169,16 +170,25 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get("devolucion_stocks/listado", [DevolucionStockController::class, 'listado'])->name("devolucion_stocks.listado");
     Route::put("devolucion_stocks/aprobar/{devolucion_stock}", [DevolucionStockController::class, 'aprobar'])->name("devolucion_stocks.aprobar");
     Route::resource("devolucion_stocks", DevolucionStockController::class)->only(
-        ["index", "store", "edit", "show", "update", "destroy"]
+        ["store", "edit", "show", "update", "destroy"]
     );
 
     // ORDEN DE VENTAS
     Route::get("orden_ventas/api", [OrdenVentaController::class, 'api'])->name("orden_ventas.api");
     Route::get("orden_ventas/paginado", [OrdenVentaController::class, 'paginado'])->name("orden_ventas.paginado");
     Route::get("orden_ventas/listado", [OrdenVentaController::class, 'listado'])->name("orden_ventas.listado");
-    Route::put("orden_ventas/aprobar/{devolucion_stock}", [OrdenVentaController::class, 'aprobar'])->name("orden_ventas.aprobar");
+    Route::put("orden_ventas/aprobar/{orden_venta}", [OrdenVentaController::class, 'aprobar'])->name("orden_ventas.aprobar");
     Route::resource("orden_ventas", OrdenVentaController::class)->only(
-        ["index", "store", "edit", "show", "update", "destroy"]
+        ["store", "edit", "show", "update", "destroy"]
+    );
+
+    // CUENTAS POR COBRAR
+    Route::get("cuenta_cobrars/api", [CuentaCobrarController::class, 'api'])->name("cuenta_cobrars.api");
+    Route::get("cuenta_cobrars/paginado", [CuentaCobrarController::class, 'paginado'])->name("cuenta_cobrars.paginado");
+    Route::get("cuenta_cobrars/listado", [CuentaCobrarController::class, 'listado'])->name("cuenta_cobrars.listado");
+    Route::put("cuenta_cobrars/pago/{cuenta_cobrar}", [CuentaCobrarController::class, 'pago'])->name("orden_ventas.pago");
+    Route::resource("cuenta_cobrars", CuentaCobrarController::class)->only(
+        ["store", "edit", "show", "update", "destroy"]
     );
 
     // REPORTES
