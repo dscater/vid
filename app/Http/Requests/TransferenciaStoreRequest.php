@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\TransferenciaDetalleRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TransferenciaStoreRequest extends FormRequest
@@ -11,7 +12,7 @@ class TransferenciaStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,30 @@ class TransferenciaStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "sucursal_id" => "required",
+            "sucursal_destino" => "required",
+            "user_sol" => "required",
+            "user_ap" => "required",
+            "observaciones" => "nullable",
+            "cantidad_total" => "required",
+            "fecha" => "required|date",
+            "hora" => "required",
+            "total" => "required",
+            "transferencia_detalles" => ["required", new TransferenciaDetalleRule()],
+            "eliminados_detalles" => "nullable",
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            "sucursal_id" => "Debes completar este campo",
+            "fecha" => "Debes completar este campo",
+            "hora" => "Debes completar este campo",
+            "observaciones" => "Debes completar este campo",
+            "cantidad_total" => "Debes completar este campo",
+            "total" => "Debes completar este campo",
+            "transferencia_detalles" => "Debes agregar al menos 1 producto",
         ];
     }
 }

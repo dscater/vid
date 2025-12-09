@@ -19,6 +19,8 @@ return new class extends Migration
             $table->unsignedBigInteger("sucursal_destino");
             $table->unsignedBigInteger("user_sol");
             $table->unsignedBigInteger("user_ap");
+            $table->double("cantidad_total", 8, 2);
+            $table->double("cantidad_total_v", 8, 2);
             $table->date("fecha");
             $table->time("hora");
             $table->text("observaciones");

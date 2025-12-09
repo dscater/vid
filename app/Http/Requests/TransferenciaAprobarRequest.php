@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\TransferenciaDetalleVerificadoRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TransferenciaAprobarRequest extends FormRequest
@@ -11,7 +12,7 @@ class TransferenciaAprobarRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,13 @@ class TransferenciaAprobarRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "verificado" => "required",
+            "transferencia_detalles" => ["required", new TransferenciaDetalleVerificadoRule()],
         ];
+    }
+
+    public function messages(): array
+    {
+        return [];
     }
 }

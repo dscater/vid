@@ -8,5 +8,28 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TransferenciaDetalle extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+
+    protected $fillable = [
+        "transferencia_id",
+        "producto_id",
+        "cantidad",
+        "cantidad_fisica",
+        "costo",
+        "subtotal",
+        "verificado",
+        "sucursal_ajuste",
+        "motivo",
+    ];
+
+
+    public function transferencia()
+    {
+        return $this->belongsTo(Transferencia::class);
+    }
+
+    public function producto()
+    {
+        return $this->belongsTo(Producto::class);
+    }
 }

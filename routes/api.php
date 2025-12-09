@@ -20,6 +20,7 @@ use App\Http\Controllers\SolicitudIngresoController;
 use App\Http\Controllers\SubCategoriaController;
 use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\SucursalProductoController;
+use App\Http\Controllers\TransferenciaController;
 use App\Http\Controllers\UnidadMedidaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UsuarioController;
@@ -200,6 +201,16 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::resource("proformas", ProformaController::class)->only(
         ["store", "edit", "show", "update", "destroy"]
     );
+
+    // TRANSFERENCIAS
+    Route::get("transferencias/api", [TransferenciaController::class, 'api'])->name("transferencias.api");
+    Route::get("transferencias/paginado", [TransferenciaController::class, 'paginado'])->name("transferencias.paginado");
+    Route::get("transferencias/listado", [TransferenciaController::class, 'listado'])->name("transferencias.listado");
+    Route::put("transferencias/aprobar/{transferencia}", [TransferenciaController::class, 'aprobar'])->name("transferencias.aprobar");
+    Route::resource("transferencias", TransferenciaController::class)->only(
+        ["store", "edit", "show", "update", "destroy"]
+    );
+
 
     // REPORTES
     Route::get('reportes/r_usuarios', [ReporteController::class, 'r_usuarios'])->name("reportes.r_usuarios");
