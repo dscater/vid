@@ -12,6 +12,7 @@ use App\Http\Controllers\OrdenSalidaController;
 use App\Http\Controllers\OrdenVentaController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProformaController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\RoleController;
@@ -188,6 +189,15 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get("cuenta_cobrars/listado", [CuentaCobrarController::class, 'listado'])->name("cuenta_cobrars.listado");
     Route::put("cuenta_cobrars/pago/{cuenta_cobrar}", [CuentaCobrarController::class, 'pago'])->name("orden_ventas.pago");
     Route::resource("cuenta_cobrars", CuentaCobrarController::class)->only(
+        ["store", "edit", "show", "update", "destroy"]
+    );
+
+    // PROFORMAS
+    Route::get("proformas/api", [ProformaController::class, 'api'])->name("proformas.api");
+    Route::get("proformas/paginado", [ProformaController::class, 'paginado'])->name("proformas.paginado");
+    Route::get("proformas/listado", [ProformaController::class, 'listado'])->name("proformas.listado");
+    Route::put("proformas/aprobar/{orden_venta}", [ProformaController::class, 'aprobar'])->name("proformas.aprobar");
+    Route::resource("proformas", ProformaController::class)->only(
         ["store", "edit", "show", "update", "destroy"]
     );
 

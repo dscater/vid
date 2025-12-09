@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\OrdenVentaDetalleRule;
+use App\Rules\ProformaDetalleRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class OrdenVentaStoreRequest extends FormRequest
+class ProformaStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,16 +31,14 @@ class OrdenVentaStoreRequest extends FormRequest
             "cantidad_total" => "required",
             "forma_pago" => "required",
             "cs_f" => "required",
-            "cancelado" => "required|decimal:0,2",
-            "cambio" => "nullable|decimal:0,2",
+            // "cancelado" => "required|decimal:0,2",
+            // "cambio" => "nullable|decimal:0,2",
             "total" => "required",
             "total_st" => "required",
             "solicitud_descuento" => "nullable",
-            "solicitud_sw" => "nullable",
-            "monto_solicitud" => "nullable",
             "descuento" => "nullable",
             "total_f" => "required",
-            "orden_venta_detalles" => ["required", new OrdenVentaDetalleRule()],
+            "proforma_detalles" => ["required", new ProformaDetalleRule()],
             "eliminados_detalles" => "nullable",
         ];
     }
@@ -61,7 +59,7 @@ class OrdenVentaStoreRequest extends FormRequest
             "cantidad_total.required" => "Debes completar este campo",
             "total.required" => "No se pudo obtener el TOTAL de Orden de Venta",
             "total_f.required" => "No se pudo obtener el TOTAL de Orden de Venta",
-            "orden_venta_detalles.required" => "Debes agregar al menos 1 producto",
+            "proforma_detalles.required" => "Debes agregar al menos 1 producto",
         ];
     }
 }

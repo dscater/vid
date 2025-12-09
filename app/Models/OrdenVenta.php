@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 
 class OrdenVenta extends Model
 {
@@ -35,7 +36,14 @@ class OrdenVenta extends Model
         "user_id",
     ];
 
-    protected $appends = ["fecha_t", "hora_t", "fecha_c"];
+    protected $appends = ["fecha_t", "hora_t", "fecha_c", "fecha_ct"];
+
+    public function getFechaCtAttribute()
+    {
+        $dt = Carbon::parse($this->fecha . ' ' . $this->hora);
+        return $dt->translatedFormat('d \d\e F \d\e Y');
+    }
+
 
     public function getFechaCAttribute()
     {

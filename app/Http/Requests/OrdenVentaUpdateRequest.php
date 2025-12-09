@@ -59,8 +59,8 @@ class OrdenVentaUpdateRequest extends FormRequest
             "cambio.decimal" => "Debes ingresar un valor númerico con hasta 2 decimales",
             "observaciones.required" => "Debes completar este campo",
             "cantidad_total.required" => "Debes completar este campo",
-            "total.required" => "No se puedo obtener el TOTAL de Orden de Venta",
-            "total_f.required" => "No se puedo obtener el TOTAL de Orden de Venta",
+            "total.required" => "No se pudo obtener el TOTAL de Orden de Venta",
+            "total_f.required" => "No se pudo obtener el TOTAL de Orden de Venta",
             "orden_venta_detalles.required" => "Debes agregar al menos 1 producto",
         ];
     }
