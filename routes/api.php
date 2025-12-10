@@ -5,7 +5,9 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ConfiguracionController;
 use App\Http\Controllers\CuentaCobrarController;
+use App\Http\Controllers\DevolucionClienteController;
 use App\Http\Controllers\DevolucionStockController;
+use App\Http\Controllers\GastoController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\OrdenSalidaController;
@@ -148,6 +150,14 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
         ["store", "edit", "show", "update", "destroy"]
     );
 
+    // GASTOS
+    Route::get("gastos/api", [GastoController::class, 'api'])->name("gastos.api");
+    Route::get("gastos/paginado", [GastoController::class, 'paginado'])->name("gastos.paginado");
+    Route::get("gastos/listado", [GastoController::class, 'listado'])->name("gastos.listado");
+    Route::resource("gastos", GastoController::class)->only(
+        ["store", "edit", "show", "update", "destroy"]
+    );
+
     // SOLICITUD DE INGRESOS
     Route::get("solicitud_ingresos/api", [SolicitudIngresoController::class, 'api'])->name("solicitud_ingresos.api");
     Route::get("solicitud_ingresos/paginado", [SolicitudIngresoController::class, 'paginado'])->name("solicitud_ingresos.paginado");
@@ -211,6 +221,14 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
         ["store", "edit", "show", "update", "destroy"]
     );
 
+    // DEVOLUCIÓN DE CLIENTES
+    Route::get("devolucion_clientes/api", [DevolucionClienteController::class, 'api'])->name("devolucion_clientes.api");
+    Route::get("devolucion_clientes/paginado", [DevolucionClienteController::class, 'paginado'])->name("devolucion_clientes.paginado");
+    Route::get("devolucion_clientes/listado", [DevolucionClienteController::class, 'listado'])->name("devolucion_clientes.listado");
+    Route::put("devolucion_clientes/aprobar/{devolucion_stock}", [DevolucionClienteController::class, 'aprobar'])->name("devolucion_clientes.aprobar");
+    Route::resource("devolucion_clientes", DevolucionClienteController::class)->only(
+        ["store", "edit", "show", "update", "destroy"]
+    );
 
     // REPORTES
     Route::get('reportes/r_usuarios', [ReporteController::class, 'r_usuarios'])->name("reportes.r_usuarios");

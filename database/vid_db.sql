@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 09-12-2025 a las 21:54:32
+-- Tiempo de generación: 10-12-2025 a las 14:13:33
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.2.22
 
@@ -196,6 +196,14 @@ CREATE TABLE `devolucion_clientes` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `devolucion_clientes`
+--
+
+INSERT INTO `devolucion_clientes` (`id`, `sucursal_id`, `cliente_id`, `cantidad_total`, `total`, `fecha`, `hora`, `observaciones`, `user_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(2, 2, 1, 1, 300.00, '2025-12-10', '09:47:00', '', 1, '2025-12-10 13:55:31', '2025-12-10 13:48:59', '2025-12-10 13:55:31'),
+(3, 2, 2, 1, 300.00, '2025-12-10', '09:55:00', '', 1, NULL, '2025-12-10 13:55:46', '2025-12-10 13:55:46');
+
 -- --------------------------------------------------------
 
 --
@@ -212,6 +220,14 @@ CREATE TABLE `devolucion_cliente_detalles` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `devolucion_cliente_detalles`
+--
+
+INSERT INTO `devolucion_cliente_detalles` (`id`, `devolucion_cliente_id`, `producto_id`, `cantidad`, `costo`, `subtotal`, `created_at`, `updated_at`) VALUES
+(1, 2, 3, 1, 300.00, 300.00, '2025-12-10 13:48:59', '2025-12-10 13:48:59'),
+(2, 3, 3, 1, 300.00, 300.00, '2025-12-10 13:55:46', '2025-12-10 13:55:46');
 
 -- --------------------------------------------------------
 
@@ -313,6 +329,13 @@ CREATE TABLE `gastos` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `gastos`
+--
+
+INSERT INTO `gastos` (`id`, `descripcion`, `monto`, `fecha`, `hora`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 'GASTO 1', 250.00, '2025-12-10', '10:07:00', NULL, '2025-12-10 14:07:36', '2025-12-10 14:09:23');
 
 -- --------------------------------------------------------
 
@@ -458,7 +481,13 @@ INSERT INTO `historial_accions` (`id`, `user_id`, `accion`, `descripcion`, `dato
 (115, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UNA PROFORMA', '{\"id\": 3, \"nro\": 1, \"cs_f\": \"CON FACTURA\", \"hora\": \"16:25:00\", \"fecha\": \"2025-12-09\", \"total\": \"3870.00\", \"codigo\": \"PF.1\", \"total_f\": \"3850.00\", \"user_id\": 1, \"total_st\": \"3870.00\", \"descuento\": \"20.00\", \"cliente_id\": 1, \"created_at\": \"2025-12-09T20:30:52.000000Z\", \"deleted_at\": null, \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-09T20:30:52.000000Z\", \"sucursal_id\": 2, \"observaciones\": null, \"cantidad_total\": 12, \"proforma_detalles\": [{\"id\": 1, \"precio\": \"300.00\", \"cantidad\": 6, \"subtotal\": \"1800.00\", \"descuento\": \"0.00\", \"created_at\": \"2025-12-09T20:30:52.000000Z\", \"deleted_at\": null, \"subtotal_f\": \"1800.00\", \"updated_at\": \"2025-12-09T20:30:52.000000Z\", \"producto_id\": 3, \"proforma_id\": 3, \"unidad_medida_id\": 1}, {\"id\": 2, \"precio\": \"345.00\", \"cantidad\": 6, \"subtotal\": \"2070.00\", \"descuento\": \"0.00\", \"created_at\": \"2025-12-09T20:30:52.000000Z\", \"deleted_at\": null, \"subtotal_f\": \"2070.00\", \"updated_at\": \"2025-12-09T20:30:52.000000Z\", \"producto_id\": 4, \"proforma_id\": 3, \"unidad_medida_id\": 2}], \"solicitud_descuento\": 1}', '{\"id\": 3, \"nro\": 1, \"cs_f\": \"CON FACTURA\", \"hora\": \"16:25:00\", \"fecha\": \"2025-12-09\", \"total\": 5250, \"codigo\": \"PF.1\", \"total_f\": 5230, \"user_id\": 1, \"total_st\": 5250, \"descuento\": \"20.00\", \"cliente_id\": 1, \"created_at\": \"2025-12-09T20:30:52.000000Z\", \"deleted_at\": null, \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-09T21:15:52.000000Z\", \"sucursal_id\": 2, \"observaciones\": null, \"cantidad_total\": 16, \"proforma_detalles\": [{\"id\": 1, \"precio\": \"300.00\", \"cantidad\": 6, \"subtotal\": \"1800.00\", \"descuento\": \"0.00\", \"created_at\": \"2025-12-09T20:30:52.000000Z\", \"deleted_at\": null, \"subtotal_f\": \"1800.00\", \"updated_at\": \"2025-12-09T20:30:52.000000Z\", \"producto_id\": 3, \"proforma_id\": 3, \"unidad_medida_id\": 1}, {\"id\": 2, \"precio\": \"345.00\", \"cantidad\": 10, \"subtotal\": \"3450.00\", \"descuento\": \"0.00\", \"created_at\": \"2025-12-09T20:30:52.000000Z\", \"deleted_at\": null, \"subtotal_f\": \"3450.00\", \"updated_at\": \"2025-12-09T21:15:52.000000Z\", \"producto_id\": 4, \"proforma_id\": 3, \"unidad_medida_id\": 2}], \"solicitud_descuento\": 1}', 'PROFORMA', '2025-12-09', '17:15:52', '2025-12-09 21:15:52', '2025-12-09 21:15:52'),
 (116, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA TRANSFERENCIA', '{\"id\": 3, \"nro\": 1, \"hora\": \"17:44\", \"fecha\": \"2025-12-09\", \"codigo\": \"T.1\", \"estado\": \"PENDIENTE\", \"user_ap\": 16, \"user_sol\": 15, \"created_at\": \"2025-12-09T21:45:57.000000Z\", \"updated_at\": \"2025-12-09T21:45:57.000000Z\", \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 2, \"cantidad_total_v\": 2, \"sucursal_destino\": 3}', NULL, 'TRANSFERENCIA', '2025-12-09', '17:45:57', '2025-12-09 21:45:57', '2025-12-09 21:45:57'),
 (117, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UNA TRANSFERENCIA', '{\"id\": 3, \"nro\": 1, \"hora\": \"17:44:00\", \"fecha\": \"2025-12-09\", \"codigo\": \"T.1\", \"estado\": \"PENDIENTE\", \"user_ap\": 16, \"user_sol\": 15, \"created_at\": \"2025-12-09T21:45:57.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-09T21:45:57.000000Z\", \"verificado\": 0, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 2, \"cantidad_total_v\": 2, \"sucursal_destino\": 3, \"transferencia_detalles\": [{\"id\": 1, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 2, \"subtotal\": \"600.00\", \"created_at\": \"2025-12-09T21:45:57.000000Z\", \"updated_at\": \"2025-12-09T21:45:57.000000Z\", \"verificado\": 0, \"producto_id\": 3, \"cantidad_fisica\": 2, \"sucursal_ajuste\": null, \"transferencia_id\": 3}]}', '{\"id\": 3, \"nro\": 1, \"hora\": \"17:44:00\", \"fecha\": \"2025-12-09\", \"codigo\": \"T.1\", \"estado\": \"PENDIENTE\", \"user_ap\": 16, \"user_sol\": 15, \"created_at\": \"2025-12-09T21:45:57.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-09T21:52:06.000000Z\", \"verificado\": 0, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 3, \"cantidad_total_v\": 3, \"sucursal_destino\": 3, \"transferencia_detalles\": [{\"id\": 1, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 2, \"subtotal\": \"600.00\", \"created_at\": \"2025-12-09T21:45:57.000000Z\", \"updated_at\": \"2025-12-09T21:45:57.000000Z\", \"verificado\": 0, \"producto_id\": 3, \"cantidad_fisica\": 2, \"sucursal_ajuste\": null, \"transferencia_id\": 3}, {\"id\": 2, \"costo\": \"345.00\", \"motivo\": null, \"cantidad\": 1, \"subtotal\": \"345.00\", \"created_at\": \"2025-12-09T21:52:06.000000Z\", \"updated_at\": \"2025-12-09T21:52:06.000000Z\", \"verificado\": 0, \"producto_id\": 4, \"cantidad_fisica\": 1, \"sucursal_ajuste\": null, \"transferencia_id\": 3}]}', 'TRANSFERENCIA', '2025-12-09', '17:52:06', '2025-12-09 21:52:06', '2025-12-09 21:52:06'),
-(118, 1, 'MODIFICACIÓN', 'EL USUARIO admin APROBO UNA TRANSFERENCIA', '{\"id\": 3, \"nro\": 1, \"hora\": \"17:44:00\", \"fecha\": \"2025-12-09\", \"codigo\": \"T.1\", \"estado\": \"PENDIENTE\", \"user_ap\": 16, \"user_sol\": 15, \"created_at\": \"2025-12-09T21:45:57.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-09T21:52:06.000000Z\", \"verificado\": 0, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 3, \"cantidad_total_v\": 3, \"sucursal_destino\": 3, \"transferencia_detalles\": [{\"id\": 1, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 2, \"subtotal\": \"600.00\", \"created_at\": \"2025-12-09T21:45:57.000000Z\", \"updated_at\": \"2025-12-09T21:45:57.000000Z\", \"verificado\": 0, \"producto_id\": 3, \"cantidad_fisica\": 2, \"sucursal_ajuste\": null, \"transferencia_id\": 3}, {\"id\": 2, \"costo\": \"345.00\", \"motivo\": null, \"cantidad\": 1, \"subtotal\": \"345.00\", \"created_at\": \"2025-12-09T21:52:06.000000Z\", \"updated_at\": \"2025-12-09T21:52:06.000000Z\", \"verificado\": 0, \"producto_id\": 4, \"cantidad_fisica\": 1, \"sucursal_ajuste\": null, \"transferencia_id\": 3}]}', '{\"id\": 3, \"nro\": 1, \"hora\": \"17:44:00\", \"fecha\": \"2025-12-09\", \"codigo\": \"T.1\", \"estado\": \"APROBADO\", \"user_ap\": 16, \"user_sol\": 15, \"created_at\": \"2025-12-09T21:45:57.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-09T21:53:43.000000Z\", \"verificado\": 1, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 3, \"cantidad_total_v\": 3, \"sucursal_destino\": 3, \"transferencia_detalles\": [{\"id\": 1, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 2, \"subtotal\": \"600.00\", \"created_at\": \"2025-12-09T21:45:57.000000Z\", \"updated_at\": \"2025-12-09T21:53:43.000000Z\", \"verificado\": 1, \"producto_id\": 3, \"cantidad_fisica\": 2, \"sucursal_ajuste\": null, \"transferencia_id\": 3}, {\"id\": 2, \"costo\": \"345.00\", \"motivo\": null, \"cantidad\": 1, \"subtotal\": \"345.00\", \"created_at\": \"2025-12-09T21:52:06.000000Z\", \"updated_at\": \"2025-12-09T21:53:43.000000Z\", \"verificado\": 1, \"producto_id\": 4, \"cantidad_fisica\": 1, \"sucursal_ajuste\": null, \"transferencia_id\": 3}]}', 'TRANSFERENCIA', '2025-12-09', '17:53:43', '2025-12-09 21:53:43', '2025-12-09 21:53:43');
+(118, 1, 'MODIFICACIÓN', 'EL USUARIO admin APROBO UNA TRANSFERENCIA', '{\"id\": 3, \"nro\": 1, \"hora\": \"17:44:00\", \"fecha\": \"2025-12-09\", \"codigo\": \"T.1\", \"estado\": \"PENDIENTE\", \"user_ap\": 16, \"user_sol\": 15, \"created_at\": \"2025-12-09T21:45:57.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-09T21:52:06.000000Z\", \"verificado\": 0, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 3, \"cantidad_total_v\": 3, \"sucursal_destino\": 3, \"transferencia_detalles\": [{\"id\": 1, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 2, \"subtotal\": \"600.00\", \"created_at\": \"2025-12-09T21:45:57.000000Z\", \"updated_at\": \"2025-12-09T21:45:57.000000Z\", \"verificado\": 0, \"producto_id\": 3, \"cantidad_fisica\": 2, \"sucursal_ajuste\": null, \"transferencia_id\": 3}, {\"id\": 2, \"costo\": \"345.00\", \"motivo\": null, \"cantidad\": 1, \"subtotal\": \"345.00\", \"created_at\": \"2025-12-09T21:52:06.000000Z\", \"updated_at\": \"2025-12-09T21:52:06.000000Z\", \"verificado\": 0, \"producto_id\": 4, \"cantidad_fisica\": 1, \"sucursal_ajuste\": null, \"transferencia_id\": 3}]}', '{\"id\": 3, \"nro\": 1, \"hora\": \"17:44:00\", \"fecha\": \"2025-12-09\", \"codigo\": \"T.1\", \"estado\": \"APROBADO\", \"user_ap\": 16, \"user_sol\": 15, \"created_at\": \"2025-12-09T21:45:57.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-09T21:53:43.000000Z\", \"verificado\": 1, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 3, \"cantidad_total_v\": 3, \"sucursal_destino\": 3, \"transferencia_detalles\": [{\"id\": 1, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 2, \"subtotal\": \"600.00\", \"created_at\": \"2025-12-09T21:45:57.000000Z\", \"updated_at\": \"2025-12-09T21:53:43.000000Z\", \"verificado\": 1, \"producto_id\": 3, \"cantidad_fisica\": 2, \"sucursal_ajuste\": null, \"transferencia_id\": 3}, {\"id\": 2, \"costo\": \"345.00\", \"motivo\": null, \"cantidad\": 1, \"subtotal\": \"345.00\", \"created_at\": \"2025-12-09T21:52:06.000000Z\", \"updated_at\": \"2025-12-09T21:53:43.000000Z\", \"verificado\": 1, \"producto_id\": 4, \"cantidad_fisica\": 1, \"sucursal_ajuste\": null, \"transferencia_id\": 3}]}', 'TRANSFERENCIA', '2025-12-09', '17:53:43', '2025-12-09 21:53:43', '2025-12-09 21:53:43'),
+(119, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA DEVOLUCIÓN DE CLIENTES', '{\"id\": 2, \"hora\": \"09:47\", \"fecha\": \"2025-12-10\", \"total\": 300, \"user_id\": 1, \"cliente_id\": 1, \"created_at\": \"2025-12-10T13:48:59.000000Z\", \"updated_at\": \"2025-12-10T13:48:59.000000Z\", \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 1}', NULL, 'DEVOLUCIÓN DE CLIENTES', '2025-12-10', '09:48:59', '2025-12-10 13:48:59', '2025-12-10 13:48:59'),
+(120, 1, 'ELIMINACIÓN', 'EL USUARIO admin ELIMINÓ UNA DEVOLUCIÓN DE CLIENTES', '{\"id\": 2, \"hora\": \"09:47:00\", \"fecha\": \"2025-12-10\", \"total\": \"300.00\", \"user_id\": 1, \"cliente_id\": 1, \"created_at\": \"2025-12-10T13:48:59.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-10T13:48:59.000000Z\", \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 1, \"devolucion_cliente_detalles\": [{\"id\": 1, \"costo\": \"300.00\", \"cantidad\": 1, \"subtotal\": \"300.00\", \"created_at\": \"2025-12-10T13:48:59.000000Z\", \"updated_at\": \"2025-12-10T13:48:59.000000Z\", \"producto_id\": 3, \"devolucion_cliente_id\": 2}]}', NULL, 'DEVOLUCIÓN DE CLIENTES', '2025-12-10', '09:55:31', '2025-12-10 13:55:31', '2025-12-10 13:55:31'),
+(121, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA DEVOLUCIÓN DE CLIENTES', '{\"id\": 3, \"hora\": \"09:55\", \"fecha\": \"2025-12-10\", \"total\": 300, \"user_id\": 1, \"cliente_id\": 2, \"created_at\": \"2025-12-10T13:55:46.000000Z\", \"updated_at\": \"2025-12-10T13:55:46.000000Z\", \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 1}', NULL, 'DEVOLUCIÓN DE CLIENTES', '2025-12-10', '09:55:46', '2025-12-10 13:55:46', '2025-12-10 13:55:46'),
+(122, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UN GASTO', '{\"id\": 1, \"hora\": \"10:07\", \"fecha\": \"2025-12-10\", \"monto\": \"200\", \"created_at\": \"2025-12-10T14:07:36.000000Z\", \"updated_at\": \"2025-12-10T14:07:36.000000Z\", \"descripcion\": \"GASTO 1\"}', NULL, 'GASTOS', '2025-12-10', '10:07:36', '2025-12-10 14:07:36', '2025-12-10 14:07:36'),
+(123, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN GASTO', '{\"id\": 1, \"hora\": \"10:07:00\", \"fecha\": \"2025-12-10\", \"monto\": \"200.00\", \"created_at\": \"2025-12-10T14:07:36.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-10T14:07:36.000000Z\", \"descripcion\": \"GASTO 1\"}', '{\"id\": 1, \"hora\": \"10:07:00\", \"fecha\": \"2025-12-10\", \"monto\": \"250\", \"created_at\": \"2025-12-10T14:07:36.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-10T14:09:07.000000Z\", \"descripcion\": \"GASTO 1\"}', 'GASTOS', '2025-12-10', '10:09:07', '2025-12-10 14:09:07', '2025-12-10 14:09:07'),
+(124, 1, 'ELIMINACIÓN', 'EL USUARIO admin ELIMINÓ UN GASTO', '{\"id\": 1, \"hora\": \"10:07:00\", \"fecha\": \"2025-12-10\", \"monto\": \"250.00\", \"created_at\": \"2025-12-10T14:07:36.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-10T14:09:07.000000Z\", \"descripcion\": \"GASTO 1\"}', NULL, 'GASTOS', '2025-12-10', '10:09:23', '2025-12-10 14:09:23', '2025-12-10 14:09:23');
 
 -- --------------------------------------------------------
 
@@ -534,7 +563,10 @@ INSERT INTO `kardex_productos` (`id`, `sucursal_id`, `tipo_registro`, `registro_
 (44, 2, 'TRANSFERENCIA', 1, 'TransferenciaDetalle', 3, 'EGRESO POR TRANSFERENCIA', 300.00, 'EGRESO', NULL, 2, 35, 300.00, NULL, 600.00, 10500.00, '2025-12-09', 1, '2025-12-09 21:53:43', '2025-12-09 21:53:43'),
 (45, 3, 'TRANSFERENCIA', 1, 'TransferenciaDetalle', 3, 'INGRESO POR TRANSFERENCIA', 300.00, 'INGRESO', 2, NULL, 6, 300.00, 600.00, NULL, 1800.00, '2025-12-09', 1, '2025-12-09 21:53:43', '2025-12-09 21:53:43'),
 (46, 2, 'TRANSFERENCIA', 2, 'TransferenciaDetalle', 4, 'EGRESO POR TRANSFERENCIA', 345.00, 'EGRESO', NULL, 1, 37, 345.00, NULL, 345.00, 12765.00, '2025-12-09', 1, '2025-12-09 21:53:43', '2025-12-09 21:53:43'),
-(47, 3, 'TRANSFERENCIA', 2, 'TransferenciaDetalle', 4, 'INGRESO POR TRANSFERENCIA', 345.00, 'INGRESO', 1, NULL, 4, 345.00, 345.00, NULL, 1380.00, '2025-12-09', 1, '2025-12-09 21:53:43', '2025-12-09 21:53:43');
+(47, 3, 'TRANSFERENCIA', 2, 'TransferenciaDetalle', 4, 'INGRESO POR TRANSFERENCIA', 345.00, 'INGRESO', 1, NULL, 4, 345.00, 345.00, NULL, 1380.00, '2025-12-09', 1, '2025-12-09 21:53:43', '2025-12-09 21:53:43'),
+(48, 2, 'DEVOLUCIÓN DE CLIENTES', 1, 'DevolucionClienteDetalle', 3, 'INGRESO POR DEVOLUCIÓN DE CLIENTES', 300.00, 'INGRESO', 1, NULL, 36, 300.00, 300.00, NULL, 10800.00, '2025-12-10', 1, '2025-12-10 13:48:59', '2025-12-10 13:48:59'),
+(49, 2, 'DEVOLUCIÓN DE CLIENTES', 1, 'DevolucionClienteDetalle', 3, 'EGRESO POR ELIMINACIÓN DE DEVOLUCIÓN DE CLIENTES', 300.00, 'EGRESO', NULL, 1, 35, 300.00, NULL, 300.00, 10500.00, '2025-12-10', 1, '2025-12-10 13:55:31', '2025-12-10 13:55:31'),
+(50, 2, 'DEVOLUCIÓN DE CLIENTES', 2, 'DevolucionClienteDetalle', 3, 'INGRESO POR DEVOLUCIÓN DE CLIENTES', 300.00, 'INGRESO', 1, NULL, 36, 300.00, 300.00, NULL, 10800.00, '2025-12-10', 1, '2025-12-10 13:55:46', '2025-12-10 13:55:46');
 
 -- --------------------------------------------------------
 
@@ -1218,7 +1250,7 @@ CREATE TABLE `sucursal_productos` (
 INSERT INTO `sucursal_productos` (`id`, `sucursal_id`, `producto_id`, `cantidad_ideal`, `cantidad_minima`, `stock_actual`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (1, 1, 3, 5, 5, 96, NULL, '2025-12-05 15:07:00', '2025-12-08 20:46:33'),
 (2, 1, 4, 0, 0, 64, NULL, '2025-12-05 15:07:00', '2025-12-08 20:46:33'),
-(4, 2, 3, 3, 3, 35, NULL, '2025-12-05 16:08:14', '2025-12-09 21:53:43'),
+(4, 2, 3, 3, 3, 36, NULL, '2025-12-05 16:08:14', '2025-12-10 13:55:46'),
 (5, 2, 4, 2, 2, 37, NULL, '2025-12-05 16:14:58', '2025-12-09 21:53:43'),
 (6, 3, 3, 0, 0, 6, NULL, '2025-12-06 14:30:40', '2025-12-09 21:53:43'),
 (7, 3, 4, 0, 0, 4, NULL, '2025-12-06 14:31:33', '2025-12-09 21:53:43');
@@ -1683,13 +1715,13 @@ ALTER TABLE `cuenta_cobrar_detalles`
 -- AUTO_INCREMENT de la tabla `devolucion_clientes`
 --
 ALTER TABLE `devolucion_clientes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `devolucion_cliente_detalles`
 --
 ALTER TABLE `devolucion_cliente_detalles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `devolucion_stocks`
@@ -1713,19 +1745,19 @@ ALTER TABLE `documentos`
 -- AUTO_INCREMENT de la tabla `gastos`
 --
 ALTER TABLE `gastos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `historial_accions`
 --
 ALTER TABLE `historial_accions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
 -- AUTO_INCREMENT de la tabla `kardex_productos`
 --
 ALTER TABLE `kardex_productos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT de la tabla `marcas`
