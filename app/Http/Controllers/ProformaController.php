@@ -126,7 +126,7 @@ class ProformaController extends Controller
         $literal = $convertir->convertir($array_monto[0]);
         $literal .= " " . $array_monto[1];
         $literal = strtolower($literal);
-        $literal = ucfirst($literal) . "/100." . " Bolivianos";;
+        $literal = ucfirst($literal) . "/100." . " Bolivianos";
 
         return response()->JSON([
             "proforma" => $proforma->load(["proforma_detalles.producto:id,nombre", "proforma_detalles.unidad_medida:id,nombre", "cliente:id,razon_social,nit", "user:id,nombre,paterno,materno"]),

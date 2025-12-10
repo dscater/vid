@@ -20,7 +20,11 @@ class ClienteService
 
     public function listado(): Collection
     {
-        $clientes = Cliente::select("clientes.*")->get();
+        $clientes = Cliente::select("clientes.*");
+
+        $clientes->where("estado", 1);
+
+        $clientes = $clientes->get();
         return $clientes;
     }
     /**

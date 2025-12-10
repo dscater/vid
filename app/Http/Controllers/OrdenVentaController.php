@@ -126,7 +126,7 @@ class OrdenVentaController extends Controller
         $literal = $convertir->convertir($array_monto[0]);
         $literal .= " " . $array_monto[1];
         $literal = strtolower($literal);
-        $literal = ucfirst($literal) . "/100." . " Bolivianos";;
+        $literal = ucfirst($literal) . "/100." . " Bolivianos";
 
         return response()->JSON([
             "orden_venta" => $orden_venta->load(["orden_venta_detalles.producto:id,nombre", "orden_venta_detalles.unidad_medida:id,nombre", "cliente:id,razon_social,nit", "user:id,nombre,paterno,materno"]),

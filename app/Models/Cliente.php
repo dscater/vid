@@ -24,6 +24,7 @@ class Cliente extends Model
         "latitud",
         "longitud",
         "ciudad",
+        "categoria",
         "contactos",
         "estado",
     ];

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Producto;
+use App\Models\Sucursal;
 use App\Models\SucursalProducto;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
@@ -23,22 +24,51 @@ class SucursalProductoService
      */
     public function listado($sucursal_id = -1, bool $con_stock = false): Collection
     {
-        $sucursal_productos = SucursalProducto::with(["sucursal", "producto"])->select("sucursal_productos.*");
-
-        if (Auth::user()->sucursals_todo == 0) {
-            $sucursal_productos->where("sucursal_id", Auth::user()->sucursal_id);
-        }
-
-        if ($sucursal_id != -1) {
-            $sucursal_productos->where("sucursal_id", $sucursal_id);
-        }
-
-        if ($con_stock) {
-            $sucursal_productos->where("stock_actual", ">", 0)->get();
-        }
+        $sucursal_productos = Producto::leftJoin('sucursal_productos', function ($join) use ($sucursal_id) {
+            $join->on('sucursal_productos.producto_id', '=', 'productos.id')
+                ->where('sucursal_productos.sucursal_id', '=', $sucursal_id);
+        })
+            ->select(
+                "sucursal_productos.sucursal_id",
+                'productos.id',
+                'productos.codigo',
+                'productos.nombre',
+                DB::raw('COALESCE(sucursal_productos.stock_actual, 0) as stock_actual'),
+                DB::raw('COALESCE(sucursal_productos.cantidad_ideal, 0) as cantidad_ideal'),
+                DB::raw('COALESCE(sucursal_productos.cantidad_minima, 0) as cantidad_minima'),
+            );
 
         $sucursal_productos = $sucursal_productos->get();
         return $sucursal_productos;
+    }
+
+
+    public function listadoSucursales(): Collection
+    {
+        $id_sucursals = Sucursal::where("estado", 1)->pluck("id")->toArray();
+
+        $productos_por_sucursal = Producto::from('productos')
+            ->crossJoin('sucursals')
+            ->leftJoin('sucursal_productos as sp', function ($join) {
+                $join->on('sp.producto_id', '=', 'productos.id')
+                    ->on('sp.sucursal_id', '=', 'sucursals.id');
+            })
+            ->whereIn('sucursals.id', $id_sucursals)
+            ->selectRaw("
+        CONCAT(productos.id, '_', sucursals.id) AS id_c,
+        productos.id AS producto_id,
+        productos.codigo,
+        productos.nombre,
+        sucursals.id AS sucursal_id,
+        sucursals.nombre AS sucursal_nombre,
+        COALESCE(sp.stock_actual, 0) AS stock_actual,
+        COALESCE(sp.cantidad_ideal, 0) AS cantidad_ideal,
+        COALESCE(sp.cantidad_minima, 0) AS cantidad_minima
+    ")
+            ->get();
+
+
+        return $productos_por_sucursal;
     }
 
     /**
@@ -73,6 +103,7 @@ class SucursalProductoService
                 ->where('sucursal_productos.sucursal_id', '=', $sucursal_id);
         })
             ->select(
+                "sucursal_productos.sucursal_id",
                 'productos.id',
                 'productos.codigo',
                 'productos.nombre',

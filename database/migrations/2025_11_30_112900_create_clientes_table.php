@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string("latitud");
             $table->string("longitud");
             $table->string("ciudad");
+            $table->string("categoria")->default("");
             $table->json("contactos")->nullable();
             $table->integer("estado")->default(1);
             $table->softDeletes();

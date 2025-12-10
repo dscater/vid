@@ -23,7 +23,10 @@ class CuentaCobrarService
 
     public function listado(): Collection
     {
-        $cuenta_cobrars = CuentaCobrar::select("cuenta_cobrars.*")->get();
+        $cuenta_cobrars = CuentaCobrar::select("cuenta_cobrars.*")
+            ->with(["orden_venta", "cliente", "cuenta_cobrar_detalles"]);
+
+        $cuenta_cobrars = $cuenta_cobrars->get();
         return $cuenta_cobrars;
     }
     /**

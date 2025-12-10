@@ -90,6 +90,7 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get("sucursal_productos/getSucursalProductos", [SucursalProductoController::class, 'getSucursalProductos'])->name("sucursal_productos.getSucursalProductos");
     Route::get("sucursal_productos/paginado", [SucursalProductoController::class, 'paginado'])->name("sucursal_productos.paginado");
     Route::get("sucursal_productos/listado", [SucursalProductoController::class, 'listado'])->name("sucursal_productos.listado");
+    Route::get("sucursal_productos/listadoSucursales", [SucursalProductoController::class, 'listadoSucursales'])->name("sucursal_productos.listadoSucursales");
     Route::put("sucursal_productos/{sucursal_producto}", [SucursalProductoController::class, 'update'])->name("sucursal_productos.update");
 
     // CATEGORIAS

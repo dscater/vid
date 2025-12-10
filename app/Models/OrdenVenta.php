@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
+use App\library\numero_a_letras\src\NumeroALetras;
 
 class OrdenVenta extends Model
 {
@@ -37,6 +38,18 @@ class OrdenVenta extends Model
     ];
 
     protected $appends = ["fecha_t", "hora_t", "fecha_c", "fecha_ct"];
+
+    public function getLiteralTxtAttribute()
+    {
+        $convertir = new NumeroALetras();
+        $array_monto = explode('.', $this->total_f);
+        $literal = $convertir->convertir($array_monto[0]);
+        $literal .= " " . $array_monto[1];
+        $literal = strtolower($literal);
+        $literal = ucfirst($literal) . "/100." . " Bolivianos";
+
+        return $literal;
+    }
 
     public function getFechaCtAttribute()
     {

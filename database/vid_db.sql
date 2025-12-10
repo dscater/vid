@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 10-12-2025 a las 14:13:33
+-- Tiempo de generación: 10-12-2025 a las 18:11:26
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.2.22
 
@@ -86,6 +86,7 @@ CREATE TABLE `clientes` (
   `latitud` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `longitud` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `ciudad` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `categoria` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `contactos` json DEFAULT NULL,
   `estado` int NOT NULL DEFAULT '1',
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -97,9 +98,9 @@ CREATE TABLE `clientes` (
 -- Volcado de datos para la tabla `clientes`
 --
 
-INSERT INTO `clientes` (`id`, `razon_social`, `tipo`, `nit`, `nombre_punto`, `nombre_prop`, `ci_prop`, `correo`, `cel`, `fono`, `dir`, `latitud`, `longitud`, `ciudad`, `contactos`, `estado`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'CLIENTE 1 S.A.', 'EMPRESA', '111111111111', 'PUNTO VENTA C 1', 'JUAN PEREZ', '121212121', 'juanperez@gmail.com', '6767676767', '22222', 'LOS PEDREGALES', '111111111', '11111111111', 'LA PAZ', '[{\"cel\": \"7777777\", \"fono\": \"6767676767\", \"nombre\": \"JUAN GONZALES\", \"observacion\": \"OBS. CONTACTO 1\"}, {\"cel\": \"7866786\", \"fono\": \"667567567\", \"nombre\": \"JORGE RAMIRES\", \"observacion\": null}]', 1, NULL, '2025-12-03 15:46:45', '2025-12-03 15:51:27'),
-(2, 'CLIENTE 2', 'PERSONA', '1111111111111', 'CLIENTE 2 PV', 'MARIA MAMANI', '23123123', NULL, '657756', '222', 'LOS PEDREAGLES1', '111', '2222', 'EL ALTO', '[{\"cel\": \"6757567\", \"fono\": \"222222\", \"nombre\": \"CONTACTO 1\", \"observacion\": null}]', 1, NULL, '2025-12-03 15:52:12', '2025-12-03 15:52:38');
+INSERT INTO `clientes` (`id`, `razon_social`, `tipo`, `nit`, `nombre_punto`, `nombre_prop`, `ci_prop`, `correo`, `cel`, `fono`, `dir`, `latitud`, `longitud`, `ciudad`, `categoria`, `contactos`, `estado`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 'CLIENTE 1 S.A.', 'EMPRESA', '111111111111', 'PUNTO VENTA C 1', 'JUAN PEREZ', '121212121', 'juanperez@gmail.com', '6767676767', '22222', 'LOS PEDREGALES', '111111111', '11111111111', 'LA PAZ', '', '[{\"cel\": \"7777777\", \"fono\": \"6767676767\", \"nombre\": \"JUAN GONZALES\", \"observacion\": \"OBS. CONTACTO 1\"}, {\"cel\": \"7866786\", \"fono\": \"667567567\", \"nombre\": \"JORGE RAMIRES\", \"observacion\": null}]', 1, NULL, '2025-12-03 15:46:45', '2025-12-03 15:51:27'),
+(2, 'CLIENTE 2', 'PERSONA', '1111111111111', 'CLIENTE 2 PV', 'MARIA MAMANI', '23123123', NULL, '657756', '222', 'LOS PEDREAGLES1', '111', '2222', 'EL ALTO', '', '[{\"cel\": \"6757567\", \"fono\": \"222222\", \"nombre\": \"CONTACTO 1\", \"observacion\": null}]', 1, NULL, '2025-12-03 15:52:12', '2025-12-10 16:51:14');
 
 -- --------------------------------------------------------
 
@@ -487,7 +488,9 @@ INSERT INTO `historial_accions` (`id`, `user_id`, `accion`, `descripcion`, `dato
 (121, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA DEVOLUCIÓN DE CLIENTES', '{\"id\": 3, \"hora\": \"09:55\", \"fecha\": \"2025-12-10\", \"total\": 300, \"user_id\": 1, \"cliente_id\": 2, \"created_at\": \"2025-12-10T13:55:46.000000Z\", \"updated_at\": \"2025-12-10T13:55:46.000000Z\", \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 1}', NULL, 'DEVOLUCIÓN DE CLIENTES', '2025-12-10', '09:55:46', '2025-12-10 13:55:46', '2025-12-10 13:55:46'),
 (122, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UN GASTO', '{\"id\": 1, \"hora\": \"10:07\", \"fecha\": \"2025-12-10\", \"monto\": \"200\", \"created_at\": \"2025-12-10T14:07:36.000000Z\", \"updated_at\": \"2025-12-10T14:07:36.000000Z\", \"descripcion\": \"GASTO 1\"}', NULL, 'GASTOS', '2025-12-10', '10:07:36', '2025-12-10 14:07:36', '2025-12-10 14:07:36'),
 (123, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN GASTO', '{\"id\": 1, \"hora\": \"10:07:00\", \"fecha\": \"2025-12-10\", \"monto\": \"200.00\", \"created_at\": \"2025-12-10T14:07:36.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-10T14:07:36.000000Z\", \"descripcion\": \"GASTO 1\"}', '{\"id\": 1, \"hora\": \"10:07:00\", \"fecha\": \"2025-12-10\", \"monto\": \"250\", \"created_at\": \"2025-12-10T14:07:36.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-10T14:09:07.000000Z\", \"descripcion\": \"GASTO 1\"}', 'GASTOS', '2025-12-10', '10:09:07', '2025-12-10 14:09:07', '2025-12-10 14:09:07'),
-(124, 1, 'ELIMINACIÓN', 'EL USUARIO admin ELIMINÓ UN GASTO', '{\"id\": 1, \"hora\": \"10:07:00\", \"fecha\": \"2025-12-10\", \"monto\": \"250.00\", \"created_at\": \"2025-12-10T14:07:36.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-10T14:09:07.000000Z\", \"descripcion\": \"GASTO 1\"}', NULL, 'GASTOS', '2025-12-10', '10:09:23', '2025-12-10 14:09:23', '2025-12-10 14:09:23');
+(124, 1, 'ELIMINACIÓN', 'EL USUARIO admin ELIMINÓ UN GASTO', '{\"id\": 1, \"hora\": \"10:07:00\", \"fecha\": \"2025-12-10\", \"monto\": \"250.00\", \"created_at\": \"2025-12-10T14:07:36.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-10T14:09:07.000000Z\", \"descripcion\": \"GASTO 1\"}', NULL, 'GASTOS', '2025-12-10', '10:09:23', '2025-12-10 14:09:23', '2025-12-10 14:09:23'),
+(125, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN CLIENTE', '{\"id\": 2, \"cel\": \"657756\", \"dir\": \"LOS PEDREAGLES1\", \"nit\": \"1111111111111\", \"fono\": \"222\", \"tipo\": \"PERSONA\", \"ciudad\": \"EL ALTO\", \"correo\": null, \"estado\": 1, \"ci_prop\": \"23123123\", \"latitud\": \"111\", \"longitud\": \"2222\", \"contactos\": [{\"cel\": \"6757567\", \"fono\": \"222222\", \"nombre\": \"CONTACTO 1\", \"observacion\": null}], \"created_at\": \"2025-12-03T15:52:12.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-03T15:52:38.000000Z\", \"nombre_prop\": \"MARIA MAMANI\", \"nombre_punto\": \"CLIENTE 2 PV\", \"razon_social\": \"CLIENTE 2\"}', '{\"id\": 2, \"cel\": \"657756\", \"dir\": \"LOS PEDREAGLES1\", \"nit\": \"1111111111111\", \"fono\": \"222\", \"tipo\": \"PERSONA\", \"ciudad\": \"EL ALTO\", \"correo\": null, \"estado\": \"0\", \"ci_prop\": \"23123123\", \"latitud\": \"111\", \"longitud\": \"2222\", \"contactos\": [{\"cel\": \"6757567\", \"fono\": \"222222\", \"nombre\": \"CONTACTO 1\", \"observacion\": null}], \"created_at\": \"2025-12-03T15:52:12.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-10T16:50:16.000000Z\", \"nombre_prop\": \"MARIA MAMANI\", \"nombre_punto\": \"CLIENTE 2 PV\", \"razon_social\": \"CLIENTE 2\"}', 'CLIENTES', '2025-12-10', '12:50:16', '2025-12-10 16:50:16', '2025-12-10 16:50:16'),
+(126, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN CLIENTE', '{\"id\": 2, \"cel\": \"657756\", \"dir\": \"LOS PEDREAGLES1\", \"nit\": \"1111111111111\", \"fono\": \"222\", \"tipo\": \"PERSONA\", \"ciudad\": \"EL ALTO\", \"correo\": null, \"estado\": 0, \"ci_prop\": \"23123123\", \"latitud\": \"111\", \"longitud\": \"2222\", \"contactos\": [{\"cel\": \"6757567\", \"fono\": \"222222\", \"nombre\": \"CONTACTO 1\", \"observacion\": null}], \"created_at\": \"2025-12-03T15:52:12.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-10T16:50:16.000000Z\", \"nombre_prop\": \"MARIA MAMANI\", \"nombre_punto\": \"CLIENTE 2 PV\", \"razon_social\": \"CLIENTE 2\"}', '{\"id\": 2, \"cel\": \"657756\", \"dir\": \"LOS PEDREAGLES1\", \"nit\": \"1111111111111\", \"fono\": \"222\", \"tipo\": \"PERSONA\", \"ciudad\": \"EL ALTO\", \"correo\": null, \"estado\": \"1\", \"ci_prop\": \"23123123\", \"latitud\": \"111\", \"longitud\": \"2222\", \"contactos\": [{\"cel\": \"6757567\", \"fono\": \"222222\", \"nombre\": \"CONTACTO 1\", \"observacion\": null}], \"created_at\": \"2025-12-03T15:52:12.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-10T16:51:14.000000Z\", \"nombre_prop\": \"MARIA MAMANI\", \"nombre_punto\": \"CLIENTE 2 PV\", \"razon_social\": \"CLIENTE 2\"}', 'CLIENTES', '2025-12-10', '12:51:14', '2025-12-10 16:51:14', '2025-12-10 16:51:14');
 
 -- --------------------------------------------------------
 
@@ -1751,7 +1754,7 @@ ALTER TABLE `gastos`
 -- AUTO_INCREMENT de la tabla `historial_accions`
 --
 ALTER TABLE `historial_accions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
 
 --
 -- AUTO_INCREMENT de la tabla `kardex_productos`

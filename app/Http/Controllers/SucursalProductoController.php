@@ -31,6 +31,13 @@ class SucursalProductoController extends Controller
         ]);
     }
 
+    public function listadoSucursales(Request $request): JsonResponse
+    {
+        return response()->JSON([
+            "sucursal_productos" => $this->sucursalProductoService->listadoSucursales()
+        ]);
+    }
+
     /**
      * Endpoint para obtener la lista de sucursal_productos paginado para data table
      *

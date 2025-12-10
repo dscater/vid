@@ -25,7 +25,10 @@ class ProformaService
 
     public function listado(): Collection
     {
-        $proformas = Proforma::select("proformas.*")->where("usuarios", 1)->get();
+        $proformas = Proforma::select("proformas.*")
+            ->with(["proforma_detalles.producto:id,nombre", "proforma_detalles.unidad_medida:id,nombre", "cliente:id,razon_social,nit", "user:id,nombre,paterno,materno"]);
+
+        $proformas = $proformas->get();
         return $proformas;
     }
     /**
