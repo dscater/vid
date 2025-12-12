@@ -30,7 +30,7 @@ class OrdenVentaService
             ->with((["orden_venta_detalles.producto:id,nombre", "orden_venta_detalles.unidad_medida:id,nombre", "cliente:id,razon_social,nit", "user:id,nombre,paterno,materno", "sucursal:id,nombre"]));
 
         $orden_ventas = $orden_ventas->get()->each
-            ->append(["fecha_t", "hora_t", "fecha_c", "fecha_ct", "literal_txt"]);;
+            ->append(["fecha_t", "hora_t", "fecha_c", "fecha_ct", "literal_txt"]);
 
 
         return $orden_ventas;

@@ -113,11 +113,42 @@ class CuentaCobrarService
      */
     public function crear(array $datos): CuentaCobrar
     {
+        if ($datos["id"]) {
+            $cuenta_cobrar = CuentaCobrar::findOrFail($datos["id"]);
+            if ($datos["created_at"] && $datos["created_at"] != '') {
+                $total_cancelado =  (float)$cuenta_cobrar->cancelado + (float)$datos["cancelado"];
+                $cuenta_cobrar->update([
+                    "cancelado" => $total_cancelado,
+                    "saldo" => $cuenta_cobrar->total - (float)$total_cancelado
+                ]);
+
+                // REGISTRAR 
+                foreach ($datos["cuenta_cobrar_detalles"] as $item) {
+                    if ($item["id"] == 0) {
+                        CuentaCobrarDetalle::create([
+                            "cuenta_cobrar_id" => $cuenta_cobrar->id,
+                            "cancelado" => $item["cancelado"],
+                            "fecha" => $item["fecha"],
+                            "hora" => $item["hora"],
+                        ]);
+                        $this->historialAccionService->registrarAccion($this->modulo, "CREACIÓN", "REGISTRO EL PAGO DE UNA CUENTA POR COBRAR", $cuenta_cobrar, NULL, ["cuenta_cobrar_detalles"]);
+                    }
+                }
+            }
+            return $cuenta_cobrar;
+        }
+
+        $orden_venta = OrdenVenta::findOrFail($datos["orden_venta_id"]);
+        $saldo = (float)$orden_venta->total_f - $orden_venta->cancelado;
 
         $cuenta_cobrar = CuentaCobrar::create([
-            "razon_social" => mb_strtoupper($datos["razon_social"]),
-            "tipo" => mb_strtoupper($datos["tipo"]),
-            "nit" => mb_strtoupper($datos["nit"]),
+            "cliente_id" => $orden_venta->cliente_id,
+            "orden_venta_id" => $orden_venta->id,
+            "total" => $orden_venta->total_f,
+            "cancelado" => $orden_venta->cancelado,
+            "saldo" => $saldo,
+            "fecha" => date("Y-m-d"),
+            "hora" => date("H:i:s"),
         ]);
         // registrar accion
         $this->historialAccionService->registrarAccion($this->modulo, "CREACIÓN", "REGISTRO UNA CUENTA POR COBRAR", $cuenta_cobrar);
@@ -127,6 +158,28 @@ class CuentaCobrarService
 
     public function pago(array $datos, CuentaCobrar $cuenta_cobrar): CuentaCobrar
     {
+        CuentaCobrarDetalle::create([
+            "cuenta_cobrar_id" => $cuenta_cobrar->id,
+            "cancelado" => $datos["cancelado"],
+            "fecha" => date("Y-m-d"),
+            "hora" => date("H:i:s"),
+        ]);
+
+        $total_cancelado =  (float)$cuenta_cobrar->cancelado + (float)$datos["cancelado"];
+        $cuenta_cobrar->update([
+            "cancelado" => $total_cancelado,
+            "saldo" => $cuenta_cobrar->total - (float)$total_cancelado
+        ]);
+
+        // registrar accion
+        $this->historialAccionService->registrarAccion($this->modulo, "CREACIÓN", "REGISTRO EL PAGO DE UNA CUENTA POR COBRAR", $cuenta_cobrar, NULL, ["cuenta_cobrar_detalles"]);
+
+        return $cuenta_cobrar;
+    }
+
+    public function pagoByOrden(array $datos, OrdenVenta $orden_venta): CuentaCobrar
+    {
+        $cuenta_cobrar = $orden_venta->cuenta_cobrar;
         CuentaCobrarDetalle::create([
             "cuenta_cobrar_id" => $cuenta_cobrar->id,
             "cancelado" => $datos["cancelado"],
@@ -166,6 +219,34 @@ class CuentaCobrarService
 
         return $cuenta_cobrar;
     }
+
+    public function verificarSincronizado(array $datos): CuentaCobrar|null
+    {
+        if ($datos["id"]) {
+            $cuenta_cobrar = CuentaCobrar::findOrFail($datos["id"]);
+            $total_cancelado =  (float)$cuenta_cobrar->cancelado + (float)$datos["cancelado"];
+            $cuenta_cobrar->update([
+                "cancelado" => $total_cancelado,
+                "saldo" => $cuenta_cobrar->total - (float)$total_cancelado
+            ]);
+
+            // REGISTRAR 
+            foreach ($datos["cuenta_cobrar_detalles"] as $item) {
+                if ($item["id"] == 0) {
+                    CuentaCobrarDetalle::create([
+                        "cuenta_cobrar_id" => $cuenta_cobrar->id,
+                        "cancelado" => $item["cancelado"],
+                        "fecha" => $item["fecha"],
+                        "hora" => $item["hora"],
+                    ]);
+                    $this->historialAccionService->registrarAccion($this->modulo, "CREACIÓN", "REGISTRO EL PAGO DE UNA CUENTA POR COBRAR", $cuenta_cobrar, NULL, ["cuenta_cobrar_detalles"]);
+                }
+            }
+            return $cuenta_cobrar;
+        }
+        return null;
+    }
+
 
     /**
      * Eliminar cuenta_cobrar

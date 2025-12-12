@@ -25,7 +25,9 @@ class DevolucionClienteService
 
     public function listado(): Collection
     {
-        $devolucion_clientes = DevolucionCliente::select("devolucion_clientes.*")->where("usuarios", 1)->get();
+        $devolucion_clientes = DevolucionCliente::select("devolucion_clientes.*")
+            ->with(["devolucion_cliente_detalles.producto", "user:id,nombre,paterno,materno", "sucursal:id,nombre", "cliente:id,razon_social"]);
+        $devolucion_clientes = $devolucion_clientes->get();
         return $devolucion_clientes;
     }
     /**

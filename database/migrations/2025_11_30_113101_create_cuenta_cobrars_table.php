@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('cuenta_cobrars', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("cliente_id");
-            $table->unsignedBigInteger("orden_venta_id");
+            $table->unsignedBigInteger("orden_venta_id")->unique();
             $table->decimal("total", 24, 2);
             $table->decimal("cancelado", 24, 2);
             $table->decimal("saldo", 24, 2);

@@ -84,7 +84,7 @@ class TransferenciaController extends Controller
     {
         try {
 
-            return Cache::lock("devolucionStore")->block(10, function () use ($request) {
+            return Cache::lock("transferenciaStore")->block(10, function () use ($request) {
                 $request = app(TransferenciaStoreRequest::class);
                 DB::beginTransaction();
                 try {

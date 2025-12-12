@@ -25,6 +25,31 @@ class CuentaCobrarController extends Controller
 {
     public function __construct(private CuentaCobrarService $cuenta_cobrarService) {}
 
+    public function sincronizar(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            if (!isset($request->cuenta_cobrars)) {
+                throw new Exception("Cuentas por cobrar: No se encontraron registros para sincronizar");
+            }
+
+            foreach ($request->cuenta_cobrars as $registro) {
+                $this->cuenta_cobrarService->verificarSincronizado($registro);
+            }
+
+            DB::commit();
+            return response()->JSON([
+                "sw" => true,
+                "message" => "Proceso realizado con éxito"
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw ValidationException::withMessages([
+                'error' =>  $e->getMessage(),
+            ]);
+        }
+    }
+
     /**
      * Listado de cuenta_cobrars sin ids: 1 y 2
      *

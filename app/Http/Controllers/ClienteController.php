@@ -25,6 +25,29 @@ class ClienteController extends Controller
 {
     public function __construct(private ClienteService $clienteService) {}
 
+    public function sincronizar(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            if (!isset($request->clientes)) {
+                throw new Exception("Clientes: No se encontraron registros para sincronizar");
+            }
+            foreach ($request->clientes as $registro) {
+                $this->clienteService->crear($registro);
+            }
+            DB::commit();
+            return response()->JSON([
+                "sw" => true,
+                "message" => "Proceso realizado con éxito"
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw ValidationException::withMessages([
+                'error' =>  $e->getMessage(),
+            ]);
+        }
+    }
+
     /**
      * Listado de clientes sin ids: 1 y 2
      *

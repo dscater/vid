@@ -84,7 +84,7 @@ class DevolucionStockController extends Controller
     {
         try {
 
-            return Cache::lock("devolucionStore")->block(10, function () use ($request) {
+            return Cache::lock("devolucionStockStore")->block(10, function () use ($request) {
                 $request = app(DevolucionStockStoreRequest::class);
                 DB::beginTransaction();
                 try {

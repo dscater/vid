@@ -40,6 +40,17 @@ Route::middleware(['auth:api'])->get('/perfil', function () {
 
 Route::get("/authCheck", [AuthController::class, 'authCheck']);
 
+// SINCRONIZAR
+Route::post("orden_ventas/sincronizar", [OrdenVentaController::class, 'sincronizar'])->name("orden_ventas.sincronizar");
+
+Route::post("cuenta_cobrars/sincronizar", [CuentaCobrarController::class, 'sincronizar'])->name("cuenta_cobrars.sincronizar");
+
+Route::post("clientes/sincronizar", [ClienteController::class, 'sincronizar'])->name("clientes.sincronizar");
+
+Route::post("proformas/sincronizar", [ProformaController::class, 'sincronizar'])->name("proformas.sincronizar");
+
+Route::post("devolucion_clientes/sincronizar", [DevolucionClienteController::class, 'sincronizar'])->name("devolucion_clientes.sincronizar");
+
 Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get('inicio', [InicioController::class, 'inicio'])->name('inicio');
     // CONFIGURACION

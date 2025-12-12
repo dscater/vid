@@ -21,6 +21,29 @@ class DevolucionClienteController extends Controller
 {
     public function __construct(private DevolucionClienteService $devolucion_clienteService) {}
 
+    public function sincronizar(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            if (!isset($request->devolucion_clientes)) {
+                throw new Exception("Devolucion Clientes: No se encontraron registros para sincronizar");
+            }
+            foreach ($request->devolucion_clientes as $registro) {
+                $this->devolucion_clienteService->crear($registro);
+            }
+            DB::commit();
+            return response()->JSON([
+                "sw" => true,
+                "message" => "Proceso realizado con éxito"
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw ValidationException::withMessages([
+                'error' =>  $e->getMessage(),
+            ]);
+        }
+    }
+
     /**
      * Listado de devolucion_clientes sin ids: 1 y 2
      *

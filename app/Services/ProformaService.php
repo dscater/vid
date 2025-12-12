@@ -26,9 +26,11 @@ class ProformaService
     public function listado(): Collection
     {
         $proformas = Proforma::select("proformas.*")
-            ->with(["proforma_detalles.producto:id,nombre", "proforma_detalles.unidad_medida:id,nombre", "cliente:id,razon_social,nit", "user:id,nombre,paterno,materno"]);
+            ->with(["proforma_detalles.producto:id,nombre", "proforma_detalles.unidad_medida:id,nombre", "cliente:id,razon_social,nit", "user:id,nombre,paterno,materno", "sucursal:id,nombre"]);
 
-        $proformas = $proformas->get();
+        $proformas = $proformas->get()->each
+            ->append(["fecha_t", "hora_t", "fecha_c", "fecha_ct", "literal_txt"]);
+
         return $proformas;
     }
     /**
@@ -102,7 +104,7 @@ class ProformaService
             // "cambio" => $datos["cambio"],
             "total" => $datos["total"],
             "total_st" => $datos["total_st"],
-            "solicitud_descuento" => $datos["solicitud_descuento"],
+            // "solicitud_descuento" => $datos["solicitud_descuento"],
             "descuento" => $datos["descuento"],
             "total_f" => $datos["total_f"],
             "user_id" => Auth::user()->id,
@@ -160,7 +162,7 @@ class ProformaService
             // "cambio" => $datos["cambio"],
             "total" => $datos["total"],
             "total_st" => $datos["total_st"],
-            "solicitud_descuento" => $datos["solicitud_descuento"],
+            // "solicitud_descuento" => $datos["solicitud_descuento"],
             "descuento" => $datos["descuento"],
             "total_f" => $datos["total_f"],
         ]);

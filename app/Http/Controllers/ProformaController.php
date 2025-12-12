@@ -22,6 +22,31 @@ class ProformaController extends Controller
 {
     public function __construct(private ProformaService $proformaService) {}
 
+    public function sincronizar(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            if (!isset($request->proformas)) {
+                throw new Exception("Proforma: No se encontraron registros para sincronizar");
+            }
+            foreach ($request->proformas as $registro) {
+                Cache::lock('proformaStore', 10)->block(5, function () use ($registro) {
+                    $this->proformaService->crear($registro);
+                });
+            }
+            DB::commit();
+            return response()->JSON([
+                "sw" => true,
+                "message" => "Proceso realizado con éxito"
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw ValidationException::withMessages([
+                'error' =>  $e->getMessage(),
+            ]);
+        }
+    }
+
     /**
      * Listado de proformas sin ids: 1 y 2
      *
@@ -53,7 +78,7 @@ class ProformaController extends Controller
                 [$orderByCol, $desc]
             ];
         }
-        Log::debug($arrayOrderBy);
+        // Log::debug($arrayOrderBy);
 
         $proformas = $this->proformaService->listadoPaginado($perPage, $page, $search, $columnsSerachLike, $columnsFilter, $columnsBetweenFilter, $arrayOrderBy);
         return response()->JSON([
@@ -86,7 +111,7 @@ class ProformaController extends Controller
     {
         try {
 
-            return Cache::lock("ordenSalidaStore")->block(10, function () use ($request) {
+            return Cache::lock("proformaStore")->block(10, function () use ($request) {
                 $request = app(ProformaStoreRequest::class);
                 DB::beginTransaction();
                 try {
