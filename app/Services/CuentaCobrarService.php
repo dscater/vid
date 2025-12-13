@@ -8,9 +8,9 @@ use App\Models\CuentaCobrarDetalle;
 use App\Models\OrdenVenta;
 use App\Models\User;
 use Exception;
-use Illuminate\Container\Attributes\Auth;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
@@ -44,11 +44,26 @@ class CuentaCobrarService
         $cuenta_cobrars = CuentaCobrar::select("cuenta_cobrars.*")
             ->with(["orden_venta:id,codigo", "cliente:id,razon_social"]);
 
+        if (Auth::user()->sucursal_asignada) {
+            $sucursal_asignada = Auth::user()->sucursal_asignada;
+            $cuenta_cobrars->whereHas("orden_venta", function ($query) use ($sucursal_asignada) {
+                $query->where("sucursal_id", $sucursal_asignada->id);
+            });
+        }
         // Filtros exactos
         foreach ($columnsFilter as $key => $value) {
             if (!is_null($value)) {
                 $cuenta_cobrars->where("cuenta_cobrars.$key", $value);
             }
+        }
+
+        if (!empty($search)) {
+            $cuenta_cobrars->whereHas("orden_venta", function ($query) use ($search) {
+                $query->where("codigo", $search);
+            });
+            $cuenta_cobrars->orWhereHas("cliente", function ($query) use ($search) {
+                $query->where("razon_social", "LIKE", "%$search%");
+            });
         }
 
         // Filtros por rango

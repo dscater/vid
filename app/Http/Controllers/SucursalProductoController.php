@@ -53,8 +53,11 @@ class SucursalProductoController extends Controller
         $desc = $request->orderAsc;
 
         $columnsSerachLike = [
-            "descripcion"
+            "codigo",
+            "nombre",
         ];
+        Log::debug($columnsSerachLike);
+
         $columnsFilter = [];
         $columnsBetweenFilter = [];
         $arrayOrderBy = [];

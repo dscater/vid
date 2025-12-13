@@ -666,12 +666,12 @@ class ModuloTableSeeder extends Seeder
             "descripcion" => "GENERAR REPORTES DE LISTA DE PRODUCTOS"
         ]);
 
-        Modulo::create([
-            "modulo" => "Reportes",
-            "nombre" => "reportes.sucursals",
-            "accion" => "REPORTE LISTA DE SUCURSALES",
-            "descripcion" => "GENERAR REPORTES DE LISTA DE SUCURSALES"
-        ]);
+        // Modulo::create([
+        //     "modulo" => "Reportes",
+        //     "nombre" => "reportes.sucursals",
+        //     "accion" => "REPORTE LISTA DE SUCURSALES",
+        //     "descripcion" => "GENERAR REPORTES DE LISTA DE SUCURSALES"
+        // ]);
 
         Modulo::create([
             "modulo" => "Reportes",
@@ -687,12 +687,12 @@ class ModuloTableSeeder extends Seeder
             "descripcion" => "GENERAR REPORTES DE LISTA DE PROVEEDORES"
         ]);
 
-        Modulo::create([
-            "modulo" => "Reportes",
-            "nombre" => "reportes.inventario",
-            "accion" => "REPORTE DE INVENTARIO",
-            "descripcion" => "GENERAR REPORTES DE INVENTARIO"
-        ]);
+        // Modulo::create([
+        //     "modulo" => "Reportes",
+        //     "nombre" => "reportes.inventario",
+        //     "accion" => "REPORTE DE INVENTARIO",
+        //     "descripcion" => "GENERAR REPORTES DE INVENTARIO"
+        // ]);
 
         Modulo::create([
             "modulo" => "Reportes",
@@ -731,10 +731,38 @@ class ModuloTableSeeder extends Seeder
 
         Modulo::create([
             "modulo" => "Reportes",
-            "nombre" => "reportes.ejecutivos",
-            "accion" => "REPORTE DE EJECUTIVOS/RESUMEN",
-            "descripcion" => "GENERAR REPORTES DE EJECUTIVOS/RESUMEN"
+            "nombre" => "reportes.utilidad_ordens",
+            "accion" => "REPORTE DE UTILIDADES DE ORDENES DE VENTA",
+            "descripcion" => "GENERAR REPORTES DE UTILIDADES DE ORDENES DE VENTA"
         ]);
+
+        Modulo::create([
+            "modulo" => "Reportes",
+            "nombre" => "reportes.cuenta_cobrars",
+            "accion" => "REPORTE DE CUENTAS POR COBRAR",
+            "descripcion" => "GENERAR REPORTES DE CUENTAS POR COBRAR"
+        ]);
+
+        Modulo::create([
+            "modulo" => "Reportes",
+            "nombre" => "reportes.rotacion",
+            "accion" => "REPORTE DE ROTACIÓN DE INVENTARIO",
+            "descripcion" => "GENERAR REPORTES DE ROTACIÓN DE INVENTARIO"
+        ]);
+
+        Modulo::create([
+            "modulo" => "Reportes",
+            "nombre" => "reportes.gastos",
+            "accion" => "REPORTE DE GASTOS",
+            "descripcion" => "GENERAR REPORTES DE GASTOS"
+        ]);
+
+        // Modulo::create([
+        //     "modulo" => "Reportes",
+        //     "nombre" => "reportes.ejecutivos",
+        //     "accion" => "REPORTE DE EJECUTIVOS/RESUMEN",
+        //     "descripcion" => "GENERAR REPORTES DE EJECUTIVOS/RESUMEN"
+        // ]);
 
         Modulo::create([
             "modulo" => "Reportes",
@@ -764,11 +792,11 @@ class ModuloTableSeeder extends Seeder
             "descripcion" => "GENERAR REPORTES DE CONTROL DIARIO DE VEHÍCULOS"
         ]);
 
-        Modulo::create([
-            "modulo" => "Reportes",
-            "nombre" => "reportes.notas_entrega",
-            "accion" => "REPORTE DE NOTAS DE ENTREGA",
-            "descripcion" => "GENERAR REPORTES DE NOTAS DE ENTREGA"
-        ]);
+        // Modulo::create([
+        //     "modulo" => "Reportes",
+        //     "nombre" => "reportes.notas_entrega",
+        //     "accion" => "REPORTE DE NOTAS DE ENTREGA",
+        //     "descripcion" => "GENERAR REPORTES DE NOTAS DE ENTREGA"
+        // ]);
     }
 }

@@ -51,27 +51,23 @@ class OrdenVentaService
     {
         $orden_ventas = OrdenVenta::select("orden_ventas.*")
             ->with(["sucursal:id,nombre", "user:id,nombre,paterno,materno", "cliente:id,razon_social"]);
+
+        if (Auth::user()->sucursal_asignada) {
+            $orden_ventas->where("sucursal_id", Auth::user()->sucursal_asignada->id);
+        }
+
         // Filtros exactos
         foreach ($columnsFilter as $key => $value) {
             if (!is_null($value)) {
-                $orden_ventas->where("orden_ventas.$key", $value);
+                $orden_ventas->where(function ($query) use ($search, $value) {
+                    $query->where("orden_ventas." . $value, "LIKE", "%$search%");
+                    if (!empty($search)) {
+                        $query->orWhereHas("cliente", function ($query2) use ($search) {
+                            $query2->where("razon_social", "LIKE", "%$search%");
+                        });
+                    }
+                });
             }
-        }
-
-        // Filtros por rango
-        foreach ($columnsBetweenFilter as $key => $value) {
-            if (isset($value[0], $value[1])) {
-                $orden_ventas->whereBetween("orden_ventas.$key", $value);
-            }
-        }
-
-        // Búsqueda en múltiples columnas con LIKE
-        if (!empty($search) && !empty($columnsSerachLike)) {
-            $orden_ventas->where(function ($query) use ($search, $columnsSerachLike) {
-                foreach ($columnsSerachLike as $col) {
-                    $query->orWhere("$col", "LIKE", "%$search%");
-                }
-            });
         }
 
         // Ordenamiento

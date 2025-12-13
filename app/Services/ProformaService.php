@@ -47,6 +47,11 @@ class ProformaService
     {
         $proformas = Proforma::select("proformas.*")
             ->with(["sucursal:id,nombre", "user:id,nombre,paterno,materno", "cliente:id,razon_social"]);
+
+        if (Auth::user()->sucursal_asignada) {
+            $proformas->where("sucursal_id", Auth::user()->sucursal_asignada->id);
+        }
+
         // Filtros exactos
         foreach ($columnsFilter as $key => $value) {
             if (!is_null($value)) {

@@ -39,10 +39,27 @@ class TransferenciaService
      * @param array $columnsFilter
      * @return LengthAwarePaginator
      */
-    public function listadoPaginado(int $length, int $page, string $search, array $columnsSerachLike = [], array $columnsFilter = [], array $columnsBetweenFilter = [], array $orderBy = []): LengthAwarePaginator
+    public function listadoPaginado(int $length, int $page, string $search, array $columnsSerachLike = [], array $columnsFilter = [], array $columnsBetweenFilter = [], array $orderBy = [], array $realacionSearch = []): LengthAwarePaginator
     {
         $transferencias = Transferencia::select("transferencias.*")
             ->with(["sucursal:id,nombre", "sucursalDestino:id,nombre", "user_solicitante:id,nombre,paterno,materno", "user_aprobo:id,nombre,paterno,materno"]);
+
+        if (Auth::user()->sucursal_asignada) {
+            $sucursal_asignada = Auth::user()->sucursal_asignada;
+            $transferencias->where(function ($query) use ($sucursal_asignada) {
+                $query->where("sucursal_id", $sucursal_asignada->id)
+                    ->orWhere("sucursal_destino", $sucursal_asignada->id);
+            });
+        }
+
+        if (!empty($search) && !empty($realacionSearch)) {
+            foreach ($realacionSearch as $relacion => $column) {
+                $transferencias->whereHas($relacion, function ($query) use ($column, $search) {
+                    $query->orWhere("$column", "LIKE", "%$search%");
+                });
+            }
+        }
+
         // Filtros exactos
         foreach ($columnsFilter as $key => $value) {
             if (!is_null($value)) {

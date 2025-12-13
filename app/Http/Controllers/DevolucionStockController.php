@@ -42,7 +42,7 @@ class DevolucionStockController extends Controller
         $desc = $request->orderAsc;
 
         $columnsSerachLike = [
-            "descripcion"
+            "codigo"
         ];
         $columnsFilter = [];
         $columnsBetweenFilter = [];

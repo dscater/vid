@@ -88,7 +88,12 @@ class ClienteController extends Controller
         $desc = $request->orderAsc;
 
         $columnsSerachLike = [
-            "descripcion"
+            "razon_social",
+            "nombre_prop",
+            "nit",
+            "ci_prop",
+            "correo",
+            "ciudad",
         ];
         $columnsFilter = [];
         $columnsBetweenFilter = [];

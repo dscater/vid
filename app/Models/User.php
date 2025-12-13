@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
@@ -70,7 +71,7 @@ class User extends Authenticatable implements JWTSubject
         "status",
     ];
 
-    protected $appends = ["permisos", "url_foto", "foto_b64", "full_name", "full_ci", "fecha_registro_t", "usuario_abrev"];
+    protected $appends = ["permisos", "url_foto", "foto_b64", "full_name", "full_ci", "fecha_registro_t", "usuario_abrev", "sucursal_asignada"];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -93,6 +94,12 @@ class User extends Authenticatable implements JWTSubject
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function getSucursalAsignadaAttribute()
+    {
+        $sucursal_asignada = Sucursal::where("user_id", Auth::user()->id)->get()->first();
+        return $sucursal_asignada;
     }
 
     public function getUsuarioAbrevAttribute()

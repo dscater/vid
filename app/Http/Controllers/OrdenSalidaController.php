@@ -43,10 +43,18 @@ class OrdenSalidaController extends Controller
         $desc = $request->orderAsc;
 
         $columnsSerachLike = [
-            "descripcion"
+            "codigo"
         ];
-        $columnsFilter = [];
-        $columnsBetweenFilter = [];
+
+        $realacionSearch = [
+            "sucursal" => "nombre",
+            "user_solicitante" => "nombre",
+            "user_solicitante" => "paterno",
+            "user_solicitante" => "materno",
+            "user_aprobador" => "nombre",
+            "user_aprobador" => "paterno",
+            "user_aprobador" => "materno",
+        ];
         $arrayOrderBy = [];
         if ($orderByCol && $desc) {
             $arrayOrderBy = [
@@ -54,7 +62,7 @@ class OrdenSalidaController extends Controller
             ];
         }
 
-        $orden_salidas = $this->orden_salidaService->listadoPaginado($perPage, $page, $search, $columnsSerachLike, $columnsFilter, $columnsBetweenFilter, $arrayOrderBy);
+        $orden_salidas = $this->orden_salidaService->listadoPaginado($perPage, $page, $search, $columnsSerachLike, $realacionSearch, $arrayOrderBy);
         return response()->JSON([
             "data" => $orden_salidas->items(),
             "total" => $orden_salidas->total(),

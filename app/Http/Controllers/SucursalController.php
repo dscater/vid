@@ -54,7 +54,7 @@ class SucursalController extends Controller
         $desc = $request->orderAsc;
 
         $columnsSerachLike = [
-            "descripcion"
+            "nombre"
         ];
         $columnsFilter = [];
         $columnsBetweenFilter = [];

@@ -86,9 +86,7 @@ class CuentaCobrarController extends Controller
         $orderByCol = $request->orderBy;
         $desc = $request->orderAsc;
 
-        $columnsSerachLike = [
-            "descripcion"
-        ];
+        $columnsSerachLike = [];
         $columnsFilter = [];
         $columnsBetweenFilter = [];
         $arrayOrderBy = [];

@@ -42,6 +42,10 @@ class DevolucionStockService
     {
         $devolucion_stocks = DevolucionStock::select("devolucion_stocks.*")
             ->with(["sucursal:id,nombre", "user:id,nombre,paterno,materno"]);
+
+        if (Auth::user()->sucursal_asignada) {
+            $devolucion_stocks->where("sucursal_id", Auth::user()->sucursal_asignada->id);
+        }
         // Filtros exactos
         foreach ($columnsFilter as $key => $value) {
             if (!is_null($value)) {

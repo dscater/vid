@@ -68,7 +68,7 @@ class ProformaController extends Controller
         $desc = $request->orderAsc;
 
         $columnsSerachLike = [
-            "descripcion"
+            "codigo"
         ];
         $columnsFilter = [];
         $columnsBetweenFilter = [];
@@ -165,9 +165,10 @@ class ProformaController extends Controller
         DB::beginTransaction();
         try {
             // actualizar proforma
-            $this->proformaService->actualizar($request->validated(), $proforma);
+            $proforma = $this->proformaService->actualizar($request->validated(), $proforma);
             DB::commit();
             return response()->JSON([
+                "proforma" => $proforma,
                 "sw" => true,
                 "message" => "Proceso realizado con éxito"
             ]);

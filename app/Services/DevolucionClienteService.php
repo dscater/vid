@@ -44,6 +44,16 @@ class DevolucionClienteService
     {
         $devolucion_clientes = DevolucionCliente::select("devolucion_clientes.*")
             ->with(["sucursal:id,nombre", "user:id,nombre,paterno,materno", "cliente:id,razon_social"]);
+
+        if (Auth::user()->sucursal_asignada) {
+            $devolucion_clientes->where("sucursal_id", Auth::user()->sucursal_asignada->id);
+        }
+
+        if (!empty($search))
+            $devolucion_clientes->whereHas("cliente", function ($query) use ($search) {
+                $query->where("razon_social", "LIKE", "%$search%");
+            });
+
         // Filtros exactos
         foreach ($columnsFilter as $key => $value) {
             if (!is_null($value)) {

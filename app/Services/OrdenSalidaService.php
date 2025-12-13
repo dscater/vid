@@ -38,22 +38,12 @@ class OrdenSalidaService
      * @param array $columnsFilter
      * @return LengthAwarePaginator
      */
-    public function listadoPaginado(int $length, int $page, string $search, array $columnsSerachLike = [], array $columnsFilter = [], array $columnsBetweenFilter = [], array $orderBy = []): LengthAwarePaginator
+    public function listadoPaginado(int $length, int $page, string $search, array $columnsSerachLike = [], array $realacionSearch, array $orderBy = []): LengthAwarePaginator
     {
         $orden_salidas = OrdenSalida::select("orden_salidas.*")
             ->with(["sucursal:id,nombre", "user:id,nombre,paterno,materno", "user_solicitante:id,nombre,paterno,materno", "user_aprobador:id,nombre,paterno,materno"]);
-        // Filtros exactos
-        foreach ($columnsFilter as $key => $value) {
-            if (!is_null($value)) {
-                $orden_salidas->where("orden_salidas.$key", $value);
-            }
-        }
-
-        // Filtros por rango
-        foreach ($columnsBetweenFilter as $key => $value) {
-            if (isset($value[0], $value[1])) {
-                $orden_salidas->whereBetween("orden_salidas.$key", $value);
-            }
+        if (Auth::user()->sucursal_asignada) {
+            $orden_salidas->where("sucursal_id", Auth::user()->sucursal_asignada->id);
         }
 
         // Búsqueda en múltiples columnas con LIKE
@@ -64,6 +54,15 @@ class OrdenSalidaService
                 }
             });
         }
+
+        if (!empty($search) && !empty($realacionSearch)) {
+            foreach ($realacionSearch as $relacion => $column) {
+                $orden_salidas->orWhereHas($relacion, function ($query) use ($column, $search) {
+                    $query->where("$column", "LIKE", "%$search%");
+                });
+            }
+        }
+
 
         // Ordenamiento
         foreach ($orderBy as $value) {

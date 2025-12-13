@@ -42,7 +42,12 @@ class TransferenciaController extends Controller
         $desc = $request->orderAsc;
 
         $columnsSerachLike = [
-            "descripcion"
+            "codigo"
+        ];
+
+        $realacionSearch = [
+            "sucursal" => "nombre",
+            "sucursalDestino" => "nombre",
         ];
         $columnsFilter = [];
         $columnsBetweenFilter = [];
@@ -53,7 +58,7 @@ class TransferenciaController extends Controller
             ];
         }
 
-        $transferencias = $this->transferenciaService->listadoPaginado($perPage, $page, $search, $columnsSerachLike, $columnsFilter, $columnsBetweenFilter, $arrayOrderBy);
+        $transferencias = $this->transferenciaService->listadoPaginado($perPage, $page, $search, $columnsSerachLike, $columnsFilter, $columnsBetweenFilter, $arrayOrderBy, $realacionSearch);
         return response()->JSON([
             "data" => $transferencias->items(),
             "total" => $transferencias->total(),
