@@ -9,6 +9,7 @@ use App\Models\Modulo;
 use App\Models\OrdenVentaDetalle;
 use App\Models\Permiso;
 use App\Models\Producto;
+use App\Models\SolicitudIngresoDetalle;
 use App\Models\User;
 use App\Services\ProductoService;
 use Illuminate\Http\JsonResponse;
@@ -48,18 +49,22 @@ class ProductoController extends Controller
 
     public function ppp(Producto $producto)
     {
-        $precio = $producto->precio;
-
-        $cantidadVendida = OrdenVentaDetalle::where('producto_id', $producto->id)
-            ->whereHas('orden_venta', function ($query) {
-                $query->where('estado', 'FINALIZADO');
+        $subtotal = SolicitudIngresoDetalle::where('producto_id', $producto->id)
+            ->whereHas('solicitud_ingreso', function ($query) {
+                $query->where('verificado', 1);
             })
-            ->sum('cantidad');
+            ->sum(DB::raw('cantidad_fisica * costo'));
 
-        Log::debug("CANTIDAD VENDIDA: " . $cantidadVendida);
-        Log::debug("PRECIO: " . $precio);
-        if ($cantidadVendida > 0) {
-            $ppp = ((float)$precio * (float)$cantidadVendida) / $cantidadVendida;
+        $cantidad = SolicitudIngresoDetalle::where('producto_id', $producto->id)
+            ->whereHas('solicitud_ingreso', function ($query) {
+                $query->where('verificado', 1);
+            })
+            ->sum('cantidad_fisica');
+
+        Log::debug("CANTIDAD: " . $cantidad);
+        Log::debug("subtotal: " . $subtotal);
+        if ($cantidad > 0) {
+            $ppp = $subtotal / $cantidad;
         } else {
             $ppp = 0;
         }
