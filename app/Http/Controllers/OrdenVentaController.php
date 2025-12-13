@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\OrdenVentaAprobarRequest;
 use App\Http\Requests\OrdenVentaStoreRequest;
 use App\Http\Requests\OrdenVentaUpdateRequest;
+use App\Jobs\RecalcularRankingClientes;
 use App\Models\OrdenVenta;
 use App\Services\OrdenVentaService;
 use Illuminate\Http\JsonResponse;
@@ -18,11 +19,12 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Validation\ValidationException;
 use App\library\numero_a_letras\src\NumeroALetras;
 use App\Services\CuentaCobrarService;
+use App\Services\ParametroClienteService;
 use Exception;
 
 class OrdenVentaController extends Controller
 {
-    public function __construct(private OrdenVentaService $orden_ventaService, private CuentaCobrarService $cuenta_cobrar_service) {}
+    public function __construct(private OrdenVentaService $orden_ventaService, private CuentaCobrarService $cuenta_cobrar_service, private ParametroClienteService $parametro_cliente_service) {}
 
     public function sincronizar(Request $request)
     {
@@ -43,6 +45,7 @@ class OrdenVentaController extends Controller
                 }
             });
             DB::commit();
+            RecalcularRankingClientes::dispatch($this->parametro_cliente_service)->afterCommit();
             return response()->JSON([
                 "sw" => true,
                 "message" => "Proceso realizado con éxito"
@@ -125,6 +128,7 @@ class OrdenVentaController extends Controller
                 try {
                     $this->orden_ventaService->crear($request->validated());
                     DB::commit();
+                    RecalcularRankingClientes::dispatch($this->parametro_cliente_service)->afterCommit();
                     return response()->JSON([
                         "sw" => true,
                         "message" => "Proceso realizado con éxito"

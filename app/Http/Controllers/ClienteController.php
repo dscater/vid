@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ClienteStoreRequest;
 use App\Http\Requests\ClienteUpdateRequest;
+use App\Jobs\RecalcularRankingClientes;
 use App\Models\HistorialAccion;
 use App\Models\Modulo;
 use App\Models\Permiso;
 use App\Models\Cliente;
 use App\Models\User;
 use App\Services\ClienteService;
+use App\Services\ParametroClienteService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -23,7 +25,7 @@ use Inertia\Response as ResponseInertia;
 
 class ClienteController extends Controller
 {
-    public function __construct(private ClienteService $clienteService) {}
+    public function __construct(private ClienteService $clienteService, private ParametroClienteService $parametro_cliente_service) {}
 
     public function sincronizar(Request $request)
     {
@@ -98,6 +100,9 @@ class ClienteController extends Controller
         }
 
         $clientes = $this->clienteService->listadoPaginado($perPage, $page, $search, $columnsSerachLike, $columnsFilter, $columnsBetweenFilter, $arrayOrderBy);
+
+        RecalcularRankingClientes::dispatch($this->parametro_cliente_service);
+
         return response()->JSON([
             "data" => $clientes->items(),
             "total" => $clientes->total(),

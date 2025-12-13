@@ -303,6 +303,14 @@ class ModuloTableSeeder extends Seeder
             "descripcion" => "ELIMINAR CLIENTES"
         ]);
 
+        Modulo::create([
+            "modulo" => "Clientes",
+            "nombre" => "clientes.parametro_clientes",
+            "accion" => "EDITAR PARAMETROS",
+            "descripcion" => "EDITAR LOS PARAMETROS PARA EL CÁLCULO DE RANKING"
+        ]);
+
+
         // PROVEEDORES
         Modulo::create([
             "modulo" => "Proveedores",
@@ -558,7 +566,7 @@ class ModuloTableSeeder extends Seeder
 
         // Modulo::create([
         //     "modulo" => "Cuentas por Cobrar",
-        //     "nombre" => "cuenta_cobrars.edit",
+        //     "nombre" => "<cuenta_cobra></cuenta_cobra>rs.edit",
         //     "accion" => "EDITAR",
         //     "descripcion" => "EDITAR CUENTAS POR COBRAR"
         // ]);

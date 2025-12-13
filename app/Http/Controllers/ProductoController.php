@@ -6,6 +6,7 @@ use App\Http\Requests\ProductoStoreRequest;
 use App\Http\Requests\ProductoUpdateRequest;
 use App\Models\HistorialAccion;
 use App\Models\Modulo;
+use App\Models\OrdenVentaDetalle;
 use App\Models\Permiso;
 use App\Models\Producto;
 use App\Models\User;
@@ -45,6 +46,47 @@ class ProductoController extends Controller
     }
 
 
+    public function ppp(Producto $producto)
+    {
+        $precio = $producto->precio;
+
+        $cantidadVendida = OrdenVentaDetalle::where('producto_id', $producto->id)
+            ->whereHas('orden_venta', function ($query) {
+                $query->where('estado', 'FINALIZADO');
+            })
+            ->sum('cantidad');
+
+        Log::debug("CANTIDAD VENDIDA: " . $cantidadVendida);
+        Log::debug("PRECIO: " . $precio);
+        if ($cantidadVendida > 0) {
+            $ppp = ((float)$precio * (float)$cantidadVendida) / $cantidadVendida;
+        } else {
+            $ppp = 0;
+        }
+
+        if ($ppp > 0) {
+            $producto->precio_ppp = $ppp;
+            $producto->save();
+        }
+        return response()->JSON($ppp);
+    }
+
+    public function ppp_update(Request $request, Producto $producto)
+    {
+        $request->validate([
+            "precio_ppp" => "required",
+            "precio" => "required",
+        ]);
+
+        $producto->update([
+            "precio_ppp" => $request->precio_ppp,
+            "precio" => $request->precio,
+        ]);
+        return response()->JSON([
+            "sw" => true,
+            "message" => "Proceso realizado con éxito"
+        ]);
+    }
 
     public function paginado(Request $request)
     {

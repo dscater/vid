@@ -21,7 +21,8 @@ class OrdenVentaService
         private HistorialAccionService $historialAccionService,
         private KardexProductoService $kardex_producto_service,
         private SucursalProductoService $sucursal_producto_service,
-        private CuentaCobrarService $cuenta_cobrar_service
+        private CuentaCobrarService $cuenta_cobrar_service,
+        private ParametroClienteService $parametro_cliente_service
     ) {}
 
     public function listado(): Collection
@@ -148,6 +149,9 @@ class OrdenVentaService
 
         // registrar accion
         $this->historialAccionService->registrarAccion($this->modulo, "CREACIÓN", "REGISTRO UNA ORDEN DE VENTA", $orden_venta);
+
+        // PARAMETRO CLIENTE
+        $this->parametro_cliente_service->verificarRankCliente($orden_venta->cliente_id);
 
         return $orden_venta;
     }

@@ -24,7 +24,10 @@ class Cliente extends Model
         "latitud",
         "longitud",
         "ciudad",
+        "rank",
         "categoria",
+        "score",
+        "factor",
         "contactos",
         "estado",
     ];
@@ -48,5 +51,10 @@ class Cliente extends Model
         return [
             'contactos' => 'array',
         ];
+    }
+
+    public function orden_ventas()
+    {
+        return $this->hasMany(OrdenVenta::class, 'cliente_id')->where("estado", "FINALIZADO");
     }
 }

@@ -12,6 +12,7 @@ use App\Http\Controllers\InicioController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\OrdenSalidaController;
 use App\Http\Controllers\OrdenVentaController;
+use App\Http\Controllers\ParametroClienteController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProformaController;
@@ -138,6 +139,8 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
 
     // PRODUCTOS
     Route::get("productos/byCodigo", [ProductoController::class, 'byCodigo'])->name("productos.byCodigo");
+    Route::get("productos/ppp/{producto}", [ProductoController::class, 'ppp'])->name("productos.ppp");
+    Route::post("productos/ppp_update/{producto}", [ProductoController::class, 'ppp_update'])->name("productos.ppp_update");
     Route::get("productos/api", [ProductoController::class, 'api'])->name("productos.api");
     Route::get("productos/paginado", [ProductoController::class, 'paginado'])->name("productos.paginado");
     Route::get("productos/listado", [ProductoController::class, 'listado'])->name("productos.listado");
@@ -153,6 +156,10 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::resource("clientes", ClienteController::class)->only(
         ["store", "edit", "show", "update", "destroy"]
     );
+
+    // parametro cliente
+    Route::get("parametro_clientes", [ParametroClienteController::class, 'index'])->name("parametro_clientes.index");
+    Route::post("parametro_clientes", [ParametroClienteController::class, 'store'])->name("parametro_clientes.store");
 
     // PROVEEDORES
     Route::get("proveedors/api", [ProveedorController::class, 'api'])->name("proveedors.api");
