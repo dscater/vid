@@ -126,10 +126,11 @@ class OrdenVentaController extends Controller
                 $request = app(OrdenVentaStoreRequest::class);
                 DB::beginTransaction();
                 try {
-                    $this->orden_ventaService->crear($request->validated());
+                    $orden_venta = $this->orden_ventaService->crear($request->validated());
                     DB::commit();
                     RecalcularRankingClientes::dispatch($this->parametro_cliente_service)->afterCommit();
                     return response()->JSON([
+                        "orden_venta" => $orden_venta,
                         "sw" => true,
                         "message" => "Proceso realizado con éxito"
                     ]);
@@ -176,9 +177,10 @@ class OrdenVentaController extends Controller
         DB::beginTransaction();
         try {
             // actualizar orden_venta
-            $this->orden_ventaService->actualizar($request->validated(), $orden_venta);
+            $orden_venta = $this->orden_ventaService->actualizar($request->validated(), $orden_venta);
             DB::commit();
             return response()->JSON([
+                "orden_venta" => $orden_venta,
                 "sw" => true,
                 "message" => "Proceso realizado con éxito"
             ]);

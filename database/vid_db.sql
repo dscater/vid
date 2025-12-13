@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 13-12-2025 a las 01:13:04
+-- Tiempo de generación: 13-12-2025 a las 17:46:33
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.2.22
 
@@ -88,7 +88,7 @@ CREATE TABLE `clientes` (
   `ciudad` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `rank` int DEFAULT NULL,
   `categoria` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `score` double(8,4) DEFAULT NULL,
+  `score` double(24,4) DEFAULT NULL,
   `factor` double(8,4) DEFAULT NULL,
   `contactos` json DEFAULT NULL,
   `estado` int NOT NULL DEFAULT '1',
@@ -102,9 +102,9 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id`, `razon_social`, `tipo`, `nit`, `nombre_punto`, `nombre_prop`, `ci_prop`, `correo`, `cel`, `fono`, `dir`, `latitud`, `longitud`, `ciudad`, `rank`, `categoria`, `score`, `factor`, `contactos`, `estado`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'CLIENTE 1 S.A. MOD', 'EMPRESA', '111111111111', 'PUNTO VENTA C 1', 'JUAN PEREZ', '121212121', 'juanperez@gmail.com', '6767676767', '22222', 'LOS PEDREGALES', '111111111', '11111111111', 'LA PAZ', 1, 'A', 6945.0833, 1.5000, '[{\"cel\": \"7777777\", \"fono\": \"6767676767\", \"nombre\": \"JUAN GONZALES\", \"observacion\": \"OBS. CONTACTO 1\"}, {\"cel\": \"7866786\", \"fono\": \"667567567\", \"nombre\": \"JORGE RAMIRES\", \"observacion\": null}]', 1, NULL, '2025-12-03 15:46:45', '2025-12-13 00:48:54'),
-(2, 'CLIENTE 2', 'PERSONA', '1111111111111', 'CLIENTE 2 PV', 'MARIA MAMANI', '23123123', NULL, '657756', '222', 'LOS PEDREAGLES1', '111', '2222', 'EL ALTO', 2, 'A', 6041.4000, 1.5000, '[{\"cel\": \"6757567\", \"fono\": \"222222\", \"nombre\": \"CONTACTO 1\", \"observacion\": null}]', 1, NULL, '2025-12-03 15:52:12', '2025-12-13 00:48:54'),
-(3, 'CLIENTE 3', 'PERSONA', '1111111', 'PUNTO VENA 3', 'JUAN DOMINGUEZ', '1221121221', 'dominguez@gmail.com', '777777', '6767676767', 'LOS PEDREGALES', '1111', '22222', 'LA PAZ', 3, 'A', 5105.1000, 1.5000, '[{\"cel\": \"767676767\", \"fono\": \"6767676767\", \"nombre\": \"JUAN\", \"observacion\": null}]', 1, NULL, '2025-12-12 16:47:21', '2025-12-13 00:48:54');
+(1, 'CLIENTE 1 S.A. MOD', 'EMPRESA', '111111111111', 'PUNTO VENTA C 1', 'JUAN PEREZ', '121212121', 'juanperez@gmail.com', '6767676767', '22222', 'LOS PEDREGALES', '111111111', '11111111111', 'LA PAZ', 1, 'A', 13411.0800, 1.5000, '[{\"cel\": \"7777777\", \"fono\": \"6767676767\", \"nombre\": \"JUAN GONZALES\", \"observacion\": \"OBS. CONTACTO 1\"}, {\"cel\": \"7866786\", \"fono\": \"667567567\", \"nombre\": \"JORGE RAMIRES\", \"observacion\": null}]', 1, NULL, '2025-12-03 15:46:45', '2025-12-13 17:32:15'),
+(2, 'CLIENTE 2', 'PERSONA', '1111111111111', 'CLIENTE 2 PV', 'MARIA MAMANI', '23123123', NULL, '657756', '222', 'LOS PEDREAGLES1', '111', '2222', 'EL ALTO', 2, 'A', 11452.3100, 1.5000, '[{\"cel\": \"6757567\", \"fono\": \"222222\", \"nombre\": \"CONTACTO 1\", \"observacion\": null}]', 1, NULL, '2025-12-03 15:52:12', '2025-12-13 17:33:51'),
+(3, 'CLIENTE 3', 'PERSONA', '1111111', 'PUNTO VENA 3', 'JUAN DOMINGUEZ', '1221121221', 'dominguez@gmail.com', '777777', '6767676767', 'LOS PEDREGALES', '1111', '22222', 'LA PAZ', 3, 'A', 9053.1450, 1.5000, '[{\"cel\": \"767676767\", \"fono\": \"6767676767\", \"nombre\": \"JUAN\", \"observacion\": null}]', 1, NULL, '2025-12-12 16:47:21', '2025-12-13 13:05:32');
 
 -- --------------------------------------------------------
 
@@ -155,11 +155,12 @@ CREATE TABLE `cuenta_cobrars` (
 INSERT INTO `cuenta_cobrars` (`id`, `cliente_id`, `orden_venta_id`, `total`, `cancelado`, `saldo`, `fecha`, `hora`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (1, 1, 8, 1935.00, 400.00, 1535.00, '2025-12-08', '16:48:08', NULL, '2025-12-08 20:48:08', '2025-12-08 21:39:10'),
 (2, 2, 14, 300.00, 150.00, 150.00, '2025-12-12', '12:32:43', NULL, '2025-12-12 16:32:43', '2025-12-12 17:24:18'),
-(3, 1, 15, 300.00, 0.00, 300.00, '2025-12-12', '12:47:21', NULL, '2025-12-12 16:47:21', '2025-12-12 16:47:21'),
+(3, 1, 15, 300.00, 0.00, 300.00, '2025-12-12', '12:47:21', NULL, '2025-12-12 16:47:21', '2025-12-13 12:34:13'),
 (5, 1, 16, 300.00, 100.00, 200.00, '2025-12-12', '13:02:45', NULL, '2025-12-12 17:02:45', '2025-12-12 17:02:45'),
 (6, 1, 17, 300.00, 0.00, 300.00, '2025-12-12', '13:24:17', NULL, '2025-12-12 17:24:17', '2025-12-12 17:24:18'),
 (7, 2, 18, 345.00, 90.00, 255.00, '2025-12-12', '13:24:18', NULL, '2025-12-12 17:24:18', '2025-12-12 17:24:18'),
-(8, 2, 19, 300.00, 100.00, 200.00, '2025-12-12', '13:32:33', NULL, '2025-12-12 17:32:33', '2025-12-12 17:32:33');
+(8, 2, 19, 300.00, 100.00, 200.00, '2025-12-12', '13:32:33', NULL, '2025-12-12 17:32:33', '2025-12-12 17:32:33'),
+(9, 1, 34, 300.00, 0.00, 300.00, '2025-12-13', '08:34:13', NULL, '2025-12-13 12:34:13', '2025-12-13 12:34:13');
 
 -- --------------------------------------------------------
 
@@ -560,7 +561,34 @@ INSERT INTO `historial_accions` (`id`, `user_id`, `accion`, `descripcion`, `dato
 (160, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 31, \"nro\": 22, \"cs_f\": \"CON FACTURA\", \"hora\": \"20:41\", \"fecha\": \"2025-12-12\", \"total\": 345, \"cambio\": 0, \"codigo\": \"OV.22\", \"estado\": \"FINALIZADO\", \"total_f\": 345, \"user_id\": 1, \"total_st\": 345, \"cancelado\": 345, \"descuento\": null, \"cliente_id\": 2, \"created_at\": \"2025-12-13T00:41:31.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-13T00:41:31.000000Z\", \"verificado\": 2, \"sucursal_id\": 2, \"solicitud_sw\": null, \"cantidad_total\": 1, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2025-12-12', '20:41:31', '2025-12-13 00:41:31', '2025-12-13 00:41:31'),
 (161, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 32, \"nro\": 23, \"cs_f\": \"CON FACTURA\", \"hora\": \"20:43\", \"fecha\": \"2025-12-12\", \"total\": 300, \"cambio\": 0, \"codigo\": \"OV.23\", \"estado\": \"FINALIZADO\", \"total_f\": 300, \"user_id\": 1, \"total_st\": 300, \"cancelado\": 300, \"descuento\": null, \"cliente_id\": 1, \"created_at\": \"2025-12-13T00:43:30.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-13T00:43:30.000000Z\", \"verificado\": 2, \"sucursal_id\": 2, \"solicitud_sw\": null, \"cantidad_total\": 1, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2025-12-12', '20:43:30', '2025-12-13 00:43:30', '2025-12-13 00:43:30'),
 (162, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 33, \"nro\": 24, \"cs_f\": \"CON FACTURA\", \"hora\": \"20:44\", \"fecha\": \"2025-12-12\", \"total\": 345, \"cambio\": 0, \"codigo\": \"OV.24\", \"estado\": \"FINALIZADO\", \"total_f\": 345, \"user_id\": 1, \"total_st\": 345, \"cancelado\": 345, \"descuento\": null, \"cliente_id\": 2, \"created_at\": \"2025-12-13T00:44:53.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-13T00:44:53.000000Z\", \"verificado\": 2, \"sucursal_id\": 2, \"solicitud_sw\": null, \"cantidad_total\": 1, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2025-12-12', '20:44:53', '2025-12-13 00:44:53', '2025-12-13 00:44:53'),
-(163, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UN PRODUCTO', '{\"id\": 5, \"codigo\": \"P003\", \"estado\": \"1\", \"nombre\": \"PRODUCTO 3\", \"precio\": \"97\", \"marca_id\": \"1\", \"created_at\": \"2025-12-13T00:52:12.000000Z\", \"updated_at\": \"2025-12-13T00:52:12.000000Z\", \"descripcion\": \"\", \"categoria_id\": \"1\", \"unidades_caja\": \"40\", \"unidad_medida_id\": \"1\"}', NULL, 'PRODUCTOS', '2025-12-12', '20:52:12', '2025-12-13 00:52:12', '2025-12-13 00:52:12');
+(163, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UN PRODUCTO', '{\"id\": 5, \"codigo\": \"P003\", \"estado\": \"1\", \"nombre\": \"PRODUCTO 3\", \"precio\": \"97\", \"marca_id\": \"1\", \"created_at\": \"2025-12-13T00:52:12.000000Z\", \"updated_at\": \"2025-12-13T00:52:12.000000Z\", \"descripcion\": \"\", \"categoria_id\": \"1\", \"unidades_caja\": \"40\", \"unidad_medida_id\": \"1\"}', NULL, 'PRODUCTOS', '2025-12-12', '20:52:12', '2025-12-13 00:52:12', '2025-12-13 00:52:12'),
+(164, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA SOLICITUD DE INGRESO', '{\"id\": 4, \"nro\": 4, \"cs_f\": \"CON FATURA\", \"total\": 10000, \"codigo\": \"SOL.4\", \"estado\": \"PENDIENTE\", \"gastos\": 0, \"user_id\": 1, \"hora_sis\": \"08:25\", \"fecha_sis\": \"2025-12-13\", \"created_at\": \"2025-12-13T12:25:13.000000Z\", \"updated_at\": \"2025-12-13T12:25:13.000000Z\", \"descripcion\": \"\", \"tipo_cambio\": 6.98, \"hora_ingreso\": \"08:24\", \"proveedor_id\": 1, \"fecha_ingreso\": \"2025-12-13\", \"observaciones\": \"\", \"cantidad_total\": 40}', NULL, 'SOLICITUD DE INGRESO', '2025-12-13', '08:25:13', '2025-12-13 12:25:13', '2025-12-13 12:25:13'),
+(165, 1, 'MODIFICACIÓN', 'EL USUARIO admin APROBO UNA SOLICITUD DE INGRESO', '{\"id\": 4, \"nro\": 4, \"cs_f\": \"CON FATURA\", \"total\": \"10000.00\", \"codigo\": \"SOL.4\", \"estado\": \"PENDIENTE\", \"gastos\": \"0.00\", \"user_id\": 1, \"hora_sis\": \"08:25:00\", \"fecha_sis\": \"2025-12-13\", \"created_at\": \"2025-12-13T12:25:13.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-13T12:25:13.000000Z\", \"verificado\": 0, \"descripcion\": \"\", \"tipo_cambio\": \"6.98\", \"hora_ingreso\": \"08:24:00\", \"proveedor_id\": 1, \"fecha_ingreso\": \"2025-12-13\", \"observaciones\": \"\", \"cantidad_total\": 40, \"solicitud_ingreso_detalles\": [{\"id\": 6, \"costo\": \"250.00\", \"motivo\": null, \"cantidad\": 40, \"subtotal\": \"10000.00\", \"created_at\": \"2025-12-13T12:25:13.000000Z\", \"updated_at\": \"2025-12-13T12:25:13.000000Z\", \"verificado\": 0, \"producto_id\": 3, \"cantidad_fisica\": 40, \"sucursal_ajuste\": null, \"solicitud_ingreso_id\": 4}]}', '{\"id\": 4, \"nro\": 4, \"cs_f\": \"CON FATURA\", \"total\": \"10000.00\", \"codigo\": \"SOL.4\", \"estado\": \"APROBADO\", \"gastos\": \"0.00\", \"user_id\": 1, \"hora_sis\": \"08:25:00\", \"fecha_sis\": \"2025-12-13\", \"created_at\": \"2025-12-13T12:25:13.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-13T12:25:18.000000Z\", \"verificado\": 1, \"descripcion\": \"\", \"tipo_cambio\": \"6.98\", \"hora_ingreso\": \"08:24:00\", \"proveedor_id\": 1, \"fecha_ingreso\": \"2025-12-13\", \"observaciones\": \"\", \"cantidad_total\": 40, \"solicitud_ingreso_detalles\": [{\"id\": 6, \"costo\": \"250.00\", \"motivo\": null, \"cantidad\": 40, \"subtotal\": \"10000.00\", \"created_at\": \"2025-12-13T12:25:13.000000Z\", \"updated_at\": \"2025-12-13T12:25:18.000000Z\", \"verificado\": 1, \"producto_id\": 3, \"cantidad_fisica\": 40, \"sucursal_ajuste\": null, \"solicitud_ingreso_id\": 4}]}', 'SOLICITUD DE INGRESO', '2025-12-13', '08:25:18', '2025-12-13 12:25:18', '2025-12-13 12:25:18'),
+(166, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 34, \"nro\": 25, \"cs_f\": \"CON FACTURA\", \"hora\": \"12:35\", \"fecha\": \"2025-12-12\", \"total\": 300, \"cambio\": 0, \"codigo\": \"OV.25\", \"estado\": \"FINALIZADO\", \"total_f\": 300, \"user_id\": 1, \"total_st\": 300, \"cancelado\": 0, \"descuento\": null, \"cliente_id\": 1, \"created_at\": \"2025-12-13T12:34:13.000000Z\", \"forma_pago\": \"CRÉDITO\", \"updated_at\": \"2025-12-13T12:34:13.000000Z\", \"verificado\": 2, \"sucursal_id\": 2, \"solicitud_sw\": null, \"cantidad_total\": 1, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2025-12-13', '08:34:13', '2025-12-13 12:34:13', '2025-12-13 12:34:13'),
+(167, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 35, \"nro\": 26, \"cs_f\": \"CON FACTURA\", \"hora\": \"12:35\", \"fecha\": \"2025-12-12\", \"total\": 345, \"cambio\": 0, \"codigo\": \"OV.26\", \"estado\": \"FINALIZADO\", \"total_f\": 345, \"user_id\": 1, \"total_st\": 345, \"cancelado\": 345, \"descuento\": null, \"cliente_id\": 2, \"created_at\": \"2025-12-13T12:34:14.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-13T12:34:14.000000Z\", \"verificado\": 2, \"sucursal_id\": 2, \"solicitud_sw\": null, \"cantidad_total\": 1, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2025-12-13', '08:34:14', '2025-12-13 12:34:14', '2025-12-13 12:34:14'),
+(168, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 36, \"nro\": 27, \"cs_f\": \"CON FACTURA\", \"hora\": \"08:54\", \"fecha\": \"2025-12-13\", \"total\": 3000, \"cambio\": 0, \"codigo\": \"OV.27\", \"estado\": \"FINALIZADO\", \"total_f\": 3000, \"user_id\": 1, \"total_st\": 2950, \"cancelado\": 3000, \"descuento\": null, \"cliente_id\": 1, \"created_at\": \"2025-12-13T12:55:28.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-13T12:55:28.000000Z\", \"verificado\": 2, \"sucursal_id\": 2, \"solicitud_sw\": null, \"cantidad_total\": 10, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2025-12-13', '08:55:28', '2025-12-13 12:55:28', '2025-12-13 12:55:28'),
+(169, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA PROFORMA', '{\"id\": 6, \"nro\": 4, \"cs_f\": \"CON FACTURA\", \"hora\": \"09:04\", \"fecha\": \"2025-12-13\", \"total\": 6000, \"codigo\": \"PF.4\", \"total_f\": 6000, \"user_id\": 1, \"total_st\": 5900, \"descuento\": 0, \"cliente_id\": 2, \"created_at\": \"2025-12-13T13:04:41.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-13T13:04:41.000000Z\", \"sucursal_id\": 2, \"cantidad_total\": 20}', NULL, 'PROFORMA', '2025-12-13', '09:04:41', '2025-12-13 13:04:41', '2025-12-13 13:04:41'),
+(170, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 37, \"nro\": 28, \"cs_f\": \"CON FACTURA\", \"hora\": \"09:05\", \"fecha\": \"2025-12-13\", \"total\": 2415, \"cambio\": 0, \"codigo\": \"OV.28\", \"estado\": \"PENDIENTE\", \"total_f\": 2385, \"user_id\": 1, \"total_st\": 2380, \"cancelado\": 0, \"descuento\": 30, \"cliente_id\": 3, \"created_at\": \"2025-12-13T13:05:32.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-13T13:05:32.000000Z\", \"verificado\": 0, \"sucursal_id\": 2, \"solicitud_sw\": 0, \"cantidad_total\": 7, \"monto_solicitud\": 30, \"solicitud_descuento\": 1}', NULL, 'ORDEN DE VENTA', '2025-12-13', '09:05:32', '2025-12-13 13:05:32', '2025-12-13 13:05:32'),
+(173, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 40, \"nro\": 29, \"cs_f\": \"CON FACTURA\", \"hora\": \"09:12\", \"fecha\": \"2025-12-13\", \"total\": 3000, \"cambio\": 0, \"codigo\": \"OV.29\", \"estado\": \"PENDIENTE\", \"total_f\": 2900, \"user_id\": 1, \"total_st\": 2950, \"cancelado\": 0, \"descuento\": 50, \"cliente_id\": 1, \"created_at\": \"2025-12-13T13:14:56.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-13T13:14:56.000000Z\", \"verificado\": 0, \"sucursal_id\": 2, \"solicitud_sw\": 0, \"cantidad_total\": 10, \"monto_solicitud\": 50, \"solicitud_descuento\": 1}', NULL, 'ORDEN DE VENTA', '2025-12-13', '09:14:56', '2025-12-13 13:14:56', '2025-12-13 13:14:56'),
+(174, 1, 'MODIFICACIÓN', 'EL USUARIO admin APROBO EL DESCUENTO DE UNA ORDEN DE VENTA', '{\"id\": 40, \"nro\": 29, \"cs_f\": \"CON FACTURA\", \"hora\": \"09:12:00\", \"fecha\": \"2025-12-13\", \"total\": \"3000.00\", \"cambio\": \"0.00\", \"codigo\": \"OV.29\", \"estado\": \"PENDIENTE\", \"total_f\": \"2900.00\", \"user_ap\": null, \"user_id\": 1, \"total_st\": \"2950.00\", \"cancelado\": \"0.00\", \"descuento\": \"50.00\", \"cliente_id\": 1, \"created_at\": \"2025-12-13T13:14:56.000000Z\", \"deleted_at\": null, \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-13T13:14:56.000000Z\", \"verificado\": 0, \"sucursal_id\": 2, \"solicitud_sw\": 0, \"observaciones\": null, \"cantidad_total\": 10, \"monto_solicitud\": \"50.00\", \"solicitud_descuento\": 1, \"orden_venta_detalles\": [{\"id\": 43, \"precio\": \"300.00\", \"cantidad\": 10, \"subtotal\": \"3000.00\", \"descuento\": \"50.00\", \"created_at\": \"2025-12-13T13:14:56.000000Z\", \"deleted_at\": null, \"subtotal_f\": \"2950.00\", \"updated_at\": \"2025-12-13T13:14:56.000000Z\", \"producto_id\": 3, \"orden_venta_id\": 40, \"unidad_medida_id\": 1}]}', '{\"id\": 40, \"nro\": 29, \"cs_f\": \"CON FACTURA\", \"hora\": \"09:12:00\", \"fecha\": \"2025-12-13\", \"total\": \"3000.00\", \"cambio\": \"0.00\", \"codigo\": \"OV.29\", \"estado\": \"APROBADO\", \"total_f\": \"2900.00\", \"user_ap\": 1, \"user_id\": 1, \"total_st\": \"2950.00\", \"cancelado\": \"0.00\", \"descuento\": 30, \"cliente_id\": 1, \"created_at\": \"2025-12-13T13:14:56.000000Z\", \"deleted_at\": null, \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-13T13:15:15.000000Z\", \"verificado\": 1, \"sucursal_id\": 2, \"solicitud_sw\": 1, \"observaciones\": null, \"cantidad_total\": 10, \"monto_solicitud\": \"50.00\", \"solicitud_descuento\": 1, \"orden_venta_detalles\": [{\"id\": 43, \"precio\": \"300.00\", \"cantidad\": 10, \"subtotal\": \"3000.00\", \"descuento\": \"50.00\", \"created_at\": \"2025-12-13T13:14:56.000000Z\", \"deleted_at\": null, \"subtotal_f\": \"2950.00\", \"updated_at\": \"2025-12-13T13:14:56.000000Z\", \"producto_id\": 3, \"orden_venta_id\": 40, \"unidad_medida_id\": 1}]}', 'ORDEN DE VENTA', '2025-12-13', '09:15:15', '2025-12-13 13:15:15', '2025-12-13 13:15:15'),
+(175, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UNA ORDEN DE VENTA', '{\"id\": 40, \"nro\": 29, \"cs_f\": \"CON FACTURA\", \"hora\": \"09:12:00\", \"fecha\": \"2025-12-13\", \"total\": \"3000.00\", \"cambio\": \"0.00\", \"codigo\": \"OV.29\", \"estado\": \"APROBADO\", \"total_f\": \"2900.00\", \"user_ap\": 1, \"user_id\": 1, \"total_st\": \"2950.00\", \"cancelado\": \"0.00\", \"descuento\": \"30.00\", \"cliente_id\": 1, \"created_at\": \"2025-12-13T13:14:56.000000Z\", \"deleted_at\": null, \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-13T13:15:15.000000Z\", \"verificado\": 1, \"sucursal_id\": 2, \"solicitud_sw\": 1, \"observaciones\": null, \"cantidad_total\": 10, \"monto_solicitud\": \"50.00\", \"solicitud_descuento\": 1, \"orden_venta_detalles\": [{\"id\": 43, \"precio\": \"300.00\", \"cantidad\": 10, \"subtotal\": \"3000.00\", \"descuento\": \"50.00\", \"created_at\": \"2025-12-13T13:14:56.000000Z\", \"deleted_at\": null, \"subtotal_f\": \"2950.00\", \"updated_at\": \"2025-12-13T13:14:56.000000Z\", \"producto_id\": 3, \"orden_venta_id\": 40, \"unidad_medida_id\": 1}]}', '{\"id\": 40, \"nro\": 29, \"cs_f\": \"CON FACTURA\", \"hora\": \"09:12:00\", \"fecha\": \"2025-12-13\", \"total\": \"3000.00\", \"cambio\": 0, \"codigo\": \"OV.29\", \"estado\": \"FINALIZADO\", \"total_f\": \"2900.00\", \"user_ap\": 1, \"user_id\": 1, \"total_st\": 2950, \"cancelado\": 2900, \"descuento\": \"30.00\", \"cliente_id\": 1, \"created_at\": \"2025-12-13T13:14:56.000000Z\", \"deleted_at\": null, \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-13T13:18:22.000000Z\", \"verificado\": 2, \"sucursal_id\": 2, \"solicitud_sw\": 1, \"observaciones\": null, \"cantidad_total\": 10, \"monto_solicitud\": \"30.00\", \"solicitud_descuento\": 1, \"orden_venta_detalles\": [{\"id\": 43, \"precio\": \"300.00\", \"cantidad\": 10, \"subtotal\": \"3000.00\", \"descuento\": \"50.00\", \"created_at\": \"2025-12-13T13:14:56.000000Z\", \"deleted_at\": null, \"subtotal_f\": \"2950.00\", \"updated_at\": \"2025-12-13T13:14:56.000000Z\", \"producto_id\": 3, \"orden_venta_id\": 40, \"unidad_medida_id\": 1}]}', 'ORDEN DE VENTA', '2025-12-13', '09:18:22', '2025-12-13 13:18:22', '2025-12-13 13:18:22'),
+(176, 1, 'MODIFICACIÓN', 'EL USUARIO admin APROBO EL DESCUENTO DE UNA ORDEN DE VENTA', '{\"id\": 37, \"nro\": 28, \"cs_f\": \"CON FACTURA\", \"hora\": \"09:05:00\", \"fecha\": \"2025-12-13\", \"total\": \"2415.00\", \"cambio\": \"0.00\", \"codigo\": \"OV.28\", \"estado\": \"PENDIENTE\", \"total_f\": \"2350.00\", \"user_ap\": null, \"user_id\": 1, \"total_st\": \"2380.00\", \"cancelado\": \"0.00\", \"descuento\": \"30.00\", \"cliente_id\": 3, \"created_at\": \"2025-12-13T13:05:32.000000Z\", \"deleted_at\": null, \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-13T13:05:32.000000Z\", \"verificado\": 0, \"sucursal_id\": 2, \"solicitud_sw\": 0, \"observaciones\": null, \"cantidad_total\": 7, \"monto_solicitud\": \"30.00\", \"solicitud_descuento\": 1, \"orden_venta_detalles\": [{\"id\": 40, \"precio\": \"345.00\", \"cantidad\": 7, \"subtotal\": \"2415.00\", \"descuento\": \"35.00\", \"created_at\": \"2025-12-13T13:05:32.000000Z\", \"deleted_at\": null, \"subtotal_f\": \"2380.00\", \"updated_at\": \"2025-12-13T13:05:32.000000Z\", \"producto_id\": 4, \"orden_venta_id\": 37, \"unidad_medida_id\": 2}]}', '{\"id\": 37, \"nro\": 28, \"cs_f\": \"CON FACTURA\", \"hora\": \"09:05:00\", \"fecha\": \"2025-12-13\", \"total\": \"2415.00\", \"cambio\": \"0.00\", \"codigo\": \"OV.28\", \"estado\": \"APROBADO\", \"total_f\": \"2350.00\", \"user_ap\": 1, \"user_id\": 1, \"total_st\": \"2380.00\", \"cancelado\": \"0.00\", \"descuento\": \"30.00\", \"cliente_id\": 3, \"created_at\": \"2025-12-13T13:05:32.000000Z\", \"deleted_at\": null, \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-13T13:19:08.000000Z\", \"verificado\": 1, \"sucursal_id\": 2, \"solicitud_sw\": 1, \"observaciones\": null, \"cantidad_total\": 7, \"monto_solicitud\": \"30.00\", \"solicitud_descuento\": 1, \"orden_venta_detalles\": [{\"id\": 40, \"precio\": \"345.00\", \"cantidad\": 7, \"subtotal\": \"2415.00\", \"descuento\": \"35.00\", \"created_at\": \"2025-12-13T13:05:32.000000Z\", \"deleted_at\": null, \"subtotal_f\": \"2380.00\", \"updated_at\": \"2025-12-13T13:05:32.000000Z\", \"producto_id\": 4, \"orden_venta_id\": 37, \"unidad_medida_id\": 2}]}', 'ORDEN DE VENTA', '2025-12-13', '09:19:08', '2025-12-13 13:19:08', '2025-12-13 13:19:08'),
+(177, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UNA ORDEN DE VENTA', '{\"id\": 37, \"nro\": 28, \"cs_f\": \"CON FACTURA\", \"hora\": \"09:05:00\", \"fecha\": \"2025-12-13\", \"total\": \"2415.00\", \"cambio\": \"0.00\", \"codigo\": \"OV.28\", \"estado\": \"APROBADO\", \"total_f\": \"2350.00\", \"user_ap\": 1, \"user_id\": 1, \"total_st\": \"2380.00\", \"cancelado\": \"0.00\", \"descuento\": \"30.00\", \"cliente_id\": 3, \"created_at\": \"2025-12-13T13:05:32.000000Z\", \"deleted_at\": null, \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-13T13:19:08.000000Z\", \"verificado\": 1, \"sucursal_id\": 2, \"solicitud_sw\": 1, \"observaciones\": null, \"cantidad_total\": 7, \"monto_solicitud\": \"30.00\", \"solicitud_descuento\": 1, \"orden_venta_detalles\": [{\"id\": 40, \"precio\": \"345.00\", \"cantidad\": 7, \"subtotal\": \"2415.00\", \"descuento\": \"35.00\", \"created_at\": \"2025-12-13T13:05:32.000000Z\", \"deleted_at\": null, \"subtotal_f\": \"2380.00\", \"updated_at\": \"2025-12-13T13:05:32.000000Z\", \"producto_id\": 4, \"orden_venta_id\": 37, \"unidad_medida_id\": 2}]}', '{\"id\": 37, \"nro\": 28, \"cs_f\": \"CON FACTURA\", \"hora\": \"09:05:00\", \"fecha\": \"2025-12-13\", \"total\": \"2415.00\", \"cambio\": 0, \"codigo\": \"OV.28\", \"estado\": \"FINALIZADO\", \"total_f\": \"2350.00\", \"user_ap\": 1, \"user_id\": 1, \"total_st\": 2380, \"cancelado\": 2350, \"descuento\": \"30.00\", \"cliente_id\": 3, \"created_at\": \"2025-12-13T13:05:32.000000Z\", \"deleted_at\": null, \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-13T13:19:15.000000Z\", \"verificado\": 2, \"sucursal_id\": 2, \"solicitud_sw\": 1, \"observaciones\": null, \"cantidad_total\": 7, \"monto_solicitud\": \"30.00\", \"solicitud_descuento\": 1, \"orden_venta_detalles\": [{\"id\": 40, \"precio\": \"345.00\", \"cantidad\": 7, \"subtotal\": \"2415.00\", \"descuento\": \"35.00\", \"created_at\": \"2025-12-13T13:05:32.000000Z\", \"deleted_at\": null, \"subtotal_f\": \"2380.00\", \"updated_at\": \"2025-12-13T13:05:32.000000Z\", \"producto_id\": 4, \"orden_venta_id\": 37, \"unidad_medida_id\": 2}]}', 'ORDEN DE VENTA', '2025-12-13', '09:19:15', '2025-12-13 13:19:15', '2025-12-13 13:19:15'),
+(178, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 41, \"nro\": 30, \"cs_f\": \"CON FACTURA\", \"hora\": \"12:55\", \"fecha\": \"2025-12-13\", \"total\": 295, \"cambio\": 0, \"codigo\": \"OV.30\", \"estado\": \"FINALIZADO\", \"total_f\": 295, \"user_id\": 1, \"total_st\": 295, \"cancelado\": 295, \"descuento\": null, \"cliente_id\": 1, \"created_at\": \"2025-12-13T16:55:43.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-13T16:55:43.000000Z\", \"verificado\": 2, \"sucursal_id\": 2, \"solicitud_sw\": null, \"cantidad_total\": 1, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2025-12-13', '12:55:43', '2025-12-13 16:55:43', '2025-12-13 16:55:43'),
+(179, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 49, \"nro\": 31, \"cs_f\": \"CON FACTURA\", \"hora\": \"12:56\", \"fecha\": \"2025-12-13\", \"total\": 295, \"cambio\": 0, \"codigo\": \"OV.31\", \"estado\": \"FINALIZADO\", \"total_f\": 295, \"user_id\": 1, \"total_st\": 295, \"cancelado\": 295, \"descuento\": null, \"cliente_id\": 2, \"created_at\": \"2025-12-13T17:01:25.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-13T17:01:25.000000Z\", \"verificado\": 2, \"sucursal_id\": 2, \"solicitud_sw\": null, \"cantidad_total\": 1, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2025-12-13', '13:01:25', '2025-12-13 17:01:25', '2025-12-13 17:01:25'),
+(180, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 50, \"nro\": 32, \"cs_f\": \"CON FACTURA\", \"hora\": \"13:03\", \"fecha\": \"2025-12-13\", \"total\": 295, \"cambio\": 0, \"codigo\": \"OV.32\", \"estado\": \"FINALIZADO\", \"total_f\": 295, \"user_id\": 1, \"total_st\": 295, \"cancelado\": 295, \"descuento\": null, \"cliente_id\": 2, \"created_at\": \"2025-12-13T17:03:12.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-13T17:03:12.000000Z\", \"verificado\": 2, \"sucursal_id\": 2, \"solicitud_sw\": null, \"cantidad_total\": 1, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2025-12-13', '13:03:12', '2025-12-13 17:03:12', '2025-12-13 17:03:12'),
+(181, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA TRANSFERENCIA', '{\"id\": 4, \"nro\": 2, \"hora\": \"13:22\", \"fecha\": \"2025-12-13\", \"codigo\": \"T.2\", \"estado\": \"PENDIENTE\", \"user_ap\": 16, \"user_sol\": 15, \"created_at\": \"2025-12-13T17:22:33.000000Z\", \"updated_at\": \"2025-12-13T17:22:33.000000Z\", \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 1, \"cantidad_total_v\": 1, \"sucursal_destino\": 3}', NULL, 'TRANSFERENCIA', '2025-12-13', '13:22:33', '2025-12-13 17:22:33', '2025-12-13 17:22:33'),
+(182, 1, 'MODIFICACIÓN', 'EL USUARIO admin APROBO UNA TRANSFERENCIA', '{\"id\": 4, \"nro\": 2, \"hora\": \"13:22:00\", \"fecha\": \"2025-12-13\", \"codigo\": \"T.2\", \"estado\": \"PENDIENTE\", \"user_ap\": 16, \"user_sol\": 15, \"created_at\": \"2025-12-13T17:22:33.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-13T17:22:33.000000Z\", \"verificado\": 0, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 1, \"cantidad_total_v\": 1, \"sucursal_destino\": 3, \"transferencia_detalles\": [{\"id\": 3, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 1, \"subtotal\": \"300.00\", \"created_at\": \"2025-12-13T17:22:33.000000Z\", \"updated_at\": \"2025-12-13T17:22:33.000000Z\", \"verificado\": 0, \"producto_id\": 3, \"cantidad_fisica\": 1, \"sucursal_ajuste\": null, \"transferencia_id\": 4}]}', '{\"id\": 4, \"nro\": 2, \"hora\": \"13:22:00\", \"fecha\": \"2025-12-13\", \"codigo\": \"T.2\", \"estado\": \"APROBADO\", \"user_ap\": 16, \"user_sol\": 15, \"created_at\": \"2025-12-13T17:22:33.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-13T17:23:17.000000Z\", \"verificado\": 1, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 1, \"cantidad_total_v\": 1, \"sucursal_destino\": 3, \"transferencia_detalles\": [{\"id\": 3, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 1, \"subtotal\": \"300.00\", \"created_at\": \"2025-12-13T17:22:33.000000Z\", \"updated_at\": \"2025-12-13T17:23:17.000000Z\", \"verificado\": 1, \"producto_id\": 3, \"cantidad_fisica\": 1, \"sucursal_ajuste\": null, \"transferencia_id\": 4}]}', 'TRANSFERENCIA', '2025-12-13', '13:23:17', '2025-12-13 17:23:17', '2025-12-13 17:23:17'),
+(183, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA TRANSFERENCIA', '{\"id\": 5, \"nro\": 3, \"hora\": \"13:27\", \"fecha\": \"2025-12-13\", \"codigo\": \"T.3\", \"estado\": \"PENDIENTE\", \"user_ap\": 16, \"user_sol\": 15, \"created_at\": \"2025-12-13T17:27:59.000000Z\", \"updated_at\": \"2025-12-13T17:27:59.000000Z\", \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 1, \"cantidad_total_v\": 1, \"sucursal_destino\": 3}', NULL, 'TRANSFERENCIA', '2025-12-13', '13:27:59', '2025-12-13 17:27:59', '2025-12-13 17:27:59'),
+(184, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE SALIDA', '{\"id\": 9, \"nro\": 9, \"hora\": \"13:28\", \"fecha\": \"2025-12-13\", \"total\": 3000, \"codigo\": \"SAL.9\", \"estado\": \"PENDIENTE\", \"user_ap\": 15, \"user_id\": 1, \"user_sol\": 15, \"created_at\": \"2025-12-13T17:28:29.000000Z\", \"updated_at\": \"2025-12-13T17:28:29.000000Z\", \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 10}', NULL, 'ORDEN DE SALIDA', '2025-12-13', '13:28:29', '2025-12-13 17:28:29', '2025-12-13 17:28:29'),
+(185, 1, 'MODIFICACIÓN', 'EL USUARIO admin APROBO UNA ORDEN DE SALIDA', '{\"id\": 9, \"nro\": 9, \"hora\": \"13:28:00\", \"fecha\": \"2025-12-13\", \"total\": \"3000.00\", \"codigo\": \"SAL.9\", \"estado\": \"PENDIENTE\", \"user_ap\": 15, \"user_id\": 1, \"user_sol\": 15, \"created_at\": \"2025-12-13T17:28:29.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-13T17:28:29.000000Z\", \"verificado\": 0, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 10, \"orden_salida_detalles\": [{\"id\": 11, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 10, \"subtotal\": \"3000.00\", \"created_at\": \"2025-12-13T17:28:29.000000Z\", \"updated_at\": \"2025-12-13T17:28:29.000000Z\", \"verificado\": 0, \"producto_id\": 3, \"cantidad_fisica\": 10, \"orden_salida_id\": 9, \"sucursal_ajuste\": null}]}', '{\"id\": 9, \"nro\": 9, \"hora\": \"13:28:00\", \"fecha\": \"2025-12-13\", \"total\": \"3000.00\", \"codigo\": \"SAL.9\", \"estado\": \"APROBADO\", \"user_ap\": 15, \"user_id\": 1, \"user_sol\": 15, \"created_at\": \"2025-12-13T17:28:29.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-13T17:28:33.000000Z\", \"verificado\": 1, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 10, \"orden_salida_detalles\": [{\"id\": 11, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 10, \"subtotal\": \"3000.00\", \"created_at\": \"2025-12-13T17:28:29.000000Z\", \"updated_at\": \"2025-12-13T17:28:33.000000Z\", \"verificado\": 1, \"producto_id\": 3, \"cantidad_fisica\": 10, \"orden_salida_id\": 9, \"sucursal_ajuste\": null}]}', 'ORDEN DE SALIDA', '2025-12-13', '13:28:33', '2025-12-13 17:28:33', '2025-12-13 17:28:33'),
+(186, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN PRODUCTO DE SUCURSAL', '{\"id\": 4, \"created_at\": \"2025-12-05T16:08:14.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-13T17:28:33.000000Z\", \"producto_id\": 3, \"sucursal_id\": 2, \"stock_actual\": 10, \"cantidad_ideal\": 3, \"cantidad_minima\": 3}', '{\"id\": 4, \"created_at\": \"2025-12-05T16:08:14.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-13T17:28:56.000000Z\", \"producto_id\": 3, \"sucursal_id\": 2, \"stock_actual\": 10, \"cantidad_ideal\": 30, \"cantidad_minima\": 6}', 'SUCURSAL PRODUCTO', '2025-12-13', '13:28:56', '2025-12-13 17:28:56', '2025-12-13 17:28:56'),
+(187, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UNA TRANSFERENCIA', '{\"id\": 5, \"nro\": 3, \"hora\": \"13:27:00\", \"fecha\": \"2025-12-13\", \"codigo\": \"T.3\", \"estado\": \"PENDIENTE\", \"user_ap\": 16, \"user_sol\": 15, \"created_at\": \"2025-12-13T17:27:59.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-13T17:27:59.000000Z\", \"verificado\": 0, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 1, \"cantidad_total_v\": 1, \"sucursal_destino\": 3, \"transferencia_detalles\": [{\"id\": 4, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 1, \"subtotal\": \"300.00\", \"created_at\": \"2025-12-13T17:27:59.000000Z\", \"updated_at\": \"2025-12-13T17:27:59.000000Z\", \"verificado\": 0, \"producto_id\": 3, \"cantidad_fisica\": 1, \"sucursal_ajuste\": null, \"transferencia_id\": 5}]}', '{\"id\": 5, \"nro\": 3, \"hora\": \"13:27:00\", \"fecha\": \"2025-12-13\", \"codigo\": \"T.3\", \"estado\": \"PENDIENTE\", \"user_ap\": 16, \"user_sol\": 15, \"created_at\": \"2025-12-13T17:27:59.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-13T17:29:10.000000Z\", \"verificado\": 0, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 6, \"cantidad_total_v\": 6, \"sucursal_destino\": 3, \"transferencia_detalles\": [{\"id\": 4, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 6, \"subtotal\": \"1800.00\", \"created_at\": \"2025-12-13T17:27:59.000000Z\", \"updated_at\": \"2025-12-13T17:29:10.000000Z\", \"verificado\": 0, \"producto_id\": 3, \"cantidad_fisica\": 6, \"sucursal_ajuste\": null, \"transferencia_id\": 5}]}', 'TRANSFERENCIA', '2025-12-13', '13:29:10', '2025-12-13 17:29:10', '2025-12-13 17:29:10'),
+(188, 1, 'MODIFICACIÓN', 'EL USUARIO admin APROBO UNA TRANSFERENCIA', '{\"id\": 5, \"nro\": 3, \"hora\": \"13:27:00\", \"fecha\": \"2025-12-13\", \"codigo\": \"T.3\", \"estado\": \"PENDIENTE\", \"user_ap\": 16, \"user_sol\": 15, \"created_at\": \"2025-12-13T17:27:59.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-13T17:29:10.000000Z\", \"verificado\": 0, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 6, \"cantidad_total_v\": 6, \"sucursal_destino\": 3, \"transferencia_detalles\": [{\"id\": 4, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 6, \"subtotal\": \"1800.00\", \"created_at\": \"2025-12-13T17:27:59.000000Z\", \"updated_at\": \"2025-12-13T17:29:10.000000Z\", \"verificado\": 0, \"producto_id\": 3, \"cantidad_fisica\": 6, \"sucursal_ajuste\": null, \"transferencia_id\": 5}]}', '{\"id\": 5, \"nro\": 3, \"hora\": \"13:27:00\", \"fecha\": \"2025-12-13\", \"codigo\": \"T.3\", \"estado\": \"APROBADO\", \"user_ap\": 16, \"user_sol\": 15, \"created_at\": \"2025-12-13T17:27:59.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-13T17:29:38.000000Z\", \"verificado\": 1, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 6, \"cantidad_total_v\": 6, \"sucursal_destino\": 3, \"transferencia_detalles\": [{\"id\": 4, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 6, \"subtotal\": \"1800.00\", \"created_at\": \"2025-12-13T17:27:59.000000Z\", \"updated_at\": \"2025-12-13T17:29:38.000000Z\", \"verificado\": 1, \"producto_id\": 3, \"cantidad_fisica\": 6, \"sucursal_ajuste\": null, \"transferencia_id\": 5}]}', 'TRANSFERENCIA', '2025-12-13', '13:29:38', '2025-12-13 17:29:38', '2025-12-13 17:29:38'),
+(189, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 52, \"nro\": 33, \"cs_f\": \"CON FACTURA\", \"hora\": \"13:31\", \"fecha\": \"2025-12-13\", \"total\": 295, \"cambio\": 0, \"codigo\": \"OV.33\", \"estado\": \"FINALIZADO\", \"total_f\": 295, \"user_id\": 1, \"total_st\": 295, \"cancelado\": 295, \"descuento\": null, \"cliente_id\": 1, \"created_at\": \"2025-12-13T17:32:15.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-13T17:32:15.000000Z\", \"verificado\": 2, \"sucursal_id\": 2, \"solicitud_sw\": null, \"cantidad_total\": 1, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2025-12-13', '13:32:15', '2025-12-13 17:32:15', '2025-12-13 17:32:15'),
+(190, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 53, \"nro\": 34, \"cs_f\": \"CON FACTURA\", \"hora\": \"13:33\", \"fecha\": \"2025-12-13\", \"total\": 295, \"cambio\": 0, \"codigo\": \"OV.34\", \"estado\": \"FINALIZADO\", \"total_f\": 295, \"user_id\": 1, \"total_st\": 295, \"cancelado\": 295, \"descuento\": null, \"cliente_id\": 2, \"created_at\": \"2025-12-13T17:33:51.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-13T17:33:51.000000Z\", \"verificado\": 2, \"sucursal_id\": 2, \"solicitud_sw\": null, \"cantidad_total\": 1, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2025-12-13', '13:33:51', '2025-12-13 17:33:51', '2025-12-13 17:33:51'),
+(191, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA TRANSFERENCIA', '{\"id\": 6, \"nro\": 4, \"hora\": \"13:34\", \"fecha\": \"2025-12-13\", \"codigo\": \"T.4\", \"estado\": \"PENDIENTE\", \"user_ap\": 16, \"user_sol\": 15, \"created_at\": \"2025-12-13T17:34:22.000000Z\", \"updated_at\": \"2025-12-13T17:34:22.000000Z\", \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 1, \"cantidad_total_v\": 1, \"sucursal_destino\": 3}', NULL, 'TRANSFERENCIA', '2025-12-13', '13:34:22', '2025-12-13 17:34:22', '2025-12-13 17:34:22'),
+(192, 1, 'MODIFICACIÓN', 'EL USUARIO admin APROBO UNA TRANSFERENCIA', '{\"id\": 6, \"nro\": 4, \"hora\": \"13:34:00\", \"fecha\": \"2025-12-13\", \"codigo\": \"T.4\", \"estado\": \"PENDIENTE\", \"user_ap\": 16, \"user_sol\": 15, \"created_at\": \"2025-12-13T17:34:22.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-13T17:34:22.000000Z\", \"verificado\": 0, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 1, \"cantidad_total_v\": 1, \"sucursal_destino\": 3, \"transferencia_detalles\": [{\"id\": 5, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 1, \"subtotal\": \"300.00\", \"created_at\": \"2025-12-13T17:34:22.000000Z\", \"updated_at\": \"2025-12-13T17:34:22.000000Z\", \"verificado\": 0, \"producto_id\": 3, \"cantidad_fisica\": 1, \"sucursal_ajuste\": null, \"transferencia_id\": 6}]}', '{\"id\": 6, \"nro\": 4, \"hora\": \"13:34:00\", \"fecha\": \"2025-12-13\", \"codigo\": \"T.4\", \"estado\": \"APROBADO\", \"user_ap\": 16, \"user_sol\": 15, \"created_at\": \"2025-12-13T17:34:22.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-13T17:34:26.000000Z\", \"verificado\": 1, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 1, \"cantidad_total_v\": 1, \"sucursal_destino\": 3, \"transferencia_detalles\": [{\"id\": 5, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 1, \"subtotal\": \"300.00\", \"created_at\": \"2025-12-13T17:34:22.000000Z\", \"updated_at\": \"2025-12-13T17:34:26.000000Z\", \"verificado\": 1, \"producto_id\": 3, \"cantidad_fisica\": 1, \"sucursal_ajuste\": null, \"transferencia_id\": 6}]}', 'TRANSFERENCIA', '2025-12-13', '13:34:26', '2025-12-13 17:34:26', '2025-12-13 17:34:26');
 
 -- --------------------------------------------------------
 
@@ -584,7 +612,21 @@ CREATE TABLE `jobs` (
 
 INSERT INTO `jobs` (`id`, `queue`, `payload`, `attempts`, `reserved_at`, `available_at`, `created_at`) VALUES
 (24, 'default', '{\"uuid\":\"03017964-5df5-4f6c-abf0-9adfcb8cc9b5\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1765588247, 1765588247),
-(25, 'default', '{\"uuid\":\"c41a24d4-5b1b-4569-b1fa-c83dd36eee1b\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1765588365, 1765588365);
+(25, 'default', '{\"uuid\":\"c41a24d4-5b1b-4569-b1fa-c83dd36eee1b\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1765588365, 1765588365),
+(26, 'default', '{\"uuid\":\"f5d38ffa-e365-4db2-ab60-25eefa5be991\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":2:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}s:11:\\\"afterCommit\\\";b:1;}\"}}', 0, NULL, 1765629255, 1765629255),
+(27, 'default', '{\"uuid\":\"4c735a0e-12a1-49d4-bc18-6bce8d51bc84\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":2:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}s:11:\\\"afterCommit\\\";b:1;}\"}}', 0, NULL, 1765629255, 1765629255),
+(28, 'default', '{\"uuid\":\"478982cd-f6d7-4de6-ab26-7f9cc3067cd6\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":2:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}s:11:\\\"afterCommit\\\";b:1;}\"}}', 0, NULL, 1765630528, 1765630528),
+(29, 'default', '{\"uuid\":\"5fa9444c-57d7-430a-a4d5-887660a419a4\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":2:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}s:11:\\\"afterCommit\\\";b:1;}\"}}', 0, NULL, 1765631132, 1765631132),
+(30, 'default', '{\"uuid\":\"916e5668-6865-47df-827f-2acfa3dfe94d\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":2:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}s:11:\\\"afterCommit\\\";b:1;}\"}}', 0, NULL, 1765631696, 1765631696),
+(31, 'default', '{\"uuid\":\"aa3ddb10-8d0f-49c7-a2a7-2cc696f64650\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1765641896, 1765641896),
+(32, 'default', '{\"uuid\":\"25dd2f13-a006-4757-bbc8-e61888f36c9c\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1765641913, 1765641913),
+(33, 'default', '{\"uuid\":\"8c926a10-692b-41bc-a709-945a97fad9d0\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1765642013, 1765642013),
+(34, 'default', '{\"uuid\":\"d3fa65a2-2c3b-4934-8eba-e94c4b7100b0\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":2:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}s:11:\\\"afterCommit\\\";b:1;}\"}}', 0, NULL, 1765644945, 1765644945),
+(35, 'default', '{\"uuid\":\"8a716d75-18f0-4967-ba60-0be1c73f1234\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":2:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}s:11:\\\"afterCommit\\\";b:1;}\"}}', 0, NULL, 1765645285, 1765645285),
+(36, 'default', '{\"uuid\":\"92d75b70-eea2-49ad-9175-eecfbfe383f6\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":2:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}s:11:\\\"afterCommit\\\";b:1;}\"}}', 0, NULL, 1765645392, 1765645392),
+(37, 'default', '{\"uuid\":\"71d407fc-6bd3-4ee4-b8b5-3cad25d16025\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":2:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}s:11:\\\"afterCommit\\\";b:1;}\"}}', 0, NULL, 1765647135, 1765647135),
+(38, 'default', '{\"uuid\":\"59c46944-e5e0-48d1-a415-41aec646d3c5\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":2:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}s:11:\\\"afterCommit\\\";b:1;}\"}}', 0, NULL, 1765647231, 1765647231),
+(39, 'default', '{\"uuid\":\"027f76e1-311e-4fa3-ab14-4b76d2420013\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1765647407, 1765647407);
 
 -- --------------------------------------------------------
 
@@ -683,7 +725,26 @@ INSERT INTO `kardex_productos` (`id`, `sucursal_id`, `tipo_registro`, `registro_
 (71, 2, 'ORDEN DE VENTA', 33, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 26, 300.00, NULL, 300.00, 7800.00, '2025-12-12', 1, '2025-12-13 00:39:43', '2025-12-13 00:39:43'),
 (72, 2, 'ORDEN DE VENTA', 34, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 1, 30, 345.00, NULL, 345.00, 10350.00, '2025-12-12', 1, '2025-12-13 00:41:31', '2025-12-13 00:41:31'),
 (73, 2, 'ORDEN DE VENTA', 35, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 25, 300.00, NULL, 300.00, 7500.00, '2025-12-12', 1, '2025-12-13 00:43:30', '2025-12-13 00:43:30'),
-(74, 2, 'ORDEN DE VENTA', 36, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 1, 29, 345.00, NULL, 345.00, 10005.00, '2025-12-12', 1, '2025-12-13 00:44:53', '2025-12-13 00:44:53');
+(74, 2, 'ORDEN DE VENTA', 36, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 1, 29, 345.00, NULL, 345.00, 10005.00, '2025-12-12', 1, '2025-12-13 00:44:53', '2025-12-13 00:44:53'),
+(75, 1, 'SOLICITUD INGRESO', 6, 'SolicitudIngresoDetalle', 3, 'INGRESO POR SOLICITUD', 250.00, 'INGRESO', 40, NULL, 136, 300.00, 10000.00, NULL, 38800.00, '2025-12-13', 1, '2025-12-13 12:25:18', '2025-12-13 12:25:18'),
+(76, 2, 'ORDEN DE VENTA', 37, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 24, 300.00, NULL, 300.00, 7200.00, '2025-12-13', 1, '2025-12-13 12:34:13', '2025-12-13 12:34:13'),
+(77, 2, 'ORDEN DE VENTA', 38, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 1, 28, 345.00, NULL, 345.00, 9660.00, '2025-12-13', 1, '2025-12-13 12:34:14', '2025-12-13 12:34:14'),
+(78, 2, 'ORDEN DE VENTA', 39, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 10, 14, 300.00, NULL, 3000.00, 4200.00, '2025-12-13', 1, '2025-12-13 12:55:28', '2025-12-13 12:55:28'),
+(79, 2, 'ORDEN DE VENTA', 43, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 10, 4, 300.00, NULL, 3000.00, 1200.00, '2025-12-13', 1, '2025-12-13 13:18:22', '2025-12-13 13:18:22'),
+(80, 2, 'ORDEN DE VENTA', 40, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 7, 21, 345.00, NULL, 2415.00, 7245.00, '2025-12-13', 1, '2025-12-13 13:19:15', '2025-12-13 13:19:15'),
+(81, 2, 'ORDEN DE VENTA', 44, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 3, 300.00, NULL, 300.00, 900.00, '2025-12-13', 1, '2025-12-13 16:55:43', '2025-12-13 16:55:43'),
+(89, 2, 'ORDEN DE VENTA', 52, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 2, 300.00, NULL, 300.00, 600.00, '2025-12-13', 1, '2025-12-13 17:01:25', '2025-12-13 17:01:25'),
+(90, 2, 'ORDEN DE VENTA', 53, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 1, 300.00, NULL, 300.00, 300.00, '2025-12-13', 1, '2025-12-13 17:03:12', '2025-12-13 17:03:12'),
+(93, 2, 'TRANSFERENCIA', 3, 'TransferenciaDetalle', 3, 'EGRESO POR TRANSFERENCIA', 300.00, 'EGRESO', NULL, 1, 0, 300.00, NULL, 300.00, 0.00, '2025-12-13', 1, '2025-12-13 17:23:17', '2025-12-13 17:23:17'),
+(94, 3, 'TRANSFERENCIA', 3, 'TransferenciaDetalle', 3, 'INGRESO POR TRANSFERENCIA', 300.00, 'INGRESO', 1, NULL, 7, 300.00, 300.00, NULL, 2100.00, '2025-12-13', 1, '2025-12-13 17:23:17', '2025-12-13 17:23:17'),
+(95, 1, 'ORDEN DE SALIDA', 11, 'OrdenSalidaDetalle', 3, 'EGRESO POR ORDEN DE SALIDA', 300.00, 'EGRESO', NULL, 10, 126, 300.00, NULL, 3000.00, 35800.00, '2025-12-13', 1, '2025-12-13 17:28:33', '2025-12-13 17:28:33'),
+(96, 2, 'ORDEN DE SALIDA', 11, 'OrdenSalidaDetalle', 3, 'INGRESO POR ORDEN DE SALIDA', 300.00, 'INGRESO', 10, NULL, 10, 300.00, 3000.00, NULL, 3000.00, '2025-12-13', 1, '2025-12-13 17:28:33', '2025-12-13 17:28:33'),
+(99, 2, 'TRANSFERENCIA', 4, 'TransferenciaDetalle', 3, 'EGRESO POR TRANSFERENCIA', 300.00, 'EGRESO', NULL, 6, 4, 300.00, NULL, 1800.00, 1200.00, '2025-12-13', 1, '2025-12-13 17:29:38', '2025-12-13 17:29:38'),
+(100, 3, 'TRANSFERENCIA', 4, 'TransferenciaDetalle', 3, 'INGRESO POR TRANSFERENCIA', 300.00, 'INGRESO', 6, NULL, 13, 300.00, 1800.00, NULL, 3900.00, '2025-12-13', 1, '2025-12-13 17:29:38', '2025-12-13 17:29:38'),
+(102, 2, 'ORDEN DE VENTA', 55, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 3, 300.00, NULL, 300.00, 900.00, '2025-12-13', 1, '2025-12-13 17:32:15', '2025-12-13 17:32:15'),
+(103, 2, 'ORDEN DE VENTA', 56, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 2, 300.00, NULL, 300.00, 600.00, '2025-12-13', 1, '2025-12-13 17:33:51', '2025-12-13 17:33:51'),
+(104, 2, 'TRANSFERENCIA', 5, 'TransferenciaDetalle', 3, 'EGRESO POR TRANSFERENCIA', 300.00, 'EGRESO', NULL, 1, 1, 300.00, NULL, 300.00, 300.00, '2025-12-13', 1, '2025-12-13 17:34:26', '2025-12-13 17:34:26'),
+(105, 3, 'TRANSFERENCIA', 5, 'TransferenciaDetalle', 3, 'INGRESO POR TRANSFERENCIA', 300.00, 'INGRESO', 1, NULL, 14, 300.00, 300.00, NULL, 4200.00, '2025-12-13', 1, '2025-12-13 17:34:26', '2025-12-13 17:34:26');
 
 -- --------------------------------------------------------
 
@@ -762,7 +823,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (36, '2025_12_12_192658_create_parametro_clientes_table', 3),
 (37, '2025_12_12_201441_add_index_cliente_fecha_to_orden_ventas_table', 4),
 (38, '2025_12_12_202747_create_jobs_table', 5),
-(39, '2025_12_12_202751_create_failed_jobs_table', 5);
+(39, '2025_12_12_202751_create_failed_jobs_table', 5),
+(40, '2025_12_13_121456_create_notificacions_table', 6),
+(41, '2025_12_13_121459_create_notificacion_users_table', 6);
 
 -- --------------------------------------------------------
 
@@ -785,109 +848,173 @@ CREATE TABLE `modulos` (
 --
 
 INSERT INTO `modulos` (`id`, `modulo`, `nombre`, `accion`, `descripcion`, `created_at`, `updated_at`) VALUES
-(1, 'Gestión de usuarios', 'usuarios.index', 'VER', 'VER LA LISTA DE USUARIOS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(2, 'Gestión de usuarios', 'usuarios.create', 'CREAR', 'CREAR USUARIOS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(3, 'Gestión de usuarios', 'usuarios.edit', 'EDITAR', 'EDITAR USUARIOS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(4, 'Gestión de usuarios', 'usuarios.destroy', 'ELIMINAR', 'ELIMINAR USUARIOS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(5, 'Roles y Permisos', 'roles.index', 'VER', 'VER LA LISTA DE ROLES Y PERMISOS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(6, 'Roles y Permisos', 'roles.create', 'CREAR', 'CREAR ROLES Y PERMISOS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(7, 'Roles y Permisos', 'roles.edit', 'EDITAR', 'EDITAR ROLES Y PERMISOS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(8, 'Roles y Permisos', 'roles.destroy', 'ELIMINAR', 'ELIMINAR ROLES Y PERMISOS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(9, 'Configuración', 'configuracions.index', 'VER', 'VER INFORMACIÓN DE LA CONFIGURACIÓN DEL SISTEMA', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(10, 'Configuración', 'configuracions.edit', 'EDITAR', 'EDITAR LA CONFIGURACIÓN DEL SISTEMA', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(11, 'Sucursales', 'sucursals.index', 'VER', 'VER LA LISTA DE SUCURSALES', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(12, 'Sucursales', 'sucursals.create', 'CREAR', 'CREAR SUCURSALES', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(13, 'Sucursales', 'sucursals.edit', 'EDITAR', 'EDITAR SUCURSALES', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(14, 'Sucursales', 'sucursals.destroy', 'ELIMINAR', 'ELIMINAR SUCURSALES', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(15, 'Productos Sucursal', 'sucursal_productos.index', 'VER', 'VER LA LISTA DE PRODUCTOS DE SUCURSAL', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(16, 'Productos Sucursal', 'sucursal_productos.edit', 'EDITAR', 'EDITAR PRODUCTOS DE SUCURSAL', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(17, 'Categorías', 'categorias.index', 'VER', 'VER LA LISTA DE CATEGORÍAS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(18, 'Categorías', 'categorias.create', 'CREAR', 'CREAR CATEGORÍAS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(19, 'Categorías', 'categorias.edit', 'EDITAR', 'EDITAR CATEGORÍAS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(20, 'Categorías', 'categorias.destroy', 'ELIMINAR', 'ELIMINAR CATEGORÍAS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(21, 'Subcategorías', 'sub_categorias.index', 'VER', 'VER LA LISTA DE SUBCATEGORÍAS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(22, 'Subcategorías', 'sub_categorias.create', 'CREAR', 'CREAR SUBCATEGORÍAS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(23, 'Subcategorías', 'sub_categorias.edit', 'EDITAR', 'EDITAR SUBCATEGORÍAS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(24, 'Subcategorías', 'sub_categorias.destroy', 'ELIMINAR', 'ELIMINAR SUBCATEGORÍAS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(25, 'Marcas', 'marcas.index', 'VER', 'VER LA LISTA DE MARCAS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(26, 'Marcas', 'marcas.create', 'CREAR', 'CREAR MARCAS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(27, 'Marcas', 'marcas.edit', 'EDITAR', 'EDITAR MARCAS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(28, 'Marcas', 'marcas.destroy', 'ELIMINAR', 'ELIMINAR MARCAS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(29, 'Unidades de Medida', 'unidad_medidas.index', 'VER', 'VER LA LISTA DE UNIDADES DE MEDIDA', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(30, 'Unidades de Medida', 'unidad_medidas.create', 'CREAR', 'CREAR UNIDADES DE MEDIDA', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(31, 'Unidades de Medida', 'unidad_medidas.edit', 'EDITAR', 'EDITAR UNIDADES DE MEDIDA', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(32, 'Unidades de Medida', 'unidad_medidas.destroy', 'ELIMINAR', 'ELIMINAR UNIDADES DE MEDIDA', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(33, 'Productos', 'productos.index', 'VER', 'VER LA LISTA DE PRODUCTOS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(34, 'Productos', 'productos.create', 'CREAR', 'CREAR PRODUCTOS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(35, 'Productos', 'productos.edit', 'EDITAR', 'EDITAR PRODUCTOS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(36, 'Productos', 'productos.destroy', 'ELIMINAR', 'ELIMINAR PRODUCTOS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(37, 'Clientes', 'clientes.index', 'VER', 'VER LA LISTA DE CLIENTES', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(38, 'Clientes', 'clientes.create', 'CREAR', 'CREAR CLIENTES', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(39, 'Clientes', 'clientes.edit', 'EDITAR', 'EDITAR CLIENTES', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(40, 'Clientes', 'clientes.destroy', 'ELIMINAR', 'ELIMINAR CLIENTES', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(41, 'Clientes', 'clientes.parametro_clientes', 'EDITAR PARAMETROS', 'EDITAR LOS PARAMETROS PARA EL CÁLCULO DE RANKING', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(42, 'Proveedores', 'proveedors.index', 'VER', 'VER LA LISTA DE PROVEEDORES', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(43, 'Proveedores', 'proveedors.create', 'CREAR', 'CREAR PROVEEDORES', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(44, 'Proveedores', 'proveedors.edit', 'EDITAR', 'EDITAR PROVEEDORES', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(45, 'Proveedores', 'proveedors.destroy', 'ELIMINAR', 'ELIMINAR PROVEEDORES', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(46, 'Solicitud de Ingresos', 'solicitud_ingresos.index', 'VER', 'VER LA LISTA DE SOLICITUD DE INGRESOS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(47, 'Solicitud de Ingresos', 'solicitud_ingresos.create', 'CREAR', 'CREAR SOLICITUD DE INGRESOS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(48, 'Solicitud de Ingresos', 'solicitud_ingresos.edit', 'EDITAR', 'EDITAR SOLICITUD DE INGRESOS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(49, 'Solicitud de Ingresos', 'solicitud_ingresos.aprobar', 'APROBAR', 'APROBAR SOLICITUD DE INGRESOS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(50, 'Solicitud de Ingresos', 'solicitud_ingresos.destroy', 'ELIMINAR', 'ELIMINAR SOLICITUD DE INGRESOS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(51, 'Ordenes de Salida', 'orden_salidas.index', 'VER', 'VER LA LISTA DE ORDENES DE SALIDA', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(52, 'Ordenes de Salida', 'orden_salidas.create', 'CREAR', 'CREAR ORDENES DE SALIDA', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(53, 'Ordenes de Salida', 'orden_salidas.edit', 'EDITAR', 'EDITAR ORDENES DE SALIDA', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(54, 'Ordenes de Salida', 'orden_salidas.aprobar', 'APROBAR', 'APROBAR ORDENES DE SALIDA', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(55, 'Ordenes de Salida', 'orden_salidas.destroy', 'ELIMINAR', 'ELIMINAR ORDENES DE SALIDA', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(56, 'Devolución de Stock', 'devolucion_stocks.index', 'VER', 'VER LA LISTA DE DEVOLUCIÓN DE STOCK', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(57, 'Devolución de Stock', 'devolucion_stocks.create', 'CREAR', 'CREAR DEVOLUCIÓN DE STOCK', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(58, 'Devolución de Stock', 'devolucion_stocks.edit', 'EDITAR', 'EDITAR DEVOLUCIÓN DE STOCK', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(59, 'Devolución de Stock', 'devolucion_stocks.aprobar', 'APROBAR', 'APROBAR DEVOLUCIÓN DE STOCK', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(60, 'Devolución de Stock', 'devolucion_stocks.destroy', 'ELIMINAR', 'ELIMINAR DEVOLUCIÓN DE STOCK', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(61, 'Ordenes de Venta', 'orden_ventas.index', 'VER', 'VER LA LISTA DE ORDENDES DE VENTA', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(62, 'Ordenes de Venta', 'orden_ventas.create', 'CREAR', 'CREAR ORDENDES DE VENTA', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(63, 'Ordenes de Venta', 'orden_ventas.edit', 'EDITAR', 'EDITAR ORDENDES DE VENTA', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(64, 'Ordenes de Venta', 'orden_ventas.aprobar_descuentos', 'APROBAR DESCUENTOS', 'APROBAR DESCUENTOS ORDENDES DE VENTA', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(65, 'Ordenes de Venta', 'orden_ventas.destroy', 'ELIMINAR', 'ELIMINAR ORDENDES DE VENTA', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(66, 'Transferencias de Stock', 'transferencias.index', 'VER', 'VER LA LISTA DE TRANSFERENCIAS DE STOCK', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(67, 'Transferencias de Stock', 'transferencias.create', 'CREAR', 'CREAR TRANSFERENCIAS DE STOCK', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(68, 'Transferencias de Stock', 'transferencias.edit', 'EDITAR', 'EDITAR TRANSFERENCIAS DE STOCK', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(69, 'Transferencias de Stock', 'transferencias.aprobar', 'APROBAR', 'APROBAR TRANSFERENCIAS DE STOCK', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(70, 'Transferencias de Stock', 'transferencias.destroy', 'ELIMINAR', 'ELIMINAR TRANSFERENCIAS DE STOCK', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(71, 'Devolución de Clientes', 'devolucion_clientes.index', 'VER', 'VER LA LISTA DE DEVOLUCIÓN DE CLIENTES', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(72, 'Devolución de Clientes', 'devolucion_clientes.create', 'CREAR', 'CREAR DEVOLUCIÓN DE CLIENTES', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(73, 'Devolución de Clientes', 'devolucion_clientes.edit', 'EDITAR', 'EDITAR DEVOLUCIÓN DE CLIENTES', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(74, 'Devolución de Clientes', 'devolucion_clientes.destroy', 'ELIMINAR', 'ELIMINAR DEVOLUCIÓN DE CLIENTES', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(75, 'Cuentas por Cobrar', 'cuenta_cobrars.index', 'VER', 'VER LA LISTA DE CUENTAS POR COBRAR', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(76, 'Cuentas por Cobrar', 'cuenta_cobrars.create', 'CREAR', 'CREAR CUENTAS POR COBRAR', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(77, 'Cuentas por Cobrar', 'orden_ventas.pago', 'REGISTRAR PAGO', 'REGISTRAR PAGOS DE CUENTAS POR COBRAR', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(78, 'Cuentas por Cobrar', 'cuenta_cobrars.destroy', 'ELIMINAR', 'ELIMINAR CUENTAS POR COBRAR', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(79, 'Registro de Gastos', 'gastos.index', 'VER', 'VER LA LISTA DE REGISTRO DE GASTOS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(80, 'Registro de Gastos', 'gastos.create', 'CREAR', 'CREAR REGISTRO DE GASTOS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(81, 'Registro de Gastos', 'gastos.edit', 'EDITAR', 'EDITAR REGISTRO DE GASTOS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(82, 'Registro de Gastos', 'gastos.destroy', 'ELIMINAR', 'ELIMINAR REGISTRO DE GASTOS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(83, 'Proformas', 'proformas.index', 'VER', 'VER LA LISTA DE PROFORMAS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(84, 'Proformas', 'proformas.create', 'CREAR', 'CREAR PROFORMAS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(85, 'Proformas', 'proformas.edit', 'EDITAR', 'EDITAR PROFORMAS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(86, 'Proformas', 'proformas.destroy', 'ELIMINAR', 'ELIMINAR PROFORMAS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(87, 'Reportes', 'reportes.usuarios', 'REPORTE LISTA DE USUARIOS', 'GENERAR REPORTES DE LISTA DE USUARIOS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(88, 'Reportes', 'reportes.productos', 'REPORTE LISTA DE PRODUCTOS', 'GENERAR REPORTES DE LISTA DE PRODUCTOS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(89, 'Reportes', 'reportes.sucursals', 'REPORTE LISTA DE SUCURSALES', 'GENERAR REPORTES DE LISTA DE SUCURSALES', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(90, 'Reportes', 'reportes.clientes', 'REPORTE LISTA DE CLIENTES', 'GENERAR REPORTES DE LISTA DE CLIENTES', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(91, 'Reportes', 'reportes.proveedors', 'REPORTE LISTA DE PROVEEDORES', 'GENERAR REPORTES DE LISTA DE PROVEEDORES', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(92, 'Reportes', 'reportes.inventario', 'REPORTE DE INVENTARIO', 'GENERAR REPORTES DE INVENTARIO', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(93, 'Reportes', 'reportes.movimiento_inventario', 'REPORTE DE MOVIMIENTO DE INVENTARIO', 'GENERAR REPORTES DE MOVIMIENTO DE INVENTARIO', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(94, 'Reportes', 'reportes.solicitud_ingresos', 'REPORTE DE SOLICITUDES DE INGRESO', 'GENERAR REPORTES DE SOLICITUDES DE INGRESO', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(95, 'Reportes', 'reportes.orden_salidas', 'REPORTE DE ORDENES DE SALIDA', 'GENERAR REPORTES DE ORDENES DE SALIDA', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(96, 'Reportes', 'reportes.devolucions', 'REPORTE DE DEVOLUCIONES', 'GENERAR REPORTES DE DEVOLUCIONES', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(97, 'Reportes', 'reportes.orden_ventas', 'REPORTE DE ORDENES DE VENTA', 'GENERAR REPORTES DE ORDENES DE VENTA', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(98, 'Reportes', 'reportes.ejecutivos', 'REPORTE DE EJECUTIVOS/RESUMEN', 'GENERAR REPORTES DE EJECUTIVOS/RESUMEN', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(99, 'Reportes', 'reportes.diario_salidas', 'REPORTE DE DIARIO DE SALIDAS POR SUCURSAL', 'GENERAR REPORTES DE DIARIO DE SALIDAS POR SUCURSAL', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(100, 'Reportes', 'reportes.movimientos_abastecimiento', 'REPORTE DE SEMANAL DE MOVIMIENTOS Y ABASTECIMIENTO', 'GENERAR REPORTES DE SEMANAL DE MOVIMIENTOS Y ABASTECIMIENTO', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(101, 'Reportes', 'reportes.saldos_almacen_central', 'REPORTE DE SALDOS DEL ALMACÉN CENTRAL', 'GENERAR REPORTES DE SALDOS DEL ALMACÉN CENTRAL', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(102, 'Reportes', 'reportes.diario_vehiculos', 'REPORTE DE CONTROL DIARIO DE VEHÍCULOS', 'GENERAR REPORTES DE CONTROL DIARIO DE VEHÍCULOS', '2025-12-12 23:32:32', '2025-12-12 23:32:32'),
-(103, 'Reportes', 'reportes.notas_entrega', 'REPORTE DE NOTAS DE ENTREGA', 'GENERAR REPORTES DE NOTAS DE ENTREGA', '2025-12-12 23:32:32', '2025-12-12 23:32:32');
+(1, 'Gestión de usuarios', 'usuarios.index', 'VER', 'VER LA LISTA DE USUARIOS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(2, 'Gestión de usuarios', 'usuarios.create', 'CREAR', 'CREAR USUARIOS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(3, 'Gestión de usuarios', 'usuarios.edit', 'EDITAR', 'EDITAR USUARIOS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(4, 'Gestión de usuarios', 'usuarios.destroy', 'ELIMINAR', 'ELIMINAR USUARIOS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(5, 'Roles y Permisos', 'roles.index', 'VER', 'VER LA LISTA DE ROLES Y PERMISOS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(6, 'Roles y Permisos', 'roles.create', 'CREAR', 'CREAR ROLES Y PERMISOS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(7, 'Roles y Permisos', 'roles.edit', 'EDITAR', 'EDITAR ROLES Y PERMISOS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(8, 'Roles y Permisos', 'roles.destroy', 'ELIMINAR', 'ELIMINAR ROLES Y PERMISOS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(9, 'Configuración', 'configuracions.index', 'VER', 'VER INFORMACIÓN DE LA CONFIGURACIÓN DEL SISTEMA', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(10, 'Configuración', 'configuracions.edit', 'EDITAR', 'EDITAR LA CONFIGURACIÓN DEL SISTEMA', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(11, 'Sucursales', 'sucursals.index', 'VER', 'VER LA LISTA DE SUCURSALES', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(12, 'Sucursales', 'sucursals.create', 'CREAR', 'CREAR SUCURSALES', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(13, 'Sucursales', 'sucursals.edit', 'EDITAR', 'EDITAR SUCURSALES', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(14, 'Sucursales', 'sucursals.destroy', 'ELIMINAR', 'ELIMINAR SUCURSALES', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(15, 'Productos Sucursal', 'sucursal_productos.index', 'VER', 'VER LA LISTA DE PRODUCTOS DE SUCURSAL', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(16, 'Productos Sucursal', 'sucursal_productos.edit', 'EDITAR', 'EDITAR PRODUCTOS DE SUCURSAL', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(17, 'Categorías', 'categorias.index', 'VER', 'VER LA LISTA DE CATEGORÍAS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(18, 'Categorías', 'categorias.create', 'CREAR', 'CREAR CATEGORÍAS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(19, 'Categorías', 'categorias.edit', 'EDITAR', 'EDITAR CATEGORÍAS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(20, 'Categorías', 'categorias.destroy', 'ELIMINAR', 'ELIMINAR CATEGORÍAS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(21, 'Subcategorías', 'sub_categorias.index', 'VER', 'VER LA LISTA DE SUBCATEGORÍAS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(22, 'Subcategorías', 'sub_categorias.create', 'CREAR', 'CREAR SUBCATEGORÍAS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(23, 'Subcategorías', 'sub_categorias.edit', 'EDITAR', 'EDITAR SUBCATEGORÍAS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(24, 'Subcategorías', 'sub_categorias.destroy', 'ELIMINAR', 'ELIMINAR SUBCATEGORÍAS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(25, 'Marcas', 'marcas.index', 'VER', 'VER LA LISTA DE MARCAS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(26, 'Marcas', 'marcas.create', 'CREAR', 'CREAR MARCAS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(27, 'Marcas', 'marcas.edit', 'EDITAR', 'EDITAR MARCAS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(28, 'Marcas', 'marcas.destroy', 'ELIMINAR', 'ELIMINAR MARCAS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(29, 'Unidades de Medida', 'unidad_medidas.index', 'VER', 'VER LA LISTA DE UNIDADES DE MEDIDA', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(30, 'Unidades de Medida', 'unidad_medidas.create', 'CREAR', 'CREAR UNIDADES DE MEDIDA', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(31, 'Unidades de Medida', 'unidad_medidas.edit', 'EDITAR', 'EDITAR UNIDADES DE MEDIDA', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(32, 'Unidades de Medida', 'unidad_medidas.destroy', 'ELIMINAR', 'ELIMINAR UNIDADES DE MEDIDA', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(33, 'Productos', 'productos.index', 'VER', 'VER LA LISTA DE PRODUCTOS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(34, 'Productos', 'productos.create', 'CREAR', 'CREAR PRODUCTOS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(35, 'Productos', 'productos.edit', 'EDITAR', 'EDITAR PRODUCTOS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(36, 'Productos', 'productos.destroy', 'ELIMINAR', 'ELIMINAR PRODUCTOS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(37, 'Clientes', 'clientes.index', 'VER', 'VER LA LISTA DE CLIENTES', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(38, 'Clientes', 'clientes.create', 'CREAR', 'CREAR CLIENTES', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(39, 'Clientes', 'clientes.edit', 'EDITAR', 'EDITAR CLIENTES', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(40, 'Clientes', 'clientes.destroy', 'ELIMINAR', 'ELIMINAR CLIENTES', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(41, 'Clientes', 'clientes.parametro_clientes', 'EDITAR PARAMETROS', 'EDITAR LOS PARAMETROS PARA EL CÁLCULO DE RANKING', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(42, 'Proveedores', 'proveedors.index', 'VER', 'VER LA LISTA DE PROVEEDORES', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(43, 'Proveedores', 'proveedors.create', 'CREAR', 'CREAR PROVEEDORES', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(44, 'Proveedores', 'proveedors.edit', 'EDITAR', 'EDITAR PROVEEDORES', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(45, 'Proveedores', 'proveedors.destroy', 'ELIMINAR', 'ELIMINAR PROVEEDORES', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(46, 'Solicitud de Ingresos', 'solicitud_ingresos.index', 'VER', 'VER LA LISTA DE SOLICITUD DE INGRESOS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(47, 'Solicitud de Ingresos', 'solicitud_ingresos.create', 'CREAR', 'CREAR SOLICITUD DE INGRESOS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(48, 'Solicitud de Ingresos', 'solicitud_ingresos.edit', 'EDITAR', 'EDITAR SOLICITUD DE INGRESOS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(49, 'Solicitud de Ingresos', 'solicitud_ingresos.aprobar', 'APROBAR', 'APROBAR SOLICITUD DE INGRESOS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(50, 'Solicitud de Ingresos', 'solicitud_ingresos.destroy', 'ELIMINAR', 'ELIMINAR SOLICITUD DE INGRESOS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(51, 'Ordenes de Salida', 'orden_salidas.index', 'VER', 'VER LA LISTA DE ORDENES DE SALIDA', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(52, 'Ordenes de Salida', 'orden_salidas.create', 'CREAR', 'CREAR ORDENES DE SALIDA', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(53, 'Ordenes de Salida', 'orden_salidas.edit', 'EDITAR', 'EDITAR ORDENES DE SALIDA', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(54, 'Ordenes de Salida', 'orden_salidas.aprobar', 'APROBAR', 'APROBAR ORDENES DE SALIDA', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(55, 'Ordenes de Salida', 'orden_salidas.destroy', 'ELIMINAR', 'ELIMINAR ORDENES DE SALIDA', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(56, 'Devolución de Stock', 'devolucion_stocks.index', 'VER', 'VER LA LISTA DE DEVOLUCIÓN DE STOCK', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(57, 'Devolución de Stock', 'devolucion_stocks.create', 'CREAR', 'CREAR DEVOLUCIÓN DE STOCK', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(58, 'Devolución de Stock', 'devolucion_stocks.edit', 'EDITAR', 'EDITAR DEVOLUCIÓN DE STOCK', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(59, 'Devolución de Stock', 'devolucion_stocks.aprobar', 'APROBAR', 'APROBAR DEVOLUCIÓN DE STOCK', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(60, 'Devolución de Stock', 'devolucion_stocks.destroy', 'ELIMINAR', 'ELIMINAR DEVOLUCIÓN DE STOCK', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(61, 'Ordenes de Venta', 'orden_ventas.index', 'VER', 'VER LA LISTA DE ORDENDES DE VENTA', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(62, 'Ordenes de Venta', 'orden_ventas.create', 'CREAR', 'CREAR ORDENDES DE VENTA', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(63, 'Ordenes de Venta', 'orden_ventas.edit', 'EDITAR', 'EDITAR ORDENDES DE VENTA', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(64, 'Ordenes de Venta', 'orden_ventas.aprobar_descuentos', 'APROBAR DESCUENTOS', 'APROBAR DESCUENTOS ORDENDES DE VENTA', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(65, 'Ordenes de Venta', 'orden_ventas.destroy', 'ELIMINAR', 'ELIMINAR ORDENDES DE VENTA', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(66, 'Transferencias de Stock', 'transferencias.index', 'VER', 'VER LA LISTA DE TRANSFERENCIAS DE STOCK', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(67, 'Transferencias de Stock', 'transferencias.create', 'CREAR', 'CREAR TRANSFERENCIAS DE STOCK', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(68, 'Transferencias de Stock', 'transferencias.edit', 'EDITAR', 'EDITAR TRANSFERENCIAS DE STOCK', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(69, 'Transferencias de Stock', 'transferencias.aprobar', 'APROBAR', 'APROBAR TRANSFERENCIAS DE STOCK', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(70, 'Transferencias de Stock', 'transferencias.destroy', 'ELIMINAR', 'ELIMINAR TRANSFERENCIAS DE STOCK', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(71, 'Devolución de Clientes', 'devolucion_clientes.index', 'VER', 'VER LA LISTA DE DEVOLUCIÓN DE CLIENTES', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(72, 'Devolución de Clientes', 'devolucion_clientes.create', 'CREAR', 'CREAR DEVOLUCIÓN DE CLIENTES', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(73, 'Devolución de Clientes', 'devolucion_clientes.edit', 'EDITAR', 'EDITAR DEVOLUCIÓN DE CLIENTES', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(74, 'Devolución de Clientes', 'devolucion_clientes.destroy', 'ELIMINAR', 'ELIMINAR DEVOLUCIÓN DE CLIENTES', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(75, 'Cuentas por Cobrar', 'cuenta_cobrars.index', 'VER', 'VER LA LISTA DE CUENTAS POR COBRAR', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(76, 'Cuentas por Cobrar', 'cuenta_cobrars.create', 'CREAR', 'CREAR CUENTAS POR COBRAR', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(77, 'Cuentas por Cobrar', 'orden_ventas.pago', 'REGISTRAR PAGO', 'REGISTRAR PAGOS DE CUENTAS POR COBRAR', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(78, 'Cuentas por Cobrar', 'cuenta_cobrars.destroy', 'ELIMINAR', 'ELIMINAR CUENTAS POR COBRAR', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(79, 'Registro de Gastos', 'gastos.index', 'VER', 'VER LA LISTA DE REGISTRO DE GASTOS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(80, 'Registro de Gastos', 'gastos.create', 'CREAR', 'CREAR REGISTRO DE GASTOS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(81, 'Registro de Gastos', 'gastos.edit', 'EDITAR', 'EDITAR REGISTRO DE GASTOS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(82, 'Registro de Gastos', 'gastos.destroy', 'ELIMINAR', 'ELIMINAR REGISTRO DE GASTOS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(83, 'Proformas', 'proformas.index', 'VER', 'VER LA LISTA DE PROFORMAS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(84, 'Proformas', 'proformas.create', 'CREAR', 'CREAR PROFORMAS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(85, 'Proformas', 'proformas.edit', 'EDITAR', 'EDITAR PROFORMAS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(86, 'Proformas', 'proformas.destroy', 'ELIMINAR', 'ELIMINAR PROFORMAS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(87, 'Notificaciones', 'notificacions.index', 'VER', 'VER Y RECIBIR NOTIFICACIONES', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(88, 'Reportes', 'reportes.usuarios', 'REPORTE LISTA DE USUARIOS', 'GENERAR REPORTES DE LISTA DE USUARIOS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(89, 'Reportes', 'reportes.productos', 'REPORTE LISTA DE PRODUCTOS', 'GENERAR REPORTES DE LISTA DE PRODUCTOS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(90, 'Reportes', 'reportes.sucursals', 'REPORTE LISTA DE SUCURSALES', 'GENERAR REPORTES DE LISTA DE SUCURSALES', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(91, 'Reportes', 'reportes.clientes', 'REPORTE LISTA DE CLIENTES', 'GENERAR REPORTES DE LISTA DE CLIENTES', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(92, 'Reportes', 'reportes.proveedors', 'REPORTE LISTA DE PROVEEDORES', 'GENERAR REPORTES DE LISTA DE PROVEEDORES', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(93, 'Reportes', 'reportes.inventario', 'REPORTE DE INVENTARIO', 'GENERAR REPORTES DE INVENTARIO', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(94, 'Reportes', 'reportes.movimiento_inventario', 'REPORTE DE MOVIMIENTO DE INVENTARIO', 'GENERAR REPORTES DE MOVIMIENTO DE INVENTARIO', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(95, 'Reportes', 'reportes.solicitud_ingresos', 'REPORTE DE SOLICITUDES DE INGRESO', 'GENERAR REPORTES DE SOLICITUDES DE INGRESO', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(96, 'Reportes', 'reportes.orden_salidas', 'REPORTE DE ORDENES DE SALIDA', 'GENERAR REPORTES DE ORDENES DE SALIDA', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(97, 'Reportes', 'reportes.devolucions', 'REPORTE DE DEVOLUCIONES', 'GENERAR REPORTES DE DEVOLUCIONES', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(98, 'Reportes', 'reportes.orden_ventas', 'REPORTE DE ORDENES DE VENTA', 'GENERAR REPORTES DE ORDENES DE VENTA', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(99, 'Reportes', 'reportes.ejecutivos', 'REPORTE DE EJECUTIVOS/RESUMEN', 'GENERAR REPORTES DE EJECUTIVOS/RESUMEN', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(100, 'Reportes', 'reportes.diario_salidas', 'REPORTE DE DIARIO DE SALIDAS POR SUCURSAL', 'GENERAR REPORTES DE DIARIO DE SALIDAS POR SUCURSAL', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(101, 'Reportes', 'reportes.movimientos_abastecimiento', 'REPORTE DE SEMANAL DE MOVIMIENTOS Y ABASTECIMIENTO', 'GENERAR REPORTES DE SEMANAL DE MOVIMIENTOS Y ABASTECIMIENTO', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(102, 'Reportes', 'reportes.saldos_almacen_central', 'REPORTE DE SALDOS DEL ALMACÉN CENTRAL', 'GENERAR REPORTES DE SALDOS DEL ALMACÉN CENTRAL', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(103, 'Reportes', 'reportes.diario_vehiculos', 'REPORTE DE CONTROL DIARIO DE VEHÍCULOS', 'GENERAR REPORTES DE CONTROL DIARIO DE VEHÍCULOS', '2025-12-13 16:42:34', '2025-12-13 16:42:34'),
+(104, 'Reportes', 'reportes.notas_entrega', 'REPORTE DE NOTAS DE ENTREGA', 'GENERAR REPORTES DE NOTAS DE ENTREGA', '2025-12-13 16:42:34', '2025-12-13 16:42:34');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `notificacions`
+--
+
+CREATE TABLE `notificacions` (
+  `id` bigint UNSIGNED NOT NULL,
+  `descripcion` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `modulo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `modulo_id` bigint UNSIGNED DEFAULT NULL,
+  `fecha` date NOT NULL,
+  `hora` time NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `notificacions`
+--
+
+INSERT INTO `notificacions` (`id`, `descripcion`, `modulo`, `modulo_id`, `fecha`, `hora`, `created_at`, `updated_at`) VALUES
+(2, 'STOCK DEL PRODUCTO PRODUCTO 1 POR DEBAJO DEL STOCK MÍNIMO', 'SucursalProducto', 4, '2025-12-13', '13:01:00', '2025-12-13 17:01:25', '2025-12-13 17:01:25'),
+(3, 'STOCK DEL PRODUCTO PRODUCTO 1 POR DEBAJO DEL STOCK MÍNIMO', 'SucursalProducto', 4, '2025-12-13', '13:03:00', '2025-12-13 17:03:12', '2025-12-13 17:03:12'),
+(5, 'STOCK DEL PRODUCTO PRODUCTO 1 POR DEBAJO DEL STOCK MÍNIMO', 'SucursalProducto', 4, '2025-12-13', '13:23:00', '2025-12-13 17:23:17', '2025-12-13 17:23:17'),
+(6, 'STOCK DEL PRODUCTO <b>PRODUCTO 1\"</b> POR DEBAJO DEL STOCK MÍNIMO. Sucursal <b>SUCURSAL 1</b>', 'SucursalProducto', 4, '2025-12-13', '13:29:00', '2025-12-13 17:29:38', '2025-12-13 17:29:38'),
+(7, 'STOCK DEL PRODUCTO <b>PRODUCTO 1\"</b> POR DEBAJO DEL STOCK MÍNIMO (6). Sucursal <b>SUCURSAL 1</b>', 'SucursalProducto', 4, '2025-12-13', '13:32:00', '2025-12-13 17:32:15', '2025-12-13 17:32:15'),
+(8, 'STOCK DEL PRODUCTO <b>PRODUCTO 1\"</b> (2) POR DEBAJO DEL STOCK MÍNIMO (6). Sucursal <b>SUCURSAL 1</b>', 'SucursalProducto', 4, '2025-12-13', '13:33:00', '2025-12-13 17:33:51', '2025-12-13 17:33:51'),
+(9, 'STOCK DEL PRODUCTO <b>PRODUCTO 1\"</b> (1) POR DEBAJO DEL STOCK MÍNIMO (6). Sucursal <b>SUCURSAL 1</b>', 'SucursalProducto', 4, '2025-12-13', '13:34:00', '2025-12-13 17:34:26', '2025-12-13 17:34:26');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `notificacion_users`
+--
+
+CREATE TABLE `notificacion_users` (
+  `id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `notificacion_id` bigint UNSIGNED NOT NULL,
+  `visto` int NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `notificacion_users`
+--
+
+INSERT INTO `notificacion_users` (`id`, `user_id`, `notificacion_id`, `visto`, `created_at`, `updated_at`) VALUES
+(1, 15, 2, 0, '2025-12-13 17:01:25', '2025-12-13 17:01:25'),
+(2, 15, 3, 0, '2025-12-13 17:03:12', '2025-12-13 17:03:12'),
+(3, 1, 5, 1, '2025-12-13 17:23:17', '2025-12-13 17:42:49'),
+(4, 15, 5, 0, '2025-12-13 17:23:17', '2025-12-13 17:23:17'),
+(5, 1, 6, 0, '2025-12-13 17:29:38', '2025-12-13 17:41:15'),
+(6, 15, 6, 0, '2025-12-13 17:29:38', '2025-12-13 17:29:38'),
+(7, 1, 7, 1, '2025-12-13 17:32:15', '2025-12-13 17:42:47'),
+(8, 15, 7, 0, '2025-12-13 17:32:15', '2025-12-13 17:32:15'),
+(9, 1, 8, 1, '2025-12-13 17:33:51', '2025-12-13 17:42:54'),
+(10, 15, 8, 0, '2025-12-13 17:33:51', '2025-12-13 17:33:51'),
+(11, 1, 9, 1, '2025-12-13 17:34:26', '2025-12-13 17:42:52'),
+(12, 15, 9, 0, '2025-12-13 17:34:26', '2025-12-13 17:34:26');
 
 -- --------------------------------------------------------
 
@@ -927,7 +1054,8 @@ INSERT INTO `orden_salidas` (`id`, `nro`, `codigo`, `sucursal_id`, `user_sol`, `
 (5, 5, 'SAL.5', 2, 15, 15, '2025-12-06', '16:01:00', '', 2.00, 600.00, 'APROBADO', 1, 1, NULL, '2025-12-06 20:01:49', '2025-12-06 20:01:54'),
 (6, 6, 'SAL.6', 2, 15, 15, '2025-12-08', '16:16:00', '', 3.00, 900.00, 'APROBADO', 1, 1, NULL, '2025-12-08 20:16:41', '2025-12-08 20:16:54'),
 (7, 7, 'SAL.7', 2, 15, 15, '2025-12-08', '16:17:00', '', 3.00, 1035.00, 'APROBADO', 1, 1, NULL, '2025-12-08 20:17:20', '2025-12-08 20:17:25'),
-(8, 8, 'SAL.8', 2, 15, 15, '2025-12-08', '16:46:00', '', 80.00, 25800.00, 'APROBADO', 1, 1, NULL, '2025-12-08 20:46:28', '2025-12-08 20:46:33');
+(8, 8, 'SAL.8', 2, 15, 15, '2025-12-08', '16:46:00', '', 80.00, 25800.00, 'APROBADO', 1, 1, NULL, '2025-12-08 20:46:28', '2025-12-08 20:46:33'),
+(9, 9, 'SAL.9', 2, 15, 15, '2025-12-13', '13:28:00', '', 10.00, 3000.00, 'APROBADO', 1, 1, NULL, '2025-12-13 17:28:29', '2025-12-13 17:28:33');
 
 -- --------------------------------------------------------
 
@@ -964,7 +1092,8 @@ INSERT INTO `orden_salida_detalles` (`id`, `orden_salida_id`, `producto_id`, `ca
 (7, 6, 3, 3, 3, 300.00, 900.00, 1, NULL, NULL, '2025-12-08 20:16:41', '2025-12-08 20:16:54'),
 (8, 7, 4, 3, 3, 345.00, 1035.00, 1, NULL, NULL, '2025-12-08 20:17:20', '2025-12-08 20:17:25'),
 (9, 8, 3, 40, 40, 300.00, 12000.00, 1, NULL, NULL, '2025-12-08 20:46:28', '2025-12-08 20:46:33'),
-(10, 8, 4, 40, 40, 345.00, 13800.00, 1, NULL, NULL, '2025-12-08 20:46:28', '2025-12-08 20:46:33');
+(10, 8, 4, 40, 40, 345.00, 13800.00, 1, NULL, NULL, '2025-12-08 20:46:28', '2025-12-08 20:46:33'),
+(11, 9, 3, 10, 10, 300.00, 3000.00, 1, NULL, NULL, '2025-12-13 17:28:29', '2025-12-13 17:28:33');
 
 -- --------------------------------------------------------
 
@@ -1030,7 +1159,17 @@ INSERT INTO `orden_ventas` (`id`, `nro`, `codigo`, `sucursal_id`, `cliente_id`, 
 (30, 21, 'OV.21', 2, 3, '2025-12-12', '20:39:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 300.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 00:39:43', '2025-12-13 00:39:43'),
 (31, 22, 'OV.22', 2, 2, '2025-12-12', '20:41:00', 1, 345.00, 345.00, 0, NULL, NULL, NULL, NULL, 345.00, 345.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 00:41:31', '2025-12-13 00:41:31'),
 (32, 23, 'OV.23', 2, 1, '2025-12-12', '20:43:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 300.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 00:43:30', '2025-12-13 00:43:30'),
-(33, 24, 'OV.24', 2, 2, '2025-12-12', '20:44:00', 1, 345.00, 345.00, 0, NULL, NULL, NULL, NULL, 345.00, 345.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 00:44:53', '2025-12-13 00:44:53');
+(33, 24, 'OV.24', 2, 2, '2025-12-12', '20:44:00', 1, 345.00, 345.00, 0, NULL, NULL, NULL, NULL, 345.00, 345.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 00:44:53', '2025-12-13 00:44:53'),
+(34, 25, 'OV.25', 2, 1, '2025-12-12', '12:35:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 0.00, 0.00, 'CRÉDITO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 12:34:13', '2025-12-13 12:34:13'),
+(35, 26, 'OV.26', 2, 2, '2025-12-12', '12:35:00', 1, 345.00, 345.00, 0, NULL, NULL, NULL, NULL, 345.00, 345.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 12:34:14', '2025-12-13 12:34:14'),
+(36, 27, 'OV.27', 2, 1, '2025-12-13', '08:54:00', 10, 3000.00, 2950.00, 0, NULL, NULL, NULL, NULL, 3000.00, 3000.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 12:55:28', '2025-12-13 12:55:28'),
+(37, 28, 'OV.28', 2, 3, '2025-12-13', '09:05:00', 7, 2415.00, 2380.00, 1, 1, 1, 30.00, 30.00, 2350.00, 2350.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 13:05:32', '2025-12-13 13:19:15'),
+(40, 29, 'OV.29', 2, 1, '2025-12-13', '09:12:00', 10, 3000.00, 2950.00, 1, 1, 1, 30.00, 30.00, 2900.00, 2900.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 13:14:56', '2025-12-13 13:18:22'),
+(41, 30, 'OV.30', 2, 1, '2025-12-13', '12:55:00', 1, 295.00, 295.00, 0, NULL, NULL, NULL, NULL, 295.00, 295.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 16:55:43', '2025-12-13 16:55:43'),
+(49, 31, 'OV.31', 2, 2, '2025-12-13', '12:56:00', 1, 295.00, 295.00, 0, NULL, NULL, NULL, NULL, 295.00, 295.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 17:01:25', '2025-12-13 17:01:25'),
+(50, 32, 'OV.32', 2, 2, '2025-12-13', '13:03:00', 1, 295.00, 295.00, 0, NULL, NULL, NULL, NULL, 295.00, 295.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 17:03:12', '2025-12-13 17:03:12'),
+(52, 33, 'OV.33', 2, 1, '2025-12-13', '13:31:00', 1, 295.00, 295.00, 0, NULL, NULL, NULL, NULL, 295.00, 295.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 17:32:15', '2025-12-13 17:32:15'),
+(53, 34, 'OV.34', 2, 2, '2025-12-13', '13:33:00', 1, 295.00, 295.00, 0, NULL, NULL, NULL, NULL, 295.00, 295.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 17:33:51', '2025-12-13 17:33:51');
 
 -- --------------------------------------------------------
 
@@ -1086,7 +1225,17 @@ INSERT INTO `orden_venta_detalles` (`id`, `orden_venta_id`, `producto_id`, `unid
 (33, 30, 3, 1, 1, 300.00, 300.00, 0.00, 300.00, NULL, '2025-12-13 00:39:43', '2025-12-13 00:39:43'),
 (34, 31, 4, 2, 1, 345.00, 345.00, 0.00, 345.00, NULL, '2025-12-13 00:41:31', '2025-12-13 00:41:31'),
 (35, 32, 3, 1, 1, 300.00, 300.00, 0.00, 300.00, NULL, '2025-12-13 00:43:30', '2025-12-13 00:43:30'),
-(36, 33, 4, 2, 1, 345.00, 345.00, 0.00, 345.00, NULL, '2025-12-13 00:44:53', '2025-12-13 00:44:53');
+(36, 33, 4, 2, 1, 345.00, 345.00, 0.00, 345.00, NULL, '2025-12-13 00:44:53', '2025-12-13 00:44:53'),
+(37, 34, 3, 1, 1, 300.00, 300.00, 0.00, 300.00, NULL, '2025-12-13 12:34:13', '2025-12-13 12:34:13'),
+(38, 35, 4, 2, 1, 345.00, 345.00, 0.00, 345.00, NULL, '2025-12-13 12:34:14', '2025-12-13 12:34:14'),
+(39, 36, 3, 1, 10, 300.00, 3000.00, 50.00, 2950.00, NULL, '2025-12-13 12:55:28', '2025-12-13 12:55:28'),
+(40, 37, 4, 2, 7, 345.00, 2415.00, 35.00, 2380.00, NULL, '2025-12-13 13:05:32', '2025-12-13 13:05:32'),
+(43, 40, 3, 1, 10, 300.00, 3000.00, 50.00, 2950.00, NULL, '2025-12-13 13:14:56', '2025-12-13 13:14:56'),
+(44, 41, 3, 1, 1, 300.00, 295.00, 5.00, 295.00, NULL, '2025-12-13 16:55:43', '2025-12-13 16:55:43'),
+(52, 49, 3, 1, 1, 300.00, 295.00, 5.00, 295.00, NULL, '2025-12-13 17:01:25', '2025-12-13 17:01:25'),
+(53, 50, 3, 1, 1, 300.00, 295.00, 5.00, 295.00, NULL, '2025-12-13 17:03:12', '2025-12-13 17:03:12'),
+(55, 52, 3, 1, 1, 300.00, 295.00, 5.00, 295.00, NULL, '2025-12-13 17:32:15', '2025-12-13 17:32:15'),
+(56, 53, 3, 1, 1, 300.00, 295.00, 5.00, 295.00, NULL, '2025-12-13 17:33:51', '2025-12-13 17:33:51');
 
 -- --------------------------------------------------------
 
@@ -1153,8 +1302,8 @@ CREATE TABLE `productos` (
 --
 
 INSERT INTO `productos` (`id`, `codigo`, `nombre`, `unidades_caja`, `descripcion`, `categoria_id`, `marca_id`, `precio`, `precio_ppp`, `ppp`, `unidad_medida_id`, `estado`, `imagen`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(3, 'P001', 'PRODUCTO 1', 20, 'DESCRIPCION', 1, 1, 300.00, 302.00, 0, 1, 1, '31764682791.png', NULL, '2025-12-02 13:39:51', '2025-12-13 01:10:37'),
-(4, 'P002', 'PRODUCTO 2', 20, '', 2, 2, 345.00, 345.00, 0, 2, 1, NULL, NULL, '2025-12-04 22:16:21', '2025-12-13 01:08:47'),
+(3, 'P001', 'PRODUCTO 1', 20, 'DESCRIPCION', 1, 1, 300.00, 289.19, 0, 1, 1, '31764682791.png', NULL, '2025-12-02 13:39:51', '2025-12-13 12:26:29'),
+(4, 'P002', 'PRODUCTO 2', 20, '', 2, 2, 345.00, 345.00, 0, 2, 1, NULL, NULL, '2025-12-04 22:16:21', '2025-12-13 01:43:04'),
 (5, 'P003', 'PRODUCTO 3', 40, '', 1, 1, 97.00, NULL, 0, 1, 1, NULL, NULL, '2025-12-13 00:52:12', '2025-12-13 00:52:12');
 
 -- --------------------------------------------------------
@@ -1193,7 +1342,8 @@ CREATE TABLE `proformas` (
 INSERT INTO `proformas` (`id`, `nro`, `codigo`, `sucursal_id`, `cliente_id`, `fecha`, `hora`, `cantidad_total`, `total`, `total_st`, `solicitud_descuento`, `descuento`, `total_f`, `forma_pago`, `cs_f`, `observaciones`, `user_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (3, 1, 'PF.1', 2, 1, '2025-12-09', '16:25:00', 16, 5250.00, 5250.00, 1, 20.00, 5230.00, 'EFECTIVO', 'CON FACTURA', NULL, 1, NULL, '2025-12-09 20:30:52', '2025-12-09 21:15:52'),
 (4, 2, 'PF.2', 2, 1, '2025-12-12', '12:55:00', 1, 300.00, 300.00, 0, 0.00, 300.00, 'EFECTIVO', 'CON FACTURA', NULL, 1, NULL, '2025-12-12 17:01:08', '2025-12-12 17:01:08'),
-(5, 3, 'PF.3', 2, 1, '2025-12-12', '13:02:00', 3, 990.00, 990.00, 0, 0.00, 990.00, 'EFECTIVO', 'CON FACTURA', NULL, 1, NULL, '2025-12-12 17:02:44', '2025-12-12 17:02:44');
+(5, 3, 'PF.3', 2, 1, '2025-12-12', '13:02:00', 3, 990.00, 990.00, 0, 0.00, 990.00, 'EFECTIVO', 'CON FACTURA', NULL, 1, NULL, '2025-12-12 17:02:44', '2025-12-12 17:02:44'),
+(6, 4, 'PF.4', 2, 2, '2025-12-13', '09:04:00', 20, 6000.00, 5900.00, 0, 0.00, 6000.00, 'EFECTIVO', 'CON FACTURA', NULL, 1, NULL, '2025-12-13 13:04:41', '2025-12-13 13:04:41');
 
 -- --------------------------------------------------------
 
@@ -1225,7 +1375,8 @@ INSERT INTO `proforma_detalles` (`id`, `proforma_id`, `producto_id`, `unidad_med
 (2, 3, 4, 2, 10, 345.00, 3450.00, 0.00, 3450.00, NULL, '2025-12-09 20:30:52', '2025-12-09 21:15:52'),
 (3, 4, 3, 1, 1, 300.00, 300.00, 0.00, 300.00, NULL, '2025-12-12 17:01:08', '2025-12-12 17:01:08'),
 (4, 5, 4, 2, 2, 345.00, 690.00, 0.00, 690.00, NULL, '2025-12-12 17:02:44', '2025-12-12 17:02:44'),
-(5, 5, 3, 1, 1, 300.00, 300.00, 0.00, 300.00, NULL, '2025-12-12 17:02:44', '2025-12-12 17:02:44');
+(5, 5, 3, 1, 1, 300.00, 300.00, 0.00, 300.00, NULL, '2025-12-12 17:02:44', '2025-12-12 17:02:44'),
+(6, 6, 3, 1, 20, 300.00, 6000.00, 100.00, 5900.00, NULL, '2025-12-13 13:04:41', '2025-12-13 13:04:41');
 
 -- --------------------------------------------------------
 
@@ -1325,7 +1476,8 @@ CREATE TABLE `solicitud_ingresos` (
 INSERT INTO `solicitud_ingresos` (`id`, `nro`, `codigo`, `proveedor_id`, `fecha_ingreso`, `hora_ingreso`, `fecha_sis`, `hora_sis`, `cs_f`, `tipo_cambio`, `gastos`, `observaciones`, `descripcion`, `cantidad_total`, `total`, `estado`, `user_id`, `verificado`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (1, 1, 'SOL.1', 1, '2025-12-04', '18:48:00', '2025-12-05', '09:46:00', 'CON FATURA', 6.98, 0.00, 'OBS', 'DESC', 20, 6450.00, 'APROBADO', 1, 1, NULL, '2025-12-04 22:59:25', '2025-12-05 15:07:00'),
 (2, 2, 'SOL.2', 2, '2025-12-05', '10:15:00', '2025-12-05', '10:15:00', 'SIN FATURA', 6.98, 0.00, '', '', 35, 10500.00, 'APROBADO', 1, 1, NULL, '2025-12-05 14:15:19', '2025-12-08 20:46:04'),
-(3, 3, 'SOL.3', 2, '2025-12-08', '16:45:00', '2025-12-08', '16:45:00', 'CON FATURA', 6.98, 0.00, '', '', 200, 64500.00, 'APROBADO', 1, 1, NULL, '2025-12-08 20:45:57', '2025-12-08 20:46:08');
+(3, 3, 'SOL.3', 2, '2025-12-08', '16:45:00', '2025-12-08', '16:45:00', 'CON FATURA', 6.98, 0.00, '', '', 200, 64500.00, 'APROBADO', 1, 1, NULL, '2025-12-08 20:45:57', '2025-12-08 20:46:08'),
+(4, 4, 'SOL.4', 1, '2025-12-13', '08:24:00', '2025-12-13', '08:25:00', 'CON FATURA', 6.98, 0.00, '', '', 40, 10000.00, 'APROBADO', 1, 1, NULL, '2025-12-13 12:25:13', '2025-12-13 12:25:18');
 
 -- --------------------------------------------------------
 
@@ -1357,7 +1509,8 @@ INSERT INTO `solicitud_ingreso_detalles` (`id`, `solicitud_ingreso_id`, `product
 (2, 1, 4, 10, 10, 345.00, 3450.00, 1, NULL, NULL, '2025-12-04 22:59:25', '2025-12-05 13:48:43'),
 (3, 2, 3, 35, 35, 300.00, 10500.00, 1, NULL, NULL, '2025-12-05 14:15:19', '2025-12-08 20:46:04'),
 (4, 3, 3, 100, 100, 300.00, 30000.00, 1, NULL, NULL, '2025-12-08 20:45:57', '2025-12-08 20:46:08'),
-(5, 3, 4, 100, 100, 345.00, 34500.00, 1, NULL, NULL, '2025-12-08 20:45:57', '2025-12-08 20:46:08');
+(5, 3, 4, 100, 100, 345.00, 34500.00, 1, NULL, NULL, '2025-12-08 20:45:57', '2025-12-08 20:46:08'),
+(6, 4, 3, 40, 40, 250.00, 10000.00, 1, NULL, NULL, '2025-12-13 12:25:13', '2025-12-13 12:25:18');
 
 -- --------------------------------------------------------
 
@@ -1434,11 +1587,11 @@ CREATE TABLE `sucursal_productos` (
 --
 
 INSERT INTO `sucursal_productos` (`id`, `sucursal_id`, `producto_id`, `cantidad_ideal`, `cantidad_minima`, `stock_actual`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 3, 5, 5, 96, NULL, '2025-12-05 15:07:00', '2025-12-08 20:46:33'),
+(1, 1, 3, 5, 5, 126, NULL, '2025-12-05 15:07:00', '2025-12-13 17:28:33'),
 (2, 1, 4, 0, 0, 64, NULL, '2025-12-05 15:07:00', '2025-12-08 20:46:33'),
-(4, 2, 3, 3, 3, 25, NULL, '2025-12-05 16:08:14', '2025-12-13 00:43:30'),
-(5, 2, 4, 2, 2, 29, NULL, '2025-12-05 16:14:58', '2025-12-13 00:44:53'),
-(6, 3, 3, 0, 0, 6, NULL, '2025-12-06 14:30:40', '2025-12-09 21:53:43'),
+(4, 2, 3, 30, 6, 1, NULL, '2025-12-05 16:08:14', '2025-12-13 17:34:26'),
+(5, 2, 4, 2, 2, 21, NULL, '2025-12-05 16:14:58', '2025-12-13 13:19:15'),
+(6, 3, 3, 0, 0, 14, NULL, '2025-12-06 14:30:40', '2025-12-13 17:34:26'),
 (7, 3, 4, 0, 0, 4, NULL, '2025-12-06 14:31:33', '2025-12-09 21:53:43');
 
 -- --------------------------------------------------------
@@ -1472,7 +1625,10 @@ CREATE TABLE `transferencias` (
 --
 
 INSERT INTO `transferencias` (`id`, `nro`, `codigo`, `sucursal_id`, `sucursal_destino`, `user_sol`, `user_ap`, `cantidad_total`, `cantidad_total_v`, `fecha`, `hora`, `observaciones`, `estado`, `verificado`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(3, 1, 'T.1', 2, 3, 15, 16, 3.00, 3.00, '2025-12-09', '17:44:00', '', 'APROBADO', 1, NULL, '2025-12-09 21:45:57', '2025-12-09 21:53:43');
+(3, 1, 'T.1', 2, 3, 15, 16, 3.00, 3.00, '2025-12-09', '17:44:00', '', 'APROBADO', 1, NULL, '2025-12-09 21:45:57', '2025-12-09 21:53:43'),
+(4, 2, 'T.2', 2, 3, 15, 16, 1.00, 1.00, '2025-12-13', '13:22:00', '', 'APROBADO', 1, NULL, '2025-12-13 17:22:33', '2025-12-13 17:23:17'),
+(5, 3, 'T.3', 2, 3, 15, 16, 6.00, 6.00, '2025-12-13', '13:27:00', '', 'APROBADO', 1, NULL, '2025-12-13 17:27:59', '2025-12-13 17:29:38'),
+(6, 4, 'T.4', 2, 3, 15, 16, 1.00, 1.00, '2025-12-13', '13:34:00', '', 'APROBADO', 1, NULL, '2025-12-13 17:34:22', '2025-12-13 17:34:26');
 
 -- --------------------------------------------------------
 
@@ -1501,7 +1657,10 @@ CREATE TABLE `transferencia_detalles` (
 
 INSERT INTO `transferencia_detalles` (`id`, `transferencia_id`, `producto_id`, `cantidad`, `cantidad_fisica`, `costo`, `subtotal`, `verificado`, `sucursal_ajuste`, `motivo`, `created_at`, `updated_at`) VALUES
 (1, 3, 3, 2, 2, 300.00, 600.00, 1, NULL, NULL, '2025-12-09 21:45:57', '2025-12-09 21:53:43'),
-(2, 3, 4, 1, 1, 345.00, 345.00, 1, NULL, NULL, '2025-12-09 21:52:06', '2025-12-09 21:53:43');
+(2, 3, 4, 1, 1, 345.00, 345.00, 1, NULL, NULL, '2025-12-09 21:52:06', '2025-12-09 21:53:43'),
+(3, 4, 3, 1, 1, 300.00, 300.00, 1, NULL, NULL, '2025-12-13 17:22:33', '2025-12-13 17:23:17'),
+(4, 5, 3, 6, 6, 300.00, 1800.00, 1, NULL, NULL, '2025-12-13 17:27:59', '2025-12-13 17:29:38'),
+(5, 6, 3, 1, 1, 300.00, 300.00, 1, NULL, NULL, '2025-12-13 17:34:22', '2025-12-13 17:34:26');
 
 -- --------------------------------------------------------
 
@@ -1569,7 +1728,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `usuario`, `nombre`, `paterno`, `materno`, `ci`, `ci_exp`, `grupo_san`, `sexo`, `nacionalidad`, `profesion`, `cel`, `fono`, `cel_dom`, `dir`, `latitud`, `longitud`, `correo`, `foto`, `carnet`, `password`, `tipo`, `role_id`, `acceso`, `fecha_registro`, `estado`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (1, 'admin', 'admin', 'admin', '', '0', '', '', '', '', '', '', '', '', '', '', '', '', NULL, NULL, '$2y$12$65d4fgZsvBV5Lc/AxNKh4eoUdbGyaczQ4sSco20feSQANshNLuxSC', 'ADMINISTRADOR', 1, 1, '2025-11-30', 1, NULL, '2025-11-30 16:37:59', '2025-11-30 16:37:59'),
-(15, 'juan@gmail.com', 'JUAN', 'PERES', 'MAMANI', '123456', 'LP', 'ORH+', 'MASCULINO', 'BOLIVIANO', 'PROFESION', '777777', '22222', '78', 'LOS PEDREGALES', '111111111', '1000000000', 'juan@gmail.com', '1764597654_15.jpg', NULL, '$2y$12$x0H.S52203ur4Vgu7POWP.UhZ73..PjPRYyYwToPadVmyH29DbhLO', 'USUARIO', 2, 1, '2025-12-01', 1, NULL, '2025-11-30 21:13:08', '2025-12-01 14:06:53'),
+(15, 'juan@gmail.com', 'JUAN', 'PERES', 'MAMANI', '123456', 'LP', 'ORH+', 'MASCULINO', 'BOLIVIANO', 'PROFESION', '777777', '22222', '78', 'LOS PEDREGALES', '111111111', '1000000000', 'juan@gmail.com', '1764597654_15.jpg', NULL, '$2y$12$tepNxpYlhcv5XBM3Y0lokOc84zXA2ILMTrBKOFKQtBvORbgYHR11W', 'USUARIO', 2, 1, '2025-12-01', 1, NULL, '2025-11-30 21:13:08', '2025-12-13 17:04:07'),
 (16, 'maria@gmail.com', 'MARIA', 'GONZALES', '', '12312312', 'LP', 'ORH+', 'FEMENINO', 'BOLIVIANA', '', '67676767', '22232323', '676767', 'LOS OLIVOS', '11111', '11111', 'maria@gmail.com', NULL, NULL, '$2y$12$Br/h92SuGVk1alSb5xDlQOpbJBmH1n0xAc.rSGIWchdkqbmJv3m2O', 'USUARIO', 3, 1, '2025-12-01', 1, NULL, '2025-12-02 00:07:39', '2025-12-02 00:07:39'),
 (17, 'jorge@gmail.com', 'JORGE', 'GONZALES', '', '453543', 'LP', 'ORH+', 'MASCULINO', 'BOLIVIANO', '', '67676767', '22322332', '65665', 'LOS PEDRAGLES', '111', '111', 'jorge@gmail.com', NULL, NULL, '$2y$12$sPwrwOPrLhuui2zoRLCFyOPfcBUx.4FkGRTtu8XeJxUAHCQscinau', 'USUARIO', 3, 1, '2025-12-01', 1, NULL, '2025-12-02 00:08:20', '2025-12-02 00:08:20');
 
@@ -1710,6 +1869,18 @@ ALTER TABLE `migrations`
 -- Indices de la tabla `modulos`
 --
 ALTER TABLE `modulos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `notificacions`
+--
+ALTER TABLE `notificacions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `notificacion_users`
+--
+ALTER TABLE `notificacion_users`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1909,7 +2080,7 @@ ALTER TABLE `configuracions`
 -- AUTO_INCREMENT de la tabla `cuenta_cobrars`
 --
 ALTER TABLE `cuenta_cobrars`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `cuenta_cobrar_detalles`
@@ -1963,19 +2134,19 @@ ALTER TABLE `gastos`
 -- AUTO_INCREMENT de la tabla `historial_accions`
 --
 ALTER TABLE `historial_accions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=164;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=193;
 
 --
 -- AUTO_INCREMENT de la tabla `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT de la tabla `kardex_productos`
 --
 ALTER TABLE `kardex_productos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT de la tabla `marcas`
@@ -1987,37 +2158,49 @@ ALTER TABLE `marcas`
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT de la tabla `modulos`
 --
 ALTER TABLE `modulos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+
+--
+-- AUTO_INCREMENT de la tabla `notificacions`
+--
+ALTER TABLE `notificacions`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT de la tabla `notificacion_users`
+--
+ALTER TABLE `notificacion_users`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `orden_salidas`
 --
 ALTER TABLE `orden_salidas`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `orden_salida_detalles`
 --
 ALTER TABLE `orden_salida_detalles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `orden_ventas`
 --
 ALTER TABLE `orden_ventas`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT de la tabla `orden_venta_detalles`
 --
 ALTER TABLE `orden_venta_detalles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT de la tabla `parametro_clientes`
@@ -2041,13 +2224,13 @@ ALTER TABLE `productos`
 -- AUTO_INCREMENT de la tabla `proformas`
 --
 ALTER TABLE `proformas`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `proforma_detalles`
 --
 ALTER TABLE `proforma_detalles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedors`
@@ -2065,13 +2248,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `solicitud_ingresos`
 --
 ALTER TABLE `solicitud_ingresos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `solicitud_ingreso_detalles`
 --
 ALTER TABLE `solicitud_ingreso_detalles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `sub_categorias`
@@ -2095,13 +2278,13 @@ ALTER TABLE `sucursal_productos`
 -- AUTO_INCREMENT de la tabla `transferencias`
 --
 ALTER TABLE `transferencias`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `transferencia_detalles`
 --
 ALTER TABLE `transferencia_detalles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `unidad_medidas`

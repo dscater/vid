@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Support\Facades\Log;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
 {
@@ -85,11 +87,46 @@ class AuthController extends Controller
 
     public function authCheck()
     {
-        $valid = auth()->check();
-        $code = 200;
-        if (!$valid) {
-            $code = 401;
+
+        try {
+            $payload = auth()->payload();
+            $exp = $payload->get('exp');
+            $secondsLeft = $exp - time();
+            $valid = auth()->check();
+            $code = 200;
+            if (!$valid) {
+                throw new Exception("No logeado", 401);
+            }
+            // Log::debug($exp);
+            // Log::debug($secondsLeft);
+            $refresh = false;
+            $token = "";
+            if ($secondsLeft < 300) {
+                $token = auth()->refresh();
+                // Log::debug("TOKEN");
+                // Log::debug($token);
+                $refresh = true;
+            }
+
+            // Log::debug("code: " . $code);
+            // Log::debug("VALID: " . $valid);
+
+            return response()->JSON([
+                "valid" => $valid,
+                'exp' => $exp,
+                'secondsLeft' => $secondsLeft,
+                "refresh" => $refresh,
+                "token" => $token
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Token inválido o expirado'
+            ], 401);
+        } catch (JWTException $e) {
+            Log::debug("Erro JWTException: " . $e->getMessage());
+            return response()->json([
+                'error' => 'Token inválido o expirado'
+            ], 401);
         }
-        return response()->json($valid, $code);
     }
 }

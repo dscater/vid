@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string("ciudad");
             $table->string("categoria")->default("");
             $table->integer("rank")->nullable()->default(NULL);
-            $table->double("score", 8, 4)->nullable()->default(NULL);
+            $table->double("score", 24, 4)->nullable()->default(NULL);
             $table->double("factor", 8, 4)->nullable()->default(NULL);
             $table->json("contactos")->nullable();
             $table->integer("estado")->default(1);

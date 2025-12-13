@@ -22,7 +22,8 @@ class OrdenVentaService
         private KardexProductoService $kardex_producto_service,
         private SucursalProductoService $sucursal_producto_service,
         private CuentaCobrarService $cuenta_cobrar_service,
-        private ParametroClienteService $parametro_cliente_service
+        private ParametroClienteService $parametro_cliente_service,
+        private NotificacionService $notificacion_service
     ) {}
 
     public function listado(): Collection
@@ -139,6 +140,19 @@ class OrdenVentaService
 
                 // DESCONTAR STOCK DE SUCURSAL
                 $this->kardex_producto_service->registroEgreso("ORDEN DE VENTA", $producto, $item["cantidad"], $producto->precio, "EGRESO POR ORDEN DE VENTA", $datos["sucursal_id"], "OrdenVentaDetalle", $orden_venta_detalle->id);
+
+                // VERIFICAR PARA NOTIFICACION
+                $sucursal_producto = $this->sucursal_producto_service->getSucursalProducto($producto->id, $datos["sucursal_id"]);
+                if ($sucursal_producto->stock_actual < $sucursal_producto->cantidad_minima) {
+                    $sucursal = Sucursal::findOrFail($datos["sucursal_id"]);
+                    $descripcion = 'STOCK DEL PRODUCTO <b>' . $producto->nombre . '"</b> (' . $sucursal_producto->stock_actual . ') POR DEBAJO DEL STOCK MÍNIMO (' . $sucursal_producto->cantidad_minima . '). Sucursal <b>' . $sucursal->nombre . '</b>';
+                    $notificacion = $this->notificacion_service->crear([
+                        "descripcion" => $descripcion,
+                        "modulo" => "SucursalProducto",
+                        "modulo_id" => $sucursal_producto->id,
+                    ]);
+                    $this->notificacion_service->asignarNotificaciones($datos["sucursal_id"], $notificacion);
+                }
             }
         }
 
@@ -225,6 +239,19 @@ class OrdenVentaService
 
                 // DESCONTAR STOCK DE SUCURSAL
                 $this->kardex_producto_service->registroEgreso("ORDEN DE VENTA", $producto, $item["cantidad"], $producto->precio, "EGRESO POR ORDEN DE VENTA", $datos["sucursal_id"], "OrdenVentaDetalle", $orden_venta_detalle->id);
+
+                // VERIFICAR PARA NOTIFICACION
+                $sucursal_producto = $this->sucursal_producto_service->getSucursalProducto($producto->id, $datos["sucursal_id"]);
+                if ($sucursal_producto->stock_actual < $sucursal_producto->cantidad_minima) {
+                    $sucursal = Sucursal::findOrFail($datos["sucursal_id"]);
+                    $descripcion = 'STOCK DEL PRODUCTO <b>' . $producto->nombre . '"</b> (' . $sucursal_producto->stock_actual . ') POR DEBAJO DEL STOCK MÍNIMO (' . $sucursal_producto->cantidad_minima . '). Sucursal <b>' . $sucursal->nombre . '</b>';
+                    $notificacion = $this->notificacion_service->crear([
+                        "descripcion" => $descripcion,
+                        "modulo" => "SucursalProducto",
+                        "modulo_id" => $sucursal_producto->id,
+                    ]);
+                    $this->notificacion_service->asignarNotificaciones($datos["sucursal_id"], $notificacion);
+                }
             }
         }
 

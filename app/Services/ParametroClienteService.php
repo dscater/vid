@@ -14,6 +14,7 @@ use Exception;
 use Illuminate\Container\Attributes\Auth;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
@@ -106,7 +107,7 @@ class ParametroClienteService
         }
 
         $resultado = (((float)$valor1 * ($importe365 + $deudas)) + ($factor * $ganancias365) + ((float)$valor2) * $importe65) / 3;
-
+        $resultado = round($resultado, 2);
         // Log::debug("RESULTADO: " . $resultado);
 
         $cliente->update([
@@ -120,6 +121,8 @@ class ParametroClienteService
     public function asignarRank()
     {
         $clientes = Cliente::where("estado", 1)->orderBy("score", "desc")->get();
+
+        DB::update("UPDATE clientes SET rank = NULL, categoria = NULL");
 
         foreach ($clientes as $key => $cliente) {
             if (!$cliente->score || (float)$cliente->score <= 0) {

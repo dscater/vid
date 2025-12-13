@@ -208,7 +208,9 @@ class SolicitudIngresoService
 
         foreach ($datos["solicitud_ingreso_detalles"] as $item) {
             $solicitud_ingreso_detalle = SolicitudIngresoDetalle::findOrFail($item["id"]);
+            $subtotal = (float)$item["cantidad_fisica"] * (float)$item["costo"];
             $solicitud_ingreso_detalle->update([
+                "subtotal" => $subtotal,
                 "verificado" => $item["verificado"],
                 "sucursal_ajuste" => $item["cantidad"] == $item["cantidad_fisica"] ? $item["sucursal_ajuste"] : null,
                 "motivo" => $item["cantidad"] == $item["cantidad_fisica"] ? $item["motivo"] : null,
@@ -216,7 +218,7 @@ class SolicitudIngresoService
 
             // AUMENTAR STOCK ALMACEN
             $producto = Producto::findOrFail($item["producto_id"]);
-            $this->kardex_producto_service->registroIngreso($almacen->id, "SOLICITUD INGRESO", $producto, $item["cantidad_fisica"], $producto->precio, "INGRESO POR SOLICITUD", "SolicitudIngresoDetalle", $solicitud_ingreso_detalle->id);
+            $this->kardex_producto_service->registroIngreso($almacen->id, "SOLICITUD INGRESO", $producto, $item["cantidad_fisica"], $solicitud_ingreso_detalle->costo, "INGRESO POR SOLICITUD", "SolicitudIngresoDetalle", $solicitud_ingreso_detalle->id);
         }
 
         // registrar accion

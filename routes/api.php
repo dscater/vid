@@ -10,6 +10,7 @@ use App\Http\Controllers\DevolucionStockController;
 use App\Http\Controllers\GastoController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\MarcaController;
+use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\OrdenSalidaController;
 use App\Http\Controllers\OrdenVentaController;
 use App\Http\Controllers\ParametroClienteController;
@@ -249,6 +250,16 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
         ["store", "edit", "show", "update", "destroy"]
     );
 
+    // NOTIFICACIONES
+    Route::get("notificacions/paginado", [NotificacionController::class, 'paginado'])->name("notificacions.paginado");
+    Route::get("notificacions/listado", [NotificacionController::class, 'listado'])->name("notificacions.listado");
+    Route::get("notificacions/listadoByUser", [NotificacionController::class, 'listadoByUser'])->name("notificacions.listadoByUser");
+    Route::get("notificacions/listadoByUserNoVisto", [NotificacionController::class, 'listadoByUserNoVisto'])->name("notificacions.listadoByUserNoVisto");
+    Route::resource("notificacions", NotificacionController::class)->only(
+        ["show"]
+    );
+
     // REPORTES
-    Route::get('reportes/r_usuarios', [ReporteController::class, 'r_usuarios'])->name("reportes.r_usuarios");
+    Route::post('reportes/usuarios', [ReporteController::class, 'usuarios'])->name("reportes.usuarios");
+    Route::post('reportes/productos', [ReporteController::class, 'productos'])->name("reportes.productos");
 });

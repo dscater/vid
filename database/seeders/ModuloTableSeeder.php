@@ -643,6 +643,14 @@ class ModuloTableSeeder extends Seeder
             "descripcion" => "ELIMINAR PROFORMAS"
         ]);
 
+        // NOTIFICACIONES
+        Modulo::create([
+            "modulo" => "Notificaciones",
+            "nombre" => "notificacions.index",
+            "accion" => "VER",
+            "descripcion" => "VER Y RECIBIR NOTIFICACIONES"
+        ]);
+
         // REPORTES
         Modulo::create([
             "modulo" => "Reportes",

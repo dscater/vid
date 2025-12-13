@@ -115,9 +115,10 @@ class ProformaController extends Controller
                 $request = app(ProformaStoreRequest::class);
                 DB::beginTransaction();
                 try {
-                    $this->proformaService->crear($request->validated());
+                    $proforma = $this->proformaService->crear($request->validated());
                     DB::commit();
                     return response()->JSON([
+                        "proforma" => $proforma,
                         "sw" => true,
                         "message" => "Proceso realizado con éxito"
                     ]);

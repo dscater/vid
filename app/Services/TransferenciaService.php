@@ -20,7 +20,8 @@ class TransferenciaService
     public function __construct(
         private HistorialAccionService $historialAccionService,
         private KardexProductoService $kardex_producto_service,
-        private SucursalProductoService $sucursal_producto_service
+        private SucursalProductoService $sucursal_producto_service,
+        private NotificacionService $notificacion_service
     ) {}
 
     public function listado(): Collection
@@ -216,6 +217,19 @@ class TransferenciaService
 
             // INCREMENTAR STOCK DEL ALMACEN
             $this->kardex_producto_service->registroIngreso($transferencia->sucursal_destino, "TRANSFERENCIA", $producto, $item["cantidad_fisica"], $producto->precio, "INGRESO POR TRANSFERENCIA", "TransferenciaDetalle", $transferencia_detalle->id);
+
+            // VERIFICAR PARA NOTIFICACION
+            $sucursal_producto = $this->sucursal_producto_service->getSucursalProducto($producto->id, $transferencia->sucursal_id);
+            if ($sucursal_producto->stock_actual < $sucursal_producto->cantidad_minima) {
+                $sucursal = Sucursal::findOrFail($transferencia->sucursal_id);
+                $descripcion = 'STOCK DEL PRODUCTO <b>' . $producto->nombre . '"</b> (' . $sucursal_producto->stock_actual . ') POR DEBAJO DEL STOCK MÍNIMO (' . $sucursal_producto->cantidad_minima . '). Sucursal <b>' . $sucursal->nombre . '</b>';
+                $notificacion = $this->notificacion_service->crear([
+                    "descripcion" => $descripcion,
+                    "modulo" => "SucursalProducto",
+                    "modulo_id" => $sucursal_producto->id,
+                ]);
+                $this->notificacion_service->asignarNotificaciones($transferencia->sucursal_id, $notificacion);
+            }
         }
 
         // registrar accion

@@ -69,11 +69,12 @@ class ProductoController extends Controller
             $ppp = 0;
         }
 
+        $res = round($ppp, 2);
         if ($ppp > 0) {
-            $producto->precio_ppp = $ppp;
+            $producto->precio_ppp = $res;
             $producto->save();
         }
-        return response()->JSON($ppp);
+        return response()->JSON($res);
     }
 
     public function ppp_update(Request $request, Producto $producto)

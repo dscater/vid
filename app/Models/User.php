@@ -160,6 +160,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Certificado::class, 'user_id');
     }
 
+    public function notificacion_users()
+    {
+        return $this->hasMany(NotificacionUser::class, 'user_id');
+    }
+
     // FUNCIONES
     public static function getNombreUsuario($nom, $apep)
     {
