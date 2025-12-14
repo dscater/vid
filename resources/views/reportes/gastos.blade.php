@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>UtilidadOrdenes</title>
+    <title>Gastos</title>
     <style type="text/css">
         * {
             font-family: sans-serif;
@@ -17,12 +17,12 @@
         }
 
         table {
-            width: 80%;
+            width: 90%;
+            margin: auto;
             border-collapse: collapse;
             table-layout: fixed;
             margin-top: 20px;
             page-break-before: avoid;
-            margin: auto;
         }
 
         table thead tr th,
@@ -31,12 +31,12 @@
             word-wrap: break-word;
         }
 
-        table thead tr th {
-            font-size: 7pt;
+        table th {
+            font-size: 8pt;
         }
 
         table tbody tr td {
-            font-size: 6pt;
+            font-size: 7pt;
         }
 
 
@@ -135,7 +135,9 @@
             color: white;
         }
 
-        .txt_rojo {}
+        .derecha {
+            text-align: right;
+        }
 
         .img_celda img {
             width: 45px;
@@ -152,71 +154,33 @@
         <h2 class="titulo">
             {{ $configuracion->first()->nombre_sistema }}
         </h2>
-        <h4 class="texto">UTILIDAD DE ORDENDES DE VENTAS</h4>
+        <h4 class="texto">LISTA DE GASTOS</h4>
         <h4 class="fecha">Expedido: {{ date('d-m-Y') }}</h4>
     </div>
-
-
     <table border="1">
-        <thead>
+        <thead class="bg-principal">
             <tr>
-                <th>MES</th>
-                <th>TOTAL VENTA</th>
-                <th>COMPRA</th>
-                <th>TOTAL</th>
+                <th width="3%">N°</th>
+                <th>DESCRIPCIÓN</th>
+                <th width="14%">FECHA</th>
+                <th width="14%">MONTO</th>
             </tr>
         </thead>
         <tbody>
             @php
-                $total_final1 = 0;
-                $total_final2 = 0;
-                $total_final3 = 0;
+                $cont = 1;
             @endphp
-            @foreach ($meses as $key => $value)
-                @php
-                    $orden_ventas = App\Models\OrdenVenta::select('orden_ventas.*');
-                    if ($sucursal_id != 'todos') {
-                        $orden_ventas->where('sucursal_id', $sucursal_id);
-                    }
-                    $orden_ventas->where('fecha', 'LIKE', "$anio-$key%");
-                    $total_ventas = $orden_ventas->where('estado', 'FINALIZADO')->sum('total_f');
-
-                    $solicitud_ingreso_detalles = App\Models\SolicitudIngresoDetalle::select(
-                        'solicitud_ingreso_detalles.*',
-                    );
-                    // if ($sucursal_id != 'todos') {
-                    //     $solicitud_ingreso_detalles->whereHas('solicitud_ingreso', function ($query) use (
-                    //         $sucursal_id,
-                    //     ) {
-                    //         $query->where('sucursal_id', $sucursal_id);
-                    //     });
-                    // }
-
-                    $solicitud_ingreso_detalles->whereHas('solicitud_ingreso', function ($query) use ($key, $anio) {
-                        $query->whereIn('verificado', [1, 2]);
-                        $query->where('fecha_ingreso', 'LIKE', "$anio-$key%");
-                    });
-
-                    $total_compras = $solicitud_ingreso_detalles->sum(DB::raw('cantidad_fisica * costo'));
-
-                    $saldo = (float) $total_ventas - (float) $total_compras;
-
-                    $total_final1 += (float) $total_ventas;
-                    $total_final2 += (float) $total_compras;
-                    $total_final3 += (float) $saldo;
-                @endphp
+            @foreach ($gastos as $item)
                 <tr>
-                    <td>{{ $value }}</td>
-                    <td class="centreado">{{ $total_ventas }}</td>
-                    <td class="centreado">{{ $total_compras }}</td>
-                    <td class="centreado">{{ number_format($saldo, 2, '.', '') }}</td>
+                    <td class="centreado">{{ $cont++ }}</td>
+                    <td class="">{{ $item->descripcion }}</td>
+                    <td class="centreado">{{ $item->fecha_c }}</td>
+                    <td class="derecha">{{ $item->monto }}</td>
                 </tr>
             @endforeach
             <tr>
-                <th>TOTAL</th>
-                <th>{{ number_format($total_final1, 2, '.', '') }}</th>
-                <th>{{ number_format($total_final2, 2, '.', '') }}</th>
-                <th>{{ number_format($total_final3, 2, '.', '') }}</th>
+                <th colspan="3">TOTAL</th>
+                <th class="derecha">{{ $gastos->sum('monto') }}</th>
             </tr>
         </tbody>
     </table>

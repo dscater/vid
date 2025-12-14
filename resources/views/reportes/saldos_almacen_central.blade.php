@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>UtilidadOrdenes</title>
+    <title>SaldosAlmacen</title>
     <style type="text/css">
         * {
             font-family: sans-serif;
@@ -17,12 +17,11 @@
         }
 
         table {
-            width: 80%;
+            width: 100%;
             border-collapse: collapse;
             table-layout: fixed;
             margin-top: 20px;
             page-break-before: avoid;
-            margin: auto;
         }
 
         table thead tr th,
@@ -61,16 +60,16 @@
         }
 
         .texto {
-            width: 250px;
+            width: 350px;
             text-align: center;
             margin: auto;
             margin-top: 15px;
             font-weight: bold;
-            font-size: 1.1em;
+            font-size: 1em;
         }
 
         .fecha {
-            width: 250px;
+            width: 350px;
             text-align: center;
             margin: auto;
             margin-top: 15px;
@@ -82,6 +81,10 @@
             text-align: right;
             padding-right: 15px;
             font-weight: bold;
+        }
+
+        table {
+            width: 100%;
         }
 
         table thead {
@@ -140,6 +143,21 @@
         .img_celda img {
             width: 45px;
         }
+
+        .break_page {
+            page-break-after: always;
+        }
+
+        .obs {
+            font-size: 0.9em;
+        }
+
+        .punteado {
+            display: block;
+            width: 100%;
+            border-bottom: dotted 1px black;
+            margin-top: 25px;
+        }
     </style>
 </head>
 
@@ -152,74 +170,83 @@
         <h2 class="titulo">
             {{ $configuracion->first()->nombre_sistema }}
         </h2>
-        <h4 class="texto">UTILIDAD DE ORDENDES DE VENTAS</h4>
+        <h4 class="texto">SALDOS DE ALMACÉN CENTRAL</h4>
         <h4 class="fecha">Expedido: {{ date('d-m-Y') }}</h4>
     </div>
+    @php
 
-
+    @endphp
     <table border="1">
         <thead>
             <tr>
-                <th>MES</th>
-                <th>TOTAL VENTA</th>
-                <th>COMPRA</th>
-                <th>TOTAL</th>
+                <th width="5%">N°</th>
+                <th>CÓD. PRODUCTO</th>
+                <th>PRODUCTO</th>
+                <th>LLEGADA PRODUCTO</th>
+                <th>SALIDA A SUCURSALES</th>
+                <th>INICIO SALDOS</th>
             </tr>
         </thead>
         <tbody>
             @php
-                $total_final1 = 0;
-                $total_final2 = 0;
-                $total_final3 = 0;
+                $cont = 1;
             @endphp
-            @foreach ($meses as $key => $value)
+            @foreach ($productos as $producto)
                 @php
-                    $orden_ventas = App\Models\OrdenVenta::select('orden_ventas.*');
-                    if ($sucursal_id != 'todos') {
-                        $orden_ventas->where('sucursal_id', $sucursal_id);
+
+                    // ABASTECIMIENTO
+                    $kardex_ingreso = App\Models\KardexProducto::where('producto_id', $producto->id)
+                        ->where('fecha', $fecha)
+                        ->where('tipo_registro', 'SOLICITUD INGRESO')
+                        ->where('sucursal_id', 1)
+                        ->get()
+                        ->first();
+                    $total_ingreso = $kardex_ingreso ? $kardex_ingreso->cantidad_ingreso : 0;
+
+                    // SALIDAS A SUCURSAL
+                    $kardex_salida = App\Models\KardexProducto::where('producto_id', $producto->id)
+                        ->where('fecha', $fecha)
+                        ->where('tipo_registro', 'ORDEN DE SALIDA')
+                        ->where('sucursal_id', 1)
+                        ->get()
+                        ->first();
+                    $total_salidas = $kardex_salida ? $kardex_salida->cantidad_salida : 0;
+
+                    // SALDO INICIAL
+                    $kardex_inicial = App\Models\KardexProducto::where('producto_id', $producto->id)
+                        ->where('fecha', $fecha)
+                        ->where('sucursal_id', 1)
+                        ->get()
+                        ->first();
+                    $saldo_inicial = 0;
+                    if ($kardex_inicial) {
+                        if ($kardex_inicial->tipo_is == 'EGRESO') {
+                            $kardex_inicial = App\Models\KardexProducto::where('producto_id', $producto->id)
+                                ->where('id', '<', $kardex_inicial->id)
+                                // ->where('tipo_is', 'INGRESO')
+                                ->where('sucursal_id', 1)
+                                ->get()
+                                ->last();
+                        }
+                        $saldo_inicial = $kardex_inicial->cantidad_saldo;
                     }
-                    $orden_ventas->where('fecha', 'LIKE', "$anio-$key%");
-                    $total_ventas = $orden_ventas->where('estado', 'FINALIZADO')->sum('total_f');
-
-                    $solicitud_ingreso_detalles = App\Models\SolicitudIngresoDetalle::select(
-                        'solicitud_ingreso_detalles.*',
-                    );
-                    // if ($sucursal_id != 'todos') {
-                    //     $solicitud_ingreso_detalles->whereHas('solicitud_ingreso', function ($query) use (
-                    //         $sucursal_id,
-                    //     ) {
-                    //         $query->where('sucursal_id', $sucursal_id);
-                    //     });
-                    // }
-
-                    $solicitud_ingreso_detalles->whereHas('solicitud_ingreso', function ($query) use ($key, $anio) {
-                        $query->whereIn('verificado', [1, 2]);
-                        $query->where('fecha_ingreso', 'LIKE', "$anio-$key%");
-                    });
-
-                    $total_compras = $solicitud_ingreso_detalles->sum(DB::raw('cantidad_fisica * costo'));
-
-                    $saldo = (float) $total_ventas - (float) $total_compras;
-
-                    $total_final1 += (float) $total_ventas;
-                    $total_final2 += (float) $total_compras;
-                    $total_final3 += (float) $saldo;
                 @endphp
                 <tr>
-                    <td>{{ $value }}</td>
-                    <td class="centreado">{{ $total_ventas }}</td>
-                    <td class="centreado">{{ $total_compras }}</td>
-                    <td class="centreado">{{ number_format($saldo, 2, '.', '') }}</td>
+                    <td>{{ $cont++ }}</td>
+                    <td>{{ $producto->codigo }}</td>
+                    <td>{{ $producto->nombre }} {{ $producto->unidad_medida->nombre }}</td>
+                    <td class="centreado">{{ $total_ingreso }}</td>
+                    <td class="centreado">{{ $total_salidas }}</td>
+                    <td class="centreado">{{ $saldo_inicial }}</td>
                 </tr>
             @endforeach
-            <tr>
-                <th>TOTAL</th>
-                <th>{{ number_format($total_final1, 2, '.', '') }}</th>
-                <th>{{ number_format($total_final2, 2, '.', '') }}</th>
-                <th>{{ number_format($total_final3, 2, '.', '') }}</th>
-            </tr>
         </tbody>
     </table>
+
+    <p class='obs'>Observaciones:</p>
+    <p class='punteado'></p>
+    <p class='punteado'></p>
+    <p class='punteado'></p>
 </body>
 
 </html>

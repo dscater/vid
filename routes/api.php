@@ -266,11 +266,14 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::post('reportes/clientes', [ReporteController::class, 'clientes'])->name("reportes.clientes");
     Route::post('reportes/proveedors', [ReporteController::class, 'proveedors'])->name("reportes.proveedors");
     Route::post('reportes/movimiento_inventario', [ReporteController::class, 'movimiento_inventario'])->name("reportes.movimiento_inventario");
+    Route::get('reportes/movimiento_inventario_g', [ReporteController::class, 'movimiento_inventario_g'])->name("reportes.movimiento_inventario_g");
+
     Route::post('reportes/solicitud_ingresos', [ReporteController::class, 'solicitud_ingresos'])->name("reportes.solicitud_ingresos");
     Route::post('reportes/orden_salidas', [ReporteController::class, 'orden_salidas'])->name("reportes.orden_salidas");
     Route::post('reportes/devolucions', [ReporteController::class, 'devolucions'])->name("reportes.devolucions");
     Route::post('reportes/orden_ventas', [ReporteController::class, 'orden_ventas'])->name("reportes.orden_ventas");
     Route::post('reportes/utilidad_ordens', [ReporteController::class, 'utilidad_ordens'])->name("reportes.utilidad_ordens");
+    Route::get('reportes/utilidad_ordens_g', [ReporteController::class, 'utilidad_ordens_g'])->name("reportes.utilidad_ordens_g");
     Route::post('reportes/cuenta_cobrars', [ReporteController::class, 'cuenta_cobrars'])->name("reportes.cuenta_cobrars");
     Route::post('reportes/rotacion', [ReporteController::class, 'rotacion'])->name("reportes.rotacion");
     Route::post('reportes/gastos', [ReporteController::class, 'gastos'])->name("reportes.gastos");

@@ -32,7 +32,8 @@ class SucursalService
     public function listadoSP($estado = null): Collection
     {
 
-        $sucursals = Sucursal::select("sucursals.*");
+        $sucursals = Sucursal::select("sucursals.*")
+            ->with(["user:id,nombre,paterno,materno"]);
         $sucursals->where("almacen", 0);
         if ($estado != null) {
             $sucursals->where("estado", $estado);

@@ -6,18 +6,22 @@ use App\Models\Categoria;
 use App\Models\Cliente;
 use App\Models\Configuracion;
 use App\Models\CuentaCobrar;
+use App\Models\DevolucionClienteDetalle;
 use App\Models\DevolucionStock;
+use App\Models\Gasto;
 use App\Models\HistorialAccion;
 use App\Models\Inscripcion;
 use App\Models\KardexProducto;
 use App\Models\Marca;
 use App\Models\OrdenSalida;
 use App\Models\OrdenVenta;
+use App\Models\OrdenVentaDetalle;
 use App\Models\Producto;
 use App\Models\Proveedor;
 use App\Models\SolicitudIngreso;
 use App\Models\SolicitudIngresoDetalle;
 use App\Models\Sucursal;
+use App\Models\TransferenciaDetalle;
 use App\Models\User;
 use App\Services\ReporteService;
 use Illuminate\Http\Request;
@@ -26,6 +30,7 @@ use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use PDF;
 use Carbon\Carbon;
+use DateTime;
 use FPDF;
 use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -280,7 +285,7 @@ class ReporteController extends Controller
             $sucursals->where("id", $sucursal_id);
         }
 
-        $sucursals = $sucursals->get();
+        $sucursals = $sucursals->where("estado", 1)->get();
 
         if ($request->tipo == 'pdf') {
             $pdf = PDF::loadView('reportes.productos', compact(
@@ -977,6 +982,70 @@ class ReporteController extends Controller
         }
     }
 
+    public function movimiento_inventario_g(Request $request)
+    {
+        $producto_id =  $request->producto_id;
+        $sucursal_id =  $request->sucursal_id;
+        $user_id =  $request->user_id;
+        $tipo_movimiento =  $request->tipo_movimiento;
+        $fecha =  $request->fecha;
+        $productos = Producto::select("productos.*");
+        if ($producto_id != 'todos') {
+            $productos->where("id", $producto_id);
+        }
+
+        $productos = $productos->where("estado", 1)->get();
+
+        $categories = ["INGRESO", "EGRESO", "AJUSTE"];
+
+        if ($tipo_movimiento != 'todos') {
+            $categories = [$tipo_movimiento == 'ajuste' ? 'AJUSTE' : $tipo_movimiento];
+        }
+
+        $data = [];
+        foreach ($categories as $item) {
+
+            $total = 0;
+            if ($item == 'AJUSTE') {
+                $kardex = KardexProducto::where("tipo_is", $item);
+            } else {
+                $kardex = KardexProducto::where("detalle", "INGRESO POR AJUSTE");
+            }
+
+            if ($producto_id != 'todos') {
+                $kardex->where("producto_id", $producto_id);
+            }
+
+            if ($user_id != 'todos') {
+                $kardex->where("user_id", $user_id);
+            }
+
+            if ($sucursal_id != 'todos') {
+                $kardex->where("sucursal_id", $sucursal_id);
+            }
+
+            if ($fecha) {
+                $kardex->where("fecha", $fecha);
+            }
+
+            if ($item == 'INGRESO' || $item == 'AJUSTE') {
+                $total = $kardex->sum("cantidad_ingreso");
+            } else {
+                $total = $kardex->sum("cantidad_salida");
+            }
+
+            $data[] = [
+                'name' => $item,
+                'y' => (float) $total,
+            ];
+        }
+
+        return response()->JSON([
+            "categories" => $categories,
+            "data" => $data,
+        ]);
+    }
+
     public function solicitud_ingresos(Request $request)
     {
         ini_set('memory_limit', '1024M');
@@ -1497,56 +1566,75 @@ class ReporteController extends Controller
 
             $fila = 2;
             $sheet->setCellValue('A' . $fila, $this->configuracion->nombre_sistema);
-            $sheet->mergeCells("A" . $fila . ":F" . $fila);  //COMBINAR CELDAS
-            $sheet->getStyle('A' . $fila . ':F' . $fila)->getAlignment()->setHorizontal('center');
-            $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->titulo);
+            $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
             $fila++;
             $sheet->setCellValue('A' . $fila, "ORDENES DE VENTAS");
-            $sheet->mergeCells("A" . $fila . ":F" . $fila);  //COMBINAR CELDAS
-            $sheet->getStyle('A' . $fila . ':F' . $fila)->getAlignment()->setHorizontal('center');
-            $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->titulo);
+            $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
             $fila++;
             $fila++;
             foreach ($orden_ventas as $key => $item) {
-                $sheet->setCellValue('A' . $fila, 'SUCURSAL/VEHÍCULO:');
-                $sheet->setCellValue('B' . $fila, $item->sucursal->nombre);
-                $sheet->mergeCells("B" . $fila . ":C" . $fila);  //COMBINAR CELDAS
-                $sheet->setCellValue('D' . $fila, 'ENCARGADO:');
-                $sheet->setCellValue('E' . $fila, $item->sucursal->user->full_name);
-                $sheet->mergeCells("E" . $fila . ":F" . $fila);  //COMBINAR CELDAS
-                $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->bodyTabla);
+                $sheet->setCellValue('A' . $fila, 'NRO.:');
+                $sheet->setCellValue('B' . $fila, $item->codigo);
+                $sheet->setCellValue('C' . $fila, 'CLIENTE:');
+                $sheet->setCellValue('D' . $fila, $item->cliente->razon_social);
+                $sheet->setCellValue('E' . $fila, 'EMPLEADO:');
+                $sheet->setCellValue('F' . $fila, $item->user->full_name);
+                $sheet->mergeCells("F" . $fila . ":G" . $fila);  //COMBINAR CELDAS
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->bodyTabla);
                 $fila++;
                 $sheet->setCellValue('A' . $fila, 'FECHA:');
                 $sheet->setCellValue('B' . $fila, $item->fecha_c);
-                $sheet->setCellValue('C' . $fila, 'USUARIO APROBADOR:');
-                $sheet->setCellValue('D' . $fila, $item->user_verificador->full_name);
-                $sheet->setCellValue('E' . $fila, 'ESTADO');
-                $sheet->setCellValue('F' . $fila, $item->estado);
-                $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->bodyTabla);
+                $sheet->setCellValue('C' . $fila, 'FORMA DE PAGO:');
+                $sheet->setCellValue('D' . $fila, $item->forma_pago);
+                $sheet->setCellValue('E' . $fila, 'SUCURSAL');
+                $sheet->setCellValue('F' . $fila, $item->sucursal->nombre);
+                $sheet->mergeCells("F" . $fila . ":G" . $fila);  //COMBINAR CELDAS
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->bodyTabla);
+                $fila++;
+                $sheet->setCellValue('A' . $fila, 'ESTADO');
+                $sheet->setCellValue('B' . $fila, $item->estado);
+                $sheet->mergeCells("B" . $fila . ":G" . $fila);  //COMBINAR CELDAS
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->bodyTabla);
                 $fila++;
                 $sheet->setCellValue('A' . $fila, 'N°');
-                $sheet->setCellValue('B' . $fila, 'CÓD. PRODUCTO');
-                $sheet->setCellValue('C' . $fila, 'PRODUCTO');
-                $sheet->mergeCells("C" . $fila . ":D" . $fila);  //COMBINAR CELDAS
-                $sheet->setCellValue('E' . $fila, 'CANTIDAD');
-                $sheet->setCellValue('F' . $fila, 'CANTIDAD FÍSICA');
-                $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->headerTabla);
+                $sheet->setCellValue('B' . $fila, 'CANTIDAD');
+                $sheet->setCellValue('C' . $fila, 'DESCRIPCIÓN');
+                $sheet->setCellValue('D' . $fila, 'P/U');
+                $sheet->setCellValue('E' . $fila, 'SUBTOTAL');
+                $sheet->setCellValue('F' . $fila, 'DESCUENTO');
+                $sheet->setCellValue('G' . $fila, 'TOTAL');
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->headerTabla);
                 $fila++;
-                foreach ($item->devolucion_stock_detalles as $key => $si) {
+                foreach ($item->orden_venta_detalles as $key => $si) {
                     $sheet->setCellValue('A' . $fila, $key + 1);
-                    $sheet->setCellValue('B' . $fila, $si->producto->codigo);
+                    $sheet->setCellValue('B' . $fila, $si->cantidad);
                     $sheet->setCellValue('C' . $fila, $si->producto->nombre . ' ' . $si->producto->unidad_medida->nomnbre);
-                    $sheet->mergeCells("C" . $fila . ":D" . $fila);  //COMBINAR CELDAS
-                    $sheet->setCellValue('E' . $fila, $si->cantidad);
-                    $sheet->setCellValue('F' . $fila, $si->cantidad_fisica);
-                    $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->bodyTabla);
+                    $sheet->setCellValue('D' . $fila, $si->precio);
+                    $sheet->setCellValue('E' . $fila, $si->subtotal);
+                    $sheet->setCellValue('F' . $fila, $si->descuento);
+                    $sheet->setCellValue('G' . $fila, $si->subtotal_f);
+                    $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->bodyTabla);
                     $fila++;
                 }
                 $sheet->setCellValue('A' . $fila, 'TOTAL');
-                $sheet->mergeCells("A" . $fila . ":D" . $fila);  //COMBINAR CELDAS
-                $sheet->setCellValue('E' . $fila, $item->cantidad_total);
-                $sheet->setCellValue('F' . $fila, $item->devolucion_stock_detalles->sum("cantidad_fisica"));
-                $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->headerTabla);
+                $sheet->mergeCells("A" . $fila . ":F" . $fila);  //COMBINAR CELDAS
+                $sheet->setCellValue('G' . $fila, $item->total_st);
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->headerTabla);
+                $fila++;
+
+                $sheet->setCellValue('A' . $fila, 'DESCUENTO');
+                $sheet->mergeCells("A" . $fila . ":F" . $fila);  //COMBINAR CELDAS
+                $sheet->setCellValue('G' . $fila, $item->descuento ?? 0);
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->headerTabla);
+                $fila++;
+                $sheet->setCellValue('A' . $fila, 'TOTAL FINAL');
+                $sheet->mergeCells("A" . $fila . ":F" . $fila);  //COMBINAR CELDAS
+                $sheet->setCellValue('G' . $fila, $item->total_f ?? 0);
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->headerTabla);
                 $fila += 4;
             }
 
@@ -1557,8 +1645,9 @@ class ReporteController extends Controller
             $sheet->getColumnDimension('D')->setWidth(15);
             $sheet->getColumnDimension('E')->setWidth(20);
             $sheet->getColumnDimension('F')->setWidth(12);
+            $sheet->getColumnDimension('G')->setWidth(12);
 
-            foreach (range('A', 'F') as $columnID) {
+            foreach (range('A', 'G') as $columnID) {
                 $sheet->getStyle($columnID)->getAlignment()->setWrapText(true);
             }
 
@@ -1567,7 +1656,7 @@ class ReporteController extends Controller
             $sheet->getPageMargins()->setRight(0.1);
             $sheet->getPageMargins()->setLeft(0.1);
             $sheet->getPageMargins()->setBottom(0.1);
-            $sheet->getPageSetup()->setPrintArea('A:F');
+            $sheet->getPageSetup()->setPrintArea('A:G');
             $sheet->getPageSetup()->setFitToWidth(1);
             $sheet->getPageSetup()->setFitToHeight(0);
 
@@ -1684,13 +1773,13 @@ class ReporteController extends Controller
                 $solicitud_ingreso_detalles = SolicitudIngresoDetalle::select(
                     'solicitud_ingreso_detalles.*',
                 );
-                if ($sucursal_id != 'todos') {
-                    $solicitud_ingreso_detalles->whereHas('solicitud_ingreso', function ($query) use (
-                        $sucursal_id,
-                    ) {
-                        $query->where('sucursal_id', $sucursal_id);
-                    });
-                }
+                // if ($sucursal_id != 'todos') {
+                //     $solicitud_ingreso_detalles->whereHas('solicitud_ingreso', function ($query) use (
+                //         $sucursal_id,
+                //     ) {
+                //         $query->where('sucursal_id', $sucursal_id);
+                //     });
+                // }
 
                 $solicitud_ingreso_detalles->whereHas('solicitud_ingreso', function ($query) use (
                     $key,
@@ -1750,6 +1839,65 @@ class ReporteController extends Controller
                 ]
             );
         }
+    }
+
+    public function utilidad_ordens_g(Request $request)
+    {
+        $sucursal_id =  $request->sucursal_id;
+        $anio =  $request->anio;
+
+        $meses = [
+            "01" => "ENERO",
+            "02" => "FEBRERO",
+            "03" => "MARZO",
+            "04" => "ABRIL",
+            "05" => "MAYO",
+            "06" => "JUNIO",
+            "07" => "JULIO",
+            "08" => "AGOSTO",
+            "09" => "SEPTIEMBRE",
+            "10" => "OCTUBRE",
+            "11" => "NOVIEMBRE",
+            "12" => "DICIEMBRE",
+        ];
+
+        $categories = [];
+        $data = [];
+
+        foreach ($meses as $key => $value) {
+            $categories[] = $value;
+            $orden_ventas = OrdenVenta::select('orden_ventas.*');
+            if ($sucursal_id != 'todos') {
+                $orden_ventas->where('sucursal_id', $sucursal_id);
+            }
+            $orden_ventas->where('fecha', 'LIKE', "$anio-$key%");
+            $total_ventas = $orden_ventas->where('estado', 'FINALIZADO')->sum('total_f');
+
+            $solicitud_ingreso_detalles = SolicitudIngresoDetalle::select(
+                'solicitud_ingreso_detalles.*',
+            );
+            $solicitud_ingreso_detalles->whereHas('solicitud_ingreso', function ($query) use (
+                $key,
+                $anio,
+            ) {
+                $query->whereIn('verificado', [1, 2]);
+                $query->where('fecha_ingreso', 'LIKE', "$anio-$key%");
+            });
+
+            $total_compras = $solicitud_ingreso_detalles->sum(DB::raw('cantidad_fisica * costo'));
+
+            $saldo = (float) $total_ventas - (float) $total_compras;
+
+            $data[] = [
+                'name' => $value,
+                'y' => (float) $saldo,
+            ];
+        }
+
+        return response()->JSON([
+            "categories" => $categories,
+            "data" => $data,
+        ]);
     }
 
     public function cuenta_cobrars(Request $request)
@@ -1873,6 +2021,1033 @@ class ReporteController extends Controller
                     $writer->save('php://output');
                 },
                 'cuenta_cobrars_' . time() . '.xlsx',
+                [
+                    'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                ]
+            );
+        }
+    }
+
+    public function rotacion(Request $request)
+    {
+        ini_set('memory_limit', '1024M');
+        set_time_limit(-1);
+        $producto_id =  $request->producto_id;
+        $fecha_ini =  $request->fecha_ini;
+        $fecha_fin =  $request->fecha_fin;
+        $productosMasVendidos = OrdenVentaDetalle::select(
+            'producto_id',
+            DB::raw('SUM(cantidad) as total_vendido')
+        );
+        if ($producto_id != 'todos') {
+            $productosMasVendidos->where('producto_id', $producto_id);
+        }
+
+        if ($fecha_ini && $fecha_fin) {
+            $productosMasVendidos->whereHas('orden_venta', function ($query) use ($fecha_fin, $fecha_ini) {
+                $query->whereBetween("fecha", [$fecha_ini, $fecha_fin]);
+            });
+        }
+
+        $productosMasVendidos =   $productosMasVendidos
+            ->whereHas("orden_venta", function ($query) {
+                $query->where("estado", "FINALIZADO");
+            })
+            ->groupBy('producto_id')
+            ->orderByDesc('total_vendido')
+            ->take(10)->get();
+
+        if ($request->tipo == 'pdf') {
+            $pdf = PDF::loadView('reportes.rotacion', compact('productosMasVendidos'))->setPaper('letter', 'portrait');
+
+            // ENUMERAR LAS PÁGINAS USANDO CANVAS
+            $pdf->output();
+            $dom_pdf = $pdf->getDomPDF();
+            $canvas = $dom_pdf->get_canvas();
+            $alto = $canvas->get_height();
+            $ancho = $canvas->get_width();
+            $canvas->page_text($ancho - 90, $alto - 25, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 9, array(0, 0, 0));
+
+            return $pdf->download('Usuarios.pdf');
+        } else {
+            $spreadsheet = new Spreadsheet();
+            $spreadsheet->getProperties()
+                ->setCreator("ADMIN")
+                ->setLastModifiedBy('Administración')
+                ->setTitle('Registros')
+                ->setSubject('Registros')
+                ->setDescription('Registros')
+                ->setKeywords('PHPSpreadsheet')
+                ->setCategory('Listado');
+
+            $sheet = $spreadsheet->getActiveSheet();
+
+            $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+
+            $fila = 1;
+            if (file_exists(public_path() . '/imgs/' . $this->configuracion->logo)) {
+                $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+                $drawing->setName('logo');
+                $drawing->setDescription('logo');
+                $drawing->setPath(public_path() . '/imgs/' . $this->configuracion->logo); // put your path and image here
+                $drawing->setCoordinates('A' . $fila);
+                $drawing->setOffsetX(5);
+                $drawing->setOffsetY(0);
+                $drawing->setHeight(60);
+                $drawing->setWorksheet($sheet);
+            }
+
+            $fila = 2;
+            $sheet->setCellValue('A' . $fila, $this->configuracion->nombre_sistema);
+            $sheet->mergeCells("A" . $fila . ":C" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':C' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':C' . $fila)->applyFromArray($this->titulo);
+            $fila++;
+            $sheet->setCellValue('A' . $fila, "ROTACIÓN DE PRODUCTOS");
+            $sheet->mergeCells("A" . $fila . ":C" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':C' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':C' . $fila)->applyFromArray($this->titulo);
+            $fila++;
+            $fila++;
+            $sheet->setCellValue('A' . $fila, 'N°');
+            $sheet->setCellValue('B' . $fila, 'PRODUCTO');
+            $sheet->setCellValue('C' . $fila, 'CANTIDAD VENDIDA');
+            $sheet->getStyle('A' . $fila . ':C' . $fila)->applyFromArray($this->headerTabla);
+            $fila++;
+
+            foreach ($productosMasVendidos as $key => $item) {
+                $sheet->setCellValue('A' . $fila, $key + 1);
+                $sheet->setCellValue('B' . $fila, $item->producto->nombre);
+                $sheet->setCellValue('C' . $fila, $item->total_vendido);
+                $sheet->getStyle('A' . $fila . ':C' . $fila)->applyFromArray($this->bodyTabla);
+                $fila++;
+            }
+
+            $sheet->getColumnDimension('A')->setWidth(10);
+            $sheet->getColumnDimension('B')->setWidth(40);
+            $sheet->getColumnDimension('C')->setWidth(15);
+
+            foreach (range('A', 'C') as $columnID) {
+                $sheet->getStyle($columnID)->getAlignment()->setWrapText(true);
+            }
+
+            $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+            $sheet->getPageMargins()->setTop(0.5);
+            $sheet->getPageMargins()->setRight(0.1);
+            $sheet->getPageMargins()->setLeft(0.1);
+            $sheet->getPageMargins()->setBottom(0.1);
+            $sheet->getPageSetup()->setPrintArea('A:C');
+            $sheet->getPageSetup()->setFitToWidth(1);
+            $sheet->getPageSetup()->setFitToHeight(0);
+
+            return response()->streamDownload(
+                function () use ($spreadsheet) {
+                    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+                    $writer->save('php://output');
+                },
+                'rotacion_' . time() . '.xlsx',
+                [
+                    'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                ]
+            );
+        }
+    }
+
+    public function gastos(Request $request)
+    {
+        ini_set('memory_limit', '1024M');
+        set_time_limit(-1);
+        $fecha_ini =  $request->fecha_ini;
+        $fecha_fin =  $request->fecha_fin;
+        $gastos = Gasto::select("gastos.*");
+        if ($fecha_ini  && $fecha_fin) {
+            $gastos->whereBetween('fecha', [$fecha_ini, $fecha_fin]);
+        }
+
+        $gastos = $gastos->get();
+
+        if ($request->tipo == 'pdf') {
+            $pdf = PDF::loadView('reportes.gastos', compact('gastos'))->setPaper('letter', 'portrait');
+
+            // ENUMERAR LAS PÁGINAS USANDO CANVAS
+            $pdf->output();
+            $dom_pdf = $pdf->getDomPDF();
+            $canvas = $dom_pdf->get_canvas();
+            $alto = $canvas->get_height();
+            $ancho = $canvas->get_width();
+            $canvas->page_text($ancho - 90, $alto - 25, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 9, array(0, 0, 0));
+
+            return $pdf->download('Usuarios.pdf');
+        } else {
+            $spreadsheet = new Spreadsheet();
+            $spreadsheet->getProperties()
+                ->setCreator("ADMIN")
+                ->setLastModifiedBy('Administración')
+                ->setTitle('Registros')
+                ->setSubject('Registros')
+                ->setDescription('Registros')
+                ->setKeywords('PHPSpreadsheet')
+                ->setCategory('Listado');
+
+            $sheet = $spreadsheet->getActiveSheet();
+
+            $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+
+            $fila = 1;
+            if (file_exists(public_path() . '/imgs/' . $this->configuracion->logo)) {
+                $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+                $drawing->setName('logo');
+                $drawing->setDescription('logo');
+                $drawing->setPath(public_path() . '/imgs/' . $this->configuracion->logo); // put your path and image here
+                $drawing->setCoordinates('A' . $fila);
+                $drawing->setOffsetX(5);
+                $drawing->setOffsetY(0);
+                $drawing->setHeight(60);
+                $drawing->setWorksheet($sheet);
+            }
+
+            $fila = 2;
+            $sheet->setCellValue('A' . $fila, $this->configuracion->nombre_sistema);
+            $sheet->mergeCells("A" . $fila . ":D" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':D' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':D' . $fila)->applyFromArray($this->titulo);
+            $fila++;
+            $sheet->setCellValue('A' . $fila, "LISTA DE GASTOS");
+            $sheet->mergeCells("A" . $fila . ":D" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':D' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':D' . $fila)->applyFromArray($this->titulo);
+            $fila++;
+            $fila++;
+            $sheet->setCellValue('A' . $fila, 'N°');
+            $sheet->setCellValue('B' . $fila, 'DESCRIPCIÓN');
+            $sheet->setCellValue('C' . $fila, 'FECHA');
+            $sheet->setCellValue('D' . $fila, 'MONTO');
+            $sheet->getStyle('A' . $fila . ':D' . $fila)->applyFromArray($this->headerTabla);
+            $fila++;
+
+            foreach ($gastos as $key => $item) {
+                $sheet->setCellValue('A' . $fila, $key + 1);
+                $sheet->setCellValue('B' . $fila, $item->descripcion);
+                $sheet->setCellValue('C' . $fila, $item->fecha_c);
+                $sheet->setCellValue('D' . $fila, $item->monto);
+                $sheet->getStyle('A' . $fila . ':D' . $fila)->applyFromArray($this->bodyTabla);
+                $fila++;
+            }
+            $sheet->setCellValue('A' . $fila, 'TOTAL');
+            $sheet->mergeCells("A" . $fila . ":C" . $fila);  //COMBINAR CELDAS
+            $sheet->setCellValue('D' . $fila, $gastos->sum("monto"));
+            $sheet->getStyle('A' . $fila . ':D' . $fila)->applyFromArray($this->headerTabla);
+
+            $sheet->getColumnDimension('A')->setWidth(8);
+            $sheet->getColumnDimension('B')->setWidth(35);
+            $sheet->getColumnDimension('C')->setWidth(16);
+            $sheet->getColumnDimension('D')->setWidth(16);
+
+            foreach (range('A', 'D') as $columnID) {
+                $sheet->getStyle($columnID)->getAlignment()->setWrapText(true);
+            }
+
+            $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+            $sheet->getPageMargins()->setTop(0.5);
+            $sheet->getPageMargins()->setRight(0.1);
+            $sheet->getPageMargins()->setLeft(0.1);
+            $sheet->getPageMargins()->setBottom(0.1);
+            $sheet->getPageSetup()->setPrintArea('A:D');
+            $sheet->getPageSetup()->setFitToWidth(1);
+            $sheet->getPageSetup()->setFitToHeight(0);
+
+            return response()->streamDownload(
+                function () use ($spreadsheet) {
+                    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+                    $writer->save('php://output');
+                },
+                'gastos_' . time() . '.xlsx',
+                [
+                    'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                ]
+            );
+        }
+    }
+
+    public function diario_salidas(Request $request)
+    {
+        ini_set('memory_limit', '1024M');
+        set_time_limit(-1);
+        $sucursal_id =  $request->sucursal_id;
+        $fecha =  $request->fecha;
+
+        $sucursals = Sucursal::select("sucursals.*");
+        if ($sucursal_id != 'todos') {
+            $sucursals->where("id", $sucursal_id);
+        }
+
+        $sucursals = $sucursals->where("almacen", 0)
+            ->where("estado", 1)->get();
+
+
+        $productos = Producto::select("productos.*");
+        $productos = $productos->where("estado", 1)->get();
+
+        if ($request->tipo == 'pdf') {
+            $pdf = PDF::loadView('reportes.diario_salidas', compact(
+                "sucursals",
+                "productos",
+                "fecha",
+            ))->setPaper('letter', 'portrait');
+
+            // ENUMERAR LAS PÁGINAS USANDO CANVAS
+            $pdf->output();
+            $dom_pdf = $pdf->getDomPDF();
+            $canvas = $dom_pdf->get_canvas();
+            $alto = $canvas->get_height();
+            $ancho = $canvas->get_width();
+            $canvas->page_text($ancho - 90, $alto - 25, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 9, array(0, 0, 0));
+
+            return $pdf->download('Usuarios.pdf');
+        } else {
+            $spreadsheet = new Spreadsheet();
+            $spreadsheet->getProperties()
+                ->setCreator("ADMIN")
+                ->setLastModifiedBy('Administración')
+                ->setTitle('Registros')
+                ->setSubject('Registros')
+                ->setDescription('Registros')
+                ->setKeywords('PHPSpreadsheet')
+                ->setCategory('Listado');
+
+            $sheet = $spreadsheet->getActiveSheet();
+
+            $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+
+            $fila = 1;
+            if (file_exists(public_path() . '/imgs/' . $this->configuracion->logo)) {
+                $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+                $drawing->setName('logo');
+                $drawing->setDescription('logo');
+                $drawing->setPath(public_path() . '/imgs/' . $this->configuracion->logo); // put your path and image here
+                $drawing->setCoordinates('A' . $fila);
+                $drawing->setOffsetX(5);
+                $drawing->setOffsetY(0);
+                $drawing->setHeight(60);
+                $drawing->setWorksheet($sheet);
+            }
+
+            $fila = 2;
+
+            foreach ($sucursals as $sucursal) {
+                $sheet->setCellValue('A' . $fila, $this->configuracion->nombre_sistema);
+                $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
+                $fila++;
+                $sheet->setCellValue('A' . $fila, "REPORTE DIARIO DE SALIDAS POR SUCURSAL");
+                $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
+                $fila++;
+                $sheet->setCellValue('A' . $fila, "Sucursal: " . $sucursal->nombre);
+                $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
+                $fila++;
+                $sheet->setCellValue('A' . $fila, "Encargado: " . $sucursal->user->full_name);
+                $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
+                $fila++;
+                $fila++;
+                $sheet->setCellValue('A' . $fila, 'N°');
+                $sheet->setCellValue('B' . $fila, 'PRODUCTO');
+                $sheet->setCellValue('C' . $fila, 'SALDO INICIAL');
+                $sheet->setCellValue('D' . $fila, 'VENTAS REALIZADAS');
+                $sheet->setCellValue('E' . $fila, 'DEVOLUCIONES');
+                $sheet->setCellValue('F' . $fila, 'PRODUCTOS AÑADIDOS');
+                $sheet->setCellValue('G' . $fila, 'SALDO FINAL');
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->headerTabla);
+                $fila++;
+
+                $cont = 1;
+                $sucursal_id = $sucursal->id;
+                foreach ($productos as $key => $producto) {
+                    // SALDO INICIAL
+                    $kardex_inicial = KardexProducto::where('producto_id', $producto->id)
+                        ->where('fecha', $fecha)
+                        ->where('sucursal_id', $sucursal_id)
+                        ->get()
+                        ->first();
+                    if ($kardex_inicial) {
+                        if ($kardex_inicial->tipo_is == 'EGRESO') {
+                            $kardex_inicial = KardexProducto::where('producto_id', $producto->id)
+                                ->where('id', '<', $kardex_inicial->id)
+                                ->where('tipo_is', 'INGRESO')
+                                ->where('sucursal_id', $sucursal_id)
+                                ->get()
+                                ->last();
+                        }
+                        $saldo_inicial = $kardex_inicial->cantidad_saldo;
+                    } else {
+                        $saldo_inicial = 0;
+                    }
+
+                    // ventas realizadas
+                    $ventas_realizadas = OrdenVentaDetalle::where('producto_id', $producto->id);
+                    $ventas_realizadas->whereHas('orden_venta', function ($query) use ($fecha, $sucursal_id) {
+                        $query->where('fecha', $fecha)->where('sucursal_id', $sucursal_id);
+                    });
+                    $ventas_realizadas = $ventas_realizadas->sum('cantidad');
+
+                    // DEVOLUCIONES
+                    $devoluciones = DevolucionClienteDetalle::where('producto_id', $producto->id);
+                    $devoluciones->whereHas('devolucion_cliente', function ($query) use ($fecha, $sucursal_id) {
+                        $query->where('fecha', $fecha)->where('sucursal_id', $sucursal_id);
+                    });
+                    $devoluciones = $devoluciones->sum('cantidad');
+
+                    // INGRESOS ADICIONALES
+                    $ingresos_adicionales = KardexProducto::where('producto_id', $producto->id)
+                        ->where('fecha', $fecha)
+                        ->where('tipo_is', 'INGRESO')
+                        ->where('sucursal_id', $sucursal_id)
+                        ->sum('cantidad_ingreso');
+                    // SALDO FINAL
+                    $kardex_final = KardexProducto::where('producto_id', $producto->id)
+                        ->where('fecha', $fecha)
+                        ->where('sucursal_id', $sucursal_id)
+                        ->where('tipo_registro', '!=', 'DEVOLUCIÓN DE STOCK')
+                        ->where('id', '>', $kardex_inicial ? $kardex_inicial->id : 0)
+                        ->get()
+                        ->last();
+                    $saldo_final = $kardex_final ? $kardex_final->cantidad_saldo : 0;
+
+
+                    $sheet->setCellValue('A' . $fila, $cont++);
+                    $sheet->setCellValue('B' . $fila, $producto->nombre . ' ' . $producto->unidad_medida->nombre);
+                    $sheet->setCellValue('C' . $fila, $saldo_inicial);
+                    $sheet->setCellValue('D' . $fila, $ventas_realizadas);
+                    $sheet->setCellValue('E' . $fila, $devoluciones);
+                    $sheet->setCellValue('F' . $fila, $ingresos_adicionales);
+                    $sheet->setCellValue('G' . $fila, $saldo_final);
+                    $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->bodyTabla);
+                    $fila++;
+                }
+                $fila += 4;
+            }
+
+            $sheet->getColumnDimension('A')->setWidth(6);
+            $sheet->getColumnDimension('B')->setWidth(25);
+            $sheet->getColumnDimension('C')->setWidth(15);
+            $sheet->getColumnDimension('D')->setWidth(15);
+            $sheet->getColumnDimension('E')->setWidth(15);
+            $sheet->getColumnDimension('F')->setWidth(15);
+            $sheet->getColumnDimension('G')->setWidth(15);
+
+            foreach (range('A', 'G') as $columnID) {
+                $sheet->getStyle($columnID)->getAlignment()->setWrapText(true);
+            }
+
+            $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+            $sheet->getPageMargins()->setTop(0.5);
+            $sheet->getPageMargins()->setRight(0.1);
+            $sheet->getPageMargins()->setLeft(0.1);
+            $sheet->getPageMargins()->setBottom(0.1);
+            $sheet->getPageSetup()->setPrintArea('A:G');
+            $sheet->getPageSetup()->setFitToWidth(1);
+            $sheet->getPageSetup()->setFitToHeight(0);
+
+            return response()->streamDownload(
+                function () use ($spreadsheet) {
+                    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+                    $writer->save('php://output');
+                },
+                'diario_salidas_' . time() . '.xlsx',
+                [
+                    'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                ]
+            );
+        }
+    }
+
+    public function movimientos_abastecimiento(Request $request)
+    {
+        ini_set('memory_limit', '1024M');
+        set_time_limit(-1);
+        $sucursal_id =  $request->sucursal_id;
+        $unidad_medida_id =  $request->unidad_medida_id;
+        $producto_id =  $request->producto_id;
+        $fecha_ini =  $request->fecha_ini;
+        $fecha_fin =  $request->fecha_fin;
+
+        $sucursals = Sucursal::select("sucursals.*");
+        if ($sucursal_id != 'todos') {
+            $sucursals->where("id", $sucursal_id);
+        }
+
+        $sucursals = $sucursals->where("almacen", 0)
+            ->where("estado", 1)->get();
+
+        $productos = Producto::select("productos.*");
+        if ($unidad_medida_id != 'todos') {
+            $productos->where("unidad_medida_id", $unidad_medida_id)->get();
+        }
+        if ($producto_id != 'todos') {
+            $productos->where("id", $producto_id)->get();
+        }
+        $productos = $productos->where("estado", 1)->get();
+
+        if ($request->tipo == 'pdf') {
+            $pdf = PDF::loadView('reportes.movimientos_abastecimiento', compact(
+                "sucursals",
+                "productos",
+                "fecha_ini",
+                "fecha_fin",
+            ))->setPaper('letter', 'landscape');
+
+            // ENUMERAR LAS PÁGINAS USANDO CANVAS
+            $pdf->output();
+            $dom_pdf = $pdf->getDomPDF();
+            $canvas = $dom_pdf->get_canvas();
+            $alto = $canvas->get_height();
+            $ancho = $canvas->get_width();
+            $canvas->page_text($ancho - 90, $alto - 25, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 9, array(0, 0, 0));
+
+            return $pdf->download('Usuarios.pdf');
+        } else {
+            $spreadsheet = new Spreadsheet();
+            $spreadsheet->getProperties()
+                ->setCreator("ADMIN")
+                ->setLastModifiedBy('Administración')
+                ->setTitle('Registros')
+                ->setSubject('Registros')
+                ->setDescription('Registros')
+                ->setKeywords('PHPSpreadsheet')
+                ->setCategory('Listado');
+
+            $sheet = $spreadsheet->getActiveSheet();
+
+            $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+
+            $fila = 1;
+            if (file_exists(public_path() . '/imgs/' . $this->configuracion->logo)) {
+                $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+                $drawing->setName('logo');
+                $drawing->setDescription('logo');
+                $drawing->setPath(public_path() . '/imgs/' . $this->configuracion->logo); // put your path and image here
+                $drawing->setCoordinates('A' . $fila);
+                $drawing->setOffsetX(5);
+                $drawing->setOffsetY(0);
+                $drawing->setHeight(60);
+                $drawing->setWorksheet($sheet);
+            }
+
+            $fila = 2;
+            $fechaInicio = new DateTime($fecha_ini);
+            $fechaFin = new DateTime($fecha_fin);
+
+            $dias = $fechaInicio->diff($fechaFin)->days + 1;
+            $cols = ["D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S"];
+            $lastCol = $cols[(int)$dias - 1];
+
+            foreach ($sucursals as $sucursal) {
+                $sheet->setCellValue('A' . $fila, $this->configuracion->nombre_sistema);
+                $sheet->mergeCells("A" . $fila . ":" . $lastCol . $fila);  //COMBINAR CELDAS
+                $sheet->getStyle('A' . $fila . ':' . $lastCol . $fila)->getAlignment()->setHorizontal('center');
+                $sheet->getStyle('A' . $fila . ':' . $lastCol . $fila)->applyFromArray($this->titulo);
+                $fila++;
+                $sheet->setCellValue('A' . $fila, "REPORTE SEMANAL DE MOVIMIENTOS Y ABASTECIMIENTO");
+                $sheet->mergeCells("A" . $fila . ":" . $lastCol . $fila);  //COMBINAR CELDAS
+                $sheet->getStyle('A' . $fila . ':' . $lastCol . $fila)->getAlignment()->setHorizontal('center');
+                $sheet->getStyle('A' . $fila . ':' . $lastCol . $fila)->applyFromArray($this->titulo);
+                $fila++;
+                $sheet->setCellValue('A' . $fila, "Sucursal: " . $sucursal->nombre);
+                $sheet->mergeCells("A" . $fila . ":" . $lastCol . $fila);  //COMBINAR CELDAS
+                $sheet->getStyle('A' . $fila . ':' . $lastCol . $fila)->getAlignment()->setHorizontal('center');
+                $sheet->getStyle('A' . $fila . ':' . $lastCol . $fila)->applyFromArray($this->titulo);
+                $fila++;
+                $sheet->setCellValue('A' . $fila, "Encargado: " . $sucursal->user->full_name);
+                $sheet->mergeCells("A" . $fila . ":" . $lastCol . $fila);  //COMBINAR CELDAS
+                $sheet->getStyle('A' . $fila . ':' . $lastCol . $fila)->getAlignment()->setHorizontal('center');
+                $sheet->getStyle('A' . $fila . ':' . $lastCol . $fila)->applyFromArray($this->titulo);
+                $fila++;
+                $fila++;
+                $sheet->setCellValue('A' . $fila, 'N°');
+                $sheet->setCellValue('B' . $fila, 'CÓD. PRODUCTO');
+                $sheet->setCellValue('C' . $fila, 'PRODUCTO');
+                $fecha_aux = date("Y-m-d", strtotime($fecha_ini));
+                foreach ($cols as $c) {
+                    $text_add = "\n (SALIDA)";
+                    if ($fecha_aux == $fecha_fin) {
+                        $text_add = "\n (SALDO)";
+                    }
+                    $sheet->setCellValue($c . $fila, $fecha_aux . $text_add);
+                    if ($c == $lastCol) {
+                        break;
+                    }
+                    $fecha_aux = date('Y-m-d', strtotime($fecha_aux . ' +1days'));
+                }
+                $sheet->getStyle('A' . $fila . ':' . $lastCol . $fila)->applyFromArray($this->headerTabla);
+                $fila++;
+
+                $cont = 1;
+                $sucursal_id = $sucursal->id;
+                foreach ($productos as $key => $producto) {
+                    $fecha_aux = date('Y-m-d', strtotime($fecha_ini));
+                    $sheet->setCellValue('A' . $fila, $cont++);
+                    $sheet->setCellValue('B' . $fila, $producto->codigo);
+                    $sheet->setCellValue('C' . $fila, $producto->nombre . ' ' . $producto->unidad_medida->nombre);
+                    foreach ($cols as $c) {
+                        if ($fecha_aux < $fecha_fin) {
+                            // ventas realizadas
+                            $ventas_realizadas = OrdenVentaDetalle::where(
+                                'producto_id',
+                                $producto->id,
+                            );
+                            $ventas_realizadas->whereHas('orden_venta', function ($query) use (
+                                $fecha_aux,
+                                $sucursal_id,
+                            ) {
+                                $query->where('fecha', $fecha_aux)->where('sucursal_id', $sucursal_id);
+                            });
+                            $total = $ventas_realizadas->sum('cantidad');
+                        } else {
+                            // SALDO FINAL
+                            $total = KardexProducto::where('producto_id', $producto->id)
+                                ->where('fecha', $fecha_aux)
+                                ->where('sucursal_id', $sucursal_id)
+                                ->where('tipo_registro', '!=', 'DEVOLUCIÓN DE STOCK')
+                                ->get()
+                                ->last();
+                            $total = $total ? $total->cantidad_saldo : 0;
+                        }
+                        $sheet->setCellValue($c . $fila, $total);
+                        if ($c == $lastCol) {
+                            break;
+                        }
+                        $fecha_aux = date('Y-m-d', strtotime($fecha_aux . ' +1days'));
+                    }
+                    $sheet->getStyle('A' . $fila . ':' . $lastCol . $fila)->applyFromArray($this->bodyTabla);
+                    $fila++;
+                }
+                $fila += 4;
+            }
+
+            $sheet->getColumnDimension('A')->setWidth(6);
+            $sheet->getColumnDimension('B')->setWidth(25);
+            $sheet->getColumnDimension('C')->setWidth(15);
+            $sheet->getColumnDimension('D')->setWidth(15);
+            $sheet->getColumnDimension('E')->setWidth(15);
+            $sheet->getColumnDimension('F')->setWidth(15);
+            $sheet->getColumnDimension('G')->setWidth(15);
+
+            foreach (range('A', $lastCol) as $columnID) {
+                $sheet->getStyle($columnID)->getAlignment()->setWrapText(true);
+            }
+
+            $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+            $sheet->getPageMargins()->setTop(0.5);
+            $sheet->getPageMargins()->setRight(0.1);
+            $sheet->getPageMargins()->setLeft(0.1);
+            $sheet->getPageMargins()->setBottom(0.1);
+            $sheet->getPageSetup()->setPrintArea('A:' . $lastCol);
+            $sheet->getPageSetup()->setFitToWidth(1);
+            $sheet->getPageSetup()->setFitToHeight(0);
+
+            return response()->streamDownload(
+                function () use ($spreadsheet) {
+                    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+                    $writer->save('php://output');
+                },
+                'movimientos_abastecimiento_' . time() . '.xlsx',
+                [
+                    'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                ]
+            );
+        }
+    }
+
+
+    public function saldos_almacen_central(Request $request)
+    {
+        ini_set('memory_limit', '1024M');
+        set_time_limit(-1);
+        $sucursal_id =  $request->sucursal_id;
+        $unidad_medida_id =  $request->unidad_medida_id;
+        $producto_id =  $request->producto_id;
+        $fecha =  $request->fecha;
+
+        $sucursals = Sucursal::select("sucursals.*");
+        if ($sucursal_id != 'todos') {
+            $sucursals->where("id", $sucursal_id);
+        }
+
+        $sucursals = $sucursals->where("almacen", 0)
+            ->where("estado", 1)->get();
+
+        $productos = Producto::select("productos.*");
+        if ($unidad_medida_id != 'todos') {
+            $productos->where("unidad_medida_id", $unidad_medida_id);
+        }
+        if ($producto_id != 'todos') {
+            $productos->where("id", $producto_id);
+        }
+
+        $productos = $productos->where("estado", 1)->get();
+
+        if ($request->tipo == 'pdf') {
+            $pdf = PDF::loadView('reportes.saldos_almacen_central', compact(
+                "sucursals",
+                "productos",
+                "fecha",
+            ))->setPaper('letter', 'portrait');
+
+            // ENUMERAR LAS PÁGINAS USANDO CANVAS
+            $pdf->output();
+            $dom_pdf = $pdf->getDomPDF();
+            $canvas = $dom_pdf->get_canvas();
+            $alto = $canvas->get_height();
+            $ancho = $canvas->get_width();
+            $canvas->page_text($ancho - 90, $alto - 25, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 9, array(0, 0, 0));
+
+            return $pdf->download('Usuarios.pdf');
+        } else {
+            $spreadsheet = new Spreadsheet();
+            $spreadsheet->getProperties()
+                ->setCreator("ADMIN")
+                ->setLastModifiedBy('Administración')
+                ->setTitle('Registros')
+                ->setSubject('Registros')
+                ->setDescription('Registros')
+                ->setKeywords('PHPSpreadsheet')
+                ->setCategory('Listado');
+
+            $sheet = $spreadsheet->getActiveSheet();
+
+            $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+
+            $fila = 1;
+            if (file_exists(public_path() . '/imgs/' . $this->configuracion->logo)) {
+                $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+                $drawing->setName('logo');
+                $drawing->setDescription('logo');
+                $drawing->setPath(public_path() . '/imgs/' . $this->configuracion->logo); // put your path and image here
+                $drawing->setCoordinates('A' . $fila);
+                $drawing->setOffsetX(5);
+                $drawing->setOffsetY(0);
+                $drawing->setHeight(60);
+                $drawing->setWorksheet($sheet);
+            }
+            $fila = 2;
+
+            $sheet->setCellValue('A' . $fila, $this->configuracion->nombre_sistema);
+            $sheet->mergeCells("A" . $fila . ":F" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':F' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->titulo);
+            $fila++;
+            $sheet->setCellValue('A' . $fila, "REPORTE DIARIO DE SALIDAS POR SUCURSAL");
+            $sheet->mergeCells("A" . $fila . ":F" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':F' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->titulo);
+            $fila++;
+            $fila++;
+            $sheet->setCellValue('A' . $fila, 'N°');
+            $sheet->setCellValue('B' . $fila, 'CÓD. PRODUCTO');
+            $sheet->setCellValue('C' . $fila, 'PRODUCTO');
+            $sheet->setCellValue('D' . $fila, 'LLEGADA PRODUCTO');
+            $sheet->setCellValue('E' . $fila, 'SALIDA A SUCURSALES');
+            $sheet->setCellValue('F' . $fila, 'INICIO SALDOS');
+            $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->headerTabla);
+            $fila++;
+
+            $cont = 1;
+            foreach ($productos as $key => $producto) {
+                // ABASTECIMIENTO
+                $kardex_ingreso = KardexProducto::where('producto_id', $producto->id)
+                    ->where('fecha', $fecha)
+                    ->where('tipo_registro', 'SOLICITUD INGRESO')
+                    ->where('sucursal_id', 1)
+                    ->get()
+                    ->first();
+                $total_ingreso = $kardex_ingreso ? $kardex_ingreso->cantidad_ingreso : 0;
+
+                // SALIDAS A SUCURSAL
+                $kardex_salida = KardexProducto::where('producto_id', $producto->id)
+                    ->where('fecha', $fecha)
+                    ->where('tipo_registro', 'ORDEN DE SALIDA')
+                    ->where('sucursal_id', 1)
+                    ->get()
+                    ->first();
+                $total_salidas = $kardex_salida ? $kardex_salida->cantidad_salida : 0;
+
+                // SALDO INICIAL
+                $kardex_inicial = KardexProducto::where('producto_id', $producto->id)
+                    ->where('fecha', $fecha)
+                    ->where('sucursal_id', 1)
+                    ->get()
+                    ->first();
+                $saldo_inicial = 0;
+                if ($kardex_inicial) {
+                    if ($kardex_inicial->tipo_is == 'EGRESO') {
+                        $kardex_inicial = KardexProducto::where('producto_id', $producto->id)
+                            ->where('id', '<', $kardex_inicial->id)
+                            // ->where('tipo_is', 'INGRESO')
+                            ->where('sucursal_id', 1)
+                            ->get()
+                            ->last();
+                    }
+                    $saldo_inicial = $kardex_inicial->cantidad_saldo;
+                }
+
+                $sheet->setCellValue('A' . $fila, $cont++);
+                $sheet->setCellValue('B' . $fila, $producto->codigo);
+                $sheet->setCellValue('C' . $fila, $producto->nombre . ' ' . $producto->unidad_medida->nombre);
+                $sheet->setCellValue('D' . $fila, $total_ingreso);
+                $sheet->setCellValue('E' . $fila, $total_salidas);
+                $sheet->setCellValue('F' . $fila, $saldo_inicial);
+                $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->bodyTabla);
+                $fila++;
+            }
+
+            $sheet->getColumnDimension('A')->setWidth(6);
+            $sheet->getColumnDimension('B')->setWidth(25);
+            $sheet->getColumnDimension('C')->setWidth(15);
+            $sheet->getColumnDimension('D')->setWidth(15);
+            $sheet->getColumnDimension('E')->setWidth(15);
+            $sheet->getColumnDimension('F')->setWidth(15);
+
+            foreach (range('A', 'F') as $columnID) {
+                $sheet->getStyle($columnID)->getAlignment()->setWrapText(true);
+            }
+
+            $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+            $sheet->getPageMargins()->setTop(0.5);
+            $sheet->getPageMargins()->setRight(0.1);
+            $sheet->getPageMargins()->setLeft(0.1);
+            $sheet->getPageMargins()->setBottom(0.1);
+            $sheet->getPageSetup()->setPrintArea('A:F');
+            $sheet->getPageSetup()->setFitToWidth(1);
+            $sheet->getPageSetup()->setFitToHeight(0);
+
+            return response()->streamDownload(
+                function () use ($spreadsheet) {
+                    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+                    $writer->save('php://output');
+                },
+                'saldos_almacen_central_' . time() . '.xlsx',
+                [
+                    'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                ]
+            );
+        }
+    }
+
+
+
+    public function diario_vehiculos(Request $request)
+    {
+        ini_set('memory_limit', '1024M');
+        set_time_limit(-1);
+        $sucursal_id =  $request->sucursal_id;
+        $fecha =  $request->fecha;
+
+        $sucursals = Sucursal::select("sucursals.*");
+        if ($sucursal_id != 'todos') {
+            $sucursals->where("id", $sucursal_id);
+        }
+
+        $sucursals = $sucursals->where("almacen", 0)
+            ->where("estado", 1)->get();
+
+
+        $productos = Producto::select("productos.*");
+        $productos = $productos->where("estado", 1)->get();
+
+        if ($request->tipo == 'pdf') {
+            $pdf = PDF::loadView('reportes.diario_vehiculos', compact(
+                "sucursals",
+                "productos",
+                "fecha",
+            ))->setPaper('letter', 'portrait');
+
+            // ENUMERAR LAS PÁGINAS USANDO CANVAS
+            $pdf->output();
+            $dom_pdf = $pdf->getDomPDF();
+            $canvas = $dom_pdf->get_canvas();
+            $alto = $canvas->get_height();
+            $ancho = $canvas->get_width();
+            $canvas->page_text($ancho - 90, $alto - 25, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 9, array(0, 0, 0));
+
+            return $pdf->download('Usuarios.pdf');
+        } else {
+            $spreadsheet = new Spreadsheet();
+            $spreadsheet->getProperties()
+                ->setCreator("ADMIN")
+                ->setLastModifiedBy('Administración')
+                ->setTitle('Registros')
+                ->setSubject('Registros')
+                ->setDescription('Registros')
+                ->setKeywords('PHPSpreadsheet')
+                ->setCategory('Listado');
+
+            $sheet = $spreadsheet->getActiveSheet();
+
+            $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+
+            $fila = 1;
+            if (file_exists(public_path() . '/imgs/' . $this->configuracion->logo)) {
+                $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+                $drawing->setName('logo');
+                $drawing->setDescription('logo');
+                $drawing->setPath(public_path() . '/imgs/' . $this->configuracion->logo); // put your path and image here
+                $drawing->setCoordinates('A' . $fila);
+                $drawing->setOffsetX(5);
+                $drawing->setOffsetY(0);
+                $drawing->setHeight(60);
+                $drawing->setWorksheet($sheet);
+            }
+
+            $fila = 2;
+
+            foreach ($sucursals as $sucursal) {
+                $sheet->setCellValue('A' . $fila, $this->configuracion->nombre_sistema);
+                $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
+                $fila++;
+                $sheet->setCellValue('A' . $fila, "CONTROL DIARIO DE SUCURSALES(VEHÍCULOS)");
+                $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
+                $fila++;
+                $sheet->setCellValue('A' . $fila, "Sucursal: " . $sucursal->nombre);
+                $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
+                $fila++;
+                $sheet->setCellValue('A' . $fila, "Encargado: " . $sucursal->user->full_name);
+                $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
+                $fila++;
+                $fila++;
+                $sheet->setCellValue('A' . $fila, 'N°');
+                $sheet->setCellValue('B' . $fila, 'PRODUCTO');
+                $sheet->setCellValue('C' . $fila, 'AÑADIDOS');
+                $sheet->setCellValue('D' . $fila, 'CANTIDAD ENTREGADA');
+                $sheet->setCellValue('E' . $fila, 'DEVOLUCIONES');
+                $sheet->setCellValue('F' . $fila, 'DIFERENCIAS/FALTANTES');
+                $sheet->setCellValue('G' . $fila, 'SALDO FINAL');
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->headerTabla);
+                $fila++;
+
+                $cont = 1;
+                $sucursal_id = $sucursal->id;
+                foreach ($productos as $key => $producto) {
+                    // INGRESOS ADICIONALES
+                    $ingresos_adicionales = KardexProducto::where('producto_id', $producto->id)
+                        ->where('fecha', $fecha)
+                        ->where('tipo_is', 'INGRESO')
+                        ->where('sucursal_id', $sucursal_id)
+                        ->sum('cantidad_ingreso');
+
+                    // SALDO INICIAL
+                    $kardex_inicial = KardexProducto::where('producto_id', $producto->id)
+                        ->where('fecha', $fecha)
+                        ->where('sucursal_id', $sucursal_id)
+                        ->get()
+                        ->first();
+                    if ($kardex_inicial) {
+                        if ($kardex_inicial->tipo_is == 'EGRESO') {
+                            $kardex_inicial = KardexProducto::where('producto_id', $producto->id)
+                                ->where('id', '<', $kardex_inicial->id)
+                                ->where('tipo_is', 'INGRESO')
+                                ->where('sucursal_id', $sucursal_id)
+                                ->get()
+                                ->last();
+                        }
+                        $saldo_inicial = $kardex_inicial->cantidad_saldo;
+                    } else {
+                        $saldo_inicial = 0;
+                    }
+
+                    // ENTREGADOS
+                    // ventas realizadas
+                    $ventas_realizadas = OrdenVentaDetalle::where('producto_id', $producto->id);
+                    $ventas_realizadas->whereHas('orden_venta', function ($query) use ($fecha, $sucursal_id) {
+                        $query->where('fecha', $fecha)->where('sucursal_id', $sucursal_id);
+                    });
+                    $ventas_realizadas = $ventas_realizadas->sum('cantidad');
+
+                    // ventas realizadas
+                    $transferencias = TransferenciaDetalle::where('producto_id', $producto->id);
+                    $transferencias->whereHas('transferencia', function ($query) use ($fecha, $sucursal_id) {
+                        $query->where('fecha', $fecha)->where('sucursal_id', $sucursal_id);
+                    });
+                    $transferencias = $transferencias->sum('cantidad_fisica');
+                    $total_entregados = (float) $ventas_realizadas + (float) $transferencias;
+
+                    // DEVOLUCIONES
+                    $devoluciones = DevolucionClienteDetalle::where('producto_id', $producto->id);
+                    $devoluciones->whereHas('devolucion_cliente', function ($query) use ($fecha, $sucursal_id) {
+                        $query->where('fecha', $fecha)->where('sucursal_id', $sucursal_id);
+                    });
+                    $devoluciones = $devoluciones->sum('cantidad');
+
+                    // FALTANTES
+                    $faltantes = TransferenciaDetalle::where('producto_id', $producto->id);
+                    $faltantes->whereHas('transferencia', function ($query) use ($fecha, $sucursal_id) {
+                        $query->where('fecha', $fecha)->where('sucursal_id', $sucursal_id);
+                    });
+                    $faltantes = $faltantes->sum(DB::raw('cantidad - cantidad_fisica'));
+
+                    $faltantes = 0;
+                    // SALDO FINAL
+                    $kardex_final = KardexProducto::where('producto_id', $producto->id)
+                        ->where('fecha', $fecha)
+                        ->where('sucursal_id', $sucursal_id)
+                        ->where('tipo_registro', '!=', 'DEVOLUCIÓN DE STOCK')
+                        ->where('id', '>', $kardex_inicial ? $kardex_inicial->id : 0)
+                        ->get()
+                        ->last();
+                    $saldo_final = $kardex_final ? $kardex_final->cantidad_saldo : 0;
+                    $sheet->setCellValue('A' . $fila, $cont++);
+                    $sheet->setCellValue('B' . $fila, $producto->nombre . ' ' . $producto->unidad_medida->nombre);
+                    $sheet->setCellValue('C' . $fila, $ingresos_adicionales);
+                    $sheet->setCellValue('D' . $fila, $total_entregados);
+                    $sheet->setCellValue('E' . $fila, $devoluciones);
+                    $sheet->setCellValue('F' . $fila, $faltantes);
+                    $sheet->setCellValue('G' . $fila, $saldo_final);
+                    $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->bodyTabla);
+                    $fila++;
+                }
+                $fila += 4;
+            }
+
+            $sheet->getColumnDimension('A')->setWidth(6);
+            $sheet->getColumnDimension('B')->setWidth(25);
+            $sheet->getColumnDimension('C')->setWidth(15);
+            $sheet->getColumnDimension('D')->setWidth(15);
+            $sheet->getColumnDimension('E')->setWidth(15);
+            $sheet->getColumnDimension('F')->setWidth(15);
+            $sheet->getColumnDimension('G')->setWidth(15);
+
+            foreach (range('A', 'G') as $columnID) {
+                $sheet->getStyle($columnID)->getAlignment()->setWrapText(true);
+            }
+
+            $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+            $sheet->getPageMargins()->setTop(0.5);
+            $sheet->getPageMargins()->setRight(0.1);
+            $sheet->getPageMargins()->setLeft(0.1);
+            $sheet->getPageMargins()->setBottom(0.1);
+            $sheet->getPageSetup()->setPrintArea('A:G');
+            $sheet->getPageSetup()->setFitToWidth(1);
+            $sheet->getPageSetup()->setFitToHeight(0);
+
+            return response()->streamDownload(
+                function () use ($spreadsheet) {
+                    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+                    $writer->save('php://output');
+                },
+                'diario_vehiculos_' . time() . '.xlsx',
                 [
                     'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 ]
