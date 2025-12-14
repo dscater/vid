@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Categoria;
 use App\Models\Cliente;
 use App\Models\Configuracion;
+use App\Models\CuentaCobrar;
 use App\Models\DevolucionStock;
 use App\Models\HistorialAccion;
 use App\Models\Inscripcion;
@@ -15,6 +16,7 @@ use App\Models\OrdenVenta;
 use App\Models\Producto;
 use App\Models\Proveedor;
 use App\Models\SolicitudIngreso;
+use App\Models\SolicitudIngresoDetalle;
 use App\Models\Sucursal;
 use App\Models\User;
 use App\Services\ReporteService;
@@ -1282,7 +1284,6 @@ class ReporteController extends Controller
         }
     }
 
-
     public function devolucions(Request $request)
     {
         ini_set('memory_limit', '1024M');
@@ -1435,7 +1436,6 @@ class ReporteController extends Controller
         }
     }
 
-
     public function orden_ventas(Request $request)
     {
         ini_set('memory_limit', '1024M');
@@ -1577,6 +1577,302 @@ class ReporteController extends Controller
                     $writer->save('php://output');
                 },
                 'orden_ventas_' . time() . '.xlsx',
+                [
+                    'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                ]
+            );
+        }
+    }
+
+    public function utilidad_ordens(Request $request)
+    {
+        ini_set('memory_limit', '1024M');
+        set_time_limit(-1);
+        $sucursal_id =  $request->sucursal_id;
+        $anio =  $request->anio;
+
+        $meses = [
+            "01" => "ENERO",
+            "02" => "FEBRERO",
+            "03" => "MARZO",
+            "04" => "ABRIL",
+            "05" => "MAYO",
+            "06" => "JUNIO",
+            "07" => "JULIO",
+            "08" => "AGOSTO",
+            "09" => "SEPTIEMBRE",
+            "10" => "OCTUBRE",
+            "11" => "NOVIEMBRE",
+            "12" => "DICIEMBRE",
+        ];
+
+        if ($request->tipo == 'pdf') {
+            $pdf = PDF::loadView('reportes.utilidad_ordens', compact(
+                'sucursal_id',
+                "anio",
+                'meses'
+            ))->setPaper('letter', 'portrait');
+
+            // ENUMERAR LAS PÁGINAS USANDO CANVAS
+            $pdf->output();
+            $dom_pdf = $pdf->getDomPDF();
+            $canvas = $dom_pdf->get_canvas();
+            $alto = $canvas->get_height();
+            $ancho = $canvas->get_width();
+            $canvas->page_text($ancho - 90, $alto - 25, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 9, array(0, 0, 0));
+
+            return $pdf->download('UtilidadOrdens.pdf');
+        } else {
+            $spreadsheet = new Spreadsheet();
+            $spreadsheet->getProperties()
+                ->setCreator("ADMIN")
+                ->setLastModifiedBy('Administración')
+                ->setTitle('Registros')
+                ->setSubject('Registros')
+                ->setDescription('Registros')
+                ->setKeywords('PHPSpreadsheet')
+                ->setCategory('Listado');
+
+            $sheet = $spreadsheet->getActiveSheet();
+
+            $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+
+            $fila = 1;
+            if (file_exists(public_path() . '/imgs/' . $this->configuracion->logo)) {
+                $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+                $drawing->setName('logo');
+                $drawing->setDescription('logo');
+                $drawing->setPath(public_path() . '/imgs/' . $this->configuracion->logo); // put your path and image here
+                $drawing->setCoordinates('A' . $fila);
+                $drawing->setOffsetX(5);
+                $drawing->setOffsetY(0);
+                $drawing->setHeight(60);
+                $drawing->setWorksheet($sheet);
+            }
+
+            $fila = 2;
+            $sheet->setCellValue('A' . $fila, $this->configuracion->nombre_sistema);
+            $sheet->mergeCells("A" . $fila . ":D" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':D' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':D' . $fila)->applyFromArray($this->titulo);
+            $fila++;
+            $sheet->setCellValue('A' . $fila, "UTILIDAD DE ORDENDES DE VENTA");
+            $sheet->mergeCells("A" . $fila . ":D" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':D' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':D' . $fila)->applyFromArray($this->titulo);
+            $fila++;
+            $fila++;
+            $sheet->setCellValue('A' . $fila, 'MES');
+            $sheet->setCellValue('B' . $fila, 'TOTAL VENTA');
+            $sheet->setCellValue('C' . $fila, 'COMPRA');
+            $sheet->setCellValue('D' . $fila, 'TOTAL');
+            $sheet->getStyle('A' . $fila . ':D' . $fila)->applyFromArray($this->headerTabla);
+            $fila++;
+
+            $total_final1 = 0;
+            $total_final2 = 0;
+            $total_final3 = 0;
+
+            foreach ($meses as $key => $value) {
+                $orden_ventas = OrdenVenta::select('orden_ventas.*');
+                if ($sucursal_id != 'todos') {
+                    $orden_ventas->where('sucursal_id', $sucursal_id);
+                }
+                $orden_ventas->where('fecha', 'LIKE', "$anio-$key%");
+                $total_ventas = $orden_ventas->where('estado', 'FINALIZADO')->sum('total_f');
+
+                $solicitud_ingreso_detalles = SolicitudIngresoDetalle::select(
+                    'solicitud_ingreso_detalles.*',
+                );
+                if ($sucursal_id != 'todos') {
+                    $solicitud_ingreso_detalles->whereHas('solicitud_ingreso', function ($query) use (
+                        $sucursal_id,
+                    ) {
+                        $query->where('sucursal_id', $sucursal_id);
+                    });
+                }
+
+                $solicitud_ingreso_detalles->whereHas('solicitud_ingreso', function ($query) use (
+                    $key,
+                    $anio,
+                ) {
+                    $query->whereIn('verificado', [1, 2]);
+                    $query->where('fecha_ingreso', 'LIKE', "$anio-$key%");
+                });
+
+                $total_compras = $solicitud_ingreso_detalles->sum(DB::raw('cantidad_fisica * costo'));
+
+                $saldo = (float) $total_ventas - (float) $total_compras;
+
+                $total_final1 += (float) $total_ventas;
+                $total_final2 += (float) $total_compras;
+                $total_final3 += (float) $saldo;
+
+                $sheet->setCellValue('A' . $fila, $value);
+                $sheet->setCellValue('B' . $fila, $total_ventas);
+                $sheet->setCellValue('C' . $fila, $total_compras);
+                $sheet->setCellValue('D' . $fila, number_format($saldo, 2, ".", ""));
+                $sheet->getStyle('A' . $fila . ':D' . $fila)->applyFromArray($this->bodyTabla);
+                $fila++;
+            }
+            $sheet->setCellValue('A' . $fila, "TOTAL");
+            $sheet->setCellValue('B' . $fila, number_format($total_final1, 2, '.', ''));
+            $sheet->setCellValue('C' . $fila, number_format($total_final2, 2, '.', ''));
+            $sheet->setCellValue('D' . $fila, number_format($total_final3, 2, '.', ''));
+            $sheet->getStyle('A' . $fila . ':D' . $fila)->applyFromArray($this->headerTabla);
+
+            $sheet->getColumnDimension('A')->setWidth(15);
+            $sheet->getColumnDimension('B')->setWidth(15);
+            $sheet->getColumnDimension('C')->setWidth(15);
+            $sheet->getColumnDimension('D')->setWidth(15);
+
+            foreach (range('A', 'D') as $columnID) {
+                $sheet->getStyle($columnID)->getAlignment()->setWrapText(true);
+            }
+
+            $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+            $sheet->getPageMargins()->setTop(0.5);
+            $sheet->getPageMargins()->setRight(0.1);
+            $sheet->getPageMargins()->setLeft(0.1);
+            $sheet->getPageMargins()->setBottom(0.1);
+            $sheet->getPageSetup()->setPrintArea('A:D');
+            $sheet->getPageSetup()->setFitToWidth(1);
+            $sheet->getPageSetup()->setFitToHeight(0);
+
+            return response()->streamDownload(
+                function () use ($spreadsheet) {
+                    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+                    $writer->save('php://output');
+                },
+                'utilidad_ordens_' . time() . '.xlsx',
+                [
+                    'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                ]
+            );
+        }
+    }
+
+    public function cuenta_cobrars(Request $request)
+    {
+        ini_set('memory_limit', '1024M');
+        set_time_limit(-1);
+        $cliente_id =  $request->cliente_id;
+        $cuenta_cobrars = CuentaCobrar::select("cuenta_cobrars.*");
+
+        if ($cliente_id != 'todos') {
+            $cuenta_cobrars->where('cliente_id', $cliente_id);
+        }
+        $cuenta_cobrars = $cuenta_cobrars->get();
+
+        if ($request->tipo == 'pdf') {
+            $pdf = PDF::loadView('reportes.cuenta_cobrars', compact('cuenta_cobrars'))->setPaper('letter', 'portrait');
+            // ENUMERAR LAS PÁGINAS USANDO CANVAS
+            $pdf->output();
+            $dom_pdf = $pdf->getDomPDF();
+            $canvas = $dom_pdf->get_canvas();
+            $alto = $canvas->get_height();
+            $ancho = $canvas->get_width();
+            $canvas->page_text($ancho - 90, $alto - 25, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 9, array(0, 0, 0));
+
+            return $pdf->download('Usuarios.pdf');
+        } else {
+            $spreadsheet = new Spreadsheet();
+            $spreadsheet->getProperties()
+                ->setCreator("ADMIN")
+                ->setLastModifiedBy('Administración')
+                ->setTitle('Registros')
+                ->setSubject('Registros')
+                ->setDescription('Registros')
+                ->setKeywords('PHPSpreadsheet')
+                ->setCategory('Listado');
+
+            $sheet = $spreadsheet->getActiveSheet();
+
+            $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+
+            $fila = 1;
+            if (file_exists(public_path() . '/imgs/' . $this->configuracion->logo)) {
+                $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+                $drawing->setName('logo');
+                $drawing->setDescription('logo');
+                $drawing->setPath(public_path() . '/imgs/' . $this->configuracion->logo); // put your path and image here
+                $drawing->setCoordinates('A' . $fila);
+                $drawing->setOffsetX(5);
+                $drawing->setOffsetY(0);
+                $drawing->setHeight(60);
+                $drawing->setWorksheet($sheet);
+            }
+
+            $fila = 2;
+            $sheet->setCellValue('A' . $fila, $this->configuracion->nombre_sistema);
+            $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
+            $fila++;
+            $sheet->setCellValue('A' . $fila, "CUENTAS POR COBRAR");
+            $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
+            $fila++;
+            $fila++;
+            $sheet->setCellValue('A' . $fila, 'N°');
+            $sheet->setCellValue('B' . $fila, 'FECHA');
+            $sheet->setCellValue('C' . $fila, 'CLIENTE');
+            $sheet->setCellValue('D' . $fila, 'CÓD. ORDEN VENTA');
+            $sheet->setCellValue('E' . $fila, 'TOTAL');
+            $sheet->setCellValue('F' . $fila, 'CANCELADO');
+            $sheet->setCellValue('G' . $fila, 'SALDO');
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->headerTabla);
+            $fila++;
+
+            foreach ($cuenta_cobrars as $key => $item) {
+                $sheet->setCellValue('A' . $fila, $key + 1);
+                $sheet->setCellValue('B' . $fila, $item->fecha_c);
+                $sheet->setCellValue('C' . $fila, $item->cliente->razon_social);
+                $sheet->setCellValue('D' . $fila, $item->orden_venta->codigo);
+                $sheet->setCellValue('E' . $fila, $item->total);
+                $sheet->setCellValue('F' . $fila, $item->cancelado);
+                $sheet->setCellValue('G' . $fila, $item->saldo);
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->bodyTabla);
+                $fila++;
+            }
+            $total = $cuenta_cobrars->sum('total');
+            $cancelado = $cuenta_cobrars->sum('cancelado');
+            $saldo = $cuenta_cobrars->sum('saldo');
+            $sheet->setCellValue('A' . $fila, "TOTAL");
+            $sheet->mergeCells("A" . $fila . ":D" . $fila);  //COMBINAR CELDAS
+            $sheet->setCellValue('E' . $fila, $total);
+            $sheet->setCellValue('F' . $fila, $cancelado);
+            $sheet->setCellValue('G' . $fila, $saldo);
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->headerTabla);
+
+            $sheet->getColumnDimension('A')->setWidth(7);
+            $sheet->getColumnDimension('B')->setWidth(15);
+            $sheet->getColumnDimension('C')->setWidth(15);
+            $sheet->getColumnDimension('D')->setWidth(10);
+            $sheet->getColumnDimension('E')->setWidth(12);
+            $sheet->getColumnDimension('F')->setWidth(12);
+            $sheet->getColumnDimension('G')->setWidth(12);
+
+            foreach (range('A', 'G') as $columnID) {
+                $sheet->getStyle($columnID)->getAlignment()->setWrapText(true);
+            }
+
+            $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+            $sheet->getPageMargins()->setTop(0.5);
+            $sheet->getPageMargins()->setRight(0.1);
+            $sheet->getPageMargins()->setLeft(0.1);
+            $sheet->getPageMargins()->setBottom(0.1);
+            $sheet->getPageSetup()->setPrintArea('A:G');
+            $sheet->getPageSetup()->setFitToWidth(1);
+            $sheet->getPageSetup()->setFitToHeight(0);
+
+            return response()->streamDownload(
+                function () use ($spreadsheet) {
+                    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+                    $writer->save('php://output');
+                },
+                'cuenta_cobrars_' . time() . '.xlsx',
                 [
                     'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 ]

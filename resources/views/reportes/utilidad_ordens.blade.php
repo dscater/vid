@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>UtilidadOrdenes</title>
+    <style type="text/css">
+        * {
+            font-family: sans-serif;
+        }
+
+        @page {
+            margin-top: 1.5cm;
+            margin-bottom: 0.3cm;
+            margin-left: 0.3cm;
+            margin-right: 0.3cm;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            margin-top: 20px;
+            page-break-before: avoid;
+            margin: auto;
+        }
+
+        table thead tr th,
+        tbody tr td {
+            padding: 3px;
+            word-wrap: break-word;
+        }
+
+        table thead tr th {
+            font-size: 7pt;
+        }
+
+        table tbody tr td {
+            font-size: 6pt;
+        }
+
+
+        .encabezado {
+            width: 100%;
+        }
+
+        .logo img {
+            position: absolute;
+            height: 70px;
+            top: -20px;
+            left: 0px;
+        }
+
+        h2.titulo {
+            width: 450px;
+            margin: auto;
+            margin-top: 0PX;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 14pt;
+        }
+
+        .texto {
+            width: 250px;
+            text-align: center;
+            margin: auto;
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .fecha {
+            width: 250px;
+            text-align: center;
+            margin: auto;
+            margin-top: 15px;
+            font-weight: normal;
+            font-size: 0.85em;
+        }
+
+        .total {
+            text-align: right;
+            padding-right: 15px;
+            font-weight: bold;
+        }
+
+        table thead {
+            background: rgb(236, 236, 236)
+        }
+
+        tr {
+            page-break-inside: avoid !important;
+        }
+
+        .centreado {
+            padding-left: 0px;
+            text-align: center;
+        }
+
+        .datos {
+            margin-left: 15px;
+            border-top: solid 1px;
+            border-collapse: collapse;
+            width: 250px;
+        }
+
+        .txt {
+            font-weight: bold;
+            text-align: right;
+            padding-right: 5px;
+        }
+
+        .txt_center {
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .cumplimiento {
+            position: absolute;
+            width: 150px;
+            right: 0px;
+            top: 86px;
+        }
+
+        .b_top {
+            border-top: solid 1px black;
+        }
+
+        .gray {
+            background: rgb(202, 202, 202);
+        }
+
+        .bg-principal {
+            background: #153f59;
+            color: white;
+        }
+
+        .txt_rojo {}
+
+        .img_celda img {
+            width: 45px;
+        }
+    </style>
+</head>
+
+<body>
+    @inject('configuracion', 'App\Models\Configuracion')
+    <div class="encabezado">
+        <div class="logo">
+            <img src="{{ $configuracion->first()->logo_b64 }}">
+        </div>
+        <h2 class="titulo">
+            {{ $configuracion->first()->nombre_sistema }}
+        </h2>
+        <h4 class="texto">UTILIDAD DE ORDENDES DE VENTAS</h4>
+        <h4 class="fecha">Expedido: {{ date('d-m-Y') }}</h4>
+    </div>
+
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>MES</th>
+                <th>TOTAL VENTA</th>
+                <th>COMPRA</th>
+                <th>TOTAL</th>
+            </tr>
+        </thead>
+        <tbody>
+            @php
+                $total_final1 = 0;
+                $total_final2 = 0;
+                $total_final3 = 0;
+            @endphp
+            @foreach ($meses as $key => $value)
+                @php
+                    $orden_ventas = App\Models\OrdenVenta::select('orden_ventas.*');
+                    if ($sucursal_id != 'todos') {
+                        $orden_ventas->where('sucursal_id', $sucursal_id);
+                    }
+                    $orden_ventas->where('fecha', 'LIKE', "$anio-$key%");
+                    $total_ventas = $orden_ventas->where('estado', 'FINALIZADO')->sum('total_f');
+
+                    $solicitud_ingreso_detalles = App\Models\SolicitudIngresoDetalle::select(
+                        'solicitud_ingreso_detalles.*',
+                    );
+                    if ($sucursal_id != 'todos') {
+                        $solicitud_ingreso_detalles->whereHas('solicitud_ingreso', function ($query) use (
+                            $sucursal_id,
+                        ) {
+                            $query->where('sucursal_id', $sucursal_id);
+                        });
+                    }
+
+                    $solicitud_ingreso_detalles->whereHas('solicitud_ingreso', function ($query) use ($key, $anio) {
+                        $query->whereIn('verificado', [1, 2]);
+                        $query->where('fecha_ingreso', 'LIKE', "$anio-$key%");
+                    });
+
+                    $total_compras = $solicitud_ingreso_detalles->sum(DB::raw('cantidad_fisica * costo'));
+
+                    $saldo = (float) $total_ventas - (float) $total_compras;
+
+                    $total_final1 += (float) $total_ventas;
+                    $total_final2 += (float) $total_compras;
+                    $total_final3 += (float) $saldo;
+                @endphp
+                <tr>
+                    <td>{{ $value }}</td>
+                    <td class="centreado">{{ $total_ventas }}</td>
+                    <td class="centreado">{{ $total_compras }}</td>
+                    <td class="centreado">{{ number_format($saldo, 2, '.', '') }}</td>
+                </tr>
+            @endforeach
+            <tr>
+                <th>TOTAL</th>
+                <th>{{ number_format($total_final1, 2, '.', '') }}</th>
+                <th>{{ number_format($total_final2, 2, '.', '') }}</th>
+                <th>{{ number_format($total_final3, 2, '.', '') }}</th>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
