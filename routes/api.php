@@ -262,4 +262,19 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     // REPORTES
     Route::post('reportes/usuarios', [ReporteController::class, 'usuarios'])->name("reportes.usuarios");
     Route::post('reportes/productos', [ReporteController::class, 'productos'])->name("reportes.productos");
+    Route::post('reportes/clientes', [ReporteController::class, 'clientes'])->name("reportes.clientes");
+    Route::post('reportes/proveedors', [ReporteController::class, 'proveedors'])->name("reportes.proveedors");
+    Route::post('reportes/movimiento_inventario', [ReporteController::class, 'movimiento_inventario'])->name("reportes.movimiento_inventario");
+    Route::post('reportes/solicitud_ingresos', [ReporteController::class, 'solicitud_ingresos'])->name("reportes.solicitud_ingresos");
+    Route::post('reportes/orden_salidas', [ReporteController::class, 'orden_salidas'])->name("reportes.orden_salidas");
+    Route::post('reportes/devolucions', [ReporteController::class, 'devolucions'])->name("reportes.devolucions");
+    Route::post('reportes/orden_ventas', [ReporteController::class, 'orden_ventas'])->name("reportes.orden_ventas");
+    Route::post('reportes/utilidad_ordens', [ReporteController::class, 'utilidad_ordens'])->name("reportes.utilidad_ordens");
+    Route::post('reportes/cuenta_cobrars', [ReporteController::class, 'cuenta_cobrars'])->name("reportes.cuenta_cobrars");
+    Route::post('reportes/rotacion', [ReporteController::class, 'rotacion'])->name("reportes.rotacion");
+    Route::post('reportes/gastos', [ReporteController::class, 'gastos'])->name("reportes.gastos");
+    Route::post('reportes/diario_salidas', [ReporteController::class, 'diario_salidas'])->name("reportes.diario_salidas");
+    Route::post('reportes/movimientos_abastecimiento', [ReporteController::class, 'movimientos_abastecimiento'])->name("reportes.movimientos_abastecimiento");
+    Route::post('reportes/saldos_almacen_central', [ReporteController::class, 'saldos_almacen_central'])->name("reportes.saldos_almacen_central");
+    Route::post('reportes/diario_vehiculos', [ReporteController::class, 'diario_vehiculos'])->name("reportes.diario_vehiculos");
 });

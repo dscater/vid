@@ -201,7 +201,6 @@ class TransferenciaService
         return $transferencia;
     }
 
-
     public function aprobar(array $datos, Transferencia $transferencia): Transferencia
     {
         $old_transferencia = clone $transferencia;
@@ -217,8 +216,9 @@ class TransferenciaService
             $transferencia_detalle = TransferenciaDetalle::findOrFail($item["id"]);
             $transferencia_detalle->update([
                 "verificado" => $item["verificado"],
-                "sucursal_ajuste" => $item["cantidad"] == $item["cantidad_fisica"] ? $item["sucursal_ajuste"] : null,
-                "motivo" => $item["cantidad"] == $item["cantidad_fisica"] ? $item["motivo"] : null,
+                "cantidad_fisica" => $item["cantidad_fisica"],
+                "sucursal_ajuste" => $item["cantidad"] != $item["cantidad_fisica"] ? $item["sucursal_ajuste"] : null,
+                "motivo" => $item["cantidad"] != $item["cantidad_fisica"] ? $item["motivo"] : null,
             ]);
 
             $producto = Producto::findOrFail($item["producto_id"]);
@@ -234,6 +234,12 @@ class TransferenciaService
 
             // INCREMENTAR STOCK DEL ALMACEN
             $this->kardex_producto_service->registroIngreso($transferencia->sucursal_destino, "TRANSFERENCIA", $producto, $item["cantidad_fisica"], $producto->precio, "INGRESO POR TRANSFERENCIA", "TransferenciaDetalle", $transferencia_detalle->id);
+
+            if ($item["cantidad"] != $item["cantidad_fisica"]) {
+                // REGISTRAR AJUSTE
+                $ajuste = (float)$item["cantidad"] - (float)$item["cantidad_fisica"];
+                $this->kardex_producto_service->registroIngreso($item["sucursal_ajuste"], "TRANSFERENCIA", $producto, $ajuste, $item["costo"], "INGRESO POR AJUSTE", "TransferenciaDetalle", $transferencia_detalle->id);
+            }
 
             // VERIFICAR PARA NOTIFICACION
             $sucursal_producto = $this->sucursal_producto_service->getSucursalProducto($producto->id, $transferencia->sucursal_id);

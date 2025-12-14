@@ -31,4 +31,9 @@ class DevolucionStockDetalle extends Model
     {
         return $this->belongsTo(Producto::class);
     }
+
+    public function oSucursalAjuste()
+    {
+        return $this->belongsTo(Sucursal::class, 'sucursal_ajuste');
+    }
 }

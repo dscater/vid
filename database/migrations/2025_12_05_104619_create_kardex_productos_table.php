@@ -30,6 +30,7 @@ return new class extends Migration
             $table->decimal("monto_saldo", 24, 2);
             $table->date("fecha");
             $table->integer("status")->default(1);
+            $table->unsignedBigInteger("user_id");
             $table->timestamps();
 
             $table->foreign("producto_id")->on("productos")->references("id");

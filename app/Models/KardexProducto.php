@@ -27,7 +27,15 @@ class KardexProducto extends Model
         "monto_saldo",
         "fecha",
         "status",
+        "user_id",
     ];
+
+    protected $appends = ["fecha_hora"];
+
+    public function getFechaHoraAttribute()
+    {
+        return date("d/m/Y H:i", strtotime($this->created_at));
+    }
 
     public function sucursal()
     {
@@ -37,5 +45,10 @@ class KardexProducto extends Model
     public function producto()
     {
         return $this->belongsTo(Sucursal::class, 'producto_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

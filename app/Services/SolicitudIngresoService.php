@@ -212,13 +212,20 @@ class SolicitudIngresoService
             $solicitud_ingreso_detalle->update([
                 "subtotal" => $subtotal,
                 "verificado" => $item["verificado"],
-                "sucursal_ajuste" => $item["cantidad"] == $item["cantidad_fisica"] ? $item["sucursal_ajuste"] : null,
-                "motivo" => $item["cantidad"] == $item["cantidad_fisica"] ? $item["motivo"] : null,
+                "cantidad_fisica" => $item["cantidad_fisica"],
+                "sucursal_ajuste" => $item["cantidad"] != $item["cantidad_fisica"] ? $item["sucursal_ajuste"] : null,
+                "motivo" => $item["cantidad"] != $item["cantidad_fisica"] ? $item["motivo"] : null,
             ]);
 
             // AUMENTAR STOCK ALMACEN
             $producto = Producto::findOrFail($item["producto_id"]);
             $this->kardex_producto_service->registroIngreso($almacen->id, "SOLICITUD INGRESO", $producto, $item["cantidad_fisica"], $solicitud_ingreso_detalle->costo, "INGRESO POR SOLICITUD", "SolicitudIngresoDetalle", $solicitud_ingreso_detalle->id);
+
+            if ($item["cantidad"] != $item["cantidad_fisica"]) {
+                // REGISTRAR AJUSTE
+                $ajuste = (float)$item["cantidad"] - (float)$item["cantidad_fisica"];
+                $this->kardex_producto_service->registroIngreso($item["sucursal_ajuste"], "SOLICITUD INGRESO", $producto, $ajuste, $item["costo"], "INGRESO POR AJUSTE", "SolicitudIngresoDetalle", $solicitud_ingreso_detalle->id);
+            }
         }
 
         // registrar accion

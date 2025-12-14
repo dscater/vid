@@ -205,8 +205,9 @@ class DevolucionStockService
             $devolucion_stock_detalle = DevolucionStockDetalle::findOrFail($item["id"]);
             $devolucion_stock_detalle->update([
                 "verificado" => $item["verificado"],
-                "sucursal_ajuste" => $item["cantidad"] == $item["cantidad_fisica"] ? $item["sucursal_ajuste"] : null,
-                "motivo" => $item["cantidad"] == $item["cantidad_fisica"] ? $item["motivo"] : null,
+                "cantidad_fisica" => $item["cantidad_fisica"],
+                "sucursal_ajuste" => $item["cantidad"] != $item["cantidad_fisica"] ? $item["sucursal_ajuste"] : null,
+                "motivo" => $item["cantidad"] != $item["cantidad_fisica"] ? $item["motivo"] : null,
             ]);
 
             $producto = Producto::findOrFail($item["producto_id"]);
@@ -222,6 +223,13 @@ class DevolucionStockService
 
             // INCREMENTAR STOCK DEL ALMACEN
             $this->kardex_producto_service->registroIngreso($almacen->id, "DEVOLUCIÓN DE STOCK", $producto, $item["cantidad_fisica"], $producto->precio, "INGRESO POR DEVOLUCIÓN DE STOCK", "DevolucionStockDetalle", $devolucion_stock_detalle->id);
+
+
+            if ($item["cantidad"] != $item["cantidad_fisica"]) {
+                // REGISTRAR AJUSTE
+                $ajuste = (float)$item["cantidad"] - (float)$item["cantidad_fisica"];
+                $this->kardex_producto_service->registroIngreso($item["sucursal_ajuste"], "DEVOLUCIÓN DE STOCK", $producto, $ajuste, $item["costo"], "INGRESO POR AJUSTE", "DevolucionStockDetalle", $devolucion_stock_detalle->id);
+            }
         }
 
         // registrar accion

@@ -9,6 +9,7 @@ use App\Models\KardexProducto;
 use App\Models\Producto;
 use App\Models\SalidaProducto;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class KardexProductoService
@@ -57,9 +58,10 @@ class KardexProductoService
                 'monto_ingreso' => $monto,
                 'monto_saldo' => (float)$ultimo->monto_saldo + $monto,
                 'fecha' => $fecha_actual,
+                "user_id" => Auth::user()->id,
             ]);
         } else {
-            $detalle = "VALOR INICIAL";
+            $detalle = $detalle != 'INGRESO POR AJUSTE' ? "VALOR INICIAL" : $detalle;
             KardexProducto::create([
                 "sucursal_id" => $sucursal_id,
                 'tipo_registro' => $tipo_registro, //INGRESO, EGRESO, VENTA,etc...
@@ -75,6 +77,7 @@ class KardexProductoService
                 'monto_ingreso' => $monto,
                 'monto_saldo' =>  $monto,
                 'fecha' => $fecha_actual,
+                "user_id" => Auth::user()->id,
             ]);
         }
 
@@ -126,6 +129,7 @@ class KardexProductoService
             'monto_salida' => $monto,
             'monto_saldo' => (float)$ultimo->monto_saldo - $monto,
             'fecha' => $fecha_actual,
+            "user_id" => Auth::user()->id,
         ]);
 
         // DECREMENTAR STOCK

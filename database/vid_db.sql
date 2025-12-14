@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 13-12-2025 a las 22:17:11
+-- Tiempo de generación: 14-12-2025 a las 01:35:54
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.2.22
 
@@ -601,7 +601,17 @@ INSERT INTO `historial_accions` (`id`, `user_id`, `accion`, `descripcion`, `dato
 (201, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA SUCURSAL', '{\"id\": 4, \"fono\": \"7667676767\", \"correo\": null, \"estado\": 1, \"nombre\": \"SUCURSAL 3\", \"user_id\": 17, \"direccion\": \"LOS PEDREGALES\", \"created_at\": \"2025-12-13T20:39:39.000000Z\", \"updated_at\": \"2025-12-13T20:39:39.000000Z\"}', NULL, 'SUCURSALES', '2025-12-13', '16:39:39', '2025-12-13 20:39:39', '2025-12-13 20:39:39'),
 (202, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE SALIDA', '{\"id\": 11, \"nro\": 11, \"hora\": \"16:40\", \"fecha\": \"2025-12-13\", \"total\": 5400, \"codigo\": \"SAL.11\", \"estado\": \"PENDIENTE\", \"user_ap\": 17, \"user_id\": 1, \"user_sol\": 17, \"created_at\": \"2025-12-13T20:40:25.000000Z\", \"updated_at\": \"2025-12-13T20:40:25.000000Z\", \"sucursal_id\": 4, \"observaciones\": \"\", \"cantidad_total\": 18}', NULL, 'ORDEN DE SALIDA', '2025-12-13', '16:40:25', '2025-12-13 20:40:25', '2025-12-13 20:40:25'),
 (203, 15, 'CREACIÓN', 'EL USUARIO juan@gmail.com REGISTRO UNA TRANSFERENCIA', '{\"id\": 7, \"nro\": 5, \"hora\": \"16:48\", \"fecha\": \"2025-12-13\", \"codigo\": \"T.5\", \"estado\": \"PENDIENTE\", \"user_ap\": 17, \"user_sol\": 15, \"created_at\": \"2025-12-13T20:48:10.000000Z\", \"updated_at\": \"2025-12-13T20:48:10.000000Z\", \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 1, \"cantidad_total_v\": 1, \"sucursal_destino\": 4}', NULL, 'TRANSFERENCIA', '2025-12-13', '16:48:10', '2025-12-13 20:48:10', '2025-12-13 20:48:10'),
-(204, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN USUARIO', '{\"ci\": \"453543\", \"id\": 17, \"cel\": \"67676767\", \"dir\": \"LOS PEDRAGLES\", \"fono\": \"22322332\", \"foto\": null, \"sexo\": \"MASCULINO\", \"tipo\": \"USUARIO\", \"acceso\": 1, \"carnet\": null, \"ci_exp\": \"LP\", \"correo\": \"jorge@gmail.com\", \"estado\": 1, \"nombre\": \"JORGE\", \"cel_dom\": \"65665\", \"latitud\": \"111\", \"materno\": \"\", \"paterno\": \"GONZALES\", \"role_id\": 3, \"usuario\": \"jorge@gmail.com\", \"longitud\": \"111\", \"grupo_san\": \"ORH+\", \"profesion\": \"\", \"created_at\": \"2025-12-02T00:08:20.000000Z\", \"deleted_at\": null, \"documentos\": [], \"updated_at\": \"2025-12-02T00:08:20.000000Z\", \"certificados\": [], \"nacionalidad\": \"BOLIVIANO\", \"fecha_registro\": \"2025-12-01\"}', '{\"ci\": \"453543\", \"id\": 17, \"cel\": \"67676767\", \"dir\": \"LOS PEDRAGLES\", \"fono\": \"22322332\", \"foto\": null, \"sexo\": \"MASCULINO\", \"tipo\": \"USUARIO\", \"acceso\": \"1\", \"carnet\": null, \"ci_exp\": \"LP\", \"correo\": \"jorge@gmail.com\", \"estado\": 1, \"nombre\": \"JORGE\", \"cel_dom\": \"65665\", \"latitud\": \"111\", \"materno\": \"\", \"paterno\": \"GONZALES\", \"role_id\": \"2\", \"usuario\": \"jorge@gmail.com\", \"longitud\": \"111\", \"grupo_san\": \"ORH+\", \"profesion\": \"\", \"created_at\": \"2025-12-02T00:08:20.000000Z\", \"deleted_at\": null, \"documentos\": [], \"updated_at\": \"2025-12-13T20:49:42.000000Z\", \"certificados\": [], \"nacionalidad\": \"BOLIVIANO\", \"fecha_registro\": \"2025-12-13\"}', 'USUARIOS', '2025-12-13', '16:49:42', '2025-12-13 20:49:42', '2025-12-13 20:49:42');
+(204, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN USUARIO', '{\"ci\": \"453543\", \"id\": 17, \"cel\": \"67676767\", \"dir\": \"LOS PEDRAGLES\", \"fono\": \"22322332\", \"foto\": null, \"sexo\": \"MASCULINO\", \"tipo\": \"USUARIO\", \"acceso\": 1, \"carnet\": null, \"ci_exp\": \"LP\", \"correo\": \"jorge@gmail.com\", \"estado\": 1, \"nombre\": \"JORGE\", \"cel_dom\": \"65665\", \"latitud\": \"111\", \"materno\": \"\", \"paterno\": \"GONZALES\", \"role_id\": 3, \"usuario\": \"jorge@gmail.com\", \"longitud\": \"111\", \"grupo_san\": \"ORH+\", \"profesion\": \"\", \"created_at\": \"2025-12-02T00:08:20.000000Z\", \"deleted_at\": null, \"documentos\": [], \"updated_at\": \"2025-12-02T00:08:20.000000Z\", \"certificados\": [], \"nacionalidad\": \"BOLIVIANO\", \"fecha_registro\": \"2025-12-01\"}', '{\"ci\": \"453543\", \"id\": 17, \"cel\": \"67676767\", \"dir\": \"LOS PEDRAGLES\", \"fono\": \"22322332\", \"foto\": null, \"sexo\": \"MASCULINO\", \"tipo\": \"USUARIO\", \"acceso\": \"1\", \"carnet\": null, \"ci_exp\": \"LP\", \"correo\": \"jorge@gmail.com\", \"estado\": 1, \"nombre\": \"JORGE\", \"cel_dom\": \"65665\", \"latitud\": \"111\", \"materno\": \"\", \"paterno\": \"GONZALES\", \"role_id\": \"2\", \"usuario\": \"jorge@gmail.com\", \"longitud\": \"111\", \"grupo_san\": \"ORH+\", \"profesion\": \"\", \"created_at\": \"2025-12-02T00:08:20.000000Z\", \"deleted_at\": null, \"documentos\": [], \"updated_at\": \"2025-12-13T20:49:42.000000Z\", \"certificados\": [], \"nacionalidad\": \"BOLIVIANO\", \"fecha_registro\": \"2025-12-13\"}', 'USUARIOS', '2025-12-13', '16:49:42', '2025-12-13 20:49:42', '2025-12-13 20:49:42'),
+(205, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN ROLE', '{\"id\": 3, \"estado\": 1, \"nombre\": \"AUXILIAR\", \"permisos\": 0, \"usuarios\": 1, \"created_at\": \"2025-11-30T16:44:33.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-11-30T16:44:33.000000Z\"}', '{\"id\": 3, \"estado\": 1, \"nombre\": \"SUPERVISOR\", \"permisos\": 0, \"usuarios\": 1, \"created_at\": \"2025-11-30T16:44:33.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-13T23:39:07.000000Z\"}', 'ROLES', '2025-12-13', '19:39:07', '2025-12-13 23:39:07', '2025-12-13 23:39:07'),
+(206, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN USUARIO', '{\"ci\": \"123456\", \"id\": 15, \"cel\": \"777777\", \"dir\": \"LOS PEDREGALES\", \"fono\": \"22222\", \"foto\": \"1764597654_15.jpg\", \"sexo\": \"MASCULINO\", \"tipo\": \"USUARIO\", \"acceso\": 1, \"carnet\": null, \"ci_exp\": \"LP\", \"correo\": \"juan@gmail.com\", \"estado\": 1, \"nombre\": \"JUAN\", \"cel_dom\": \"78\", \"latitud\": \"111111111\", \"materno\": \"MAMANI\", \"paterno\": \"PERES\", \"role_id\": 2, \"usuario\": \"juan@gmail.com\", \"longitud\": \"1000000000\", \"grupo_san\": \"ORH+\", \"profesion\": \"PROFESION\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"deleted_at\": null, \"documentos\": [{\"id\": 5, \"ext\": \"jpeg\", \"file\": \"0151764537188.jpeg\", \"name\": \"0151764537188.jpeg\", \"user_id\": 15, \"url_file\": \"https://vid.test/files/documentos/0151764537188.jpeg\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"https://vid.test/files/documentos/0151764537188.jpeg\"}, {\"id\": 6, \"ext\": \"pdf\", \"file\": \"1151764537188.pdf\", \"name\": \"1151764537188.pdf\", \"user_id\": 15, \"url_file\": \"https://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"https://vid.test/files/documentos/1151764537188.pdf\"}], \"updated_at\": \"2025-12-13T17:04:07.000000Z\", \"certificados\": [{\"id\": 5, \"ext\": \"pdf\", \"file\": \"0151764537188.pdf\", \"name\": \"0151764537188.pdf\", \"user_id\": 15, \"url_file\": \"https://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"https://vid.test/files/certificados/0151764537188.pdf\"}, {\"id\": 6, \"ext\": \"pdf\", \"file\": \"1151764537188.pdf\", \"name\": \"1151764537188.pdf\", \"user_id\": 15, \"url_file\": \"https://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"https://vid.test/files/certificados/1151764537188.pdf\"}], \"nacionalidad\": \"BOLIVIANO\", \"fecha_registro\": \"2025-12-01\"}', '{\"ci\": \"123456\", \"id\": 15, \"cel\": \"777777\", \"dir\": \"LOS PEDREGALES\", \"fono\": \"22222\", \"foto\": \"1764597654_15.jpg\", \"sexo\": \"MASCULINO\", \"tipo\": \"USUARIO\", \"acceso\": \"1\", \"carnet\": null, \"ci_exp\": \"LP\", \"correo\": \"juan@gmail.com\", \"estado\": 1, \"nombre\": \"JUAN\", \"cel_dom\": \"78\", \"latitud\": \"111111111\", \"materno\": \"MAMANI\", \"paterno\": \"PERES\", \"role_id\": \"3\", \"usuario\": \"juan@gmail.com\", \"longitud\": \"1000000000\", \"grupo_san\": \"ORH+\", \"profesion\": \"PROFESION\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"deleted_at\": null, \"documentos\": [{\"id\": 5, \"ext\": \"jpeg\", \"file\": \"0151764537188.jpeg\", \"name\": \"0151764537188.jpeg\", \"user_id\": 15, \"url_file\": \"https://vid.test/files/documentos/0151764537188.jpeg\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"https://vid.test/files/documentos/0151764537188.jpeg\"}, {\"id\": 6, \"ext\": \"pdf\", \"file\": \"1151764537188.pdf\", \"name\": \"1151764537188.pdf\", \"user_id\": 15, \"url_file\": \"https://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"https://vid.test/files/documentos/1151764537188.pdf\"}], \"updated_at\": \"2025-12-13T23:39:19.000000Z\", \"certificados\": [{\"id\": 5, \"ext\": \"pdf\", \"file\": \"0151764537188.pdf\", \"name\": \"0151764537188.pdf\", \"user_id\": 15, \"url_file\": \"https://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"https://vid.test/files/certificados/0151764537188.pdf\"}, {\"id\": 6, \"ext\": \"pdf\", \"file\": \"1151764537188.pdf\", \"name\": \"1151764537188.pdf\", \"user_id\": 15, \"url_file\": \"https://vid.test/imgs/attach.png\", \"created_at\": \"2025-11-30T21:13:08.000000Z\", \"updated_at\": \"2025-11-30T21:13:08.000000Z\", \"url_archivo\": \"https://vid.test/files/certificados/1151764537188.pdf\"}], \"nacionalidad\": \"BOLIVIANO\", \"fecha_registro\": \"2025-12-13\"}', 'USUARIOS', '2025-12-13', '19:39:19', '2025-12-13 23:39:19', '2025-12-13 23:39:19'),
+(207, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN USUARIO', '{\"ci\": \"453543\", \"id\": 17, \"cel\": \"67676767\", \"dir\": \"LOS PEDRAGLES\", \"fono\": \"22322332\", \"foto\": null, \"sexo\": \"MASCULINO\", \"tipo\": \"USUARIO\", \"acceso\": 1, \"carnet\": null, \"ci_exp\": \"LP\", \"correo\": \"jorge@gmail.com\", \"estado\": 1, \"nombre\": \"JORGE\", \"cel_dom\": \"65665\", \"latitud\": \"111\", \"materno\": \"\", \"paterno\": \"GONZALES\", \"role_id\": 2, \"usuario\": \"jorge@gmail.com\", \"longitud\": \"111\", \"grupo_san\": \"ORH+\", \"profesion\": \"\", \"created_at\": \"2025-12-02T00:08:20.000000Z\", \"deleted_at\": null, \"documentos\": [], \"updated_at\": \"2025-12-13T20:49:48.000000Z\", \"certificados\": [], \"nacionalidad\": \"BOLIVIANO\", \"fecha_registro\": \"2025-12-13\"}', '{\"ci\": \"453543\", \"id\": 17, \"cel\": \"67676767\", \"dir\": \"LOS PEDRAGLES\", \"fono\": \"22322332\", \"foto\": null, \"sexo\": \"MASCULINO\", \"tipo\": \"USUARIO\", \"acceso\": \"1\", \"carnet\": null, \"ci_exp\": \"LP\", \"correo\": \"jorge@gmail.com\", \"estado\": 1, \"nombre\": \"JORGE\", \"cel_dom\": \"65665\", \"latitud\": \"111\", \"materno\": \"\", \"paterno\": \"GONZALES\", \"role_id\": \"3\", \"usuario\": \"jorge@gmail.com\", \"longitud\": \"111\", \"grupo_san\": \"ORH+\", \"profesion\": \"\", \"created_at\": \"2025-12-02T00:08:20.000000Z\", \"deleted_at\": null, \"documentos\": [], \"updated_at\": \"2025-12-13T23:39:30.000000Z\", \"certificados\": [], \"nacionalidad\": \"BOLIVIANO\", \"fecha_registro\": \"2025-12-13\"}', 'USUARIOS', '2025-12-13', '19:39:30', '2025-12-13 23:39:30', '2025-12-13 23:39:30'),
+(208, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN ROLE', '{\"id\": 3, \"estado\": 1, \"nombre\": \"SUPERVISOR\", \"permisos\": 0, \"usuarios\": 1, \"created_at\": \"2025-11-30T16:44:33.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-13T23:39:07.000000Z\"}', '{\"id\": 3, \"estado\": 1, \"nombre\": \"ENCARGADO\", \"permisos\": 0, \"usuarios\": 1, \"created_at\": \"2025-11-30T16:44:33.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-13T23:39:38.000000Z\"}', 'ROLES', '2025-12-13', '19:39:38', '2025-12-13 23:39:38', '2025-12-13 23:39:38'),
+(209, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA SOLICITUD DE INGRESO', '{\"id\": 5, \"nro\": 5, \"cs_f\": \"CON FATURA\", \"total\": 14840, \"codigo\": \"SOL.5\", \"estado\": \"PENDIENTE\", \"gastos\": 120, \"user_id\": 1, \"hora_sis\": \"20:26\", \"fecha_sis\": \"2025-12-13\", \"created_at\": \"2025-12-14T00:26:18.000000Z\", \"updated_at\": \"2025-12-14T00:26:18.000000Z\", \"descripcion\": \"\", \"tipo_cambio\": 6.98, \"hora_ingreso\": \"20:25\", \"proveedor_id\": 2, \"fecha_ingreso\": \"2025-12-13\", \"observaciones\": \"\", \"cantidad_total\": 60}', NULL, 'SOLICITUD DE INGRESO', '2025-12-13', '20:26:18', '2025-12-14 00:26:18', '2025-12-14 00:26:18'),
+(210, 1, 'MODIFICACIÓN', 'EL USUARIO admin APROBO UNA SOLICITUD DE INGRESO', '{\"id\": 5, \"nro\": 5, \"cs_f\": \"CON FATURA\", \"total\": \"14840.00\", \"codigo\": \"SOL.5\", \"estado\": \"PENDIENTE\", \"gastos\": \"120.00\", \"user_id\": 1, \"hora_sis\": \"20:26:00\", \"fecha_sis\": \"2025-12-13\", \"created_at\": \"2025-12-14T00:26:18.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-14T00:26:18.000000Z\", \"verificado\": 0, \"descripcion\": \"\", \"tipo_cambio\": \"6.98\", \"hora_ingreso\": \"20:25:00\", \"proveedor_id\": 2, \"fecha_ingreso\": \"2025-12-13\", \"observaciones\": \"\", \"cantidad_total\": 60, \"solicitud_ingreso_detalles\": [{\"id\": 7, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 20, \"subtotal\": \"6000.00\", \"created_at\": \"2025-12-14T00:26:18.000000Z\", \"updated_at\": \"2025-12-14T00:26:18.000000Z\", \"verificado\": 0, \"producto_id\": 3, \"cantidad_fisica\": 20, \"sucursal_ajuste\": null, \"solicitud_ingreso_id\": 5}, {\"id\": 8, \"costo\": \"345.00\", \"motivo\": null, \"cantidad\": 20, \"subtotal\": \"6900.00\", \"created_at\": \"2025-12-14T00:26:18.000000Z\", \"updated_at\": \"2025-12-14T00:26:18.000000Z\", \"verificado\": 0, \"producto_id\": 4, \"cantidad_fisica\": 20, \"sucursal_ajuste\": null, \"solicitud_ingreso_id\": 5}, {\"id\": 9, \"costo\": \"97.00\", \"motivo\": null, \"cantidad\": 20, \"subtotal\": \"1940.00\", \"created_at\": \"2025-12-14T00:26:18.000000Z\", \"updated_at\": \"2025-12-14T00:26:18.000000Z\", \"verificado\": 0, \"producto_id\": 5, \"cantidad_fisica\": 20, \"sucursal_ajuste\": null, \"solicitud_ingreso_id\": 5}]}', '{\"id\": 5, \"nro\": 5, \"cs_f\": \"CON FATURA\", \"total\": \"14840.00\", \"codigo\": \"SOL.5\", \"estado\": \"APROBADO CON OBSERVACIONES\", \"gastos\": \"120.00\", \"user_id\": 1, \"hora_sis\": \"20:26:00\", \"fecha_sis\": \"2025-12-13\", \"created_at\": \"2025-12-14T00:26:18.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-14T00:26:45.000000Z\", \"verificado\": 2, \"descripcion\": \"\", \"tipo_cambio\": \"6.98\", \"hora_ingreso\": \"20:25:00\", \"proveedor_id\": 2, \"fecha_ingreso\": \"2025-12-13\", \"observaciones\": \"\", \"cantidad_total\": 60, \"solicitud_ingreso_detalles\": [{\"id\": 7, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 20, \"subtotal\": \"6000.00\", \"created_at\": \"2025-12-14T00:26:18.000000Z\", \"updated_at\": \"2025-12-14T00:26:45.000000Z\", \"verificado\": 1, \"producto_id\": 3, \"cantidad_fisica\": 20, \"sucursal_ajuste\": null, \"solicitud_ingreso_id\": 5}, {\"id\": 8, \"costo\": \"345.00\", \"motivo\": null, \"cantidad\": 20, \"subtotal\": \"6900.00\", \"created_at\": \"2025-12-14T00:26:18.000000Z\", \"updated_at\": \"2025-12-14T00:26:45.000000Z\", \"verificado\": 1, \"producto_id\": 4, \"cantidad_fisica\": 20, \"sucursal_ajuste\": null, \"solicitud_ingreso_id\": 5}, {\"id\": 9, \"costo\": \"97.00\", \"motivo\": \"ROTURA\", \"cantidad\": 20, \"subtotal\": \"1746.00\", \"created_at\": \"2025-12-14T00:26:18.000000Z\", \"updated_at\": \"2025-12-14T00:26:45.000000Z\", \"verificado\": 1, \"producto_id\": 5, \"cantidad_fisica\": 20, \"sucursal_ajuste\": 2, \"solicitud_ingreso_id\": 5}]}', 'SOLICITUD DE INGRESO', '2025-12-13', '20:26:45', '2025-12-14 00:26:45', '2025-12-14 00:26:45'),
+(211, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA SOLICITUD DE INGRESO', '{\"id\": 6, \"nro\": 6, \"cs_f\": \"CON FATURA\", \"total\": 3000, \"codigo\": \"SOL.6\", \"estado\": \"PENDIENTE\", \"gastos\": 75, \"user_id\": 1, \"hora_sis\": \"20:31\", \"fecha_sis\": \"2025-12-13\", \"created_at\": \"2025-12-14T00:31:52.000000Z\", \"updated_at\": \"2025-12-14T00:31:52.000000Z\", \"descripcion\": \"\", \"tipo_cambio\": 6.98, \"hora_ingreso\": \"20:31\", \"proveedor_id\": 1, \"fecha_ingreso\": \"2025-12-13\", \"observaciones\": \"\", \"cantidad_total\": 10}', NULL, 'SOLICITUD DE INGRESO', '2025-12-13', '20:31:52', '2025-12-14 00:31:52', '2025-12-14 00:31:52'),
+(212, 1, 'MODIFICACIÓN', 'EL USUARIO admin APROBO UNA SOLICITUD DE INGRESO', '{\"id\": 6, \"nro\": 6, \"cs_f\": \"CON FATURA\", \"total\": \"3000.00\", \"codigo\": \"SOL.6\", \"estado\": \"PENDIENTE\", \"gastos\": \"75.00\", \"user_id\": 1, \"hora_sis\": \"20:31:00\", \"fecha_sis\": \"2025-12-13\", \"created_at\": \"2025-12-14T00:31:52.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-14T00:31:52.000000Z\", \"verificado\": 0, \"descripcion\": \"\", \"tipo_cambio\": \"6.98\", \"hora_ingreso\": \"20:31:00\", \"proveedor_id\": 1, \"fecha_ingreso\": \"2025-12-13\", \"observaciones\": \"\", \"cantidad_total\": 10, \"solicitud_ingreso_detalles\": [{\"id\": 10, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 10, \"subtotal\": \"3000.00\", \"created_at\": \"2025-12-14T00:31:52.000000Z\", \"updated_at\": \"2025-12-14T00:31:52.000000Z\", \"verificado\": 0, \"producto_id\": 3, \"cantidad_fisica\": 10, \"sucursal_ajuste\": null, \"solicitud_ingreso_id\": 6}]}', '{\"id\": 6, \"nro\": 6, \"cs_f\": \"CON FATURA\", \"total\": \"3000.00\", \"codigo\": \"SOL.6\", \"estado\": \"APROBADO CON OBSERVACIONES\", \"gastos\": \"75.00\", \"user_id\": 1, \"hora_sis\": \"20:31:00\", \"fecha_sis\": \"2025-12-13\", \"created_at\": \"2025-12-14T00:31:52.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-14T00:32:07.000000Z\", \"verificado\": 2, \"descripcion\": \"\", \"tipo_cambio\": \"6.98\", \"hora_ingreso\": \"20:31:00\", \"proveedor_id\": 1, \"fecha_ingreso\": \"2025-12-13\", \"observaciones\": \"\", \"cantidad_total\": 10, \"solicitud_ingreso_detalles\": [{\"id\": 10, \"costo\": \"300.00\", \"motivo\": \"AJUSTE\", \"cantidad\": 10, \"subtotal\": \"2400.00\", \"created_at\": \"2025-12-14T00:31:52.000000Z\", \"updated_at\": \"2025-12-14T00:32:07.000000Z\", \"verificado\": 1, \"producto_id\": 3, \"cantidad_fisica\": 8, \"sucursal_ajuste\": 2, \"solicitud_ingreso_id\": 6}]}', 'SOLICITUD DE INGRESO', '2025-12-13', '20:32:07', '2025-12-14 00:32:07', '2025-12-14 00:32:07'),
+(213, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE SALIDA', '{\"id\": 12, \"nro\": 12, \"hora\": \"20:33\", \"fecha\": \"2025-12-13\", \"total\": 6000, \"codigo\": \"SAL.12\", \"estado\": \"PENDIENTE\", \"user_ap\": 17, \"user_id\": 1, \"user_sol\": 17, \"created_at\": \"2025-12-14T00:33:53.000000Z\", \"updated_at\": \"2025-12-14T00:33:53.000000Z\", \"sucursal_id\": 4, \"observaciones\": \"\", \"cantidad_total\": 20}', NULL, 'ORDEN DE SALIDA', '2025-12-13', '20:33:53', '2025-12-14 00:33:53', '2025-12-14 00:33:53'),
+(214, 1, 'MODIFICACIÓN', 'EL USUARIO admin APROBO UNA ORDEN DE SALIDA', '{\"id\": 12, \"nro\": 12, \"hora\": \"20:33:00\", \"fecha\": \"2025-12-13\", \"total\": \"6000.00\", \"codigo\": \"SAL.12\", \"estado\": \"PENDIENTE\", \"user_ap\": 17, \"user_id\": 1, \"user_sol\": 17, \"created_at\": \"2025-12-14T00:33:53.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-14T00:33:53.000000Z\", \"verificado\": 0, \"sucursal_id\": 4, \"observaciones\": \"\", \"cantidad_total\": 20, \"orden_salida_detalles\": [{\"id\": 14, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 20, \"subtotal\": \"6000.00\", \"created_at\": \"2025-12-14T00:33:53.000000Z\", \"updated_at\": \"2025-12-14T00:33:53.000000Z\", \"verificado\": 0, \"producto_id\": 3, \"cantidad_fisica\": 20, \"orden_salida_id\": 12, \"sucursal_ajuste\": null}]}', '{\"id\": 12, \"nro\": 12, \"hora\": \"20:33:00\", \"fecha\": \"2025-12-13\", \"total\": \"6000.00\", \"codigo\": \"SAL.12\", \"estado\": \"APROBADO CON OBSERVACIONES\", \"user_ap\": 17, \"user_id\": 1, \"user_sol\": 17, \"created_at\": \"2025-12-14T00:33:53.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-14T00:34:12.000000Z\", \"verificado\": 2, \"sucursal_id\": 4, \"observaciones\": \"\", \"cantidad_total\": 20, \"orden_salida_detalles\": [{\"id\": 14, \"costo\": \"300.00\", \"motivo\": \"POR FALTANTE DE PROVEEDOR\", \"cantidad\": 20, \"subtotal\": \"6000.00\", \"created_at\": \"2025-12-14T00:33:53.000000Z\", \"updated_at\": \"2025-12-14T00:34:12.000000Z\", \"verificado\": 1, \"producto_id\": 3, \"cantidad_fisica\": 19, \"orden_salida_id\": 12, \"sucursal_ajuste\": 1}]}', 'ORDEN DE SALIDA', '2025-12-13', '20:34:12', '2025-12-14 00:34:12', '2025-12-14 00:34:12');
 
 -- --------------------------------------------------------
 
@@ -669,6 +679,7 @@ CREATE TABLE `kardex_productos` (
   `monto_saldo` decimal(24,2) NOT NULL,
   `fecha` date NOT NULL,
   `status` int NOT NULL DEFAULT '1',
+  `user_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -677,92 +688,101 @@ CREATE TABLE `kardex_productos` (
 -- Volcado de datos para la tabla `kardex_productos`
 --
 
-INSERT INTO `kardex_productos` (`id`, `sucursal_id`, `tipo_registro`, `registro_id`, `modulo`, `producto_id`, `detalle`, `precio`, `tipo_is`, `cantidad_ingreso`, `cantidad_salida`, `cantidad_saldo`, `cu`, `monto_ingreso`, `monto_salida`, `monto_saldo`, `fecha`, `status`, `created_at`, `updated_at`) VALUES
-(6, 1, 'SOLICITUD INGRESO', 1, 'SolicitudIngresoDetalle', 3, 'VALOR INICIAL', 300.00, 'INGRESO', 10, NULL, 10, 300.00, 3000.00, NULL, 3000.00, '2025-12-05', 1, '2025-12-05 15:07:00', '2025-12-05 15:07:00'),
-(7, 1, 'SOLICITUD INGRESO', 2, 'SolicitudIngresoDetalle', 4, 'VALOR INICIAL', 345.00, 'INGRESO', 10, NULL, 10, 345.00, 3450.00, NULL, 3450.00, '2025-12-05', 1, '2025-12-05 15:07:00', '2025-12-05 15:07:00'),
-(8, 1, 'ORDEN DE SALIDA', 1, 'OrdenSalidaDetalle', 3, 'EGRESO POR ORDEN DE SALIDA', 300.00, 'EGRESO', NULL, 2, 8, 300.00, NULL, 600.00, 2400.00, '2025-12-06', 1, '2025-12-06 14:28:41', '2025-12-06 14:28:41'),
-(9, 2, 'ORDEN DE SALIDA', 1, 'OrdenSalidaDetalle', 3, 'VALOR INICIAL', 300.00, 'INGRESO', 2, NULL, 2, 300.00, 600.00, NULL, 600.00, '2025-12-06', 1, '2025-12-06 14:28:41', '2025-12-06 14:28:41'),
-(10, 1, 'ORDEN DE SALIDA', 2, 'OrdenSalidaDetalle', 4, 'EGRESO POR ORDEN DE SALIDA', 345.00, 'EGRESO', NULL, 3, 7, 345.00, NULL, 1035.00, 2415.00, '2025-12-06', 1, '2025-12-06 14:28:41', '2025-12-06 14:28:41'),
-(11, 2, 'ORDEN DE SALIDA', 2, 'OrdenSalidaDetalle', 4, 'VALOR INICIAL', 345.00, 'INGRESO', 3, NULL, 3, 345.00, 1035.00, NULL, 1035.00, '2025-12-06', 1, '2025-12-06 14:28:41', '2025-12-06 14:28:41'),
-(12, 1, 'ORDEN DE SALIDA', 3, 'OrdenSalidaDetalle', 3, 'EGRESO POR ORDEN DE SALIDA', 300.00, 'EGRESO', NULL, 4, 4, 300.00, NULL, 1200.00, 1200.00, '2025-12-06', 1, '2025-12-06 14:30:40', '2025-12-06 14:30:40'),
-(13, 3, 'ORDEN DE SALIDA', 3, 'OrdenSalidaDetalle', 3, 'VALOR INICIAL', 300.00, 'INGRESO', 4, NULL, 4, 300.00, 1200.00, NULL, 1200.00, '2025-12-06', 1, '2025-12-06 14:30:40', '2025-12-06 14:30:40'),
-(14, 1, 'ORDEN DE SALIDA', 4, 'OrdenSalidaDetalle', 4, 'EGRESO POR ORDEN DE SALIDA', 345.00, 'EGRESO', NULL, 3, 4, 345.00, NULL, 1035.00, 1380.00, '2025-12-06', 1, '2025-12-06 14:31:33', '2025-12-06 14:31:33'),
-(15, 3, 'ORDEN DE SALIDA', 4, 'OrdenSalidaDetalle', 4, 'VALOR INICIAL', 345.00, 'INGRESO', 3, NULL, 3, 345.00, 1035.00, NULL, 1035.00, '2025-12-06', 1, '2025-12-06 14:31:33', '2025-12-06 14:31:33'),
-(16, 1, 'ORDEN DE SALIDA', 5, 'OrdenSalidaDetalle', 3, 'EGRESO POR ORDEN DE SALIDA', 300.00, 'EGRESO', NULL, 1, 3, 300.00, NULL, 300.00, 900.00, '2025-12-06', 1, '2025-12-06 14:58:25', '2025-12-06 14:58:25'),
-(17, 2, 'ORDEN DE SALIDA', 5, 'OrdenSalidaDetalle', 3, 'INGRESO POR ORDEN DE SALIDA', 300.00, 'INGRESO', 1, NULL, 3, 300.00, 300.00, NULL, 900.00, '2025-12-06', 1, '2025-12-06 14:58:25', '2025-12-06 14:58:25'),
-(18, 2, 'DEVOLUCIÓN DE STOCK', 1, 'DevolucionStockDetalle', 3, 'EGRESO POR DEVOLUCIÓN DE STOCK', 300.00, 'EGRESO', NULL, 3, 0, 300.00, NULL, 900.00, 0.00, '2025-12-06', 1, '2025-12-06 15:20:26', '2025-12-06 15:20:26'),
-(19, 1, 'DEVOLUCIÓN DE STOCK', 1, 'DevolucionStockDetalle', 3, 'INGRESO POR DEVOLUCIÓN DE STOCK', 300.00, 'INGRESO', 3, NULL, 6, 300.00, 900.00, NULL, 1800.00, '2025-12-06', 1, '2025-12-06 15:20:26', '2025-12-06 15:20:26'),
-(20, 2, 'DEVOLUCIÓN DE STOCK', 2, 'DevolucionStockDetalle', 4, 'EGRESO POR DEVOLUCIÓN DE STOCK', 345.00, 'EGRESO', NULL, 3, 0, 345.00, NULL, 1035.00, 0.00, '2025-12-06', 1, '2025-12-06 15:20:26', '2025-12-06 15:20:26'),
-(21, 1, 'DEVOLUCIÓN DE STOCK', 2, 'DevolucionStockDetalle', 4, 'INGRESO POR DEVOLUCIÓN DE STOCK', 345.00, 'INGRESO', 3, NULL, 7, 345.00, 1035.00, NULL, 2415.00, '2025-12-06', 1, '2025-12-06 15:20:26', '2025-12-06 15:20:26'),
-(22, 1, 'ORDEN DE SALIDA', 6, 'OrdenSalidaDetalle', 3, 'EGRESO POR ORDEN DE SALIDA', 300.00, 'EGRESO', NULL, 2, 4, 300.00, NULL, 600.00, 1200.00, '2025-12-06', 1, '2025-12-06 20:01:54', '2025-12-06 20:01:54'),
-(23, 2, 'ORDEN DE SALIDA', 6, 'OrdenSalidaDetalle', 3, 'INGRESO POR ORDEN DE SALIDA', 300.00, 'INGRESO', 2, NULL, 2, 300.00, 600.00, NULL, 600.00, '2025-12-06', 1, '2025-12-06 20:01:54', '2025-12-06 20:01:54'),
-(24, 2, 'ORDEN DE VENTA', 3, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 1, 300.00, NULL, 300.00, 300.00, '2025-12-06', 1, '2025-12-06 20:01:57', '2025-12-06 20:01:57'),
-(25, 2, 'ORDEN DE VENTA', 4, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 0, 300.00, NULL, 300.00, 0.00, '2025-12-06', 1, '2025-12-06 20:02:05', '2025-12-06 20:02:05'),
-(26, 1, 'ORDEN DE SALIDA', 7, 'OrdenSalidaDetalle', 3, 'EGRESO POR ORDEN DE SALIDA', 300.00, 'EGRESO', NULL, 3, 1, 300.00, NULL, 900.00, 300.00, '2025-12-08', 1, '2025-12-08 20:16:54', '2025-12-08 20:16:54'),
-(27, 2, 'ORDEN DE SALIDA', 7, 'OrdenSalidaDetalle', 3, 'INGRESO POR ORDEN DE SALIDA', 300.00, 'INGRESO', 3, NULL, 3, 300.00, 900.00, NULL, 900.00, '2025-12-08', 1, '2025-12-08 20:16:54', '2025-12-08 20:16:54'),
-(29, 1, 'ORDEN DE SALIDA', 8, 'OrdenSalidaDetalle', 4, 'EGRESO POR ORDEN DE SALIDA', 345.00, 'EGRESO', NULL, 3, 4, 345.00, NULL, 1035.00, 1380.00, '2025-12-08', 1, '2025-12-08 20:17:25', '2025-12-08 20:17:25'),
-(30, 2, 'ORDEN DE SALIDA', 8, 'OrdenSalidaDetalle', 4, 'INGRESO POR ORDEN DE SALIDA', 345.00, 'INGRESO', 3, NULL, 3, 345.00, 1035.00, NULL, 1035.00, '2025-12-08', 1, '2025-12-08 20:17:25', '2025-12-08 20:17:25'),
-(31, 2, 'ORDEN DE VENTA', 6, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 2, 300.00, NULL, 300.00, 600.00, '2025-12-08', 1, '2025-12-08 20:17:28', '2025-12-08 20:17:28'),
-(32, 2, 'ORDEN DE VENTA', 7, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 1, 2, 345.00, NULL, 345.00, 690.00, '2025-12-08', 1, '2025-12-08 20:17:28', '2025-12-08 20:17:28'),
-(33, 1, 'SOLICITUD INGRESO', 3, 'SolicitudIngresoDetalle', 3, 'INGRESO POR SOLICITUD', 300.00, 'INGRESO', 35, NULL, 36, 300.00, 10500.00, NULL, 10800.00, '2025-12-08', 1, '2025-12-08 20:46:04', '2025-12-08 20:46:04'),
-(34, 1, 'SOLICITUD INGRESO', 4, 'SolicitudIngresoDetalle', 3, 'INGRESO POR SOLICITUD', 300.00, 'INGRESO', 100, NULL, 136, 300.00, 30000.00, NULL, 40800.00, '2025-12-08', 1, '2025-12-08 20:46:08', '2025-12-08 20:46:08'),
-(35, 1, 'SOLICITUD INGRESO', 5, 'SolicitudIngresoDetalle', 4, 'INGRESO POR SOLICITUD', 345.00, 'INGRESO', 100, NULL, 104, 345.00, 34500.00, NULL, 35880.00, '2025-12-08', 1, '2025-12-08 20:46:08', '2025-12-08 20:46:08'),
-(36, 1, 'ORDEN DE SALIDA', 9, 'OrdenSalidaDetalle', 3, 'EGRESO POR ORDEN DE SALIDA', 300.00, 'EGRESO', NULL, 40, 96, 300.00, NULL, 12000.00, 28800.00, '2025-12-08', 1, '2025-12-08 20:46:33', '2025-12-08 20:46:33'),
-(37, 2, 'ORDEN DE SALIDA', 9, 'OrdenSalidaDetalle', 3, 'INGRESO POR ORDEN DE SALIDA', 300.00, 'INGRESO', 40, NULL, 42, 300.00, 12000.00, NULL, 12600.00, '2025-12-08', 1, '2025-12-08 20:46:33', '2025-12-08 20:46:33'),
-(38, 1, 'ORDEN DE SALIDA', 10, 'OrdenSalidaDetalle', 4, 'EGRESO POR ORDEN DE SALIDA', 345.00, 'EGRESO', NULL, 40, 64, 345.00, NULL, 13800.00, 22080.00, '2025-12-08', 1, '2025-12-08 20:46:33', '2025-12-08 20:46:33'),
-(39, 2, 'ORDEN DE SALIDA', 10, 'OrdenSalidaDetalle', 4, 'INGRESO POR ORDEN DE SALIDA', 345.00, 'INGRESO', 40, NULL, 42, 345.00, 13800.00, NULL, 14490.00, '2025-12-08', 1, '2025-12-08 20:46:33', '2025-12-08 20:46:33'),
-(40, 2, 'ORDEN DE VENTA', 8, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 3, 39, 300.00, NULL, 900.00, 11700.00, '2025-12-08', 1, '2025-12-08 20:48:08', '2025-12-08 20:48:08'),
-(41, 2, 'ORDEN DE VENTA', 9, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 3, 39, 345.00, NULL, 1035.00, 13455.00, '2025-12-08', 1, '2025-12-08 20:48:08', '2025-12-08 20:48:08'),
-(42, 2, 'ORDEN DE VENTA', 12, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 2, 37, 300.00, NULL, 600.00, 11100.00, '2025-12-08', 1, '2025-12-08 23:24:33', '2025-12-08 23:24:33'),
-(43, 2, 'ORDEN DE VENTA', 13, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 1, 38, 345.00, NULL, 345.00, 13110.00, '2025-12-08', 1, '2025-12-08 23:24:33', '2025-12-08 23:24:33'),
-(44, 2, 'TRANSFERENCIA', 1, 'TransferenciaDetalle', 3, 'EGRESO POR TRANSFERENCIA', 300.00, 'EGRESO', NULL, 2, 35, 300.00, NULL, 600.00, 10500.00, '2025-12-09', 1, '2025-12-09 21:53:43', '2025-12-09 21:53:43'),
-(45, 3, 'TRANSFERENCIA', 1, 'TransferenciaDetalle', 3, 'INGRESO POR TRANSFERENCIA', 300.00, 'INGRESO', 2, NULL, 6, 300.00, 600.00, NULL, 1800.00, '2025-12-09', 1, '2025-12-09 21:53:43', '2025-12-09 21:53:43'),
-(46, 2, 'TRANSFERENCIA', 2, 'TransferenciaDetalle', 4, 'EGRESO POR TRANSFERENCIA', 345.00, 'EGRESO', NULL, 1, 37, 345.00, NULL, 345.00, 12765.00, '2025-12-09', 1, '2025-12-09 21:53:43', '2025-12-09 21:53:43'),
-(47, 3, 'TRANSFERENCIA', 2, 'TransferenciaDetalle', 4, 'INGRESO POR TRANSFERENCIA', 345.00, 'INGRESO', 1, NULL, 4, 345.00, 345.00, NULL, 1380.00, '2025-12-09', 1, '2025-12-09 21:53:43', '2025-12-09 21:53:43'),
-(48, 2, 'DEVOLUCIÓN DE CLIENTES', 1, 'DevolucionClienteDetalle', 3, 'INGRESO POR DEVOLUCIÓN DE CLIENTES', 300.00, 'INGRESO', 1, NULL, 36, 300.00, 300.00, NULL, 10800.00, '2025-12-10', 1, '2025-12-10 13:48:59', '2025-12-10 13:48:59'),
-(49, 2, 'DEVOLUCIÓN DE CLIENTES', 1, 'DevolucionClienteDetalle', 3, 'EGRESO POR ELIMINACIÓN DE DEVOLUCIÓN DE CLIENTES', 300.00, 'EGRESO', NULL, 1, 35, 300.00, NULL, 300.00, 10500.00, '2025-12-10', 1, '2025-12-10 13:55:31', '2025-12-10 13:55:31'),
-(50, 2, 'DEVOLUCIÓN DE CLIENTES', 2, 'DevolucionClienteDetalle', 3, 'INGRESO POR DEVOLUCIÓN DE CLIENTES', 300.00, 'INGRESO', 1, NULL, 36, 300.00, 300.00, NULL, 10800.00, '2025-12-10', 1, '2025-12-10 13:55:46', '2025-12-10 13:55:46'),
-(51, 2, 'ORDEN DE VENTA', 14, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 35, 300.00, NULL, 300.00, 10500.00, '2025-12-12', 1, '2025-12-12 15:54:11', '2025-12-12 15:54:11'),
-(52, 2, 'ORDEN DE VENTA', 15, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 34, 300.00, NULL, 300.00, 10200.00, '2025-12-12', 1, '2025-12-12 16:32:42', '2025-12-12 16:32:42'),
-(53, 2, 'ORDEN DE VENTA', 16, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 1, 36, 345.00, NULL, 345.00, 12420.00, '2025-12-12', 1, '2025-12-12 16:32:42', '2025-12-12 16:32:42'),
-(54, 2, 'ORDEN DE VENTA', 17, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 33, 300.00, NULL, 300.00, 9900.00, '2025-12-12', 1, '2025-12-12 16:32:43', '2025-12-12 16:32:43'),
-(55, 2, 'ORDEN DE VENTA', 18, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 32, 300.00, NULL, 300.00, 9600.00, '2025-12-12', 1, '2025-12-12 16:47:21', '2025-12-12 16:47:21'),
-(56, 2, 'DEVOLUCIÓN DE CLIENTES', 3, 'DevolucionClienteDetalle', 3, 'INGRESO POR DEVOLUCIÓN DE CLIENTES', 300.00, 'INGRESO', 1, NULL, 33, 300.00, 300.00, NULL, 9900.00, '2025-12-12', 1, '2025-12-12 17:02:44', '2025-12-12 17:02:44'),
-(57, 2, 'ORDEN DE VENTA', 19, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 32, 300.00, NULL, 300.00, 9600.00, '2025-12-12', 1, '2025-12-12 17:02:45', '2025-12-12 17:02:45'),
-(58, 2, 'ORDEN DE VENTA', 20, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 31, 300.00, NULL, 300.00, 9300.00, '2025-12-12', 1, '2025-12-12 17:24:17', '2025-12-12 17:24:17'),
-(59, 2, 'ORDEN DE VENTA', 21, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 1, 35, 345.00, NULL, 345.00, 12075.00, '2025-12-12', 1, '2025-12-12 17:24:18', '2025-12-12 17:24:18'),
-(60, 2, 'ORDEN DE VENTA', 22, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 30, 300.00, NULL, 300.00, 9000.00, '2025-12-12', 1, '2025-12-12 17:32:33', '2025-12-12 17:32:33'),
-(61, 2, 'ORDEN DE VENTA', 23, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 29, 300.00, NULL, 300.00, 8700.00, '2025-12-12', 1, '2025-12-13 00:27:09', '2025-12-13 00:27:09'),
-(66, 2, 'ORDEN DE VENTA', 28, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 1, 34, 345.00, NULL, 345.00, 11730.00, '2025-12-12', 1, '2025-12-13 00:32:10', '2025-12-13 00:32:10'),
-(67, 2, 'ORDEN DE VENTA', 29, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 2, 32, 345.00, NULL, 690.00, 11040.00, '2025-12-12', 1, '2025-12-13 00:33:35', '2025-12-13 00:33:35'),
-(68, 2, 'ORDEN DE VENTA', 30, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 28, 300.00, NULL, 300.00, 8400.00, '2025-12-12', 1, '2025-12-13 00:35:10', '2025-12-13 00:35:10'),
-(69, 2, 'ORDEN DE VENTA', 31, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 27, 300.00, NULL, 300.00, 8100.00, '2025-12-12', 1, '2025-12-13 00:37:49', '2025-12-13 00:37:49'),
-(70, 2, 'ORDEN DE VENTA', 32, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 1, 31, 345.00, NULL, 345.00, 10695.00, '2025-12-12', 1, '2025-12-13 00:38:48', '2025-12-13 00:38:48'),
-(71, 2, 'ORDEN DE VENTA', 33, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 26, 300.00, NULL, 300.00, 7800.00, '2025-12-12', 1, '2025-12-13 00:39:43', '2025-12-13 00:39:43'),
-(72, 2, 'ORDEN DE VENTA', 34, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 1, 30, 345.00, NULL, 345.00, 10350.00, '2025-12-12', 1, '2025-12-13 00:41:31', '2025-12-13 00:41:31'),
-(73, 2, 'ORDEN DE VENTA', 35, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 25, 300.00, NULL, 300.00, 7500.00, '2025-12-12', 1, '2025-12-13 00:43:30', '2025-12-13 00:43:30'),
-(74, 2, 'ORDEN DE VENTA', 36, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 1, 29, 345.00, NULL, 345.00, 10005.00, '2025-12-12', 1, '2025-12-13 00:44:53', '2025-12-13 00:44:53'),
-(75, 1, 'SOLICITUD INGRESO', 6, 'SolicitudIngresoDetalle', 3, 'INGRESO POR SOLICITUD', 250.00, 'INGRESO', 40, NULL, 136, 300.00, 10000.00, NULL, 38800.00, '2025-12-13', 1, '2025-12-13 12:25:18', '2025-12-13 12:25:18'),
-(76, 2, 'ORDEN DE VENTA', 37, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 24, 300.00, NULL, 300.00, 7200.00, '2025-12-13', 1, '2025-12-13 12:34:13', '2025-12-13 12:34:13'),
-(77, 2, 'ORDEN DE VENTA', 38, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 1, 28, 345.00, NULL, 345.00, 9660.00, '2025-12-13', 1, '2025-12-13 12:34:14', '2025-12-13 12:34:14'),
-(78, 2, 'ORDEN DE VENTA', 39, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 10, 14, 300.00, NULL, 3000.00, 4200.00, '2025-12-13', 1, '2025-12-13 12:55:28', '2025-12-13 12:55:28'),
-(79, 2, 'ORDEN DE VENTA', 43, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 10, 4, 300.00, NULL, 3000.00, 1200.00, '2025-12-13', 1, '2025-12-13 13:18:22', '2025-12-13 13:18:22'),
-(80, 2, 'ORDEN DE VENTA', 40, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 7, 21, 345.00, NULL, 2415.00, 7245.00, '2025-12-13', 1, '2025-12-13 13:19:15', '2025-12-13 13:19:15'),
-(81, 2, 'ORDEN DE VENTA', 44, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 3, 300.00, NULL, 300.00, 900.00, '2025-12-13', 1, '2025-12-13 16:55:43', '2025-12-13 16:55:43'),
-(89, 2, 'ORDEN DE VENTA', 52, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 2, 300.00, NULL, 300.00, 600.00, '2025-12-13', 1, '2025-12-13 17:01:25', '2025-12-13 17:01:25'),
-(90, 2, 'ORDEN DE VENTA', 53, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 1, 300.00, NULL, 300.00, 300.00, '2025-12-13', 1, '2025-12-13 17:03:12', '2025-12-13 17:03:12'),
-(93, 2, 'TRANSFERENCIA', 3, 'TransferenciaDetalle', 3, 'EGRESO POR TRANSFERENCIA', 300.00, 'EGRESO', NULL, 1, 0, 300.00, NULL, 300.00, 0.00, '2025-12-13', 1, '2025-12-13 17:23:17', '2025-12-13 17:23:17'),
-(94, 3, 'TRANSFERENCIA', 3, 'TransferenciaDetalle', 3, 'INGRESO POR TRANSFERENCIA', 300.00, 'INGRESO', 1, NULL, 7, 300.00, 300.00, NULL, 2100.00, '2025-12-13', 1, '2025-12-13 17:23:17', '2025-12-13 17:23:17'),
-(95, 1, 'ORDEN DE SALIDA', 11, 'OrdenSalidaDetalle', 3, 'EGRESO POR ORDEN DE SALIDA', 300.00, 'EGRESO', NULL, 10, 126, 300.00, NULL, 3000.00, 35800.00, '2025-12-13', 1, '2025-12-13 17:28:33', '2025-12-13 17:28:33'),
-(96, 2, 'ORDEN DE SALIDA', 11, 'OrdenSalidaDetalle', 3, 'INGRESO POR ORDEN DE SALIDA', 300.00, 'INGRESO', 10, NULL, 10, 300.00, 3000.00, NULL, 3000.00, '2025-12-13', 1, '2025-12-13 17:28:33', '2025-12-13 17:28:33'),
-(99, 2, 'TRANSFERENCIA', 4, 'TransferenciaDetalle', 3, 'EGRESO POR TRANSFERENCIA', 300.00, 'EGRESO', NULL, 6, 4, 300.00, NULL, 1800.00, 1200.00, '2025-12-13', 1, '2025-12-13 17:29:38', '2025-12-13 17:29:38'),
-(100, 3, 'TRANSFERENCIA', 4, 'TransferenciaDetalle', 3, 'INGRESO POR TRANSFERENCIA', 300.00, 'INGRESO', 6, NULL, 13, 300.00, 1800.00, NULL, 3900.00, '2025-12-13', 1, '2025-12-13 17:29:38', '2025-12-13 17:29:38'),
-(102, 2, 'ORDEN DE VENTA', 55, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 3, 300.00, NULL, 300.00, 900.00, '2025-12-13', 1, '2025-12-13 17:32:15', '2025-12-13 17:32:15'),
-(103, 2, 'ORDEN DE VENTA', 56, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 2, 300.00, NULL, 300.00, 600.00, '2025-12-13', 1, '2025-12-13 17:33:51', '2025-12-13 17:33:51'),
-(104, 2, 'TRANSFERENCIA', 5, 'TransferenciaDetalle', 3, 'EGRESO POR TRANSFERENCIA', 300.00, 'EGRESO', NULL, 1, 1, 300.00, NULL, 300.00, 300.00, '2025-12-13', 1, '2025-12-13 17:34:26', '2025-12-13 17:34:26'),
-(105, 3, 'TRANSFERENCIA', 5, 'TransferenciaDetalle', 3, 'INGRESO POR TRANSFERENCIA', 300.00, 'INGRESO', 1, NULL, 14, 300.00, 300.00, NULL, 4200.00, '2025-12-13', 1, '2025-12-13 17:34:26', '2025-12-13 17:34:26'),
-(106, 1, 'ORDEN DE SALIDA', 12, 'OrdenSalidaDetalle', 3, 'EGRESO POR ORDEN DE SALIDA', 300.00, 'EGRESO', NULL, 18, 108, 300.00, NULL, 5400.00, 30400.00, '2025-12-13', 1, '2025-12-13 20:36:28', '2025-12-13 20:36:28'),
-(107, 2, 'ORDEN DE SALIDA', 12, 'OrdenSalidaDetalle', 3, 'INGRESO POR ORDEN DE SALIDA', 300.00, 'INGRESO', 18, NULL, 19, 300.00, 5400.00, NULL, 5700.00, '2025-12-13', 1, '2025-12-13 20:36:28', '2025-12-13 20:36:28');
+INSERT INTO `kardex_productos` (`id`, `sucursal_id`, `tipo_registro`, `registro_id`, `modulo`, `producto_id`, `detalle`, `precio`, `tipo_is`, `cantidad_ingreso`, `cantidad_salida`, `cantidad_saldo`, `cu`, `monto_ingreso`, `monto_salida`, `monto_saldo`, `fecha`, `status`, `user_id`, `created_at`, `updated_at`) VALUES
+(6, 1, 'SOLICITUD INGRESO', 1, 'SolicitudIngresoDetalle', 3, 'VALOR INICIAL', 300.00, 'INGRESO', 10, NULL, 10, 300.00, 3000.00, NULL, 3000.00, '2025-12-05', 1, 1, '2025-12-05 15:07:00', '2025-12-05 15:07:00'),
+(7, 1, 'SOLICITUD INGRESO', 2, 'SolicitudIngresoDetalle', 4, 'VALOR INICIAL', 345.00, 'INGRESO', 10, NULL, 10, 345.00, 3450.00, NULL, 3450.00, '2025-12-05', 1, 1, '2025-12-05 15:07:00', '2025-12-05 15:07:00'),
+(8, 1, 'ORDEN DE SALIDA', 1, 'OrdenSalidaDetalle', 3, 'EGRESO POR ORDEN DE SALIDA', 300.00, 'EGRESO', NULL, 2, 8, 300.00, NULL, 600.00, 2400.00, '2025-12-06', 1, 1, '2025-12-06 14:28:41', '2025-12-06 14:28:41'),
+(9, 2, 'ORDEN DE SALIDA', 1, 'OrdenSalidaDetalle', 3, 'VALOR INICIAL', 300.00, 'INGRESO', 2, NULL, 2, 300.00, 600.00, NULL, 600.00, '2025-12-06', 1, 1, '2025-12-06 14:28:41', '2025-12-06 14:28:41'),
+(10, 1, 'ORDEN DE SALIDA', 2, 'OrdenSalidaDetalle', 4, 'EGRESO POR ORDEN DE SALIDA', 345.00, 'EGRESO', NULL, 3, 7, 345.00, NULL, 1035.00, 2415.00, '2025-12-06', 1, 1, '2025-12-06 14:28:41', '2025-12-06 14:28:41'),
+(11, 2, 'ORDEN DE SALIDA', 2, 'OrdenSalidaDetalle', 4, 'VALOR INICIAL', 345.00, 'INGRESO', 3, NULL, 3, 345.00, 1035.00, NULL, 1035.00, '2025-12-06', 1, 1, '2025-12-06 14:28:41', '2025-12-06 14:28:41'),
+(12, 1, 'ORDEN DE SALIDA', 3, 'OrdenSalidaDetalle', 3, 'EGRESO POR ORDEN DE SALIDA', 300.00, 'EGRESO', NULL, 4, 4, 300.00, NULL, 1200.00, 1200.00, '2025-12-06', 1, 1, '2025-12-06 14:30:40', '2025-12-06 14:30:40'),
+(13, 3, 'ORDEN DE SALIDA', 3, 'OrdenSalidaDetalle', 3, 'VALOR INICIAL', 300.00, 'INGRESO', 4, NULL, 4, 300.00, 1200.00, NULL, 1200.00, '2025-12-06', 1, 1, '2025-12-06 14:30:40', '2025-12-06 14:30:40'),
+(14, 1, 'ORDEN DE SALIDA', 4, 'OrdenSalidaDetalle', 4, 'EGRESO POR ORDEN DE SALIDA', 345.00, 'EGRESO', NULL, 3, 4, 345.00, NULL, 1035.00, 1380.00, '2025-12-06', 1, 1, '2025-12-06 14:31:33', '2025-12-06 14:31:33'),
+(15, 3, 'ORDEN DE SALIDA', 4, 'OrdenSalidaDetalle', 4, 'VALOR INICIAL', 345.00, 'INGRESO', 3, NULL, 3, 345.00, 1035.00, NULL, 1035.00, '2025-12-06', 1, 1, '2025-12-06 14:31:33', '2025-12-06 14:31:33'),
+(16, 1, 'ORDEN DE SALIDA', 5, 'OrdenSalidaDetalle', 3, 'EGRESO POR ORDEN DE SALIDA', 300.00, 'EGRESO', NULL, 1, 3, 300.00, NULL, 300.00, 900.00, '2025-12-06', 1, 1, '2025-12-06 14:58:25', '2025-12-06 14:58:25'),
+(17, 2, 'ORDEN DE SALIDA', 5, 'OrdenSalidaDetalle', 3, 'INGRESO POR ORDEN DE SALIDA', 300.00, 'INGRESO', 1, NULL, 3, 300.00, 300.00, NULL, 900.00, '2025-12-06', 1, 1, '2025-12-06 14:58:25', '2025-12-06 14:58:25'),
+(18, 2, 'DEVOLUCIÓN DE STOCK', 1, 'DevolucionStockDetalle', 3, 'EGRESO POR DEVOLUCIÓN DE STOCK', 300.00, 'EGRESO', NULL, 3, 0, 300.00, NULL, 900.00, 0.00, '2025-12-06', 1, 1, '2025-12-06 15:20:26', '2025-12-06 15:20:26'),
+(19, 1, 'DEVOLUCIÓN DE STOCK', 1, 'DevolucionStockDetalle', 3, 'INGRESO POR DEVOLUCIÓN DE STOCK', 300.00, 'INGRESO', 3, NULL, 6, 300.00, 900.00, NULL, 1800.00, '2025-12-06', 1, 1, '2025-12-06 15:20:26', '2025-12-06 15:20:26'),
+(20, 2, 'DEVOLUCIÓN DE STOCK', 2, 'DevolucionStockDetalle', 4, 'EGRESO POR DEVOLUCIÓN DE STOCK', 345.00, 'EGRESO', NULL, 3, 0, 345.00, NULL, 1035.00, 0.00, '2025-12-06', 1, 1, '2025-12-06 15:20:26', '2025-12-06 15:20:26'),
+(21, 1, 'DEVOLUCIÓN DE STOCK', 2, 'DevolucionStockDetalle', 4, 'INGRESO POR DEVOLUCIÓN DE STOCK', 345.00, 'INGRESO', 3, NULL, 7, 345.00, 1035.00, NULL, 2415.00, '2025-12-06', 1, 1, '2025-12-06 15:20:26', '2025-12-06 15:20:26'),
+(22, 1, 'ORDEN DE SALIDA', 6, 'OrdenSalidaDetalle', 3, 'EGRESO POR ORDEN DE SALIDA', 300.00, 'EGRESO', NULL, 2, 4, 300.00, NULL, 600.00, 1200.00, '2025-12-06', 1, 1, '2025-12-06 20:01:54', '2025-12-06 20:01:54'),
+(23, 2, 'ORDEN DE SALIDA', 6, 'OrdenSalidaDetalle', 3, 'INGRESO POR ORDEN DE SALIDA', 300.00, 'INGRESO', 2, NULL, 2, 300.00, 600.00, NULL, 600.00, '2025-12-06', 1, 1, '2025-12-06 20:01:54', '2025-12-06 20:01:54'),
+(24, 2, 'ORDEN DE VENTA', 3, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 1, 300.00, NULL, 300.00, 300.00, '2025-12-06', 1, 1, '2025-12-06 20:01:57', '2025-12-06 20:01:57'),
+(25, 2, 'ORDEN DE VENTA', 4, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 0, 300.00, NULL, 300.00, 0.00, '2025-12-06', 1, 1, '2025-12-06 20:02:05', '2025-12-06 20:02:05'),
+(26, 1, 'ORDEN DE SALIDA', 7, 'OrdenSalidaDetalle', 3, 'EGRESO POR ORDEN DE SALIDA', 300.00, 'EGRESO', NULL, 3, 1, 300.00, NULL, 900.00, 300.00, '2025-12-08', 1, 1, '2025-12-08 20:16:54', '2025-12-08 20:16:54'),
+(27, 2, 'ORDEN DE SALIDA', 7, 'OrdenSalidaDetalle', 3, 'INGRESO POR ORDEN DE SALIDA', 300.00, 'INGRESO', 3, NULL, 3, 300.00, 900.00, NULL, 900.00, '2025-12-08', 1, 1, '2025-12-08 20:16:54', '2025-12-08 20:16:54'),
+(29, 1, 'ORDEN DE SALIDA', 8, 'OrdenSalidaDetalle', 4, 'EGRESO POR ORDEN DE SALIDA', 345.00, 'EGRESO', NULL, 3, 4, 345.00, NULL, 1035.00, 1380.00, '2025-12-08', 1, 1, '2025-12-08 20:17:25', '2025-12-08 20:17:25'),
+(30, 2, 'ORDEN DE SALIDA', 8, 'OrdenSalidaDetalle', 4, 'INGRESO POR ORDEN DE SALIDA', 345.00, 'INGRESO', 3, NULL, 3, 345.00, 1035.00, NULL, 1035.00, '2025-12-08', 1, 1, '2025-12-08 20:17:25', '2025-12-08 20:17:25'),
+(31, 2, 'ORDEN DE VENTA', 6, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 2, 300.00, NULL, 300.00, 600.00, '2025-12-08', 1, 1, '2025-12-08 20:17:28', '2025-12-08 20:17:28'),
+(32, 2, 'ORDEN DE VENTA', 7, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 1, 2, 345.00, NULL, 345.00, 690.00, '2025-12-08', 1, 1, '2025-12-08 20:17:28', '2025-12-08 20:17:28'),
+(33, 1, 'SOLICITUD INGRESO', 3, 'SolicitudIngresoDetalle', 3, 'INGRESO POR SOLICITUD', 300.00, 'INGRESO', 35, NULL, 36, 300.00, 10500.00, NULL, 10800.00, '2025-12-08', 1, 1, '2025-12-08 20:46:04', '2025-12-08 20:46:04'),
+(34, 1, 'SOLICITUD INGRESO', 4, 'SolicitudIngresoDetalle', 3, 'INGRESO POR SOLICITUD', 300.00, 'INGRESO', 100, NULL, 136, 300.00, 30000.00, NULL, 40800.00, '2025-12-08', 1, 1, '2025-12-08 20:46:08', '2025-12-08 20:46:08'),
+(35, 1, 'SOLICITUD INGRESO', 5, 'SolicitudIngresoDetalle', 4, 'INGRESO POR SOLICITUD', 345.00, 'INGRESO', 100, NULL, 104, 345.00, 34500.00, NULL, 35880.00, '2025-12-08', 1, 1, '2025-12-08 20:46:08', '2025-12-08 20:46:08'),
+(36, 1, 'ORDEN DE SALIDA', 9, 'OrdenSalidaDetalle', 3, 'EGRESO POR ORDEN DE SALIDA', 300.00, 'EGRESO', NULL, 40, 96, 300.00, NULL, 12000.00, 28800.00, '2025-12-08', 1, 1, '2025-12-08 20:46:33', '2025-12-08 20:46:33'),
+(37, 2, 'ORDEN DE SALIDA', 9, 'OrdenSalidaDetalle', 3, 'INGRESO POR ORDEN DE SALIDA', 300.00, 'INGRESO', 40, NULL, 42, 300.00, 12000.00, NULL, 12600.00, '2025-12-08', 1, 1, '2025-12-08 20:46:33', '2025-12-08 20:46:33'),
+(38, 1, 'ORDEN DE SALIDA', 10, 'OrdenSalidaDetalle', 4, 'EGRESO POR ORDEN DE SALIDA', 345.00, 'EGRESO', NULL, 40, 64, 345.00, NULL, 13800.00, 22080.00, '2025-12-08', 1, 1, '2025-12-08 20:46:33', '2025-12-08 20:46:33'),
+(39, 2, 'ORDEN DE SALIDA', 10, 'OrdenSalidaDetalle', 4, 'INGRESO POR ORDEN DE SALIDA', 345.00, 'INGRESO', 40, NULL, 42, 345.00, 13800.00, NULL, 14490.00, '2025-12-08', 1, 1, '2025-12-08 20:46:33', '2025-12-08 20:46:33'),
+(40, 2, 'ORDEN DE VENTA', 8, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 3, 39, 300.00, NULL, 900.00, 11700.00, '2025-12-08', 1, 1, '2025-12-08 20:48:08', '2025-12-08 20:48:08'),
+(41, 2, 'ORDEN DE VENTA', 9, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 3, 39, 345.00, NULL, 1035.00, 13455.00, '2025-12-08', 1, 1, '2025-12-08 20:48:08', '2025-12-08 20:48:08'),
+(42, 2, 'ORDEN DE VENTA', 12, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 2, 37, 300.00, NULL, 600.00, 11100.00, '2025-12-08', 1, 1, '2025-12-08 23:24:33', '2025-12-08 23:24:33'),
+(43, 2, 'ORDEN DE VENTA', 13, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 1, 38, 345.00, NULL, 345.00, 13110.00, '2025-12-08', 1, 1, '2025-12-08 23:24:33', '2025-12-08 23:24:33'),
+(44, 2, 'TRANSFERENCIA', 1, 'TransferenciaDetalle', 3, 'EGRESO POR TRANSFERENCIA', 300.00, 'EGRESO', NULL, 2, 35, 300.00, NULL, 600.00, 10500.00, '2025-12-09', 1, 1, '2025-12-09 21:53:43', '2025-12-09 21:53:43'),
+(45, 3, 'TRANSFERENCIA', 1, 'TransferenciaDetalle', 3, 'INGRESO POR TRANSFERENCIA', 300.00, 'INGRESO', 2, NULL, 6, 300.00, 600.00, NULL, 1800.00, '2025-12-09', 1, 1, '2025-12-09 21:53:43', '2025-12-09 21:53:43'),
+(46, 2, 'TRANSFERENCIA', 2, 'TransferenciaDetalle', 4, 'EGRESO POR TRANSFERENCIA', 345.00, 'EGRESO', NULL, 1, 37, 345.00, NULL, 345.00, 12765.00, '2025-12-09', 1, 1, '2025-12-09 21:53:43', '2025-12-09 21:53:43'),
+(47, 3, 'TRANSFERENCIA', 2, 'TransferenciaDetalle', 4, 'INGRESO POR TRANSFERENCIA', 345.00, 'INGRESO', 1, NULL, 4, 345.00, 345.00, NULL, 1380.00, '2025-12-09', 1, 1, '2025-12-09 21:53:43', '2025-12-09 21:53:43'),
+(48, 2, 'DEVOLUCIÓN DE CLIENTES', 1, 'DevolucionClienteDetalle', 3, 'INGRESO POR DEVOLUCIÓN DE CLIENTES', 300.00, 'INGRESO', 1, NULL, 36, 300.00, 300.00, NULL, 10800.00, '2025-12-10', 1, 1, '2025-12-10 13:48:59', '2025-12-10 13:48:59'),
+(49, 2, 'DEVOLUCIÓN DE CLIENTES', 1, 'DevolucionClienteDetalle', 3, 'EGRESO POR ELIMINACIÓN DE DEVOLUCIÓN DE CLIENTES', 300.00, 'EGRESO', NULL, 1, 35, 300.00, NULL, 300.00, 10500.00, '2025-12-10', 1, 1, '2025-12-10 13:55:31', '2025-12-10 13:55:31'),
+(50, 2, 'DEVOLUCIÓN DE CLIENTES', 2, 'DevolucionClienteDetalle', 3, 'INGRESO POR DEVOLUCIÓN DE CLIENTES', 300.00, 'INGRESO', 1, NULL, 36, 300.00, 300.00, NULL, 10800.00, '2025-12-10', 1, 1, '2025-12-10 13:55:46', '2025-12-10 13:55:46'),
+(51, 2, 'ORDEN DE VENTA', 14, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 35, 300.00, NULL, 300.00, 10500.00, '2025-12-12', 1, 1, '2025-12-12 15:54:11', '2025-12-12 15:54:11'),
+(52, 2, 'ORDEN DE VENTA', 15, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 34, 300.00, NULL, 300.00, 10200.00, '2025-12-12', 1, 1, '2025-12-12 16:32:42', '2025-12-12 16:32:42'),
+(53, 2, 'ORDEN DE VENTA', 16, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 1, 36, 345.00, NULL, 345.00, 12420.00, '2025-12-12', 1, 1, '2025-12-12 16:32:42', '2025-12-12 16:32:42'),
+(54, 2, 'ORDEN DE VENTA', 17, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 33, 300.00, NULL, 300.00, 9900.00, '2025-12-12', 1, 1, '2025-12-12 16:32:43', '2025-12-12 16:32:43'),
+(55, 2, 'ORDEN DE VENTA', 18, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 32, 300.00, NULL, 300.00, 9600.00, '2025-12-12', 1, 1, '2025-12-12 16:47:21', '2025-12-12 16:47:21'),
+(56, 2, 'DEVOLUCIÓN DE CLIENTES', 3, 'DevolucionClienteDetalle', 3, 'INGRESO POR DEVOLUCIÓN DE CLIENTES', 300.00, 'INGRESO', 1, NULL, 33, 300.00, 300.00, NULL, 9900.00, '2025-12-12', 1, 1, '2025-12-12 17:02:44', '2025-12-12 17:02:44'),
+(57, 2, 'ORDEN DE VENTA', 19, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 32, 300.00, NULL, 300.00, 9600.00, '2025-12-12', 1, 1, '2025-12-12 17:02:45', '2025-12-12 17:02:45'),
+(58, 2, 'ORDEN DE VENTA', 20, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 31, 300.00, NULL, 300.00, 9300.00, '2025-12-12', 1, 1, '2025-12-12 17:24:17', '2025-12-12 17:24:17'),
+(59, 2, 'ORDEN DE VENTA', 21, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 1, 35, 345.00, NULL, 345.00, 12075.00, '2025-12-12', 1, 1, '2025-12-12 17:24:18', '2025-12-12 17:24:18'),
+(60, 2, 'ORDEN DE VENTA', 22, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 30, 300.00, NULL, 300.00, 9000.00, '2025-12-12', 1, 1, '2025-12-12 17:32:33', '2025-12-12 17:32:33'),
+(61, 2, 'ORDEN DE VENTA', 23, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 29, 300.00, NULL, 300.00, 8700.00, '2025-12-12', 1, 1, '2025-12-13 00:27:09', '2025-12-13 00:27:09'),
+(66, 2, 'ORDEN DE VENTA', 28, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 1, 34, 345.00, NULL, 345.00, 11730.00, '2025-12-12', 1, 1, '2025-12-13 00:32:10', '2025-12-13 00:32:10'),
+(67, 2, 'ORDEN DE VENTA', 29, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 2, 32, 345.00, NULL, 690.00, 11040.00, '2025-12-12', 1, 1, '2025-12-13 00:33:35', '2025-12-13 00:33:35'),
+(68, 2, 'ORDEN DE VENTA', 30, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 28, 300.00, NULL, 300.00, 8400.00, '2025-12-12', 1, 1, '2025-12-13 00:35:10', '2025-12-13 00:35:10'),
+(69, 2, 'ORDEN DE VENTA', 31, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 27, 300.00, NULL, 300.00, 8100.00, '2025-12-12', 1, 1, '2025-12-13 00:37:49', '2025-12-13 00:37:49'),
+(70, 2, 'ORDEN DE VENTA', 32, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 1, 31, 345.00, NULL, 345.00, 10695.00, '2025-12-12', 1, 1, '2025-12-13 00:38:48', '2025-12-13 00:38:48'),
+(71, 2, 'ORDEN DE VENTA', 33, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 26, 300.00, NULL, 300.00, 7800.00, '2025-12-12', 1, 1, '2025-12-13 00:39:43', '2025-12-13 00:39:43'),
+(72, 2, 'ORDEN DE VENTA', 34, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 1, 30, 345.00, NULL, 345.00, 10350.00, '2025-12-12', 1, 1, '2025-12-13 00:41:31', '2025-12-13 00:41:31'),
+(73, 2, 'ORDEN DE VENTA', 35, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 25, 300.00, NULL, 300.00, 7500.00, '2025-12-12', 1, 1, '2025-12-13 00:43:30', '2025-12-13 00:43:30'),
+(74, 2, 'ORDEN DE VENTA', 36, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 1, 29, 345.00, NULL, 345.00, 10005.00, '2025-12-12', 1, 1, '2025-12-13 00:44:53', '2025-12-13 00:44:53'),
+(75, 1, 'SOLICITUD INGRESO', 6, 'SolicitudIngresoDetalle', 3, 'INGRESO POR SOLICITUD', 250.00, 'INGRESO', 40, NULL, 136, 300.00, 10000.00, NULL, 38800.00, '2025-12-13', 1, 1, '2025-12-13 12:25:18', '2025-12-13 12:25:18'),
+(76, 2, 'ORDEN DE VENTA', 37, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 24, 300.00, NULL, 300.00, 7200.00, '2025-12-13', 1, 1, '2025-12-13 12:34:13', '2025-12-13 12:34:13'),
+(77, 2, 'ORDEN DE VENTA', 38, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 1, 28, 345.00, NULL, 345.00, 9660.00, '2025-12-13', 1, 1, '2025-12-13 12:34:14', '2025-12-13 12:34:14'),
+(78, 2, 'ORDEN DE VENTA', 39, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 10, 14, 300.00, NULL, 3000.00, 4200.00, '2025-12-13', 1, 1, '2025-12-13 12:55:28', '2025-12-13 12:55:28'),
+(79, 2, 'ORDEN DE VENTA', 43, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 10, 4, 300.00, NULL, 3000.00, 1200.00, '2025-12-13', 1, 1, '2025-12-13 13:18:22', '2025-12-13 13:18:22'),
+(80, 2, 'ORDEN DE VENTA', 40, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 7, 21, 345.00, NULL, 2415.00, 7245.00, '2025-12-13', 1, 1, '2025-12-13 13:19:15', '2025-12-13 13:19:15'),
+(81, 2, 'ORDEN DE VENTA', 44, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 3, 300.00, NULL, 300.00, 900.00, '2025-12-13', 1, 1, '2025-12-13 16:55:43', '2025-12-13 16:55:43'),
+(89, 2, 'ORDEN DE VENTA', 52, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 2, 300.00, NULL, 300.00, 600.00, '2025-12-13', 1, 1, '2025-12-13 17:01:25', '2025-12-13 17:01:25'),
+(90, 2, 'ORDEN DE VENTA', 53, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 1, 300.00, NULL, 300.00, 300.00, '2025-12-13', 1, 1, '2025-12-13 17:03:12', '2025-12-13 17:03:12'),
+(93, 2, 'TRANSFERENCIA', 3, 'TransferenciaDetalle', 3, 'EGRESO POR TRANSFERENCIA', 300.00, 'EGRESO', NULL, 1, 0, 300.00, NULL, 300.00, 0.00, '2025-12-13', 1, 1, '2025-12-13 17:23:17', '2025-12-13 17:23:17'),
+(94, 3, 'TRANSFERENCIA', 3, 'TransferenciaDetalle', 3, 'INGRESO POR TRANSFERENCIA', 300.00, 'INGRESO', 1, NULL, 7, 300.00, 300.00, NULL, 2100.00, '2025-12-13', 1, 1, '2025-12-13 17:23:17', '2025-12-13 17:23:17'),
+(95, 1, 'ORDEN DE SALIDA', 11, 'OrdenSalidaDetalle', 3, 'EGRESO POR ORDEN DE SALIDA', 300.00, 'EGRESO', NULL, 10, 126, 300.00, NULL, 3000.00, 35800.00, '2025-12-13', 1, 1, '2025-12-13 17:28:33', '2025-12-13 17:28:33'),
+(96, 2, 'ORDEN DE SALIDA', 11, 'OrdenSalidaDetalle', 3, 'INGRESO POR ORDEN DE SALIDA', 300.00, 'INGRESO', 10, NULL, 10, 300.00, 3000.00, NULL, 3000.00, '2025-12-13', 1, 1, '2025-12-13 17:28:33', '2025-12-13 17:28:33'),
+(99, 2, 'TRANSFERENCIA', 4, 'TransferenciaDetalle', 3, 'EGRESO POR TRANSFERENCIA', 300.00, 'EGRESO', NULL, 6, 4, 300.00, NULL, 1800.00, 1200.00, '2025-12-13', 1, 1, '2025-12-13 17:29:38', '2025-12-13 17:29:38'),
+(100, 3, 'TRANSFERENCIA', 4, 'TransferenciaDetalle', 3, 'INGRESO POR TRANSFERENCIA', 300.00, 'INGRESO', 6, NULL, 13, 300.00, 1800.00, NULL, 3900.00, '2025-12-13', 1, 1, '2025-12-13 17:29:38', '2025-12-13 17:29:38'),
+(102, 2, 'ORDEN DE VENTA', 55, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 3, 300.00, NULL, 300.00, 900.00, '2025-12-13', 1, 1, '2025-12-13 17:32:15', '2025-12-13 17:32:15'),
+(103, 2, 'ORDEN DE VENTA', 56, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 2, 300.00, NULL, 300.00, 600.00, '2025-12-13', 1, 1, '2025-12-13 17:33:51', '2025-12-13 17:33:51'),
+(104, 2, 'TRANSFERENCIA', 5, 'TransferenciaDetalle', 3, 'EGRESO POR TRANSFERENCIA', 300.00, 'EGRESO', NULL, 1, 1, 300.00, NULL, 300.00, 300.00, '2025-12-13', 1, 1, '2025-12-13 17:34:26', '2025-12-13 17:34:26'),
+(105, 3, 'TRANSFERENCIA', 5, 'TransferenciaDetalle', 3, 'INGRESO POR TRANSFERENCIA', 300.00, 'INGRESO', 1, NULL, 14, 300.00, 300.00, NULL, 4200.00, '2025-12-13', 1, 1, '2025-12-13 17:34:26', '2025-12-13 17:34:26'),
+(106, 1, 'ORDEN DE SALIDA', 12, 'OrdenSalidaDetalle', 3, 'EGRESO POR ORDEN DE SALIDA', 300.00, 'EGRESO', NULL, 18, 108, 300.00, NULL, 5400.00, 30400.00, '2025-12-13', 1, 1, '2025-12-13 20:36:28', '2025-12-13 20:36:28'),
+(107, 2, 'ORDEN DE SALIDA', 12, 'OrdenSalidaDetalle', 3, 'INGRESO POR ORDEN DE SALIDA', 300.00, 'INGRESO', 18, NULL, 19, 300.00, 5400.00, NULL, 5700.00, '2025-12-13', 1, 1, '2025-12-13 20:36:28', '2025-12-13 20:36:28'),
+(108, 1, 'SOLICITUD INGRESO', 7, 'SolicitudIngresoDetalle', 3, 'INGRESO POR SOLICITUD', 300.00, 'INGRESO', 20, NULL, 128, 300.00, 6000.00, NULL, 36400.00, '2025-12-13', 1, 1, '2025-12-14 00:26:45', '2025-12-14 00:26:45'),
+(109, 1, 'SOLICITUD INGRESO', 8, 'SolicitudIngresoDetalle', 4, 'INGRESO POR SOLICITUD', 345.00, 'INGRESO', 20, NULL, 84, 345.00, 6900.00, NULL, 28980.00, '2025-12-13', 1, 1, '2025-12-14 00:26:45', '2025-12-14 00:26:45'),
+(110, 1, 'SOLICITUD INGRESO', 9, 'SolicitudIngresoDetalle', 5, 'VALOR INICIAL', 97.00, 'INGRESO', 18, NULL, 18, 97.00, 1746.00, NULL, 1746.00, '2025-12-13', 1, 1, '2025-12-14 00:26:45', '2025-12-14 00:26:45'),
+(111, 2, 'SOLICITUD INGRESO', 9, 'SolicitudIngresoDetalle', 5, 'INGRESO POR AJUSTE', 97.00, 'INGRESO', 2, NULL, 2, 97.00, 194.00, NULL, 194.00, '2025-12-13', 1, 1, '2025-12-14 00:26:45', '2025-12-14 00:26:45'),
+(112, 1, 'SOLICITUD INGRESO', 10, 'SolicitudIngresoDetalle', 3, 'INGRESO POR SOLICITUD', 300.00, 'INGRESO', 8, NULL, 136, 300.00, 2400.00, NULL, 38800.00, '2025-12-13', 1, 1, '2025-12-14 00:32:07', '2025-12-14 00:32:07'),
+(113, 2, 'SOLICITUD INGRESO', 10, 'SolicitudIngresoDetalle', 3, 'INGRESO POR AJUSTE', 300.00, 'INGRESO', 2, NULL, 21, 300.00, 600.00, NULL, 6300.00, '2025-12-13', 1, 1, '2025-12-14 00:32:07', '2025-12-14 00:32:07'),
+(114, 1, 'ORDEN DE SALIDA', 14, 'OrdenSalidaDetalle', 3, 'EGRESO POR ORDEN DE SALIDA', 300.00, 'EGRESO', NULL, 19, 117, 300.00, NULL, 5700.00, 33100.00, '2025-12-13', 1, 1, '2025-12-14 00:34:12', '2025-12-14 00:34:12'),
+(115, 4, 'ORDEN DE SALIDA', 14, 'OrdenSalidaDetalle', 3, 'INGRESO POR ORDEN DE SALIDA', 300.00, 'INGRESO', 19, NULL, 19, 300.00, 5700.00, NULL, 5700.00, '2025-12-13', 1, 1, '2025-12-14 00:34:12', '2025-12-14 00:34:12'),
+(116, 1, 'ORDEN DE SALIDA', 14, 'OrdenSalidaDetalle', 3, 'INGRESO POR AJUSTE', 300.00, 'INGRESO', 1, NULL, 118, 300.00, 300.00, NULL, 33400.00, '2025-12-13', 1, 1, '2025-12-14 00:34:12', '2025-12-14 00:34:12');
 
 -- --------------------------------------------------------
 
@@ -1075,7 +1095,8 @@ INSERT INTO `orden_salidas` (`id`, `nro`, `codigo`, `sucursal_id`, `user_sol`, `
 (8, 8, 'SAL.8', 2, 15, 15, '2025-12-08', '16:46:00', '', 80.00, 25800.00, 'APROBADO', 1, 1, NULL, '2025-12-08 20:46:28', '2025-12-08 20:46:33'),
 (9, 9, 'SAL.9', 2, 15, 15, '2025-12-13', '13:28:00', '', 10.00, 3000.00, 'APROBADO', 1, 1, NULL, '2025-12-13 17:28:29', '2025-12-13 17:28:33'),
 (10, 10, 'SAL.10', 2, 15, 15, '2025-12-13', '16:32:00', '', 18.00, 5400.00, 'APROBADO', 1, 1, NULL, '2025-12-13 20:32:10', '2025-12-13 20:36:28'),
-(11, 11, 'SAL.11', 4, 17, 17, '2025-12-13', '16:40:00', '', 18.00, 5400.00, 'PENDIENTE', 0, 1, NULL, '2025-12-13 20:40:25', '2025-12-13 20:40:25');
+(11, 11, 'SAL.11', 4, 17, 17, '2025-12-13', '16:40:00', '', 18.00, 5400.00, 'PENDIENTE', 0, 1, NULL, '2025-12-13 20:40:25', '2025-12-13 20:40:25'),
+(12, 12, 'SAL.12', 4, 17, 17, '2025-12-13', '20:33:00', '', 20.00, 6000.00, 'APROBADO CON OBSERVACIONES', 2, 1, NULL, '2025-12-14 00:33:53', '2025-12-14 00:34:12');
 
 -- --------------------------------------------------------
 
@@ -1115,7 +1136,8 @@ INSERT INTO `orden_salida_detalles` (`id`, `orden_salida_id`, `producto_id`, `ca
 (10, 8, 4, 40, 40, 345.00, 13800.00, 1, NULL, NULL, '2025-12-08 20:46:28', '2025-12-08 20:46:33'),
 (11, 9, 3, 10, 10, 300.00, 3000.00, 1, NULL, NULL, '2025-12-13 17:28:29', '2025-12-13 17:28:33'),
 (12, 10, 3, 18, 18, 300.00, 5400.00, 1, NULL, NULL, '2025-12-13 20:32:10', '2025-12-13 20:36:28'),
-(13, 11, 3, 18, 18, 300.00, 5400.00, 0, NULL, NULL, '2025-12-13 20:40:25', '2025-12-13 20:40:25');
+(13, 11, 3, 18, 18, 300.00, 5400.00, 0, NULL, NULL, '2025-12-13 20:40:25', '2025-12-13 20:40:25'),
+(14, 12, 3, 20, 19, 300.00, 6000.00, 1, 1, 'POR FALTANTE DE PROVEEDOR', '2025-12-14 00:33:53', '2025-12-14 00:34:12');
 
 -- --------------------------------------------------------
 
@@ -1294,6 +1316,52 @@ CREATE TABLE `permisos` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `permisos`
+--
+
+INSERT INTO `permisos` (`id`, `role_id`, `modulo_id`, `created_at`, `updated_at`) VALUES
+(1, 3, 37, '2025-12-13 23:39:49', '2025-12-13 23:39:49'),
+(2, 3, 38, '2025-12-13 23:39:50', '2025-12-13 23:39:50'),
+(3, 3, 39, '2025-12-13 23:39:51', '2025-12-13 23:39:51'),
+(4, 3, 40, '2025-12-13 23:39:52', '2025-12-13 23:39:52'),
+(6, 3, 51, '2025-12-13 23:39:58', '2025-12-13 23:39:58'),
+(7, 3, 52, '2025-12-13 23:39:58', '2025-12-13 23:39:58'),
+(8, 3, 53, '2025-12-13 23:39:59', '2025-12-13 23:39:59'),
+(9, 3, 54, '2025-12-13 23:39:59', '2025-12-13 23:39:59'),
+(10, 3, 55, '2025-12-13 23:40:01', '2025-12-13 23:40:01'),
+(11, 3, 56, '2025-12-13 23:40:02', '2025-12-13 23:40:02'),
+(12, 3, 57, '2025-12-13 23:40:02', '2025-12-13 23:40:02'),
+(14, 3, 58, '2025-12-13 23:40:04', '2025-12-13 23:40:04'),
+(15, 3, 60, '2025-12-13 23:40:06', '2025-12-13 23:40:06'),
+(16, 3, 61, '2025-12-13 23:40:07', '2025-12-13 23:40:07'),
+(17, 3, 62, '2025-12-13 23:40:08', '2025-12-13 23:40:08'),
+(18, 3, 63, '2025-12-13 23:40:08', '2025-12-13 23:40:08'),
+(19, 3, 65, '2025-12-13 23:40:09', '2025-12-13 23:40:09'),
+(20, 3, 64, '2025-12-13 23:40:11', '2025-12-13 23:40:11'),
+(21, 3, 66, '2025-12-13 23:40:13', '2025-12-13 23:40:13'),
+(22, 3, 67, '2025-12-13 23:40:14', '2025-12-13 23:40:14'),
+(23, 3, 68, '2025-12-13 23:40:15', '2025-12-13 23:40:15'),
+(24, 3, 69, '2025-12-13 23:40:16', '2025-12-13 23:40:16'),
+(25, 3, 70, '2025-12-13 23:40:16', '2025-12-13 23:40:16'),
+(26, 3, 71, '2025-12-13 23:40:17', '2025-12-13 23:40:17'),
+(27, 3, 72, '2025-12-13 23:40:18', '2025-12-13 23:40:18'),
+(28, 3, 73, '2025-12-13 23:40:18', '2025-12-13 23:40:18'),
+(29, 3, 74, '2025-12-13 23:40:22', '2025-12-13 23:40:22'),
+(30, 3, 75, '2025-12-13 23:40:23', '2025-12-13 23:40:23'),
+(31, 3, 76, '2025-12-13 23:40:24', '2025-12-13 23:40:24'),
+(32, 3, 77, '2025-12-13 23:40:25', '2025-12-13 23:40:25'),
+(33, 3, 78, '2025-12-13 23:40:26', '2025-12-13 23:40:26'),
+(34, 3, 79, '2025-12-13 23:40:28', '2025-12-13 23:40:28'),
+(35, 3, 80, '2025-12-13 23:40:29', '2025-12-13 23:40:29'),
+(36, 3, 82, '2025-12-13 23:40:30', '2025-12-13 23:40:30'),
+(37, 3, 81, '2025-12-13 23:40:30', '2025-12-13 23:40:30'),
+(38, 3, 83, '2025-12-13 23:40:32', '2025-12-13 23:40:32'),
+(39, 3, 84, '2025-12-13 23:40:32', '2025-12-13 23:40:32'),
+(40, 3, 85, '2025-12-13 23:40:33', '2025-12-13 23:40:33'),
+(41, 3, 86, '2025-12-13 23:40:34', '2025-12-13 23:40:34'),
+(42, 3, 87, '2025-12-13 23:40:35', '2025-12-13 23:40:35');
+
 -- --------------------------------------------------------
 
 --
@@ -1461,7 +1529,7 @@ CREATE TABLE `roles` (
 INSERT INTO `roles` (`id`, `nombre`, `permisos`, `usuarios`, `estado`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (1, 'SUPER USUARIO', 1, 0, 1, NULL, NULL, NULL),
 (2, 'ADMINISTRADOR', 0, 1, 1, NULL, '2025-11-30 16:44:28', '2025-11-30 16:44:28'),
-(3, 'AUXILIAR', 0, 1, 1, NULL, '2025-11-30 16:44:33', '2025-11-30 16:44:33');
+(3, 'ENCARGADO', 0, 1, 1, NULL, '2025-11-30 16:44:33', '2025-12-13 23:39:38');
 
 -- --------------------------------------------------------
 
@@ -1501,7 +1569,9 @@ INSERT INTO `solicitud_ingresos` (`id`, `nro`, `codigo`, `proveedor_id`, `fecha_
 (1, 1, 'SOL.1', 1, '2025-12-04', '18:48:00', '2025-12-05', '09:46:00', 'CON FATURA', 6.98, 0.00, 'OBS', 'DESC', 20, 6450.00, 'APROBADO', 1, 1, NULL, '2025-12-04 22:59:25', '2025-12-05 15:07:00'),
 (2, 2, 'SOL.2', 2, '2025-12-05', '10:15:00', '2025-12-05', '10:15:00', 'SIN FATURA', 6.98, 0.00, '', '', 35, 10500.00, 'APROBADO', 1, 1, NULL, '2025-12-05 14:15:19', '2025-12-08 20:46:04'),
 (3, 3, 'SOL.3', 2, '2025-12-08', '16:45:00', '2025-12-08', '16:45:00', 'CON FATURA', 6.98, 0.00, '', '', 200, 64500.00, 'APROBADO', 1, 1, NULL, '2025-12-08 20:45:57', '2025-12-08 20:46:08'),
-(4, 4, 'SOL.4', 1, '2025-12-13', '08:24:00', '2025-12-13', '08:25:00', 'CON FATURA', 6.98, 0.00, '', '', 40, 10000.00, 'APROBADO', 1, 1, NULL, '2025-12-13 12:25:13', '2025-12-13 12:25:18');
+(4, 4, 'SOL.4', 1, '2025-12-13', '08:24:00', '2025-12-13', '08:25:00', 'CON FATURA', 6.98, 0.00, '', '', 40, 10000.00, 'APROBADO', 1, 1, NULL, '2025-12-13 12:25:13', '2025-12-13 12:25:18'),
+(5, 5, 'SOL.5', 2, '2025-12-13', '20:25:00', '2025-12-13', '20:26:00', 'CON FATURA', 6.98, 120.00, '', '', 60, 14840.00, 'APROBADO CON OBSERVACIONES', 1, 2, NULL, '2025-12-14 00:26:18', '2025-12-14 00:26:45'),
+(6, 6, 'SOL.6', 1, '2025-12-13', '20:31:00', '2025-12-13', '20:31:00', 'CON FATURA', 6.98, 75.00, '', '', 10, 3000.00, 'APROBADO CON OBSERVACIONES', 1, 2, NULL, '2025-12-14 00:31:52', '2025-12-14 00:32:07');
 
 -- --------------------------------------------------------
 
@@ -1534,7 +1604,11 @@ INSERT INTO `solicitud_ingreso_detalles` (`id`, `solicitud_ingreso_id`, `product
 (3, 2, 3, 35, 35, 300.00, 10500.00, 1, NULL, NULL, '2025-12-05 14:15:19', '2025-12-08 20:46:04'),
 (4, 3, 3, 100, 100, 300.00, 30000.00, 1, NULL, NULL, '2025-12-08 20:45:57', '2025-12-08 20:46:08'),
 (5, 3, 4, 100, 100, 345.00, 34500.00, 1, NULL, NULL, '2025-12-08 20:45:57', '2025-12-08 20:46:08'),
-(6, 4, 3, 40, 40, 250.00, 10000.00, 1, NULL, NULL, '2025-12-13 12:25:13', '2025-12-13 12:25:18');
+(6, 4, 3, 40, 40, 250.00, 10000.00, 1, NULL, NULL, '2025-12-13 12:25:13', '2025-12-13 12:25:18'),
+(7, 5, 3, 20, 20, 300.00, 6000.00, 1, NULL, NULL, '2025-12-14 00:26:18', '2025-12-14 00:26:45'),
+(8, 5, 4, 20, 20, 345.00, 6900.00, 1, NULL, NULL, '2025-12-14 00:26:18', '2025-12-14 00:26:45'),
+(9, 5, 5, 20, 18, 97.00, 1746.00, 1, 2, 'ROTURA', '2025-12-14 00:26:18', '2025-12-14 00:26:45'),
+(10, 6, 3, 10, 8, 300.00, 2400.00, 1, 2, 'AJUSTE', '2025-12-14 00:31:52', '2025-12-14 00:32:07');
 
 -- --------------------------------------------------------
 
@@ -1612,12 +1686,15 @@ CREATE TABLE `sucursal_productos` (
 --
 
 INSERT INTO `sucursal_productos` (`id`, `sucursal_id`, `producto_id`, `cantidad_ideal`, `cantidad_minima`, `stock_actual`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 3, 5, 5, 108, NULL, '2025-12-05 15:07:00', '2025-12-13 20:36:28'),
-(2, 1, 4, 0, 0, 64, NULL, '2025-12-05 15:07:00', '2025-12-08 20:46:33'),
-(4, 2, 3, 30, 6, 19, NULL, '2025-12-05 16:08:14', '2025-12-13 20:36:28'),
+(1, 1, 3, 5, 5, 118, NULL, '2025-12-05 15:07:00', '2025-12-14 00:34:12'),
+(2, 1, 4, 0, 0, 84, NULL, '2025-12-05 15:07:00', '2025-12-14 00:26:45'),
+(4, 2, 3, 30, 6, 21, NULL, '2025-12-05 16:08:14', '2025-12-14 00:32:07'),
 (5, 2, 4, 2, 2, 21, NULL, '2025-12-05 16:14:58', '2025-12-13 13:19:15'),
 (6, 3, 3, 0, 0, 14, NULL, '2025-12-06 14:30:40', '2025-12-13 17:34:26'),
-(7, 3, 4, 0, 0, 4, NULL, '2025-12-06 14:31:33', '2025-12-09 21:53:43');
+(7, 3, 4, 0, 0, 4, NULL, '2025-12-06 14:31:33', '2025-12-09 21:53:43'),
+(8, 1, 5, 0, 0, 18, NULL, '2025-12-14 00:26:45', '2025-12-14 00:26:45'),
+(9, 2, 5, 0, 0, 2, NULL, '2025-12-14 00:26:45', '2025-12-14 00:26:45'),
+(10, 4, 3, 0, 0, 19, NULL, '2025-12-14 00:34:12', '2025-12-14 00:34:12');
 
 -- --------------------------------------------------------
 
@@ -1755,9 +1832,9 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `usuario`, `nombre`, `paterno`, `materno`, `ci`, `ci_exp`, `grupo_san`, `sexo`, `nacionalidad`, `profesion`, `cel`, `fono`, `cel_dom`, `dir`, `latitud`, `longitud`, `correo`, `foto`, `carnet`, `password`, `tipo`, `role_id`, `acceso`, `fecha_registro`, `estado`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (1, 'admin', 'admin', 'admin', '', '0', '', '', '', '', '', '', '', '', '', '', '', '', NULL, NULL, '$2y$12$65d4fgZsvBV5Lc/AxNKh4eoUdbGyaczQ4sSco20feSQANshNLuxSC', 'ADMINISTRADOR', 1, 1, '2025-11-30', 1, NULL, '2025-11-30 16:37:59', '2025-11-30 16:37:59'),
-(15, 'juan@gmail.com', 'JUAN', 'PERES', 'MAMANI', '123456', 'LP', 'ORH+', 'MASCULINO', 'BOLIVIANO', 'PROFESION', '777777', '22222', '78', 'LOS PEDREGALES', '111111111', '1000000000', 'juan@gmail.com', '1764597654_15.jpg', NULL, '$2y$12$tepNxpYlhcv5XBM3Y0lokOc84zXA2ILMTrBKOFKQtBvORbgYHR11W', 'USUARIO', 2, 1, '2025-12-01', 1, NULL, '2025-11-30 21:13:08', '2025-12-13 17:04:07'),
+(15, 'juan@gmail.com', 'JUAN', 'PERES', 'MAMANI', '123456', 'LP', 'ORH+', 'MASCULINO', 'BOLIVIANO', 'PROFESION', '777777', '22222', '78', 'LOS PEDREGALES', '111111111', '1000000000', 'juan@gmail.com', '1764597654_15.jpg', NULL, '$2y$12$3lN93o7zk3tMJwyiw6SHZOSx8moWmZG0GrF51GqHa9w.1LRdVUT8q', 'USUARIO', 3, 1, '2025-12-13', 1, NULL, '2025-11-30 21:13:08', '2025-12-13 23:39:19'),
 (16, 'maria@gmail.com', 'MARIA', 'GONZALES', '', '12312312', 'LP', 'ORH+', 'FEMENINO', 'BOLIVIANA', '', '67676767', '22232323', '676767', 'LOS OLIVOS', '11111', '11111', 'maria@gmail.com', NULL, NULL, '$2y$12$Br/h92SuGVk1alSb5xDlQOpbJBmH1n0xAc.rSGIWchdkqbmJv3m2O', 'USUARIO', 3, 1, '2025-12-01', 1, NULL, '2025-12-02 00:07:39', '2025-12-02 00:07:39'),
-(17, 'jorge@gmail.com', 'JORGE', 'GONZALES', '', '453543', 'LP', 'ORH+', 'MASCULINO', 'BOLIVIANO', '', '67676767', '22322332', '65665', 'LOS PEDRAGLES', '111', '111', 'jorge@gmail.com', NULL, NULL, '$2y$12$eXItD8EK0KG6/jAUhr2Gse8HpSAlUt.KextkJmLaWURaxy7HsfUs6', 'USUARIO', 2, 1, '2025-12-13', 1, NULL, '2025-12-02 00:08:20', '2025-12-13 20:49:48');
+(17, 'jorge@gmail.com', 'JORGE', 'GONZALES', '', '453543', 'LP', 'ORH+', 'MASCULINO', 'BOLIVIANO', '', '67676767', '22322332', '65665', 'LOS PEDRAGLES', '111', '111', 'jorge@gmail.com', NULL, NULL, '$2y$12$SxmukOtIP.U3x3aexRyEbeHJHXbYhQsDFsHR53jf2CAVGEIf6WoGe', 'USUARIO', 3, 1, '2025-12-13', 1, NULL, '2025-12-02 00:08:20', '2025-12-13 23:39:30');
 
 --
 -- Índices para tablas volcadas
@@ -2161,7 +2238,7 @@ ALTER TABLE `gastos`
 -- AUTO_INCREMENT de la tabla `historial_accions`
 --
 ALTER TABLE `historial_accions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=205;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=215;
 
 --
 -- AUTO_INCREMENT de la tabla `jobs`
@@ -2173,7 +2250,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT de la tabla `kardex_productos`
 --
 ALTER TABLE `kardex_productos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
 
 --
 -- AUTO_INCREMENT de la tabla `marcas`
@@ -2209,13 +2286,13 @@ ALTER TABLE `notificacion_users`
 -- AUTO_INCREMENT de la tabla `orden_salidas`
 --
 ALTER TABLE `orden_salidas`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `orden_salida_detalles`
 --
 ALTER TABLE `orden_salida_detalles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `orden_ventas`
@@ -2239,7 +2316,7 @@ ALTER TABLE `parametro_clientes`
 -- AUTO_INCREMENT de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
@@ -2275,13 +2352,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `solicitud_ingresos`
 --
 ALTER TABLE `solicitud_ingresos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `solicitud_ingreso_detalles`
 --
 ALTER TABLE `solicitud_ingreso_detalles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `sub_categorias`
@@ -2299,7 +2376,7 @@ ALTER TABLE `sucursals`
 -- AUTO_INCREMENT de la tabla `sucursal_productos`
 --
 ALTER TABLE `sucursal_productos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `transferencias`
