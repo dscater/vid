@@ -18,6 +18,7 @@ class Sucursal extends Model
         "user_id",
         "almacen",
         "estado",
+        "monto_dia"
     ];
 
     protected $appends = [

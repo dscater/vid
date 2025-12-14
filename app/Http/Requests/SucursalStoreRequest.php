@@ -28,6 +28,7 @@ class SucursalStoreRequest extends FormRequest
             "correo" => "nullable|email",
             "user_id" => "required",
             "estado" => "boolean|in:0,1",
+            "monto_dia" => "decimal:0,2"
         ];
     }
 
@@ -39,6 +40,7 @@ class SucursalStoreRequest extends FormRequest
             "fono.required" => "Debes completar este campo",
             "correo.required" => "Debes completar este campo",
             "user_id.required" => "Debes completar este campo",
+            "monto_dia.decimal" => "Debes ingresar un valor númerico valido",
         ];
     }
 }

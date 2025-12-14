@@ -194,6 +194,7 @@ class DevolucionStockService
         $devolucion_stock->update([
             "verificado" => $datos["verificado"],
             "estado" => $txtAprobado,
+            "user_ver" => Auth::user()->id
         ]);
 
         $almacen = Sucursal::where("almacen", 1)->get()->first();

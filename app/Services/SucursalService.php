@@ -107,6 +107,7 @@ class SucursalService
             "correo" => $datos["correo"],
             "user_id" => $datos["user_id"],
             "estado" => $datos["estado"],
+            "monto_dia" => $datos["monto_dia"],
         ]);
         // registrar accion
         $this->historialAccionService->registrarAccion($this->modulo, "CREACIÓN", "REGISTRO UNA SUCURSAL", $sucursal);
@@ -131,6 +132,7 @@ class SucursalService
             "correo" => $datos["correo"],
             "user_id" => $datos["user_id"],
             "estado" => $datos["estado"],
+            "monto_dia" => $datos["monto_dia"],
         ]);
         // registrar accion
         $this->historialAccionService->registrarAccion($this->modulo, "MODIFICACIÓN", "ACTUALIZÓ UNA SUCURSAL", $old_sucursal, $sucursal);

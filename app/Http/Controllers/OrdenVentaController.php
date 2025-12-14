@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Validation\ValidationException;
 use App\library\numero_a_letras\src\NumeroALetras;
+use App\Models\Sucursal;
 use App\Services\CuentaCobrarService;
 use App\Services\ParametroClienteService;
 use Exception;
@@ -238,5 +239,22 @@ class OrdenVentaController extends Controller
                 'error' =>  $e->getMessage(),
             ]);
         }
+    }
+
+    public function montoMaximo(Request $request)
+    {
+        $fecha = $request->fecha;
+        $sucursal_id = $request->sucursal_id;
+
+        $sucursal = Sucursal::findOrFail($sucursal_id);
+
+        $total_vendido = OrdenVenta::where("sucursal_id", $sucursal->id)
+            ->where("fecha", $fecha)
+            ->sum("total_f");
+
+        return response()->JSON([
+            "monto_dia" => $sucursal->monto_dia,
+            "total_vendido" => $total_vendido
+        ]);
     }
 }

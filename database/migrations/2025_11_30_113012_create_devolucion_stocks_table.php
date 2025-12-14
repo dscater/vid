@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string("estado");
             $table->unsignedBigInteger("user_id");
             $table->integer("verificado")->default(0);
+            $table->unsignedBigInteger("user_ver")->nullable();
             $table->softDeletes();
             $table->timestamps();
 

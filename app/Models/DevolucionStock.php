@@ -24,6 +24,7 @@ class DevolucionStock extends Model
         "estado",
         "user_id",
         "verificado",
+        "user_ver"
     ];
 
     protected $appends = ["fecha_t", "hora_t", "fecha_c"];
@@ -52,6 +53,13 @@ class DevolucionStock extends Model
     {
         return $this->belongsTo(User::class, "user_id");
     }
+
+
+    public function user_verificador()
+    {
+        return $this->belongsTo(User::class, "user_ver");
+    }
+
 
     public function devolucion_stock_detalles()
     {

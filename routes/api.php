@@ -209,6 +209,7 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get("orden_ventas/api", [OrdenVentaController::class, 'api'])->name("orden_ventas.api");
     Route::get("orden_ventas/paginado", [OrdenVentaController::class, 'paginado'])->name("orden_ventas.paginado");
     Route::get("orden_ventas/listado", [OrdenVentaController::class, 'listado'])->name("orden_ventas.listado");
+    Route::get("orden_ventas/montoMaximo", [OrdenVentaController::class, 'montoMaximo'])->name("orden_ventas.montoMaximo");
     Route::put("orden_ventas/aprobar/{orden_venta}", [OrdenVentaController::class, 'aprobar'])->name("orden_ventas.aprobar");
     Route::resource("orden_ventas", OrdenVentaController::class)->only(
         ["store", "edit", "show", "update", "destroy"]

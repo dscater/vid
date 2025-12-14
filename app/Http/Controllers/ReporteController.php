@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Categoria;
 use App\Models\Cliente;
 use App\Models\Configuracion;
+use App\Models\DevolucionStock;
 use App\Models\HistorialAccion;
 use App\Models\Inscripcion;
 use App\Models\KardexProducto;
 use App\Models\Marca;
+use App\Models\OrdenSalida;
+use App\Models\OrdenVenta;
 use App\Models\Producto;
 use App\Models\Proveedor;
+use App\Models\SolicitudIngreso;
 use App\Models\Sucursal;
 use App\Models\User;
 use App\Services\ReporteService;
@@ -964,6 +968,615 @@ class ReporteController extends Controller
                     $writer->save('php://output');
                 },
                 'productos_' . time() . '.xlsx',
+                [
+                    'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                ]
+            );
+        }
+    }
+
+    public function solicitud_ingresos(Request $request)
+    {
+        ini_set('memory_limit', '1024M');
+        set_time_limit(-1);
+        $proveedor_id =  $request->proveedor_id;
+        $fecha =  $request->fecha;
+        $estado =  $request->estado;
+        $solicitud_ingresos = SolicitudIngreso::select("solicitud_ingresos.*");
+
+        if ($proveedor_id != 'todos') {
+            $solicitud_ingresos->where('proveedor_id', $proveedor_id);
+        }
+
+        if ($estado != 'todos') {
+            $solicitud_ingresos->where('estado', $estado);
+        }
+
+        if ($fecha) {
+            $solicitud_ingresos->where('fecha_ingreso', $fecha);
+        }
+
+        $solicitud_ingresos = $solicitud_ingresos->get();
+
+        if ($request->tipo == 'pdf') {
+            $pdf = PDF::loadView('reportes.solicitud_ingresos', compact('solicitud_ingresos'))->setPaper('letter', 'portrait');
+
+            // ENUMERAR LAS PÁGINAS USANDO CANVAS
+            $pdf->output();
+            $dom_pdf = $pdf->getDomPDF();
+            $canvas = $dom_pdf->get_canvas();
+            $alto = $canvas->get_height();
+            $ancho = $canvas->get_width();
+            $canvas->page_text($ancho - 90, $alto - 25, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 9, array(0, 0, 0));
+
+            return $pdf->download('Usuarios.pdf');
+        } else {
+            $spreadsheet = new Spreadsheet();
+            $spreadsheet->getProperties()
+                ->setCreator("ADMIN")
+                ->setLastModifiedBy('Administración')
+                ->setTitle('Registros')
+                ->setSubject('Registros')
+                ->setDescription('Registros')
+                ->setKeywords('PHPSpreadsheet')
+                ->setCategory('Listado');
+
+            $sheet = $spreadsheet->getActiveSheet();
+
+            $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+
+            $fila = 1;
+            if (file_exists(public_path() . '/imgs/' . $this->configuracion->logo)) {
+                $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+                $drawing->setName('logo');
+                $drawing->setDescription('logo');
+                $drawing->setPath(public_path() . '/imgs/' . $this->configuracion->logo); // put your path and image here
+                $drawing->setCoordinates('A' . $fila);
+                $drawing->setOffsetX(5);
+                $drawing->setOffsetY(0);
+                $drawing->setHeight(60);
+                $drawing->setWorksheet($sheet);
+            }
+
+            $fila = 2;
+            $sheet->setCellValue('A' . $fila, $this->configuracion->nombre_sistema);
+            $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
+            $fila++;
+            $sheet->setCellValue('A' . $fila, "SOLICITUDES DE INGRESO");
+            $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
+            $fila++;
+            $fila++;
+            foreach ($solicitud_ingresos as $key => $item) {
+                $sheet->setCellValue('A' . $fila, 'CÓDIGO:');
+                $sheet->setCellValue('B' . $fila, $item->codigo);
+                $sheet->setCellValue('C' . $fila, 'PROVEEDOR:');
+                $sheet->setCellValue('D' . $fila, $item->proveedor->razon_social);
+                $sheet->mergeCells("D" . $fila . ":G" . $fila);  //COMBINAR CELDAS
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->bodyTabla);
+                $fila++;
+                $sheet->setCellValue('A' . $fila, 'FECHA:');
+                $sheet->setCellValue('B' . $fila, $item->fecha_c);
+                $sheet->setCellValue('C' . $fila, 'USUARIO SOLICITANTE:');
+                $sheet->setCellValue('D' . $fila, $item->user->full_name);
+                $sheet->mergeCells("D" . $fila . ":E" . $fila);  //COMBINAR CELDAS
+                $sheet->setCellValue('F' . $fila, 'ESTADO');
+                $sheet->setCellValue('G' . $fila, $item->estado);
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->bodyTabla);
+                $fila++;
+                $sheet->setCellValue('A' . $fila, 'N°');
+                $sheet->setCellValue('B' . $fila, 'CÓD. PRODUCTO');
+                $sheet->setCellValue('C' . $fila, 'PRODUCTO');
+                $sheet->setCellValue('D' . $fila, 'MARCA');
+                $sheet->setCellValue('E' . $fila, 'CATEGORÍA');
+                $sheet->setCellValue('F' . $fila, 'CANTIDAD');
+                $sheet->setCellValue('G' . $fila, 'CANTIDAD FÍSICA');
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->headerTabla);
+                $fila++;
+                foreach ($item->solicitud_ingreso_detalles as $key => $si) {
+                    $sheet->setCellValue('A' . $fila, $key + 1);
+                    $sheet->setCellValue('B' . $fila, $si->producto->codigo);
+                    $sheet->setCellValue('C' . $fila, $si->producto->nombre . ' ' . $si->producto->unidad_medida->nomnbre);
+                    $sheet->setCellValue('D' . $fila, $si->producto->marca->nombre);
+                    $sheet->setCellValue('E' . $fila, $si->producto->categoria->nombre);
+                    $sheet->setCellValue('F' . $fila, $si->cantidad);
+                    $sheet->setCellValue('G' . $fila, $si->cantidad_fisica);
+                    $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->bodyTabla);
+                    $fila++;
+                }
+                $sheet->setCellValue('A' . $fila, 'TOTAL');
+                $sheet->mergeCells("A" . $fila . ":E" . $fila);  //COMBINAR CELDAS
+                $sheet->setCellValue('F' . $fila, $item->cantidad_total);
+                $sheet->setCellValue('G' . $fila, $item->solicitud_ingreso_detalles->sum("cantidad_fisica"));
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->headerTabla);
+                $fila += 4;
+            }
+
+
+            $sheet->getColumnDimension('A')->setWidth(10);
+            $sheet->getColumnDimension('B')->setWidth(15);
+            $sheet->getColumnDimension('C')->setWidth(15);
+            $sheet->getColumnDimension('D')->setWidth(10);
+            $sheet->getColumnDimension('E')->setWidth(20);
+            $sheet->getColumnDimension('F')->setWidth(12);
+            $sheet->getColumnDimension('G')->setWidth(15);
+
+            foreach (range('A', 'G') as $columnID) {
+                $sheet->getStyle($columnID)->getAlignment()->setWrapText(true);
+            }
+
+            $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+            $sheet->getPageMargins()->setTop(0.5);
+            $sheet->getPageMargins()->setRight(0.1);
+            $sheet->getPageMargins()->setLeft(0.1);
+            $sheet->getPageMargins()->setBottom(0.1);
+            $sheet->getPageSetup()->setPrintArea('A:G');
+            $sheet->getPageSetup()->setFitToWidth(1);
+            $sheet->getPageSetup()->setFitToHeight(0);
+
+            return response()->streamDownload(
+                function () use ($spreadsheet) {
+                    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+                    $writer->save('php://output');
+                },
+                'solicitud_ingresos_' . time() . '.xlsx',
+                [
+                    'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                ]
+            );
+        }
+    }
+
+    public function orden_salidas(Request $request)
+    {
+        ini_set('memory_limit', '1024M');
+        set_time_limit(-1);
+        $sucursal_id =  $request->sucursal_id;
+        $fecha =  $request->fecha;
+        $estado =  $request->estado;
+        $orden_salidas = OrdenSalida::select("orden_salidas.*");
+
+        if ($sucursal_id != 'todos') {
+            $orden_salidas->where('sucursal_id', $sucursal_id);
+        }
+
+        if ($estado != 'todos') {
+            $orden_salidas->where('estado', $estado);
+        }
+
+        if ($fecha) {
+            $orden_salidas->where('fecha', $fecha);
+        }
+
+        $orden_salidas = $orden_salidas->get();
+
+        if ($request->tipo == 'pdf') {
+            $pdf = PDF::loadView('reportes.orden_salidas', compact('orden_salidas'))->setPaper('letter', 'portrait');
+
+            // ENUMERAR LAS PÁGINAS USANDO CANVAS
+            $pdf->output();
+            $dom_pdf = $pdf->getDomPDF();
+            $canvas = $dom_pdf->get_canvas();
+            $alto = $canvas->get_height();
+            $ancho = $canvas->get_width();
+            $canvas->page_text($ancho - 90, $alto - 25, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 9, array(0, 0, 0));
+
+            return $pdf->download('Usuarios.pdf');
+        } else {
+            $spreadsheet = new Spreadsheet();
+            $spreadsheet->getProperties()
+                ->setCreator("ADMIN")
+                ->setLastModifiedBy('Administración')
+                ->setTitle('Registros')
+                ->setSubject('Registros')
+                ->setDescription('Registros')
+                ->setKeywords('PHPSpreadsheet')
+                ->setCategory('Listado');
+
+            $sheet = $spreadsheet->getActiveSheet();
+
+            $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+
+            $fila = 1;
+            if (file_exists(public_path() . '/imgs/' . $this->configuracion->logo)) {
+                $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+                $drawing->setName('logo');
+                $drawing->setDescription('logo');
+                $drawing->setPath(public_path() . '/imgs/' . $this->configuracion->logo); // put your path and image here
+                $drawing->setCoordinates('A' . $fila);
+                $drawing->setOffsetX(5);
+                $drawing->setOffsetY(0);
+                $drawing->setHeight(60);
+                $drawing->setWorksheet($sheet);
+            }
+
+            $fila = 2;
+            $sheet->setCellValue('A' . $fila, $this->configuracion->nombre_sistema);
+            $sheet->mergeCells("A" . $fila . ":F" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':F' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->titulo);
+            $fila++;
+            $sheet->setCellValue('A' . $fila, "ÓRDENDES DE SALIDA");
+            $sheet->mergeCells("A" . $fila . ":F" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':F' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->titulo);
+            $fila++;
+            $fila++;
+            foreach ($orden_salidas as $key => $item) {
+                $sheet->setCellValue('A' . $fila, 'CÓDIGO:');
+                $sheet->setCellValue('B' . $fila, $item->codigo);
+                $sheet->setCellValue('C' . $fila, 'SUCURSAL/VEHÍCULO:');
+                $sheet->setCellValue('D' . $fila, $item->sucursal->nombre);
+                $sheet->setCellValue('E' . $fila, 'USUARIO SOLICITANTE:');
+                $sheet->setCellValue('F' . $fila, $item->user_solicitante->full_name);
+                $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->bodyTabla);
+                $fila++;
+                $sheet->setCellValue('A' . $fila, 'FECHA:');
+                $sheet->setCellValue('B' . $fila, $item->fecha_c);
+                $sheet->setCellValue('C' . $fila, 'USUARIO APROBADOR:');
+                $sheet->setCellValue('D' . $fila, $item->user_aprobador->full_name);
+                $sheet->setCellValue('E' . $fila, 'ESTADO');
+                $sheet->setCellValue('F' . $fila, $item->estado);
+                $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->bodyTabla);
+                $fila++;
+                $sheet->setCellValue('A' . $fila, 'N°');
+                $sheet->setCellValue('B' . $fila, 'CÓD. PRODUCTO');
+                $sheet->setCellValue('C' . $fila, 'PRODUCTO');
+                $sheet->mergeCells("C" . $fila . ":D" . $fila);  //COMBINAR CELDAS
+                $sheet->setCellValue('E' . $fila, 'CANTIDAD');
+                $sheet->setCellValue('F' . $fila, 'CANTIDAD FÍSICA');
+                $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->headerTabla);
+                $fila++;
+                foreach ($item->orden_salida_detalles as $key => $si) {
+                    $sheet->setCellValue('A' . $fila, $key + 1);
+                    $sheet->setCellValue('B' . $fila, $si->producto->codigo);
+                    $sheet->setCellValue('C' . $fila, $si->producto->nombre . ' ' . $si->producto->unidad_medida->nomnbre);
+                    $sheet->mergeCells("C" . $fila . ":D" . $fila);  //COMBINAR CELDAS
+                    $sheet->setCellValue('E' . $fila, $si->cantidad);
+                    $sheet->setCellValue('F' . $fila, $si->cantidad_fisica);
+                    $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->bodyTabla);
+                    $fila++;
+                }
+                $sheet->setCellValue('A' . $fila, 'TOTAL');
+                $sheet->mergeCells("A" . $fila . ":D" . $fila);  //COMBINAR CELDAS
+                $sheet->setCellValue('E' . $fila, $item->cantidad_total);
+                $sheet->setCellValue('F' . $fila, $item->orden_salida_detalles->sum("cantidad_fisica"));
+                $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->headerTabla);
+                $fila += 4;
+            }
+
+
+            $sheet->getColumnDimension('A')->setWidth(10);
+            $sheet->getColumnDimension('B')->setWidth(15);
+            $sheet->getColumnDimension('C')->setWidth(20);
+            $sheet->getColumnDimension('D')->setWidth(15);
+            $sheet->getColumnDimension('E')->setWidth(20);
+            $sheet->getColumnDimension('F')->setWidth(12);
+
+            foreach (range('A', 'F') as $columnID) {
+                $sheet->getStyle($columnID)->getAlignment()->setWrapText(true);
+            }
+
+            $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+            $sheet->getPageMargins()->setTop(0.5);
+            $sheet->getPageMargins()->setRight(0.1);
+            $sheet->getPageMargins()->setLeft(0.1);
+            $sheet->getPageMargins()->setBottom(0.1);
+            $sheet->getPageSetup()->setPrintArea('A:F');
+            $sheet->getPageSetup()->setFitToWidth(1);
+            $sheet->getPageSetup()->setFitToHeight(0);
+
+            return response()->streamDownload(
+                function () use ($spreadsheet) {
+                    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+                    $writer->save('php://output');
+                },
+                'orden_salidas_' . time() . '.xlsx',
+                [
+                    'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                ]
+            );
+        }
+    }
+
+
+    public function devolucions(Request $request)
+    {
+        ini_set('memory_limit', '1024M');
+        set_time_limit(-1);
+        $sucursal_id =  $request->sucursal_id;
+        $fecha =  $request->fecha;
+        $estado =  $request->estado;
+        $devolucion_stocks = DevolucionStock::select("devolucion_stocks.*");
+
+        if ($sucursal_id != 'todos') {
+            $devolucion_stocks->where('sucursal_id', $sucursal_id);
+        }
+
+        if ($estado != 'todos') {
+            $devolucion_stocks->where('estado', $estado);
+        }
+
+        if ($fecha) {
+            $devolucion_stocks->where('fecha', $fecha);
+        }
+
+        $devolucion_stocks = $devolucion_stocks->get();
+
+        if ($request->tipo == 'pdf') {
+            $pdf = PDF::loadView('reportes.devolucions', compact('devolucion_stocks'))->setPaper('letter', 'portrait');
+
+            // ENUMERAR LAS PÁGINAS USANDO CANVAS
+            $pdf->output();
+            $dom_pdf = $pdf->getDomPDF();
+            $canvas = $dom_pdf->get_canvas();
+            $alto = $canvas->get_height();
+            $ancho = $canvas->get_width();
+            $canvas->page_text($ancho - 90, $alto - 25, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 9, array(0, 0, 0));
+
+            return $pdf->download('Usuarios.pdf');
+        } else {
+            $spreadsheet = new Spreadsheet();
+            $spreadsheet->getProperties()
+                ->setCreator("ADMIN")
+                ->setLastModifiedBy('Administración')
+                ->setTitle('Registros')
+                ->setSubject('Registros')
+                ->setDescription('Registros')
+                ->setKeywords('PHPSpreadsheet')
+                ->setCategory('Listado');
+
+            $sheet = $spreadsheet->getActiveSheet();
+
+            $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+
+            $fila = 1;
+            if (file_exists(public_path() . '/imgs/' . $this->configuracion->logo)) {
+                $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+                $drawing->setName('logo');
+                $drawing->setDescription('logo');
+                $drawing->setPath(public_path() . '/imgs/' . $this->configuracion->logo); // put your path and image here
+                $drawing->setCoordinates('A' . $fila);
+                $drawing->setOffsetX(5);
+                $drawing->setOffsetY(0);
+                $drawing->setHeight(60);
+                $drawing->setWorksheet($sheet);
+            }
+
+            $fila = 2;
+            $sheet->setCellValue('A' . $fila, $this->configuracion->nombre_sistema);
+            $sheet->mergeCells("A" . $fila . ":F" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':F' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->titulo);
+            $fila++;
+            $sheet->setCellValue('A' . $fila, "DEVOLUCIONES DE STOCK");
+            $sheet->mergeCells("A" . $fila . ":F" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':F' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->titulo);
+            $fila++;
+            $fila++;
+            foreach ($devolucion_stocks as $key => $item) {
+                $sheet->setCellValue('A' . $fila, 'SUCURSAL/VEHÍCULO:');
+                $sheet->setCellValue('B' . $fila, $item->sucursal->nombre);
+                $sheet->mergeCells("B" . $fila . ":C" . $fila);  //COMBINAR CELDAS
+                $sheet->setCellValue('D' . $fila, 'ENCARGADO:');
+                $sheet->setCellValue('E' . $fila, $item->sucursal->user->full_name);
+                $sheet->mergeCells("E" . $fila . ":F" . $fila);  //COMBINAR CELDAS
+                $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->bodyTabla);
+                $fila++;
+                $sheet->setCellValue('A' . $fila, 'FECHA:');
+                $sheet->setCellValue('B' . $fila, $item->fecha_c);
+                $sheet->setCellValue('C' . $fila, 'USUARIO APROBADOR:');
+                $sheet->setCellValue('D' . $fila, $item->user_verificador->full_name);
+                $sheet->setCellValue('E' . $fila, 'ESTADO');
+                $sheet->setCellValue('F' . $fila, $item->estado);
+                $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->bodyTabla);
+                $fila++;
+                $sheet->setCellValue('A' . $fila, 'N°');
+                $sheet->setCellValue('B' . $fila, 'CÓD. PRODUCTO');
+                $sheet->setCellValue('C' . $fila, 'PRODUCTO');
+                $sheet->mergeCells("C" . $fila . ":D" . $fila);  //COMBINAR CELDAS
+                $sheet->setCellValue('E' . $fila, 'CANTIDAD');
+                $sheet->setCellValue('F' . $fila, 'CANTIDAD FÍSICA');
+                $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->headerTabla);
+                $fila++;
+                foreach ($item->devolucion_stock_detalles as $key => $si) {
+                    $sheet->setCellValue('A' . $fila, $key + 1);
+                    $sheet->setCellValue('B' . $fila, $si->producto->codigo);
+                    $sheet->setCellValue('C' . $fila, $si->producto->nombre . ' ' . $si->producto->unidad_medida->nomnbre);
+                    $sheet->mergeCells("C" . $fila . ":D" . $fila);  //COMBINAR CELDAS
+                    $sheet->setCellValue('E' . $fila, $si->cantidad);
+                    $sheet->setCellValue('F' . $fila, $si->cantidad_fisica);
+                    $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->bodyTabla);
+                    $fila++;
+                }
+                $sheet->setCellValue('A' . $fila, 'TOTAL');
+                $sheet->mergeCells("A" . $fila . ":D" . $fila);  //COMBINAR CELDAS
+                $sheet->setCellValue('E' . $fila, $item->cantidad_total);
+                $sheet->setCellValue('F' . $fila, $item->devolucion_stock_detalles->sum("cantidad_fisica"));
+                $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->headerTabla);
+                $fila += 4;
+            }
+
+
+            $sheet->getColumnDimension('A')->setWidth(10);
+            $sheet->getColumnDimension('B')->setWidth(15);
+            $sheet->getColumnDimension('C')->setWidth(20);
+            $sheet->getColumnDimension('D')->setWidth(15);
+            $sheet->getColumnDimension('E')->setWidth(20);
+            $sheet->getColumnDimension('F')->setWidth(12);
+
+            foreach (range('A', 'F') as $columnID) {
+                $sheet->getStyle($columnID)->getAlignment()->setWrapText(true);
+            }
+
+            $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+            $sheet->getPageMargins()->setTop(0.5);
+            $sheet->getPageMargins()->setRight(0.1);
+            $sheet->getPageMargins()->setLeft(0.1);
+            $sheet->getPageMargins()->setBottom(0.1);
+            $sheet->getPageSetup()->setPrintArea('A:F');
+            $sheet->getPageSetup()->setFitToWidth(1);
+            $sheet->getPageSetup()->setFitToHeight(0);
+
+            return response()->streamDownload(
+                function () use ($spreadsheet) {
+                    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+                    $writer->save('php://output');
+                },
+                'devolucions_' . time() . '.xlsx',
+                [
+                    'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                ]
+            );
+        }
+    }
+
+
+    public function orden_ventas(Request $request)
+    {
+        ini_set('memory_limit', '1024M');
+        set_time_limit(-1);
+        $sucursal_id =  $request->sucursal_id;
+        $cliente_id =  $request->cliente_id;
+        $fecha_ini =  $request->fecha_ini;
+        $fecha_fin =  $request->fecha_fin;
+        $orden_ventas = OrdenVenta::select("orden_ventas.*");
+
+        if ($sucursal_id != 'todos') {
+            $orden_ventas->where('sucursal_id', $sucursal_id);
+        }
+        if ($fecha_ini && $fecha_fin) {
+            $orden_ventas->whereBetween('fecha', [$fecha_ini, $fecha_fin]);
+        }
+
+        $orden_ventas = $orden_ventas->get();
+
+        if ($request->tipo == 'pdf') {
+            $pdf = PDF::loadView('reportes.orden_ventas', compact('orden_ventas'))->setPaper('letter', 'portrait');
+
+            // ENUMERAR LAS PÁGINAS USANDO CANVAS
+            $pdf->output();
+            $dom_pdf = $pdf->getDomPDF();
+            $canvas = $dom_pdf->get_canvas();
+            $alto = $canvas->get_height();
+            $ancho = $canvas->get_width();
+            $canvas->page_text($ancho - 90, $alto - 25, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 9, array(0, 0, 0));
+
+            return $pdf->download('Usuarios.pdf');
+        } else {
+            $spreadsheet = new Spreadsheet();
+            $spreadsheet->getProperties()
+                ->setCreator("ADMIN")
+                ->setLastModifiedBy('Administración')
+                ->setTitle('Registros')
+                ->setSubject('Registros')
+                ->setDescription('Registros')
+                ->setKeywords('PHPSpreadsheet')
+                ->setCategory('Listado');
+
+            $sheet = $spreadsheet->getActiveSheet();
+
+            $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+
+            $fila = 1;
+            if (file_exists(public_path() . '/imgs/' . $this->configuracion->logo)) {
+                $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+                $drawing->setName('logo');
+                $drawing->setDescription('logo');
+                $drawing->setPath(public_path() . '/imgs/' . $this->configuracion->logo); // put your path and image here
+                $drawing->setCoordinates('A' . $fila);
+                $drawing->setOffsetX(5);
+                $drawing->setOffsetY(0);
+                $drawing->setHeight(60);
+                $drawing->setWorksheet($sheet);
+            }
+
+            $fila = 2;
+            $sheet->setCellValue('A' . $fila, $this->configuracion->nombre_sistema);
+            $sheet->mergeCells("A" . $fila . ":F" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':F' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->titulo);
+            $fila++;
+            $sheet->setCellValue('A' . $fila, "ORDENES DE VENTAS");
+            $sheet->mergeCells("A" . $fila . ":F" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':F' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->titulo);
+            $fila++;
+            $fila++;
+            foreach ($orden_ventas as $key => $item) {
+                $sheet->setCellValue('A' . $fila, 'SUCURSAL/VEHÍCULO:');
+                $sheet->setCellValue('B' . $fila, $item->sucursal->nombre);
+                $sheet->mergeCells("B" . $fila . ":C" . $fila);  //COMBINAR CELDAS
+                $sheet->setCellValue('D' . $fila, 'ENCARGADO:');
+                $sheet->setCellValue('E' . $fila, $item->sucursal->user->full_name);
+                $sheet->mergeCells("E" . $fila . ":F" . $fila);  //COMBINAR CELDAS
+                $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->bodyTabla);
+                $fila++;
+                $sheet->setCellValue('A' . $fila, 'FECHA:');
+                $sheet->setCellValue('B' . $fila, $item->fecha_c);
+                $sheet->setCellValue('C' . $fila, 'USUARIO APROBADOR:');
+                $sheet->setCellValue('D' . $fila, $item->user_verificador->full_name);
+                $sheet->setCellValue('E' . $fila, 'ESTADO');
+                $sheet->setCellValue('F' . $fila, $item->estado);
+                $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->bodyTabla);
+                $fila++;
+                $sheet->setCellValue('A' . $fila, 'N°');
+                $sheet->setCellValue('B' . $fila, 'CÓD. PRODUCTO');
+                $sheet->setCellValue('C' . $fila, 'PRODUCTO');
+                $sheet->mergeCells("C" . $fila . ":D" . $fila);  //COMBINAR CELDAS
+                $sheet->setCellValue('E' . $fila, 'CANTIDAD');
+                $sheet->setCellValue('F' . $fila, 'CANTIDAD FÍSICA');
+                $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->headerTabla);
+                $fila++;
+                foreach ($item->devolucion_stock_detalles as $key => $si) {
+                    $sheet->setCellValue('A' . $fila, $key + 1);
+                    $sheet->setCellValue('B' . $fila, $si->producto->codigo);
+                    $sheet->setCellValue('C' . $fila, $si->producto->nombre . ' ' . $si->producto->unidad_medida->nomnbre);
+                    $sheet->mergeCells("C" . $fila . ":D" . $fila);  //COMBINAR CELDAS
+                    $sheet->setCellValue('E' . $fila, $si->cantidad);
+                    $sheet->setCellValue('F' . $fila, $si->cantidad_fisica);
+                    $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->bodyTabla);
+                    $fila++;
+                }
+                $sheet->setCellValue('A' . $fila, 'TOTAL');
+                $sheet->mergeCells("A" . $fila . ":D" . $fila);  //COMBINAR CELDAS
+                $sheet->setCellValue('E' . $fila, $item->cantidad_total);
+                $sheet->setCellValue('F' . $fila, $item->devolucion_stock_detalles->sum("cantidad_fisica"));
+                $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->headerTabla);
+                $fila += 4;
+            }
+
+
+            $sheet->getColumnDimension('A')->setWidth(10);
+            $sheet->getColumnDimension('B')->setWidth(15);
+            $sheet->getColumnDimension('C')->setWidth(20);
+            $sheet->getColumnDimension('D')->setWidth(15);
+            $sheet->getColumnDimension('E')->setWidth(20);
+            $sheet->getColumnDimension('F')->setWidth(12);
+
+            foreach (range('A', 'F') as $columnID) {
+                $sheet->getStyle($columnID)->getAlignment()->setWrapText(true);
+            }
+
+            $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+            $sheet->getPageMargins()->setTop(0.5);
+            $sheet->getPageMargins()->setRight(0.1);
+            $sheet->getPageMargins()->setLeft(0.1);
+            $sheet->getPageMargins()->setBottom(0.1);
+            $sheet->getPageSetup()->setPrintArea('A:F');
+            $sheet->getPageSetup()->setFitToWidth(1);
+            $sheet->getPageSetup()->setFitToHeight(0);
+
+            return response()->streamDownload(
+                function () use ($spreadsheet) {
+                    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+                    $writer->save('php://output');
+                },
+                'orden_ventas_' . time() . '.xlsx',
                 [
                     'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 ]
