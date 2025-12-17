@@ -39,6 +39,14 @@ class OrdenVentaStoreRequest extends FormRequest
             "solicitud_sw" => "nullable",
             "monto_solicitud" => "nullable",
             "descuento" => "nullable",
+
+            "con" => "boolean",
+            "cancelado_c" => "required|decimal:0,2",
+            "qr" => "boolean",
+            "cancelado_qr" => "required|decimal:0,2",
+            "cre" => "boolean",
+            "credito" => "required|decimal:0,2",
+
             "total_f" => "required",
             "orden_venta_detalles" => ["required", new OrdenVentaDetalleRule()],
             "eliminados_detalles" => "nullable",

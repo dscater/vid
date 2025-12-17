@@ -27,8 +27,14 @@ return new class extends Migration
             $table->unsignedBigInteger("user_ap")->nullable();
             $table->decimal("monto_solicitud", 24, 2)->default(0)->nullable();
             $table->decimal("descuento", 24, 2)->default(0)->nullable();
-            $table->decimal("cancelado", 24, 2)->default(0)->nullable();
             $table->decimal("total_f", 24, 2);
+            $table->integer("con")->default(0);
+            $table->decimal("cancelado_c", 24, 2)->default(0)->nullable();
+            $table->integer("qr")->default(0);
+            $table->decimal("cancelado_qr", 24, 2)->default(0)->nullable();
+            $table->integer("cre")->default(0);
+            $table->decimal("credito", 24, 2)->default(0)->nullable();
+            $table->decimal("cancelado", 24, 2)->default(0)->nullable();
             $table->decimal("cambio", 24, 2)->default(0)->nullable();
             $table->string("forma_pago");
             $table->string("cs_f");

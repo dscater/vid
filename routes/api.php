@@ -140,6 +140,7 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
 
     // PRODUCTOS
     Route::get("productos/byCodigo", [ProductoController::class, 'byCodigo'])->name("productos.byCodigo");
+    Route::get("productos/byCodigoListSelectElementUi", [ProductoController::class, 'byCodigoListSelectElementUi'])->name("productos.byCodigoListSelectElementUi");
     Route::get("productos/ppp/{producto}", [ProductoController::class, 'ppp'])->name("productos.ppp");
     Route::post("productos/ppp_update/{producto}", [ProductoController::class, 'ppp_update'])->name("productos.ppp_update");
     Route::get("productos/api", [ProductoController::class, 'api'])->name("productos.api");

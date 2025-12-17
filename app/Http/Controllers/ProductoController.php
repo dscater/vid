@@ -46,6 +46,13 @@ class ProductoController extends Controller
         return response()->JSON($producto);
     }
 
+    public function byCodigoListSelectElementUi(Request $request): JsonResponse
+    {
+        $codigo = $request->input("codigo", "");
+        $productos = Producto::where("codigo", "LIKE", "%$codigo%")
+            ->get();
+        return response()->JSON(["productos" => $productos]);
+    }
 
     public function ppp(Producto $producto)
     {

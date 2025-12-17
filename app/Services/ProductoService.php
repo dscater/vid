@@ -21,7 +21,7 @@ class ProductoService
 
     public function listado(): Collection
     {
-        $productos = Producto::select("productos.*")->get();
+        $productos = Producto::select("productos.*")->where("estado", 1)->get();
         return $productos;
     }
     /**
@@ -40,6 +40,8 @@ class ProductoService
             ->with(["categoria:id,nombre"])
             ->with(["marca:id,nombre"])
             ->with(["unidad_medida:id,nombre"]);
+
+        $productos->where("estado", 1);
 
         // Filtros exactos
         foreach ($columnsFilter as $key => $value) {

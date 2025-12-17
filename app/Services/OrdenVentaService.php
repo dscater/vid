@@ -100,6 +100,14 @@ class OrdenVentaService
             "cantidad_total" => $datos["cantidad_total"],
             "cs_f" => $datos["cs_f"],
             "forma_pago" => $datos["forma_pago"],
+
+            "con" => $datos["con"],
+            "cancelado_c" => $datos["cancelado_c"],
+            "qr" => $datos["qr"],
+            "cancelado_qr" => $datos["cancelado_qr"],
+            "cre" => $datos["cre"],
+            "credito" => $datos["credito"],
+
             "cancelado" => $datos["cancelado"],
             "cambio" => $datos["cambio"],
             "total" => $datos["total"],
@@ -153,7 +161,7 @@ class OrdenVentaService
         }
 
         // TIPO DE PAGO
-        if ($orden_venta->forma_pago == 'CRÉDITO') {
+        if ($orden_venta->cre == 1) {
             $this->cuenta_cobrar_service->nuevo($orden_venta);
         }
 
@@ -259,7 +267,7 @@ class OrdenVentaService
         }
 
         // TIPO DE PAGO
-        if ($orden_venta->forma_pago == 'CRÉDITO') {
+        if ($orden_venta->cre == 1) {
             $this->cuenta_cobrar_service->nuevo($orden_venta);
         }
 
