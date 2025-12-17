@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 14-12-2025 a las 21:38:03
+-- Tiempo de generación: 17-12-2025 a las 15:13:54
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.2.22
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `categorias` (
   `id` bigint UNSIGNED NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -52,7 +52,7 @@ INSERT INTO `categorias` (`id`, `nombre`, `deleted_at`, `created_at`, `updated_a
 CREATE TABLE `certificados` (
   `id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
-  `file` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -73,21 +73,21 @@ INSERT INTO `certificados` (`id`, `user_id`, `file`, `created_at`, `updated_at`)
 
 CREATE TABLE `clientes` (
   `id` bigint UNSIGNED NOT NULL,
-  `razon_social` varchar(700) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tipo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nit` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombre_punto` varchar(700) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombre_prop` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ci_prop` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `correo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `cel` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `fono` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `dir` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `latitud` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `longitud` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ciudad` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `razon_social` varchar(700) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nit` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre_punto` varchar(700) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre_prop` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ci_prop` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `correo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cel` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fono` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dir` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `latitud` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `longitud` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ciudad` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `rank` int DEFAULT NULL,
-  `categoria` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `categoria` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `score` double(24,4) DEFAULT NULL,
   `factor` double(8,4) DEFAULT NULL,
   `contactos` json DEFAULT NULL,
@@ -102,7 +102,7 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id`, `razon_social`, `tipo`, `nit`, `nombre_punto`, `nombre_prop`, `ci_prop`, `correo`, `cel`, `fono`, `dir`, `latitud`, `longitud`, `ciudad`, `rank`, `categoria`, `score`, `factor`, `contactos`, `estado`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'CLIENTE 1 S.A. MOD', 'EMPRESA', '111111111111', 'PUNTO VENTA C 1', 'JUAN PEREZ', '121212121', 'juanperez@gmail.com', '6767676767', '22222', 'LOS PEDREGALES', '111111111', '11111111111', 'LA PAZ', 1, 'A', 13760.2600, 1.5000, '[{\"cel\": \"7777777\", \"fono\": \"6767676767\", \"nombre\": \"JUAN GONZALES\", \"observacion\": \"OBS. CONTACTO 1\"}, {\"cel\": \"7866786\", \"fono\": \"667567567\", \"nombre\": \"JORGE RAMIRES\", \"observacion\": null}]', 1, NULL, '2025-12-03 15:46:45', '2025-12-14 14:58:44'),
+(1, 'CLIENTE 1 S.A. MOD', 'EMPRESA', '111111111111', 'PUNTO VENTA C 1', 'JUAN PEREZ', '121212121', 'juanperez@gmail.com', '6767676767', '22222', 'LOS PEDREGALES', '111111111', '11111111111', 'LA PAZ', 1, 'A', 15996.1600, 1.5000, '[{\"cel\": \"7777777\", \"fono\": \"6767676767\", \"nombre\": \"JUAN GONZALES\", \"observacion\": \"OBS. CONTACTO 1\"}, {\"cel\": \"7866786\", \"fono\": \"667567567\", \"nombre\": \"JORGE RAMIRES\", \"observacion\": null}]', 1, NULL, '2025-12-03 15:46:45', '2025-12-17 14:53:16'),
 (2, 'CLIENTE 2', 'PERSONA', '1111111111111', 'CLIENTE 2 PV', 'MARIA MAMANI', '23123123', NULL, '657756', '222', 'LOS PEDREAGLES1', '111', '2222', 'EL ALTO', 2, 'A', 13045.7700, 1.5000, '[{\"cel\": \"6757567\", \"fono\": \"222222\", \"nombre\": \"CONTACTO 1\", \"observacion\": null}]', 1, NULL, '2025-12-03 15:52:12', '2025-12-14 15:03:27'),
 (3, 'CLIENTE 3', 'PERSONA', '1111111', 'PUNTO VENA 3', 'JUAN DOMINGUEZ', '1221121221', 'dominguez@gmail.com', '777777', '6767676767', 'LOS PEDREGALES', '1111', '22222', 'LA PAZ', 3, 'A', 12825.0800, 1.5000, '[{\"cel\": \"767676767\", \"fono\": \"6767676767\", \"nombre\": \"JUAN\", \"observacion\": null}]', 1, NULL, '2025-12-12 16:47:21', '2025-12-14 15:15:18');
 
@@ -114,9 +114,9 @@ INSERT INTO `clientes` (`id`, `razon_social`, `tipo`, `nit`, `nombre_punto`, `no
 
 CREATE TABLE `configuracions` (
   `id` bigint UNSIGNED NOT NULL,
-  `nombre_sistema` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `alias` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `logo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nombre_sistema` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `alias` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -160,7 +160,9 @@ INSERT INTO `cuenta_cobrars` (`id`, `cliente_id`, `orden_venta_id`, `total`, `ca
 (6, 1, 17, 300.00, 0.00, 300.00, '2025-12-12', '13:24:17', NULL, '2025-12-12 17:24:17', '2025-12-12 17:24:18'),
 (7, 2, 18, 345.00, 90.00, 255.00, '2025-12-12', '13:24:18', NULL, '2025-12-12 17:24:18', '2025-12-12 17:24:18'),
 (8, 2, 19, 300.00, 100.00, 200.00, '2025-12-12', '13:32:33', NULL, '2025-12-12 17:32:33', '2025-12-12 17:32:33'),
-(9, 1, 34, 300.00, 0.00, 300.00, '2025-12-13', '08:34:13', NULL, '2025-12-13 12:34:13', '2025-12-13 12:34:13');
+(9, 1, 34, 300.00, 0.00, 300.00, '2025-12-13', '08:34:13', NULL, '2025-12-13 12:34:13', '2025-12-13 12:34:13'),
+(10, 1, 57, 645.00, 400.00, 245.00, '2025-12-17', '10:48:46', NULL, '2025-12-17 14:48:46', '2025-12-17 14:48:46'),
+(11, 1, 58, 635.00, 600.00, 35.00, '2025-12-17', '10:53:16', NULL, '2025-12-17 14:53:16', '2025-12-17 14:53:16');
 
 -- --------------------------------------------------------
 
@@ -206,7 +208,7 @@ CREATE TABLE `devolucion_clientes` (
   `total` decimal(24,2) NOT NULL,
   `fecha` date NOT NULL,
   `hora` time NOT NULL,
-  `observaciones` text COLLATE utf8mb4_unicode_ci,
+  `observaciones` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `user_id` bigint UNSIGNED NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -257,7 +259,7 @@ INSERT INTO `devolucion_cliente_detalles` (`id`, `devolucion_cliente_id`, `produ
 CREATE TABLE `devolucion_stocks` (
   `id` bigint UNSIGNED NOT NULL,
   `nro` bigint NOT NULL,
-  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `sucursal_id` bigint UNSIGNED NOT NULL,
   `cantidad_total` double NOT NULL,
   `total` decimal(24,2) NOT NULL,
@@ -265,8 +267,8 @@ CREATE TABLE `devolucion_stocks` (
   `total_v` decimal(24,2) NOT NULL,
   `fecha` date NOT NULL,
   `hora` time NOT NULL,
-  `observaciones` text COLLATE utf8mb4_unicode_ci,
-  `estado` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `observaciones` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `estado` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
   `verificado` int NOT NULL DEFAULT '0',
   `user_ver` bigint UNSIGNED DEFAULT NULL,
@@ -298,7 +300,7 @@ CREATE TABLE `devolucion_stock_detalles` (
   `subtotal` decimal(24,2) NOT NULL,
   `verificado` int NOT NULL DEFAULT '0',
   `sucursal_ajuste` bigint UNSIGNED DEFAULT NULL,
-  `motivo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `motivo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -320,7 +322,7 @@ INSERT INTO `devolucion_stock_detalles` (`id`, `devolucion_stock_id`, `producto_
 CREATE TABLE `documentos` (
   `id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
-  `file` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -341,11 +343,11 @@ INSERT INTO `documentos` (`id`, `user_id`, `file`, `created_at`, `updated_at`) V
 
 CREATE TABLE `failed_jobs` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -364,7 +366,7 @@ INSERT INTO `failed_jobs` (`id`, `uuid`, `connection`, `queue`, `payload`, `exce
 
 CREATE TABLE `gastos` (
   `id` bigint UNSIGNED NOT NULL,
-  `descripcion` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `monto` decimal(24,2) NOT NULL,
   `fecha` date NOT NULL,
   `hora` time NOT NULL,
@@ -389,11 +391,11 @@ INSERT INTO `gastos` (`id`, `descripcion`, `monto`, `fecha`, `hora`, `deleted_at
 CREATE TABLE `historial_accions` (
   `id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
-  `accion` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `descripcion` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `accion` varchar(155) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `datos_original` json DEFAULT NULL,
   `datos_nuevo` json DEFAULT NULL,
-  `modulo` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `modulo` varchar(155) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `fecha` date NOT NULL,
   `hora` time NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -616,7 +618,12 @@ INSERT INTO `historial_accions` (`id`, `user_id`, `accion`, `descripcion`, `dato
 (215, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 54, \"nro\": 35, \"cs_f\": \"CON FACTURA\", \"hora\": \"10:58\", \"fecha\": \"2025-12-14\", \"total\": 295, \"cambio\": 0, \"codigo\": \"OV.35\", \"estado\": \"FINALIZADO\", \"total_f\": 295, \"user_id\": 1, \"total_st\": 295, \"cancelado\": 295, \"descuento\": null, \"cliente_id\": 1, \"created_at\": \"2025-12-14T14:58:44.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-14T14:58:44.000000Z\", \"verificado\": 2, \"sucursal_id\": 2, \"solicitud_sw\": null, \"cantidad_total\": 1, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2025-12-14', '10:58:44', '2025-12-14 14:58:44', '2025-12-14 14:58:44'),
 (216, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE SALIDA', '{\"id\": 13, \"nro\": 13, \"hora\": \"10:59\", \"fecha\": \"2025-12-14\", \"total\": 9000, \"codigo\": \"SAL.13\", \"estado\": \"PENDIENTE\", \"user_ap\": 15, \"user_id\": 1, \"user_sol\": 15, \"created_at\": \"2025-12-14T14:59:22.000000Z\", \"updated_at\": \"2025-12-14T14:59:22.000000Z\", \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 30}', NULL, 'ORDEN DE SALIDA', '2025-12-14', '10:59:22', '2025-12-14 14:59:22', '2025-12-14 14:59:22'),
 (217, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 55, \"nro\": 36, \"cs_f\": \"CON FACTURA\", \"hora\": \"11:02\", \"fecha\": \"2025-12-14\", \"total\": 2400, \"cambio\": 0, \"codigo\": \"OV.36\", \"estado\": \"FINALIZADO\", \"total_f\": 2115, \"user_id\": 1, \"total_st\": 2360, \"cancelado\": 2115, \"descuento\": null, \"cliente_id\": 2, \"created_at\": \"2025-12-14T15:03:27.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-14T15:03:27.000000Z\", \"verificado\": 2, \"sucursal_id\": 2, \"solicitud_sw\": null, \"cantidad_total\": 8, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2025-12-14', '11:03:27', '2025-12-14 15:03:27', '2025-12-14 15:03:27'),
-(218, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 56, \"nro\": 37, \"cs_f\": \"CON FACTURA\", \"hora\": \"11:14\", \"fecha\": \"2025-12-14\", \"total\": 600, \"cambio\": 0, \"codigo\": \"OV.37\", \"estado\": \"FINALIZADO\", \"total_f\": 590, \"user_id\": 1, \"total_st\": 590, \"cancelado\": 590, \"descuento\": null, \"cliente_id\": 3, \"created_at\": \"2025-12-14T15:15:18.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-14T15:15:18.000000Z\", \"verificado\": 2, \"sucursal_id\": 2, \"solicitud_sw\": null, \"cantidad_total\": 2, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2025-12-14', '11:15:18', '2025-12-14 15:15:18', '2025-12-14 15:15:18');
+(218, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 56, \"nro\": 37, \"cs_f\": \"CON FACTURA\", \"hora\": \"11:14\", \"fecha\": \"2025-12-14\", \"total\": 600, \"cambio\": 0, \"codigo\": \"OV.37\", \"estado\": \"FINALIZADO\", \"total_f\": 590, \"user_id\": 1, \"total_st\": 590, \"cancelado\": 590, \"descuento\": null, \"cliente_id\": 3, \"created_at\": \"2025-12-14T15:15:18.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-14T15:15:18.000000Z\", \"verificado\": 2, \"sucursal_id\": 2, \"solicitud_sw\": null, \"cantidad_total\": 2, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2025-12-14', '11:15:18', '2025-12-14 15:15:18', '2025-12-14 15:15:18'),
+(219, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 57, \"qr\": 1, \"con\": 1, \"cre\": 1, \"nro\": 38, \"cs_f\": \"CON FACTURA\", \"hora\": \"10:40\", \"fecha\": \"2025-12-17\", \"total\": 645, \"cambio\": 0, \"codigo\": \"OV.38\", \"estado\": \"FINALIZADO\", \"credito\": 45, \"total_f\": 645, \"user_id\": 1, \"total_st\": 645, \"cancelado\": 400, \"descuento\": null, \"cliente_id\": 1, \"created_at\": \"2025-12-17T14:48:46.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-17T14:48:46.000000Z\", \"verificado\": 2, \"cancelado_c\": 300, \"sucursal_id\": 2, \"cancelado_qr\": 100, \"solicitud_sw\": null, \"cantidad_total\": 2, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2025-12-17', '10:48:46', '2025-12-17 14:48:46', '2025-12-17 14:48:46'),
+(220, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE SALIDA', '{\"id\": 14, \"nro\": 14, \"hora\": \"10:50\", \"fecha\": \"2025-12-17\", \"total\": 25800, \"codigo\": \"SAL.14\", \"estado\": \"PENDIENTE\", \"user_ap\": 15, \"user_id\": 1, \"user_sol\": 15, \"created_at\": \"2025-12-17T14:50:42.000000Z\", \"updated_at\": \"2025-12-17T14:50:42.000000Z\", \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 80}', NULL, 'ORDEN DE SALIDA', '2025-12-17', '10:50:42', '2025-12-17 14:50:42', '2025-12-17 14:50:42'),
+(221, 15, 'MODIFICACIÓN', 'EL USUARIO juan@gmail.com APROBO UNA ORDEN DE SALIDA', '{\"id\": 14, \"nro\": 14, \"hora\": \"10:50:00\", \"fecha\": \"2025-12-17\", \"total\": \"25800.00\", \"codigo\": \"SAL.14\", \"estado\": \"PENDIENTE\", \"user_ap\": 15, \"user_id\": 1, \"user_sol\": 15, \"created_at\": \"2025-12-17T14:50:42.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-17T14:50:42.000000Z\", \"verificado\": 0, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 80, \"orden_salida_detalles\": [{\"id\": 16, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 40, \"subtotal\": \"12000.00\", \"created_at\": \"2025-12-17T14:50:42.000000Z\", \"updated_at\": \"2025-12-17T14:50:42.000000Z\", \"verificado\": 0, \"producto_id\": 3, \"cantidad_fisica\": 40, \"orden_salida_id\": 14, \"sucursal_ajuste\": null}, {\"id\": 17, \"costo\": \"345.00\", \"motivo\": null, \"cantidad\": 40, \"subtotal\": \"13800.00\", \"created_at\": \"2025-12-17T14:50:42.000000Z\", \"updated_at\": \"2025-12-17T14:50:42.000000Z\", \"verificado\": 0, \"producto_id\": 4, \"cantidad_fisica\": 40, \"orden_salida_id\": 14, \"sucursal_ajuste\": null}]}', '{\"id\": 14, \"nro\": 14, \"hora\": \"10:50:00\", \"fecha\": \"2025-12-17\", \"total\": \"25800.00\", \"codigo\": \"SAL.14\", \"estado\": \"APROBADO\", \"user_ap\": 15, \"user_id\": 1, \"user_sol\": 15, \"created_at\": \"2025-12-17T14:50:42.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-17T14:51:06.000000Z\", \"verificado\": 1, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 80, \"orden_salida_detalles\": [{\"id\": 16, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 40, \"subtotal\": \"12000.00\", \"created_at\": \"2025-12-17T14:50:42.000000Z\", \"updated_at\": \"2025-12-17T14:51:06.000000Z\", \"verificado\": 1, \"producto_id\": 3, \"cantidad_fisica\": 40, \"orden_salida_id\": 14, \"sucursal_ajuste\": null}, {\"id\": 17, \"costo\": \"345.00\", \"motivo\": null, \"cantidad\": 40, \"subtotal\": \"13800.00\", \"created_at\": \"2025-12-17T14:50:42.000000Z\", \"updated_at\": \"2025-12-17T14:51:06.000000Z\", \"verificado\": 1, \"producto_id\": 4, \"cantidad_fisica\": 40, \"orden_salida_id\": 14, \"sucursal_ajuste\": null}]}', 'ORDEN DE SALIDA', '2025-12-17', '10:51:06', '2025-12-17 14:51:06', '2025-12-17 14:51:06'),
+(222, 15, 'MODIFICACIÓN', 'EL USUARIO juan@gmail.com APROBO UNA ORDEN DE SALIDA', '{\"id\": 13, \"nro\": 13, \"hora\": \"10:59:00\", \"fecha\": \"2025-12-14\", \"total\": \"9000.00\", \"codigo\": \"SAL.13\", \"estado\": \"PENDIENTE\", \"user_ap\": 15, \"user_id\": 1, \"user_sol\": 15, \"created_at\": \"2025-12-14T14:59:22.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-14T14:59:22.000000Z\", \"verificado\": 0, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 30, \"orden_salida_detalles\": [{\"id\": 15, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 30, \"subtotal\": \"9000.00\", \"created_at\": \"2025-12-14T14:59:22.000000Z\", \"updated_at\": \"2025-12-14T14:59:22.000000Z\", \"verificado\": 0, \"producto_id\": 3, \"cantidad_fisica\": 30, \"orden_salida_id\": 13, \"sucursal_ajuste\": null}]}', '{\"id\": 13, \"nro\": 13, \"hora\": \"10:59:00\", \"fecha\": \"2025-12-14\", \"total\": \"9000.00\", \"codigo\": \"SAL.13\", \"estado\": \"APROBADO\", \"user_ap\": 15, \"user_id\": 1, \"user_sol\": 15, \"created_at\": \"2025-12-14T14:59:22.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-17T14:51:10.000000Z\", \"verificado\": 1, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 30, \"orden_salida_detalles\": [{\"id\": 15, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 30, \"subtotal\": \"9000.00\", \"created_at\": \"2025-12-14T14:59:22.000000Z\", \"updated_at\": \"2025-12-17T14:51:10.000000Z\", \"verificado\": 1, \"producto_id\": 3, \"cantidad_fisica\": 30, \"orden_salida_id\": 13, \"sucursal_ajuste\": null}]}', 'ORDEN DE SALIDA', '2025-12-17', '10:51:10', '2025-12-17 14:51:10', '2025-12-17 14:51:10'),
+(223, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 58, \"qr\": 1, \"con\": 1, \"cre\": 1, \"nro\": 39, \"cs_f\": \"CON FACTURA\", \"hora\": \"10:51\", \"fecha\": \"2025-12-17\", \"total\": 635, \"cambio\": -35, \"codigo\": \"OV.39\", \"estado\": \"FINALIZADO\", \"credito\": 35, \"total_f\": 635, \"user_id\": 1, \"total_st\": 635, \"cancelado\": 600, \"descuento\": null, \"cliente_id\": 1, \"created_at\": \"2025-12-17T14:53:16.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-17T14:53:16.000000Z\", \"verificado\": 2, \"cancelado_c\": 300, \"sucursal_id\": 2, \"cancelado_qr\": 300, \"solicitud_sw\": null, \"cantidad_total\": 2, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2025-12-17', '10:53:16', '2025-12-17 14:53:16', '2025-12-17 14:53:16');
 
 -- --------------------------------------------------------
 
@@ -626,8 +633,8 @@ INSERT INTO `historial_accions` (`id`, `user_id`, `accion`, `descripcion`, `dato
 
 CREATE TABLE `jobs` (
   `id` bigint UNSIGNED NOT NULL,
-  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `attempts` tinyint UNSIGNED NOT NULL,
   `reserved_at` int UNSIGNED DEFAULT NULL,
   `available_at` int UNSIGNED NOT NULL,
@@ -664,7 +671,9 @@ INSERT INTO `jobs` (`id`, `queue`, `payload`, `attempts`, `reserved_at`, `availa
 (46, 'default', '{\"uuid\":\"843363aa-2ca7-46eb-9f7e-b54f10d2eef6\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":2:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}s:11:\\\"afterCommit\\\";b:1;}\"}}', 0, NULL, 1765724607, 1765724607),
 (47, 'default', '{\"uuid\":\"7a406199-384a-4b2f-93a1-5110691a2a5d\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":2:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}s:11:\\\"afterCommit\\\";b:1;}\"}}', 0, NULL, 1765725318, 1765725318),
 (48, 'default', '{\"uuid\":\"6635657a-068f-4bd7-80a9-0ee8a129568a\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1765725521, 1765725521),
-(49, 'default', '{\"uuid\":\"aa73fbeb-6bff-4d2b-9f63-5438aba9fd6d\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1765727803, 1765727803);
+(49, 'default', '{\"uuid\":\"aa73fbeb-6bff-4d2b-9f63-5438aba9fd6d\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1765727803, 1765727803),
+(50, 'default', '{\"uuid\":\"6298aeca-ac56-4d10-a559-8eed4e8e2e12\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":2:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}s:11:\\\"afterCommit\\\";b:1;}\"}}', 0, NULL, 1765982927, 1765982927),
+(51, 'default', '{\"uuid\":\"fcb3e3a1-c33e-4fc6-a592-c4cc83f11108\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":2:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}s:11:\\\"afterCommit\\\";b:1;}\"}}', 0, NULL, 1765983196, 1765983196);
 
 -- --------------------------------------------------------
 
@@ -675,13 +684,13 @@ INSERT INTO `jobs` (`id`, `queue`, `payload`, `attempts`, `reserved_at`, `availa
 CREATE TABLE `kardex_productos` (
   `id` bigint UNSIGNED NOT NULL,
   `sucursal_id` bigint UNSIGNED NOT NULL,
-  `tipo_registro` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tipo_registro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `registro_id` bigint UNSIGNED DEFAULT NULL,
-  `modulo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `modulo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `producto_id` bigint UNSIGNED NOT NULL,
-  `detalle` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `detalle` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `precio` decimal(24,2) DEFAULT NULL,
-  `tipo_is` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipo_is` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `cantidad_ingreso` double DEFAULT NULL,
   `cantidad_salida` double DEFAULT NULL,
   `cantidad_saldo` double NOT NULL,
@@ -797,7 +806,17 @@ INSERT INTO `kardex_productos` (`id`, `sucursal_id`, `tipo_registro`, `registro_
 (116, 1, 'ORDEN DE SALIDA', 14, 'OrdenSalidaDetalle', 3, 'INGRESO POR AJUSTE', 300.00, 'INGRESO', 1, NULL, 118, 300.00, 300.00, NULL, 33400.00, '2025-12-13', 1, 1, '2025-12-14 00:34:12', '2025-12-14 00:34:12'),
 (117, 2, 'ORDEN DE VENTA', 57, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 20, 300.00, NULL, 300.00, 6000.00, '2025-12-14', 1, 1, '2025-12-14 14:58:44', '2025-12-14 14:58:44'),
 (118, 2, 'ORDEN DE VENTA', 58, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 8, 12, 300.00, NULL, 2400.00, 3600.00, '2025-12-14', 1, 1, '2025-12-14 15:03:27', '2025-12-14 15:03:27'),
-(119, 2, 'ORDEN DE VENTA', 59, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 2, 10, 300.00, NULL, 600.00, 3000.00, '2025-12-14', 1, 1, '2025-12-14 15:15:18', '2025-12-14 15:15:18');
+(119, 2, 'ORDEN DE VENTA', 59, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 2, 10, 300.00, NULL, 600.00, 3000.00, '2025-12-14', 1, 1, '2025-12-14 15:15:18', '2025-12-14 15:15:18'),
+(120, 2, 'ORDEN DE VENTA', 60, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 9, 300.00, NULL, 300.00, 2700.00, '2025-12-17', 1, 1, '2025-12-17 14:48:46', '2025-12-17 14:48:46'),
+(121, 2, 'ORDEN DE VENTA', 61, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 1, 20, 345.00, NULL, 345.00, 6900.00, '2025-12-17', 1, 1, '2025-12-17 14:48:46', '2025-12-17 14:48:46'),
+(122, 1, 'ORDEN DE SALIDA', 16, 'OrdenSalidaDetalle', 3, 'EGRESO POR ORDEN DE SALIDA', 300.00, 'EGRESO', NULL, 40, 78, 300.00, NULL, 12000.00, 21400.00, '2025-12-17', 1, 15, '2025-12-17 14:51:06', '2025-12-17 14:51:06'),
+(123, 2, 'ORDEN DE SALIDA', 16, 'OrdenSalidaDetalle', 3, 'INGRESO POR ORDEN DE SALIDA', 300.00, 'INGRESO', 40, NULL, 49, 300.00, 12000.00, NULL, 14700.00, '2025-12-17', 1, 15, '2025-12-17 14:51:06', '2025-12-17 14:51:06'),
+(124, 1, 'ORDEN DE SALIDA', 17, 'OrdenSalidaDetalle', 4, 'EGRESO POR ORDEN DE SALIDA', 345.00, 'EGRESO', NULL, 40, 44, 345.00, NULL, 13800.00, 15180.00, '2025-12-17', 1, 15, '2025-12-17 14:51:06', '2025-12-17 14:51:06'),
+(125, 2, 'ORDEN DE SALIDA', 17, 'OrdenSalidaDetalle', 4, 'INGRESO POR ORDEN DE SALIDA', 345.00, 'INGRESO', 40, NULL, 60, 345.00, 13800.00, NULL, 20700.00, '2025-12-17', 1, 15, '2025-12-17 14:51:06', '2025-12-17 14:51:06'),
+(126, 1, 'ORDEN DE SALIDA', 15, 'OrdenSalidaDetalle', 3, 'EGRESO POR ORDEN DE SALIDA', 300.00, 'EGRESO', NULL, 30, 48, 300.00, NULL, 9000.00, 12400.00, '2025-12-17', 1, 15, '2025-12-17 14:51:10', '2025-12-17 14:51:10'),
+(127, 2, 'ORDEN DE SALIDA', 15, 'OrdenSalidaDetalle', 3, 'INGRESO POR ORDEN DE SALIDA', 300.00, 'INGRESO', 30, NULL, 79, 300.00, 9000.00, NULL, 23700.00, '2025-12-17', 1, 15, '2025-12-17 14:51:10', '2025-12-17 14:51:10'),
+(128, 2, 'ORDEN DE VENTA', 62, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 78, 300.00, NULL, 300.00, 23400.00, '2025-12-17', 1, 1, '2025-12-17 14:53:16', '2025-12-17 14:53:16'),
+(129, 2, 'ORDEN DE VENTA', 63, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 1, 59, 345.00, NULL, 345.00, 20355.00, '2025-12-17', 1, 1, '2025-12-17 14:53:16', '2025-12-17 14:53:16');
 
 -- --------------------------------------------------------
 
@@ -807,7 +826,7 @@ INSERT INTO `kardex_productos` (`id`, `sucursal_id`, `tipo_registro`, `registro_
 
 CREATE TABLE `marcas` (
   `id` bigint UNSIGNED NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -829,7 +848,7 @@ INSERT INTO `marcas` (`id`, `nombre`, `deleted_at`, `created_at`, `updated_at`) 
 
 CREATE TABLE `migrations` (
   `id` int UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -888,10 +907,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `modulos` (
   `id` bigint UNSIGNED NOT NULL,
-  `modulo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `accion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `descripcion` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `modulo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `accion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1014,8 +1033,8 @@ INSERT INTO `modulos` (`id`, `modulo`, `nombre`, `accion`, `descripcion`, `creat
 
 CREATE TABLE `notificacions` (
   `id` bigint UNSIGNED NOT NULL,
-  `descripcion` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `modulo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `descripcion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `modulo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `modulo_id` bigint UNSIGNED DEFAULT NULL,
   `fecha` date NOT NULL,
   `hora` time NOT NULL,
@@ -1078,16 +1097,16 @@ INSERT INTO `notificacion_users` (`id`, `user_id`, `notificacion_id`, `visto`, `
 CREATE TABLE `orden_salidas` (
   `id` bigint UNSIGNED NOT NULL,
   `nro` bigint NOT NULL,
-  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `sucursal_id` bigint UNSIGNED NOT NULL,
   `user_sol` bigint UNSIGNED NOT NULL,
   `user_ap` bigint UNSIGNED NOT NULL,
   `fecha` date NOT NULL,
   `hora` time NOT NULL,
-  `observaciones` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `observaciones` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `cantidad_total` double(8,2) NOT NULL,
   `total` decimal(24,2) NOT NULL,
-  `estado` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `verificado` int NOT NULL DEFAULT '0',
   `user_id` bigint UNSIGNED NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -1112,7 +1131,8 @@ INSERT INTO `orden_salidas` (`id`, `nro`, `codigo`, `sucursal_id`, `user_sol`, `
 (10, 10, 'SAL.10', 2, 15, 15, '2025-12-13', '16:32:00', '', 18.00, 5400.00, 'APROBADO', 1, 1, NULL, '2025-12-13 20:32:10', '2025-12-13 20:36:28'),
 (11, 11, 'SAL.11', 4, 17, 17, '2025-12-13', '16:40:00', '', 18.00, 5400.00, 'PENDIENTE', 0, 1, NULL, '2025-12-13 20:40:25', '2025-12-13 20:40:25'),
 (12, 12, 'SAL.12', 4, 17, 17, '2025-12-13', '20:33:00', '', 20.00, 6000.00, 'APROBADO CON OBSERVACIONES', 2, 1, NULL, '2025-12-14 00:33:53', '2025-12-14 00:34:12'),
-(13, 13, 'SAL.13', 2, 15, 15, '2025-12-14', '10:59:00', '', 30.00, 9000.00, 'PENDIENTE', 0, 1, NULL, '2025-12-14 14:59:22', '2025-12-14 14:59:22');
+(13, 13, 'SAL.13', 2, 15, 15, '2025-12-14', '10:59:00', '', 30.00, 9000.00, 'APROBADO', 1, 1, NULL, '2025-12-14 14:59:22', '2025-12-17 14:51:10'),
+(14, 14, 'SAL.14', 2, 15, 15, '2025-12-17', '10:50:00', '', 80.00, 25800.00, 'APROBADO', 1, 1, NULL, '2025-12-17 14:50:42', '2025-12-17 14:51:06');
 
 -- --------------------------------------------------------
 
@@ -1130,7 +1150,7 @@ CREATE TABLE `orden_salida_detalles` (
   `subtotal` decimal(24,2) NOT NULL,
   `verificado` int NOT NULL DEFAULT '0',
   `sucursal_ajuste` bigint UNSIGNED DEFAULT NULL,
-  `motivo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `motivo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1154,7 +1174,9 @@ INSERT INTO `orden_salida_detalles` (`id`, `orden_salida_id`, `producto_id`, `ca
 (12, 10, 3, 18, 18, 300.00, 5400.00, 1, NULL, NULL, '2025-12-13 20:32:10', '2025-12-13 20:36:28'),
 (13, 11, 3, 18, 18, 300.00, 5400.00, 0, NULL, NULL, '2025-12-13 20:40:25', '2025-12-13 20:40:25'),
 (14, 12, 3, 20, 19, 300.00, 6000.00, 1, 1, 'POR FALTANTE DE PROVEEDOR', '2025-12-14 00:33:53', '2025-12-14 00:34:12'),
-(15, 13, 3, 30, 30, 300.00, 9000.00, 0, NULL, NULL, '2025-12-14 14:59:22', '2025-12-14 14:59:22');
+(15, 13, 3, 30, 30, 300.00, 9000.00, 1, NULL, NULL, '2025-12-14 14:59:22', '2025-12-17 14:51:10'),
+(16, 14, 3, 40, 40, 300.00, 12000.00, 1, NULL, NULL, '2025-12-17 14:50:42', '2025-12-17 14:51:06'),
+(17, 14, 4, 40, 40, 345.00, 13800.00, 1, NULL, NULL, '2025-12-17 14:50:42', '2025-12-17 14:51:06');
 
 -- --------------------------------------------------------
 
@@ -1165,7 +1187,7 @@ INSERT INTO `orden_salida_detalles` (`id`, `orden_salida_id`, `producto_id`, `ca
 CREATE TABLE `orden_ventas` (
   `id` bigint UNSIGNED NOT NULL,
   `nro` bigint NOT NULL,
-  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `sucursal_id` bigint UNSIGNED NOT NULL,
   `cliente_id` bigint UNSIGNED NOT NULL,
   `fecha` date NOT NULL,
@@ -1180,11 +1202,17 @@ CREATE TABLE `orden_ventas` (
   `descuento` decimal(24,2) DEFAULT '0.00',
   `total_f` decimal(24,2) NOT NULL,
   `cancelado` decimal(24,2) DEFAULT '0.00',
+  `con` int NOT NULL DEFAULT '0',
+  `cancelado_c` decimal(24,2) DEFAULT '0.00',
+  `qr` int NOT NULL DEFAULT '0',
+  `cancelado_qr` decimal(24,2) DEFAULT NULL,
+  `cre` int NOT NULL DEFAULT '0',
+  `credito` decimal(24,2) DEFAULT NULL,
   `cambio` decimal(24,2) DEFAULT '0.00',
-  `forma_pago` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cs_f` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `observaciones` text COLLATE utf8mb4_unicode_ci,
-  `estado` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `forma_pago` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cs_f` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `observaciones` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `estado` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `verificado` int NOT NULL DEFAULT '0',
   `user_id` bigint UNSIGNED NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -1196,44 +1224,46 @@ CREATE TABLE `orden_ventas` (
 -- Volcado de datos para la tabla `orden_ventas`
 --
 
-INSERT INTO `orden_ventas` (`id`, `nro`, `codigo`, `sucursal_id`, `cliente_id`, `fecha`, `hora`, `cantidad_total`, `total`, `total_st`, `solicitud_descuento`, `solicitud_sw`, `user_ap`, `monto_solicitud`, `descuento`, `total_f`, `cancelado`, `cambio`, `forma_pago`, `cs_f`, `observaciones`, `estado`, `verificado`, `user_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(4, 1, 'OV.1', 2, 1, '2025-12-06', '15:54:00', 1, 300.00, 300.00, 0, 0, NULL, 0.00, 0.00, 300.00, 300.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-06 20:01:57', '2025-12-06 20:01:57'),
-(5, 2, 'OV.2', 2, 1, '2025-12-06', '15:54:00', 1, 300.00, 300.00, 0, 0, NULL, 0.00, 0.00, 300.00, 300.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-06 20:02:05', '2025-12-06 20:02:05'),
-(7, 3, 'OV.3', 2, 2, '2025-12-08', '09:32:00', 2, 645.00, 645.00, 1, 1, 1, 20.00, 20.00, 625.00, 625.00, 0.00, 'EFECTIVO', 'SIN FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-08 13:40:38', '2025-12-08 20:17:28'),
-(8, 4, 'OV.4', 2, 1, '2025-12-08', '16:46:00', 6, 1935.00, 1935.00, 0, NULL, NULL, NULL, NULL, 1935.00, 0.00, 0.00, 'CRÉDITO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-08 20:48:08', '2025-12-08 20:48:08'),
-(9, 5, 'OV.5', 2, 1, '2025-12-08', '18:38:00', 2, 645.00, 645.00, 1, 0, NULL, 10.00, 10.00, 635.00, 635.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'PENDIENTE', 0, 1, NULL, '2025-12-08 22:38:56', '2025-12-08 23:19:31'),
-(10, 6, 'OV.6', 2, 1, '2025-12-08', '19:18:00', 3, 945.00, 945.00, 1, 1, 1, 10.00, 10.00, 935.00, 935.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-08 23:19:09', '2025-12-08 23:24:33'),
-(12, 7, 'OV.7', 2, 1, '2025-12-12', '11:53:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 300.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-12 15:54:11', '2025-12-12 15:54:11'),
-(13, 8, 'OV.8', 2, 1, '2025-12-12', '12:24:00', 2, 645.00, 645.00, 0, NULL, NULL, NULL, NULL, 645.00, 645.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-12 16:32:42', '2025-12-12 16:32:42'),
-(14, 9, 'OV.9', 2, 2, '2025-12-12', '12:24:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 0.00, 0.00, 'CRÉDITO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-12 16:32:43', '2025-12-12 16:32:43'),
-(15, 10, 'OV.10', 2, 1, '2025-12-12', '12:42:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 0.00, 0.00, 'CRÉDITO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-12 16:47:21', '2025-12-12 16:47:21'),
-(16, 11, 'OV.11', 2, 1, '2025-12-12', '13:01:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 0.00, 0.00, 'CRÉDITO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-12 17:02:45', '2025-12-12 17:02:45'),
-(17, 12, 'OV.12', 2, 1, '2025-12-12', '13:23:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 0.00, 0.00, 'CRÉDITO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-12 17:24:17', '2025-12-12 17:24:17'),
-(18, 13, 'OV.13', 2, 2, '2025-12-12', '13:23:00', 1, 345.00, 345.00, 0, NULL, NULL, NULL, NULL, 345.00, 0.00, 0.00, 'CRÉDITO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-12 17:24:18', '2025-12-12 17:24:18'),
-(19, 14, 'OV.14', 2, 2, '2025-12-12', '13:31:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 10.00, -290.00, 'CRÉDITO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-12 17:32:33', '2025-12-12 17:32:33'),
-(20, 15, 'OV.15', 2, 1, '2025-12-12', '20:26:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 300.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 00:27:09', '2025-12-13 00:27:09'),
-(25, 16, 'OV.16', 2, 1, '2025-12-12', '20:29:00', 1, 345.00, 345.00, 0, NULL, NULL, NULL, NULL, 345.00, 345.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 00:32:10', '2025-12-13 00:32:10'),
-(26, 17, 'OV.17', 2, 1, '2025-12-12', '20:33:00', 2, 690.00, 690.00, 0, NULL, NULL, NULL, NULL, 690.00, 690.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 00:33:35', '2025-12-13 00:33:35'),
-(27, 18, 'OV.18', 2, 1, '2025-12-12', '20:34:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 300.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 00:35:10', '2025-12-13 00:35:10'),
-(28, 19, 'OV.19', 2, 1, '2025-12-12', '20:37:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 300.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 00:37:49', '2025-12-13 00:37:49'),
-(29, 20, 'OV.20', 2, 2, '2025-12-12', '20:38:00', 1, 345.00, 345.00, 0, NULL, NULL, NULL, NULL, 345.00, 345.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 00:38:48', '2025-12-13 00:38:48'),
-(30, 21, 'OV.21', 2, 3, '2025-12-12', '20:39:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 300.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 00:39:43', '2025-12-13 00:39:43'),
-(31, 22, 'OV.22', 2, 2, '2025-12-12', '20:41:00', 1, 345.00, 345.00, 0, NULL, NULL, NULL, NULL, 345.00, 345.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 00:41:31', '2025-12-13 00:41:31'),
-(32, 23, 'OV.23', 2, 1, '2025-12-12', '20:43:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 300.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 00:43:30', '2025-12-13 00:43:30'),
-(33, 24, 'OV.24', 2, 2, '2025-12-12', '20:44:00', 1, 345.00, 345.00, 0, NULL, NULL, NULL, NULL, 345.00, 345.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 00:44:53', '2025-12-13 00:44:53'),
-(34, 25, 'OV.25', 2, 1, '2025-12-12', '12:35:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 0.00, 0.00, 'CRÉDITO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 12:34:13', '2025-12-13 12:34:13'),
-(35, 26, 'OV.26', 2, 2, '2025-12-12', '12:35:00', 1, 345.00, 345.00, 0, NULL, NULL, NULL, NULL, 345.00, 345.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 12:34:14', '2025-12-13 12:34:14'),
-(36, 27, 'OV.27', 2, 1, '2025-12-13', '08:54:00', 10, 3000.00, 2950.00, 0, NULL, NULL, NULL, NULL, 3000.00, 3000.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 12:55:28', '2025-12-13 12:55:28'),
-(37, 28, 'OV.28', 2, 3, '2025-12-13', '09:05:00', 7, 2415.00, 2380.00, 1, 1, 1, 30.00, 30.00, 2350.00, 2350.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 13:05:32', '2025-12-13 13:19:15'),
-(40, 29, 'OV.29', 2, 1, '2025-12-13', '09:12:00', 10, 3000.00, 2950.00, 1, 1, 1, 30.00, 30.00, 2900.00, 2900.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 13:14:56', '2025-12-13 13:18:22'),
-(41, 30, 'OV.30', 2, 1, '2025-12-13', '12:55:00', 1, 295.00, 295.00, 0, NULL, NULL, NULL, NULL, 295.00, 295.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 16:55:43', '2025-12-13 16:55:43'),
-(49, 31, 'OV.31', 2, 2, '2025-12-13', '12:56:00', 1, 295.00, 295.00, 0, NULL, NULL, NULL, NULL, 295.00, 295.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 17:01:25', '2025-12-13 17:01:25'),
-(50, 32, 'OV.32', 2, 2, '2025-12-13', '13:03:00', 1, 295.00, 295.00, 0, NULL, NULL, NULL, NULL, 295.00, 295.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 17:03:12', '2025-12-13 17:03:12'),
-(52, 33, 'OV.33', 2, 1, '2025-12-13', '13:31:00', 1, 295.00, 295.00, 0, NULL, NULL, NULL, NULL, 295.00, 295.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 17:32:15', '2025-12-13 17:32:15'),
-(53, 34, 'OV.34', 2, 2, '2025-12-13', '13:33:00', 1, 295.00, 295.00, 0, NULL, NULL, NULL, NULL, 295.00, 295.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 17:33:51', '2025-12-13 17:33:51'),
-(54, 35, 'OV.35', 2, 1, '2025-12-14', '10:58:00', 1, 295.00, 295.00, 0, NULL, NULL, NULL, NULL, 295.00, 295.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-14 14:58:44', '2025-12-14 14:58:44'),
-(55, 36, 'OV.36', 2, 2, '2025-12-14', '11:02:00', 8, 2400.00, 2360.00, 0, NULL, NULL, NULL, NULL, 2115.00, 2115.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-14 15:03:27', '2025-12-14 15:03:27'),
-(56, 37, 'OV.37', 2, 3, '2025-12-14', '11:14:00', 2, 600.00, 590.00, 0, NULL, NULL, NULL, NULL, 590.00, 590.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-14 15:15:18', '2025-12-14 15:15:18');
+INSERT INTO `orden_ventas` (`id`, `nro`, `codigo`, `sucursal_id`, `cliente_id`, `fecha`, `hora`, `cantidad_total`, `total`, `total_st`, `solicitud_descuento`, `solicitud_sw`, `user_ap`, `monto_solicitud`, `descuento`, `total_f`, `cancelado`, `con`, `cancelado_c`, `qr`, `cancelado_qr`, `cre`, `credito`, `cambio`, `forma_pago`, `cs_f`, `observaciones`, `estado`, `verificado`, `user_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(4, 1, 'OV.1', 2, 1, '2025-12-06', '15:54:00', 1, 300.00, 300.00, 0, 0, NULL, 0.00, 0.00, 300.00, 300.00, 1, 300.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-06 20:01:57', '2025-12-06 20:01:57'),
+(5, 2, 'OV.2', 2, 1, '2025-12-06', '15:54:00', 1, 300.00, 300.00, 0, 0, NULL, 0.00, 0.00, 300.00, 300.00, 1, 300.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-06 20:02:05', '2025-12-06 20:02:05'),
+(7, 3, 'OV.3', 2, 2, '2025-12-08', '09:32:00', 2, 645.00, 645.00, 1, 1, 1, 20.00, 20.00, 625.00, 625.00, 1, 625.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'SIN FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-08 13:40:38', '2025-12-08 20:17:28'),
+(8, 4, 'OV.4', 2, 1, '2025-12-08', '16:46:00', 6, 1935.00, 1935.00, 0, NULL, NULL, NULL, NULL, 1935.00, 0.00, 0, 0.00, 0, NULL, 1, 1935.00, 0.00, 'CRÉDITO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-08 20:48:08', '2025-12-08 20:48:08'),
+(9, 5, 'OV.5', 2, 1, '2025-12-08', '18:38:00', 2, 645.00, 645.00, 1, 0, NULL, 10.00, 10.00, 635.00, 635.00, 1, 635.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'PENDIENTE', 0, 1, NULL, '2025-12-08 22:38:56', '2025-12-08 23:19:31'),
+(10, 6, 'OV.6', 2, 1, '2025-12-08', '19:18:00', 3, 945.00, 945.00, 1, 1, 1, 10.00, 10.00, 935.00, 935.00, 1, 935.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-08 23:19:09', '2025-12-08 23:24:33'),
+(12, 7, 'OV.7', 2, 1, '2025-12-12', '11:53:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 300.00, 1, 300.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-12 15:54:11', '2025-12-12 15:54:11'),
+(13, 8, 'OV.8', 2, 1, '2025-12-12', '12:24:00', 2, 645.00, 645.00, 0, NULL, NULL, NULL, NULL, 645.00, 645.00, 1, 645.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-12 16:32:42', '2025-12-12 16:32:42'),
+(14, 9, 'OV.9', 2, 2, '2025-12-12', '12:24:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 0.00, 0, 0.00, 0, NULL, 1, 300.00, 0.00, 'CRÉDITO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-12 16:32:43', '2025-12-12 16:32:43'),
+(15, 10, 'OV.10', 2, 1, '2025-12-12', '12:42:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 0.00, 0, 0.00, 0, NULL, 1, 300.00, 0.00, 'CRÉDITO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-12 16:47:21', '2025-12-12 16:47:21'),
+(16, 11, 'OV.11', 2, 1, '2025-12-12', '13:01:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 0.00, 0, 0.00, 0, NULL, 1, 300.00, 0.00, 'CRÉDITO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-12 17:02:45', '2025-12-12 17:02:45'),
+(17, 12, 'OV.12', 2, 1, '2025-12-12', '13:23:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 0.00, 0, 0.00, 0, NULL, 1, 300.00, 0.00, 'CRÉDITO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-12 17:24:17', '2025-12-12 17:24:17'),
+(18, 13, 'OV.13', 2, 2, '2025-12-12', '13:23:00', 1, 345.00, 345.00, 0, NULL, NULL, NULL, NULL, 345.00, 0.00, 0, 0.00, 0, NULL, 1, 345.00, 0.00, 'CRÉDITO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-12 17:24:18', '2025-12-12 17:24:18'),
+(19, 14, 'OV.14', 2, 2, '2025-12-12', '13:31:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 10.00, 0, 0.00, 0, NULL, 1, 290.00, -290.00, 'CRÉDITO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-12 17:32:33', '2025-12-12 17:32:33'),
+(20, 15, 'OV.15', 2, 1, '2025-12-12', '20:26:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 300.00, 1, 300.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 00:27:09', '2025-12-13 00:27:09'),
+(25, 16, 'OV.16', 2, 1, '2025-12-12', '20:29:00', 1, 345.00, 345.00, 0, NULL, NULL, NULL, NULL, 345.00, 345.00, 1, 345.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 00:32:10', '2025-12-13 00:32:10'),
+(26, 17, 'OV.17', 2, 1, '2025-12-12', '20:33:00', 2, 690.00, 690.00, 0, NULL, NULL, NULL, NULL, 690.00, 690.00, 1, 690.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 00:33:35', '2025-12-13 00:33:35'),
+(27, 18, 'OV.18', 2, 1, '2025-12-12', '20:34:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 300.00, 1, 300.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 00:35:10', '2025-12-13 00:35:10'),
+(28, 19, 'OV.19', 2, 1, '2025-12-12', '20:37:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 300.00, 1, 300.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 00:37:49', '2025-12-13 00:37:49'),
+(29, 20, 'OV.20', 2, 2, '2025-12-12', '20:38:00', 1, 345.00, 345.00, 0, NULL, NULL, NULL, NULL, 345.00, 345.00, 1, 345.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 00:38:48', '2025-12-13 00:38:48'),
+(30, 21, 'OV.21', 2, 3, '2025-12-12', '20:39:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 300.00, 1, 300.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 00:39:43', '2025-12-13 00:39:43'),
+(31, 22, 'OV.22', 2, 2, '2025-12-12', '20:41:00', 1, 345.00, 345.00, 0, NULL, NULL, NULL, NULL, 345.00, 345.00, 1, 345.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 00:41:31', '2025-12-13 00:41:31'),
+(32, 23, 'OV.23', 2, 1, '2025-12-12', '20:43:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 300.00, 1, 300.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 00:43:30', '2025-12-13 00:43:30'),
+(33, 24, 'OV.24', 2, 2, '2025-12-12', '20:44:00', 1, 345.00, 345.00, 0, NULL, NULL, NULL, NULL, 345.00, 345.00, 1, 345.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 00:44:53', '2025-12-13 00:44:53'),
+(34, 25, 'OV.25', 2, 1, '2025-12-12', '12:35:00', 1, 300.00, 300.00, 0, NULL, NULL, NULL, NULL, 300.00, 0.00, 0, 0.00, 0, NULL, 1, 300.00, 0.00, 'CRÉDITO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 12:34:13', '2025-12-13 12:34:13'),
+(35, 26, 'OV.26', 2, 2, '2025-12-12', '12:35:00', 1, 345.00, 345.00, 0, NULL, NULL, NULL, NULL, 345.00, 345.00, 1, 345.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 12:34:14', '2025-12-13 12:34:14'),
+(36, 27, 'OV.27', 2, 1, '2025-12-13', '08:54:00', 10, 3000.00, 2950.00, 0, NULL, NULL, NULL, NULL, 3000.00, 3000.00, 1, 3000.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 12:55:28', '2025-12-13 12:55:28'),
+(37, 28, 'OV.28', 2, 3, '2025-12-13', '09:05:00', 7, 2415.00, 2380.00, 1, 1, 1, 30.00, 30.00, 2350.00, 2350.00, 1, 2350.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 13:05:32', '2025-12-13 13:19:15'),
+(40, 29, 'OV.29', 2, 1, '2025-12-13', '09:12:00', 10, 3000.00, 2950.00, 1, 1, 1, 30.00, 30.00, 2900.00, 2900.00, 1, 2900.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 13:14:56', '2025-12-13 13:18:22'),
+(41, 30, 'OV.30', 2, 1, '2025-12-13', '12:55:00', 1, 295.00, 295.00, 0, NULL, NULL, NULL, NULL, 295.00, 295.00, 1, 295.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 16:55:43', '2025-12-13 16:55:43'),
+(49, 31, 'OV.31', 2, 2, '2025-12-13', '12:56:00', 1, 295.00, 295.00, 0, NULL, NULL, NULL, NULL, 295.00, 295.00, 1, 295.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 17:01:25', '2025-12-13 17:01:25'),
+(50, 32, 'OV.32', 2, 2, '2025-12-13', '13:03:00', 1, 295.00, 295.00, 0, NULL, NULL, NULL, NULL, 295.00, 295.00, 1, 295.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 17:03:12', '2025-12-13 17:03:12'),
+(52, 33, 'OV.33', 2, 1, '2025-12-13', '13:31:00', 1, 295.00, 295.00, 0, NULL, NULL, NULL, NULL, 295.00, 295.00, 1, 295.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 17:32:15', '2025-12-13 17:32:15'),
+(53, 34, 'OV.34', 2, 2, '2025-12-13', '13:33:00', 1, 295.00, 295.00, 0, NULL, NULL, NULL, NULL, 295.00, 295.00, 1, 295.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-13 17:33:51', '2025-12-13 17:33:51'),
+(54, 35, 'OV.35', 2, 1, '2025-12-14', '10:58:00', 1, 295.00, 295.00, 0, NULL, NULL, NULL, NULL, 295.00, 295.00, 1, 295.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-14 14:58:44', '2025-12-14 14:58:44'),
+(55, 36, 'OV.36', 2, 2, '2025-12-14', '11:02:00', 8, 2400.00, 2360.00, 0, NULL, NULL, NULL, NULL, 2115.00, 2115.00, 1, 2115.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-14 15:03:27', '2025-12-14 15:03:27'),
+(56, 37, 'OV.37', 2, 3, '2025-12-14', '11:14:00', 2, 600.00, 590.00, 0, NULL, NULL, NULL, NULL, 590.00, 590.00, 1, 590.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-14 15:15:18', '2025-12-14 15:15:18'),
+(57, 38, 'OV.38', 2, 1, '2025-12-17', '10:40:00', 2, 645.00, 645.00, 0, NULL, NULL, NULL, NULL, 645.00, 400.00, 1, 300.00, 1, 100.00, 1, 245.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-17 14:48:46', '2025-12-17 14:48:46'),
+(58, 39, 'OV.39', 2, 1, '2025-12-17', '10:51:00', 2, 635.00, 635.00, 0, NULL, NULL, NULL, NULL, 635.00, 600.00, 1, 300.00, 1, 300.00, 1, 35.00, -35.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-17 14:53:16', '2025-12-17 14:53:16');
 
 -- --------------------------------------------------------
 
@@ -1302,7 +1332,11 @@ INSERT INTO `orden_venta_detalles` (`id`, `orden_venta_id`, `producto_id`, `unid
 (56, 53, 3, 1, 1, 300.00, 295.00, 5.00, 295.00, NULL, '2025-12-13 17:33:51', '2025-12-13 17:33:51'),
 (57, 54, 3, 1, 1, 300.00, 295.00, 5.00, 295.00, NULL, '2025-12-14 14:58:44', '2025-12-14 14:58:44'),
 (58, 55, 3, 1, 8, 300.00, 2400.00, 40.00, 2360.00, NULL, '2025-12-14 15:03:27', '2025-12-14 15:03:27'),
-(59, 56, 3, 1, 2, 300.00, 600.00, 10.00, 590.00, NULL, '2025-12-14 15:15:18', '2025-12-14 15:15:18');
+(59, 56, 3, 1, 2, 300.00, 600.00, 10.00, 590.00, NULL, '2025-12-14 15:15:18', '2025-12-14 15:15:18'),
+(60, 57, 3, 1, 1, 300.00, 300.00, 0.00, 300.00, NULL, '2025-12-17 14:48:46', '2025-12-17 14:48:46'),
+(61, 57, 4, 2, 1, 345.00, 345.00, 0.00, 345.00, NULL, '2025-12-17 14:48:46', '2025-12-17 14:48:46'),
+(62, 58, 3, 1, 1, 300.00, 295.00, 5.00, 295.00, NULL, '2025-12-17 14:53:16', '2025-12-17 14:53:16'),
+(63, 58, 4, 2, 1, 345.00, 340.00, 5.00, 340.00, NULL, '2025-12-17 14:53:16', '2025-12-17 14:53:16');
 
 -- --------------------------------------------------------
 
@@ -1393,10 +1427,10 @@ INSERT INTO `permisos` (`id`, `role_id`, `modulo_id`, `created_at`, `updated_at`
 
 CREATE TABLE `productos` (
   `id` bigint UNSIGNED NOT NULL,
-  `codigo` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombre` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `unidades_caja` int NOT NULL,
-  `descripcion` text COLLATE utf8mb4_unicode_ci,
+  `descripcion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `categoria_id` bigint UNSIGNED NOT NULL,
   `marca_id` bigint UNSIGNED NOT NULL,
   `precio` decimal(24,2) NOT NULL,
@@ -1428,7 +1462,7 @@ INSERT INTO `productos` (`id`, `codigo`, `nombre`, `unidades_caja`, `descripcion
 CREATE TABLE `proformas` (
   `id` bigint UNSIGNED NOT NULL,
   `nro` bigint NOT NULL,
-  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `sucursal_id` bigint UNSIGNED NOT NULL,
   `cliente_id` bigint UNSIGNED NOT NULL,
   `fecha` date NOT NULL,
@@ -1439,9 +1473,9 @@ CREATE TABLE `proformas` (
   `solicitud_descuento` int DEFAULT '0',
   `descuento` decimal(24,2) NOT NULL,
   `total_f` decimal(24,2) NOT NULL,
-  `forma_pago` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cs_f` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `observaciones` text COLLATE utf8mb4_unicode_ci,
+  `forma_pago` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cs_f` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `observaciones` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `user_id` bigint UNSIGNED NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1501,17 +1535,17 @@ INSERT INTO `proforma_detalles` (`id`, `proforma_id`, `producto_id`, `unidad_med
 
 CREATE TABLE `proveedors` (
   `id` bigint UNSIGNED NOT NULL,
-  `razon_social` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombre_com` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nit` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `moneda` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `fono_emp` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `correo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `dir` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ciudad` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tipo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `razon_social` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre_com` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nit` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `moneda` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fono_emp` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `correo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dir` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ciudad` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `estado` int NOT NULL DEFAULT '1',
-  `observaciones` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `observaciones` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `categorias` json DEFAULT NULL,
   `marcas` json DEFAULT NULL,
   `contactos` json DEFAULT NULL,
@@ -1536,7 +1570,7 @@ INSERT INTO `proveedors` (`id`, `razon_social`, `nombre_com`, `nit`, `moneda`, `
 
 CREATE TABLE `roles` (
   `id` bigint UNSIGNED NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `permisos` int NOT NULL DEFAULT '0',
   `usuarios` int NOT NULL DEFAULT '1',
   `estado` int NOT NULL DEFAULT '1',
@@ -1563,20 +1597,20 @@ INSERT INTO `roles` (`id`, `nombre`, `permisos`, `usuarios`, `estado`, `deleted_
 CREATE TABLE `solicitud_ingresos` (
   `id` bigint UNSIGNED NOT NULL,
   `nro` bigint NOT NULL,
-  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `proveedor_id` bigint UNSIGNED NOT NULL,
   `fecha_ingreso` date NOT NULL,
   `hora_ingreso` time NOT NULL,
   `fecha_sis` date NOT NULL,
   `hora_sis` time NOT NULL,
-  `cs_f` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cs_f` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `tipo_cambio` decimal(24,2) NOT NULL,
   `gastos` decimal(24,2) NOT NULL,
-  `observaciones` text COLLATE utf8mb4_unicode_ci,
-  `descripcion` text COLLATE utf8mb4_unicode_ci,
+  `observaciones` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `descripcion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `cantidad_total` double NOT NULL,
   `total` decimal(24,2) NOT NULL,
-  `estado` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
   `verificado` int NOT NULL DEFAULT '0',
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -1612,7 +1646,7 @@ CREATE TABLE `solicitud_ingreso_detalles` (
   `subtotal` decimal(24,2) NOT NULL,
   `verificado` int NOT NULL DEFAULT '0',
   `sucursal_ajuste` bigint UNSIGNED DEFAULT NULL,
-  `motivo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `motivo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1642,7 +1676,7 @@ INSERT INTO `solicitud_ingreso_detalles` (`id`, `solicitud_ingreso_id`, `product
 CREATE TABLE `sub_categorias` (
   `id` bigint UNSIGNED NOT NULL,
   `categoria_id` bigint UNSIGNED NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1664,10 +1698,10 @@ INSERT INTO `sub_categorias` (`id`, `categoria_id`, `nombre`, `deleted_at`, `cre
 
 CREATE TABLE `sucursals` (
   `id` bigint UNSIGNED NOT NULL,
-  `nombre` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `direccion` varchar(800) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `fono` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `correo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nombre` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `direccion` varchar(800) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fono` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `correo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `user_id` bigint UNSIGNED DEFAULT NULL,
   `almacen` int NOT NULL DEFAULT '0',
   `estado` int NOT NULL DEFAULT '1',
@@ -1710,10 +1744,10 @@ CREATE TABLE `sucursal_productos` (
 --
 
 INSERT INTO `sucursal_productos` (`id`, `sucursal_id`, `producto_id`, `cantidad_ideal`, `cantidad_minima`, `stock_actual`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 3, 5, 5, 118, NULL, '2025-12-05 15:07:00', '2025-12-14 00:34:12'),
-(2, 1, 4, 0, 0, 84, NULL, '2025-12-05 15:07:00', '2025-12-14 00:26:45'),
-(4, 2, 3, 30, 6, 10, NULL, '2025-12-05 16:08:14', '2025-12-14 15:15:18'),
-(5, 2, 4, 2, 2, 21, NULL, '2025-12-05 16:14:58', '2025-12-13 13:19:15'),
+(1, 1, 3, 5, 5, 48, NULL, '2025-12-05 15:07:00', '2025-12-17 14:51:10'),
+(2, 1, 4, 0, 0, 44, NULL, '2025-12-05 15:07:00', '2025-12-17 14:51:06'),
+(4, 2, 3, 30, 6, 78, NULL, '2025-12-05 16:08:14', '2025-12-17 14:53:16'),
+(5, 2, 4, 2, 2, 59, NULL, '2025-12-05 16:14:58', '2025-12-17 14:53:16'),
 (6, 3, 3, 0, 0, 14, NULL, '2025-12-06 14:30:40', '2025-12-13 17:34:26'),
 (7, 3, 4, 0, 0, 4, NULL, '2025-12-06 14:31:33', '2025-12-09 21:53:43'),
 (8, 1, 5, 0, 0, 18, NULL, '2025-12-14 00:26:45', '2025-12-14 00:26:45'),
@@ -1729,7 +1763,7 @@ INSERT INTO `sucursal_productos` (`id`, `sucursal_id`, `producto_id`, `cantidad_
 CREATE TABLE `transferencias` (
   `id` bigint UNSIGNED NOT NULL,
   `nro` bigint NOT NULL,
-  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `sucursal_id` bigint UNSIGNED NOT NULL,
   `sucursal_destino` bigint UNSIGNED NOT NULL,
   `user_sol` bigint UNSIGNED NOT NULL,
@@ -1738,8 +1772,8 @@ CREATE TABLE `transferencias` (
   `cantidad_total_v` double(8,2) NOT NULL,
   `fecha` date NOT NULL,
   `hora` time NOT NULL,
-  `observaciones` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `estado` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `observaciones` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `verificado` int NOT NULL DEFAULT '0',
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1773,7 +1807,7 @@ CREATE TABLE `transferencia_detalles` (
   `subtotal` decimal(24,2) NOT NULL,
   `verificado` int NOT NULL DEFAULT '0',
   `sucursal_ajuste` bigint UNSIGNED DEFAULT NULL,
-  `motivo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `motivo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1798,7 +1832,7 @@ INSERT INTO `transferencia_detalles` (`id`, `transferencia_id`, `producto_id`, `
 
 CREATE TABLE `unidad_medidas` (
   `id` bigint UNSIGNED NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1820,27 +1854,27 @@ INSERT INTO `unidad_medidas` (`id`, `nombre`, `deleted_at`, `created_at`, `updat
 
 CREATE TABLE `users` (
   `id` bigint UNSIGNED NOT NULL,
-  `usuario` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `paterno` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `materno` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `ci` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ci_exp` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `grupo_san` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sexo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nacionalidad` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `profesion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `cel` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `fono` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `cel_dom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `dir` varchar(600) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `latitud` varchar(600) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `longitud` varchar(600) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `correo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `foto` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `carnet` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tipo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `usuario` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `paterno` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `materno` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ci` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ci_exp` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `grupo_san` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sexo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nacionalidad` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `profesion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cel` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fono` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cel_dom` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dir` varchar(600) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `latitud` varchar(600) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `longitud` varchar(600) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `correo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `foto` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `carnet` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `role_id` bigint UNSIGNED DEFAULT NULL,
   `acceso` int NOT NULL,
   `fecha_registro` date NOT NULL,
@@ -2208,7 +2242,7 @@ ALTER TABLE `configuracions`
 -- AUTO_INCREMENT de la tabla `cuenta_cobrars`
 --
 ALTER TABLE `cuenta_cobrars`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `cuenta_cobrar_detalles`
@@ -2262,19 +2296,19 @@ ALTER TABLE `gastos`
 -- AUTO_INCREMENT de la tabla `historial_accions`
 --
 ALTER TABLE `historial_accions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=219;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=224;
 
 --
 -- AUTO_INCREMENT de la tabla `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT de la tabla `kardex_productos`
 --
 ALTER TABLE `kardex_productos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
 
 --
 -- AUTO_INCREMENT de la tabla `marcas`
@@ -2310,25 +2344,25 @@ ALTER TABLE `notificacion_users`
 -- AUTO_INCREMENT de la tabla `orden_salidas`
 --
 ALTER TABLE `orden_salidas`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `orden_salida_detalles`
 --
 ALTER TABLE `orden_salida_detalles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `orden_ventas`
 --
 ALTER TABLE `orden_ventas`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT de la tabla `orden_venta_detalles`
 --
 ALTER TABLE `orden_venta_detalles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT de la tabla `parametro_clientes`
