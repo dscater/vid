@@ -46,7 +46,7 @@ class ProformaService
     public function listadoPaginado(int $length, int $page, string $search, array $columnsSerachLike = [], array $columnsFilter = [], array $columnsBetweenFilter = [], array $orderBy = []): LengthAwarePaginator
     {
         $proformas = Proforma::select("proformas.*")
-            ->with(["sucursal:id,nombre", "user:id,nombre,paterno,materno", "cliente:id,razon_social"]);
+            ->with(["sucursal:id,nombre", "user:id,nombre,paterno,materno"]);
 
         if (Auth::user()->sucursal_asignada) {
             $proformas->where("sucursal_id", Auth::user()->sucursal_asignada->id);
@@ -99,32 +99,35 @@ class ProformaService
             "nro" => $nuevo_codigo[0],
             "codigo" => $nuevo_codigo[1],
             "sucursal_id" => $datos["sucursal_id"],
-            "cliente_id" => $datos["cliente_id"],
             "fecha" => $datos["fecha"],
             "hora" => $datos["hora"],
-            "cantidad_total" => $datos["cantidad_total"],
-            "cs_f" => $datos["cs_f"],
-            "forma_pago" => $datos["forma_pago"],
-            // "cancelado" => $datos["cancelado"],
-            // "cambio" => $datos["cambio"],
             "total" => $datos["total"],
-            "total_st" => $datos["total_st"],
-            // "solicitud_descuento" => $datos["solicitud_descuento"],
-            "descuento" => $datos["descuento"],
-            "total_f" => $datos["total_f"],
             "user_id" => Auth::user()->id,
         ]);
 
         foreach ($datos["proforma_detalles"] as $item) {
+            Log::debug($item);
+            // DETALLE
             $proforma_detalle = $proforma->proforma_detalles()->create([
-                "producto_id" => $item["producto_id"],
-                "unidad_medida_id" => $item["unidad_medida_id"],
+                "proforma_id" => $proforma->id,
+                "cliente_id" => $item["cliente_id"],
                 "cantidad" => $item["cantidad"],
-                "precio" => $item["precio"],
-                "subtotal" => $item["subtotal"],
-                "descuento" => $item["descuento"],
-                "subtotal_f" => $item["subtotal_f"],
+                "total" => $item["total"],
+                "saldo" => $item["total"],
+                "estado" => "PENDIENTE",
             ]);
+
+            // DETALLE PRODUCTOS
+            foreach ($item["proforma_detalle_productos"] as $pdp) {
+                $proforma_detalle->proforma_detalle_productos()->create([
+                    "proforma_id" => $proforma->id,
+                    "producto_id" => $pdp["producto_id"],
+                    "unidad_medida_id" => $pdp["unidad_medida_id"],
+                    "cantidad" => $pdp["cantidad"],
+                    "precio" => $pdp["precio"],
+                    "subtotal" => $pdp["subtotal"],
+                ]);
+            }
         }
 
         // registrar accion

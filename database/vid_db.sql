@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 17-12-2025 a las 15:13:54
+-- Tiempo de generación: 18-12-2025 a las 22:24:52
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.2.22
 
@@ -102,9 +102,10 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id`, `razon_social`, `tipo`, `nit`, `nombre_punto`, `nombre_prop`, `ci_prop`, `correo`, `cel`, `fono`, `dir`, `latitud`, `longitud`, `ciudad`, `rank`, `categoria`, `score`, `factor`, `contactos`, `estado`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'CLIENTE 1 S.A. MOD', 'EMPRESA', '111111111111', 'PUNTO VENTA C 1', 'JUAN PEREZ', '121212121', 'juanperez@gmail.com', '6767676767', '22222', 'LOS PEDREGALES', '111111111', '11111111111', 'LA PAZ', 1, 'A', 15996.1600, 1.5000, '[{\"cel\": \"7777777\", \"fono\": \"6767676767\", \"nombre\": \"JUAN GONZALES\", \"observacion\": \"OBS. CONTACTO 1\"}, {\"cel\": \"7866786\", \"fono\": \"667567567\", \"nombre\": \"JORGE RAMIRES\", \"observacion\": null}]', 1, NULL, '2025-12-03 15:46:45', '2025-12-17 14:53:16'),
+(1, 'CLIENTE 1 S.A. MOD', 'EMPRESA', '111111111111', 'PUNTO VENTA C 1', 'JUAN PEREZ', '121212121', 'juanperez@gmail.com', '6767676767', '22222', 'LOS PEDREGALES', '111111111', '11111111111', 'LA PAZ', 1, 'A', 16197.8400, 1.5000, '[{\"cel\": \"7777777\", \"fono\": \"6767676767\", \"nombre\": \"JUAN GONZALES\", \"observacion\": \"OBS. CONTACTO 1\"}, {\"cel\": \"7866786\", \"fono\": \"667567567\", \"nombre\": \"JORGE RAMIRES\", \"observacion\": null}]', 1, NULL, '2025-12-03 15:46:45', '2025-12-17 15:53:35'),
 (2, 'CLIENTE 2', 'PERSONA', '1111111111111', 'CLIENTE 2 PV', 'MARIA MAMANI', '23123123', NULL, '657756', '222', 'LOS PEDREAGLES1', '111', '2222', 'EL ALTO', 2, 'A', 13045.7700, 1.5000, '[{\"cel\": \"6757567\", \"fono\": \"222222\", \"nombre\": \"CONTACTO 1\", \"observacion\": null}]', 1, NULL, '2025-12-03 15:52:12', '2025-12-14 15:03:27'),
-(3, 'CLIENTE 3', 'PERSONA', '1111111', 'PUNTO VENA 3', 'JUAN DOMINGUEZ', '1221121221', 'dominguez@gmail.com', '777777', '6767676767', 'LOS PEDREGALES', '1111', '22222', 'LA PAZ', 3, 'A', 12825.0800, 1.5000, '[{\"cel\": \"767676767\", \"fono\": \"6767676767\", \"nombre\": \"JUAN\", \"observacion\": null}]', 1, NULL, '2025-12-12 16:47:21', '2025-12-14 15:15:18');
+(3, 'CLIENTE 3', 'PERSONA', '1111111', 'PUNTO VENA 3', 'JUAN DOMINGUEZ', '1221121221', 'dominguez@gmail.com', '777777', '6767676767', 'LOS PEDREGALES', '1111', '22222', 'LA PAZ', 3, 'A', 12825.0800, 1.5000, '[{\"cel\": \"767676767\", \"fono\": \"6767676767\", \"nombre\": \"JUAN\", \"observacion\": null}]', 1, NULL, '2025-12-12 16:47:21', '2025-12-14 15:15:18'),
+(4, 'JUAN PEREZ', 'PERSONA', '123123', 'PUNTO VENTA JUAN PEREZ', 'JUAN PEREZ', '234234234', NULL, '67676767', '454554', 'LOS PEDREGALES', '1213123', '123123', 'LA PAZ', NULL, '', NULL, NULL, '[{\"cel\": \"676767\", \"fono\": \"67676767\", \"nombre\": \"JUAN PEREZ\", \"observacion\": null}]', 1, NULL, '2025-12-18 21:37:23', '2025-12-18 21:37:23');
 
 -- --------------------------------------------------------
 
@@ -623,7 +624,10 @@ INSERT INTO `historial_accions` (`id`, `user_id`, `accion`, `descripcion`, `dato
 (220, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE SALIDA', '{\"id\": 14, \"nro\": 14, \"hora\": \"10:50\", \"fecha\": \"2025-12-17\", \"total\": 25800, \"codigo\": \"SAL.14\", \"estado\": \"PENDIENTE\", \"user_ap\": 15, \"user_id\": 1, \"user_sol\": 15, \"created_at\": \"2025-12-17T14:50:42.000000Z\", \"updated_at\": \"2025-12-17T14:50:42.000000Z\", \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 80}', NULL, 'ORDEN DE SALIDA', '2025-12-17', '10:50:42', '2025-12-17 14:50:42', '2025-12-17 14:50:42'),
 (221, 15, 'MODIFICACIÓN', 'EL USUARIO juan@gmail.com APROBO UNA ORDEN DE SALIDA', '{\"id\": 14, \"nro\": 14, \"hora\": \"10:50:00\", \"fecha\": \"2025-12-17\", \"total\": \"25800.00\", \"codigo\": \"SAL.14\", \"estado\": \"PENDIENTE\", \"user_ap\": 15, \"user_id\": 1, \"user_sol\": 15, \"created_at\": \"2025-12-17T14:50:42.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-17T14:50:42.000000Z\", \"verificado\": 0, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 80, \"orden_salida_detalles\": [{\"id\": 16, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 40, \"subtotal\": \"12000.00\", \"created_at\": \"2025-12-17T14:50:42.000000Z\", \"updated_at\": \"2025-12-17T14:50:42.000000Z\", \"verificado\": 0, \"producto_id\": 3, \"cantidad_fisica\": 40, \"orden_salida_id\": 14, \"sucursal_ajuste\": null}, {\"id\": 17, \"costo\": \"345.00\", \"motivo\": null, \"cantidad\": 40, \"subtotal\": \"13800.00\", \"created_at\": \"2025-12-17T14:50:42.000000Z\", \"updated_at\": \"2025-12-17T14:50:42.000000Z\", \"verificado\": 0, \"producto_id\": 4, \"cantidad_fisica\": 40, \"orden_salida_id\": 14, \"sucursal_ajuste\": null}]}', '{\"id\": 14, \"nro\": 14, \"hora\": \"10:50:00\", \"fecha\": \"2025-12-17\", \"total\": \"25800.00\", \"codigo\": \"SAL.14\", \"estado\": \"APROBADO\", \"user_ap\": 15, \"user_id\": 1, \"user_sol\": 15, \"created_at\": \"2025-12-17T14:50:42.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-17T14:51:06.000000Z\", \"verificado\": 1, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 80, \"orden_salida_detalles\": [{\"id\": 16, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 40, \"subtotal\": \"12000.00\", \"created_at\": \"2025-12-17T14:50:42.000000Z\", \"updated_at\": \"2025-12-17T14:51:06.000000Z\", \"verificado\": 1, \"producto_id\": 3, \"cantidad_fisica\": 40, \"orden_salida_id\": 14, \"sucursal_ajuste\": null}, {\"id\": 17, \"costo\": \"345.00\", \"motivo\": null, \"cantidad\": 40, \"subtotal\": \"13800.00\", \"created_at\": \"2025-12-17T14:50:42.000000Z\", \"updated_at\": \"2025-12-17T14:51:06.000000Z\", \"verificado\": 1, \"producto_id\": 4, \"cantidad_fisica\": 40, \"orden_salida_id\": 14, \"sucursal_ajuste\": null}]}', 'ORDEN DE SALIDA', '2025-12-17', '10:51:06', '2025-12-17 14:51:06', '2025-12-17 14:51:06'),
 (222, 15, 'MODIFICACIÓN', 'EL USUARIO juan@gmail.com APROBO UNA ORDEN DE SALIDA', '{\"id\": 13, \"nro\": 13, \"hora\": \"10:59:00\", \"fecha\": \"2025-12-14\", \"total\": \"9000.00\", \"codigo\": \"SAL.13\", \"estado\": \"PENDIENTE\", \"user_ap\": 15, \"user_id\": 1, \"user_sol\": 15, \"created_at\": \"2025-12-14T14:59:22.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-14T14:59:22.000000Z\", \"verificado\": 0, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 30, \"orden_salida_detalles\": [{\"id\": 15, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 30, \"subtotal\": \"9000.00\", \"created_at\": \"2025-12-14T14:59:22.000000Z\", \"updated_at\": \"2025-12-14T14:59:22.000000Z\", \"verificado\": 0, \"producto_id\": 3, \"cantidad_fisica\": 30, \"orden_salida_id\": 13, \"sucursal_ajuste\": null}]}', '{\"id\": 13, \"nro\": 13, \"hora\": \"10:59:00\", \"fecha\": \"2025-12-14\", \"total\": \"9000.00\", \"codigo\": \"SAL.13\", \"estado\": \"APROBADO\", \"user_ap\": 15, \"user_id\": 1, \"user_sol\": 15, \"created_at\": \"2025-12-14T14:59:22.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-17T14:51:10.000000Z\", \"verificado\": 1, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 30, \"orden_salida_detalles\": [{\"id\": 15, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 30, \"subtotal\": \"9000.00\", \"created_at\": \"2025-12-14T14:59:22.000000Z\", \"updated_at\": \"2025-12-17T14:51:10.000000Z\", \"verificado\": 1, \"producto_id\": 3, \"cantidad_fisica\": 30, \"orden_salida_id\": 13, \"sucursal_ajuste\": null}]}', 'ORDEN DE SALIDA', '2025-12-17', '10:51:10', '2025-12-17 14:51:10', '2025-12-17 14:51:10'),
-(223, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 58, \"qr\": 1, \"con\": 1, \"cre\": 1, \"nro\": 39, \"cs_f\": \"CON FACTURA\", \"hora\": \"10:51\", \"fecha\": \"2025-12-17\", \"total\": 635, \"cambio\": -35, \"codigo\": \"OV.39\", \"estado\": \"FINALIZADO\", \"credito\": 35, \"total_f\": 635, \"user_id\": 1, \"total_st\": 635, \"cancelado\": 600, \"descuento\": null, \"cliente_id\": 1, \"created_at\": \"2025-12-17T14:53:16.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-17T14:53:16.000000Z\", \"verificado\": 2, \"cancelado_c\": 300, \"sucursal_id\": 2, \"cancelado_qr\": 300, \"solicitud_sw\": null, \"cantidad_total\": 2, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2025-12-17', '10:53:16', '2025-12-17 14:53:16', '2025-12-17 14:53:16');
+(223, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 58, \"qr\": 1, \"con\": 1, \"cre\": 1, \"nro\": 39, \"cs_f\": \"CON FACTURA\", \"hora\": \"10:51\", \"fecha\": \"2025-12-17\", \"total\": 635, \"cambio\": -35, \"codigo\": \"OV.39\", \"estado\": \"FINALIZADO\", \"credito\": 35, \"total_f\": 635, \"user_id\": 1, \"total_st\": 635, \"cancelado\": 600, \"descuento\": null, \"cliente_id\": 1, \"created_at\": \"2025-12-17T14:53:16.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-17T14:53:16.000000Z\", \"verificado\": 2, \"cancelado_c\": 300, \"sucursal_id\": 2, \"cancelado_qr\": 300, \"solicitud_sw\": null, \"cantidad_total\": 2, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2025-12-17', '10:53:16', '2025-12-17 14:53:16', '2025-12-17 14:53:16'),
+(224, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 59, \"qr\": 1, \"con\": 1, \"cre\": 0, \"nro\": 40, \"cs_f\": \"CON FACTURA\", \"hora\": \"11:52\", \"fecha\": \"2025-12-17\", \"total\": 295, \"cambio\": 0, \"codigo\": \"OV.40\", \"estado\": \"FINALIZADO\", \"credito\": 0, \"total_f\": 295, \"user_id\": 1, \"total_st\": 295, \"cancelado\": 295, \"descuento\": null, \"cliente_id\": 1, \"created_at\": \"2025-12-17T15:53:34.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-17T15:53:34.000000Z\", \"verificado\": 2, \"cancelado_c\": 200, \"sucursal_id\": 2, \"cancelado_qr\": 95, \"solicitud_sw\": null, \"cantidad_total\": 1, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2025-12-17', '11:53:35', '2025-12-17 15:53:35', '2025-12-17 15:53:35'),
+(225, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UN CLIENTE', '{\"id\": 4, \"cel\": \"67676767\", \"dir\": \"LOS PEDREGALES\", \"nit\": \"123123\", \"fono\": \"454554\", \"tipo\": \"PERSONA\", \"ciudad\": \"LA PAZ\", \"correo\": null, \"estado\": \"1\", \"ci_prop\": \"234234234\", \"latitud\": \"1213123\", \"longitud\": \"123123\", \"contactos\": [{\"cel\": \"676767\", \"fono\": \"67676767\", \"nombre\": \"JUAN PEREZ\", \"observacion\": null}], \"created_at\": \"2025-12-18T21:37:23.000000Z\", \"updated_at\": \"2025-12-18T21:37:23.000000Z\", \"nombre_prop\": \"JUAN PEREZ\", \"nombre_punto\": \"PUNTO VENTA JUAN PEREZ\", \"razon_social\": \"JUAN PEREZ\"}', NULL, 'CLIENTES', '2025-12-18', '17:37:23', '2025-12-18 21:37:23', '2025-12-18 21:37:23'),
+(226, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA PROFORMA', '{\"id\": 7, \"nro\": 1, \"hora\": \"17:57\", \"fecha\": \"2025-12-18\", \"total\": null, \"codigo\": \"PF.1\", \"user_id\": 1, \"created_at\": \"2025-12-18T22:00:24.000000Z\", \"updated_at\": \"2025-12-18T22:00:24.000000Z\", \"sucursal_id\": 2}', NULL, 'PROFORMA', '2025-12-18', '18:00:24', '2025-12-18 22:00:24', '2025-12-18 22:00:24');
 
 -- --------------------------------------------------------
 
@@ -673,7 +677,11 @@ INSERT INTO `jobs` (`id`, `queue`, `payload`, `attempts`, `reserved_at`, `availa
 (48, 'default', '{\"uuid\":\"6635657a-068f-4bd7-80a9-0ee8a129568a\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1765725521, 1765725521),
 (49, 'default', '{\"uuid\":\"aa73fbeb-6bff-4d2b-9f63-5438aba9fd6d\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1765727803, 1765727803),
 (50, 'default', '{\"uuid\":\"6298aeca-ac56-4d10-a559-8eed4e8e2e12\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":2:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}s:11:\\\"afterCommit\\\";b:1;}\"}}', 0, NULL, 1765982927, 1765982927),
-(51, 'default', '{\"uuid\":\"fcb3e3a1-c33e-4fc6-a592-c4cc83f11108\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":2:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}s:11:\\\"afterCommit\\\";b:1;}\"}}', 0, NULL, 1765983196, 1765983196);
+(51, 'default', '{\"uuid\":\"fcb3e3a1-c33e-4fc6-a592-c4cc83f11108\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":2:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}s:11:\\\"afterCommit\\\";b:1;}\"}}', 0, NULL, 1765983196, 1765983196),
+(52, 'default', '{\"uuid\":\"7a3ee69b-8a60-4f5a-b2c0-5bd6d564806c\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":2:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}s:11:\\\"afterCommit\\\";b:1;}\"}}', 0, NULL, 1765986816, 1765986816),
+(53, 'default', '{\"uuid\":\"52e1b8cf-fde1-4686-b93e-89da5319899c\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1766093808, 1766093808),
+(54, 'default', '{\"uuid\":\"547c37b8-1488-4688-aee7-8e51f7978dc4\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1766093809, 1766093809),
+(55, 'default', '{\"uuid\":\"e2aae2ae-9138-444f-af20-87087ff3342b\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1766093843, 1766093843);
 
 -- --------------------------------------------------------
 
@@ -816,7 +824,8 @@ INSERT INTO `kardex_productos` (`id`, `sucursal_id`, `tipo_registro`, `registro_
 (126, 1, 'ORDEN DE SALIDA', 15, 'OrdenSalidaDetalle', 3, 'EGRESO POR ORDEN DE SALIDA', 300.00, 'EGRESO', NULL, 30, 48, 300.00, NULL, 9000.00, 12400.00, '2025-12-17', 1, 15, '2025-12-17 14:51:10', '2025-12-17 14:51:10'),
 (127, 2, 'ORDEN DE SALIDA', 15, 'OrdenSalidaDetalle', 3, 'INGRESO POR ORDEN DE SALIDA', 300.00, 'INGRESO', 30, NULL, 79, 300.00, 9000.00, NULL, 23700.00, '2025-12-17', 1, 15, '2025-12-17 14:51:10', '2025-12-17 14:51:10'),
 (128, 2, 'ORDEN DE VENTA', 62, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 78, 300.00, NULL, 300.00, 23400.00, '2025-12-17', 1, 1, '2025-12-17 14:53:16', '2025-12-17 14:53:16'),
-(129, 2, 'ORDEN DE VENTA', 63, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 1, 59, 345.00, NULL, 345.00, 20355.00, '2025-12-17', 1, 1, '2025-12-17 14:53:16', '2025-12-17 14:53:16');
+(129, 2, 'ORDEN DE VENTA', 63, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 1, 59, 345.00, NULL, 345.00, 20355.00, '2025-12-17', 1, 1, '2025-12-17 14:53:16', '2025-12-17 14:53:16'),
+(130, 2, 'ORDEN DE VENTA', 64, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 77, 300.00, NULL, 300.00, 23100.00, '2025-12-17', 1, 1, '2025-12-17 15:53:35', '2025-12-17 15:53:35');
 
 -- --------------------------------------------------------
 
@@ -897,7 +906,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (38, '2025_12_12_202747_create_jobs_table', 5),
 (39, '2025_12_12_202751_create_failed_jobs_table', 5),
 (40, '2025_12_13_121456_create_notificacions_table', 6),
-(41, '2025_12_13_121459_create_notificacion_users_table', 6);
+(41, '2025_12_13_121459_create_notificacion_users_table', 6),
+(42, '2025_12_18_163352_create_proforma_detalle_productos_table', 7);
 
 -- --------------------------------------------------------
 
@@ -1263,7 +1273,8 @@ INSERT INTO `orden_ventas` (`id`, `nro`, `codigo`, `sucursal_id`, `cliente_id`, 
 (55, 36, 'OV.36', 2, 2, '2025-12-14', '11:02:00', 8, 2400.00, 2360.00, 0, NULL, NULL, NULL, NULL, 2115.00, 2115.00, 1, 2115.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-14 15:03:27', '2025-12-14 15:03:27'),
 (56, 37, 'OV.37', 2, 3, '2025-12-14', '11:14:00', 2, 600.00, 590.00, 0, NULL, NULL, NULL, NULL, 590.00, 590.00, 1, 590.00, 0, NULL, 0, NULL, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-14 15:15:18', '2025-12-14 15:15:18'),
 (57, 38, 'OV.38', 2, 1, '2025-12-17', '10:40:00', 2, 645.00, 645.00, 0, NULL, NULL, NULL, NULL, 645.00, 400.00, 1, 300.00, 1, 100.00, 1, 245.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-17 14:48:46', '2025-12-17 14:48:46'),
-(58, 39, 'OV.39', 2, 1, '2025-12-17', '10:51:00', 2, 635.00, 635.00, 0, NULL, NULL, NULL, NULL, 635.00, 600.00, 1, 300.00, 1, 300.00, 1, 35.00, -35.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-17 14:53:16', '2025-12-17 14:53:16');
+(58, 39, 'OV.39', 2, 1, '2025-12-17', '10:51:00', 2, 635.00, 635.00, 0, NULL, NULL, NULL, NULL, 635.00, 600.00, 1, 300.00, 1, 300.00, 1, 35.00, -35.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-17 14:53:16', '2025-12-17 14:53:16'),
+(59, 40, 'OV.40', 2, 1, '2025-12-17', '11:52:00', 1, 295.00, 295.00, 0, NULL, NULL, NULL, NULL, 295.00, 295.00, 1, 200.00, 1, 95.00, 0, 0.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2025-12-17 15:53:34', '2025-12-17 15:53:34');
 
 -- --------------------------------------------------------
 
@@ -1336,7 +1347,8 @@ INSERT INTO `orden_venta_detalles` (`id`, `orden_venta_id`, `producto_id`, `unid
 (60, 57, 3, 1, 1, 300.00, 300.00, 0.00, 300.00, NULL, '2025-12-17 14:48:46', '2025-12-17 14:48:46'),
 (61, 57, 4, 2, 1, 345.00, 345.00, 0.00, 345.00, NULL, '2025-12-17 14:48:46', '2025-12-17 14:48:46'),
 (62, 58, 3, 1, 1, 300.00, 295.00, 5.00, 295.00, NULL, '2025-12-17 14:53:16', '2025-12-17 14:53:16'),
-(63, 58, 4, 2, 1, 345.00, 340.00, 5.00, 340.00, NULL, '2025-12-17 14:53:16', '2025-12-17 14:53:16');
+(63, 58, 4, 2, 1, 345.00, 340.00, 5.00, 340.00, NULL, '2025-12-17 14:53:16', '2025-12-17 14:53:16'),
+(64, 59, 3, 1, 1, 300.00, 295.00, 5.00, 295.00, NULL, '2025-12-17 15:53:34', '2025-12-17 15:53:34');
 
 -- --------------------------------------------------------
 
@@ -1464,17 +1476,10 @@ CREATE TABLE `proformas` (
   `nro` bigint NOT NULL,
   `codigo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `sucursal_id` bigint UNSIGNED NOT NULL,
-  `cliente_id` bigint UNSIGNED NOT NULL,
   `fecha` date NOT NULL,
   `hora` time NOT NULL,
-  `cantidad_total` double NOT NULL,
-  `total` decimal(24,2) NOT NULL,
-  `total_st` decimal(24,2) NOT NULL,
-  `solicitud_descuento` int DEFAULT '0',
-  `descuento` decimal(24,2) NOT NULL,
-  `total_f` decimal(24,2) NOT NULL,
-  `forma_pago` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cs_f` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cantidad_total` double DEFAULT NULL,
+  `total` decimal(24,2) DEFAULT NULL,
   `observaciones` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `user_id` bigint UNSIGNED NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -1486,12 +1491,8 @@ CREATE TABLE `proformas` (
 -- Volcado de datos para la tabla `proformas`
 --
 
-INSERT INTO `proformas` (`id`, `nro`, `codigo`, `sucursal_id`, `cliente_id`, `fecha`, `hora`, `cantidad_total`, `total`, `total_st`, `solicitud_descuento`, `descuento`, `total_f`, `forma_pago`, `cs_f`, `observaciones`, `user_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(3, 1, 'PF.1', 2, 1, '2025-12-09', '16:25:00', 16, 5250.00, 5250.00, 1, 20.00, 5230.00, 'EFECTIVO', 'CON FACTURA', NULL, 1, NULL, '2025-12-09 20:30:52', '2025-12-09 21:15:52'),
-(4, 2, 'PF.2', 2, 1, '2025-12-12', '12:55:00', 1, 300.00, 300.00, 0, 0.00, 300.00, 'EFECTIVO', 'CON FACTURA', NULL, 1, NULL, '2025-12-12 17:01:08', '2025-12-12 17:01:08'),
-(5, 3, 'PF.3', 2, 1, '2025-12-12', '13:02:00', 3, 990.00, 990.00, 0, 0.00, 990.00, 'EFECTIVO', 'CON FACTURA', NULL, 1, NULL, '2025-12-12 17:02:44', '2025-12-12 17:02:44'),
-(6, 4, 'PF.4', 2, 2, '2025-12-13', '09:04:00', 20, 6000.00, 5900.00, 0, 0.00, 6000.00, 'EFECTIVO', 'CON FACTURA', NULL, 1, NULL, '2025-12-13 13:04:41', '2025-12-13 20:27:06'),
-(7, 5, 'PF.5', 3, 2, '2025-12-13', '16:28:00', 1, 295.00, 295.00, 0, 0.00, 295.00, 'EFECTIVO', 'CON FACTURA', NULL, 1, NULL, '2025-12-13 20:28:11', '2025-12-13 20:28:11');
+INSERT INTO `proformas` (`id`, `nro`, `codigo`, `sucursal_id`, `fecha`, `hora`, `cantidad_total`, `total`, `observaciones`, `user_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(7, 1, 'PF.1', 2, '2025-12-18', '17:57:00', NULL, NULL, NULL, 1, NULL, '2025-12-18 22:00:24', '2025-12-18 22:00:24');
 
 -- --------------------------------------------------------
 
@@ -1502,13 +1503,13 @@ INSERT INTO `proformas` (`id`, `nro`, `codigo`, `sucursal_id`, `cliente_id`, `fe
 CREATE TABLE `proforma_detalles` (
   `id` bigint UNSIGNED NOT NULL,
   `proforma_id` bigint UNSIGNED NOT NULL,
-  `producto_id` bigint UNSIGNED NOT NULL,
-  `unidad_medida_id` bigint UNSIGNED NOT NULL,
+  `cliente_id` bigint UNSIGNED NOT NULL,
   `cantidad` double NOT NULL,
-  `precio` decimal(24,2) NOT NULL,
-  `subtotal` decimal(24,2) NOT NULL,
-  `descuento` decimal(24,2) NOT NULL,
-  `subtotal_f` decimal(24,2) NOT NULL,
+  `cantidad_entregada` double(8,2) NOT NULL DEFAULT '0.00',
+  `total` decimal(24,2) NOT NULL,
+  `saldo` decimal(24,2) NOT NULL,
+  `estado` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `verificado` int NOT NULL DEFAULT '0',
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1518,14 +1519,42 @@ CREATE TABLE `proforma_detalles` (
 -- Volcado de datos para la tabla `proforma_detalles`
 --
 
-INSERT INTO `proforma_detalles` (`id`, `proforma_id`, `producto_id`, `unidad_medida_id`, `cantidad`, `precio`, `subtotal`, `descuento`, `subtotal_f`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 3, 3, 1, 6, 300.00, 1800.00, 0.00, 1800.00, NULL, '2025-12-09 20:30:52', '2025-12-09 20:30:52'),
-(2, 3, 4, 2, 10, 345.00, 3450.00, 0.00, 3450.00, NULL, '2025-12-09 20:30:52', '2025-12-09 21:15:52'),
-(3, 4, 3, 1, 1, 300.00, 300.00, 0.00, 300.00, NULL, '2025-12-12 17:01:08', '2025-12-12 17:01:08'),
-(4, 5, 4, 2, 2, 345.00, 690.00, 0.00, 690.00, NULL, '2025-12-12 17:02:44', '2025-12-12 17:02:44'),
-(5, 5, 3, 1, 1, 300.00, 300.00, 0.00, 300.00, NULL, '2025-12-12 17:02:44', '2025-12-12 17:02:44'),
-(6, 6, 3, 1, 20, 300.00, 6000.00, 100.00, 5900.00, NULL, '2025-12-13 13:04:41', '2025-12-13 13:04:41'),
-(7, 7, 3, 1, 1, 300.00, 295.00, 5.00, 295.00, NULL, '2025-12-13 20:28:11', '2025-12-13 20:28:11');
+INSERT INTO `proforma_detalles` (`id`, `proforma_id`, `cliente_id`, `cantidad`, `cantidad_entregada`, `total`, `saldo`, `estado`, `verificado`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(5, 7, 1, 4, 0.00, 1290.00, 1290.00, 'PENDIENTE', 0, NULL, '2025-12-18 22:00:24', '2025-12-18 22:00:24'),
+(6, 7, 4, 1, 0.00, 97.00, 97.00, 'PENDIENTE', 0, NULL, '2025-12-18 22:00:24', '2025-12-18 22:00:24');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `proforma_detalle_productos`
+--
+
+CREATE TABLE `proforma_detalle_productos` (
+  `id` bigint UNSIGNED NOT NULL,
+  `proforma_id` bigint UNSIGNED NOT NULL,
+  `proforma_detalle_id` bigint UNSIGNED NOT NULL,
+  `producto_id` bigint UNSIGNED NOT NULL,
+  `unidad_medida_id` bigint UNSIGNED NOT NULL,
+  `cantidad` double DEFAULT NULL,
+  `cantidad_entregada` double(8,2) DEFAULT NULL,
+  `precio` decimal(24,2) DEFAULT NULL,
+  `subtotal` decimal(24,2) DEFAULT NULL,
+  `verificado` int NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `proforma_detalle_productos`
+--
+
+INSERT INTO `proforma_detalle_productos` (`id`, `proforma_id`, `proforma_detalle_id`, `producto_id`, `unidad_medida_id`, `cantidad`, `cantidad_entregada`, `precio`, `subtotal`, `verificado`, `created_at`, `updated_at`) VALUES
+(7, 7, 5, 3, 1, 2, NULL, 300.00, 600.00, 0, '2025-12-18 22:00:24', '2025-12-18 22:00:24'),
+(8, 7, 5, 4, 2, 2, NULL, 345.00, 690.00, 0, '2025-12-18 22:00:24', '2025-12-18 22:00:24'),
+(9, 7, 5, 5, 1, NULL, NULL, 97.00, NULL, 0, '2025-12-18 22:00:24', '2025-12-18 22:00:24'),
+(10, 7, 6, 3, 1, NULL, NULL, 300.00, NULL, 0, '2025-12-18 22:00:24', '2025-12-18 22:00:24'),
+(11, 7, 6, 4, 2, NULL, NULL, 345.00, NULL, 0, '2025-12-18 22:00:24', '2025-12-18 22:00:24'),
+(12, 7, 6, 5, 1, 1, NULL, 97.00, 97.00, 0, '2025-12-18 22:00:24', '2025-12-18 22:00:24');
 
 -- --------------------------------------------------------
 
@@ -1746,7 +1775,7 @@ CREATE TABLE `sucursal_productos` (
 INSERT INTO `sucursal_productos` (`id`, `sucursal_id`, `producto_id`, `cantidad_ideal`, `cantidad_minima`, `stock_actual`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (1, 1, 3, 5, 5, 48, NULL, '2025-12-05 15:07:00', '2025-12-17 14:51:10'),
 (2, 1, 4, 0, 0, 44, NULL, '2025-12-05 15:07:00', '2025-12-17 14:51:06'),
-(4, 2, 3, 30, 6, 78, NULL, '2025-12-05 16:08:14', '2025-12-17 14:53:16'),
+(4, 2, 3, 30, 6, 77, NULL, '2025-12-05 16:08:14', '2025-12-17 15:53:35'),
 (5, 2, 4, 2, 2, 59, NULL, '2025-12-05 16:14:58', '2025-12-17 14:53:16'),
 (6, 3, 3, 0, 0, 14, NULL, '2025-12-06 14:30:40', '2025-12-13 17:34:26'),
 (7, 3, 4, 0, 0, 4, NULL, '2025-12-06 14:31:33', '2025-12-09 21:53:43'),
@@ -2114,7 +2143,6 @@ ALTER TABLE `proformas`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `proformas_codigo_unique` (`codigo`),
   ADD KEY `proformas_sucursal_id_foreign` (`sucursal_id`),
-  ADD KEY `proformas_cliente_id_foreign` (`cliente_id`),
   ADD KEY `proformas_user_id_foreign` (`user_id`);
 
 --
@@ -2122,9 +2150,17 @@ ALTER TABLE `proformas`
 --
 ALTER TABLE `proforma_detalles`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `proforma_detalles_proforma_id_foreign` (`proforma_id`),
-  ADD KEY `proforma_detalles_producto_id_foreign` (`producto_id`),
-  ADD KEY `proforma_detalles_unidad_medida_id_foreign` (`unidad_medida_id`);
+  ADD KEY `proforma_detalles_proforma_id_foreign` (`proforma_id`);
+
+--
+-- Indices de la tabla `proforma_detalle_productos`
+--
+ALTER TABLE `proforma_detalle_productos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `proforma_detalle_productos_proforma_id_foreign` (`proforma_id`),
+  ADD KEY `proforma_detalle_productos_proforma_detalle_id_foreign` (`proforma_detalle_id`),
+  ADD KEY `proforma_detalle_productos_producto_id_foreign` (`producto_id`),
+  ADD KEY `proforma_detalle_productos_unidad_medida_id_foreign` (`unidad_medida_id`);
 
 --
 -- Indices de la tabla `proveedors`
@@ -2230,7 +2266,7 @@ ALTER TABLE `certificados`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `configuracions`
@@ -2296,19 +2332,19 @@ ALTER TABLE `gastos`
 -- AUTO_INCREMENT de la tabla `historial_accions`
 --
 ALTER TABLE `historial_accions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=224;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=227;
 
 --
 -- AUTO_INCREMENT de la tabla `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT de la tabla `kardex_productos`
 --
 ALTER TABLE `kardex_productos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
 
 --
 -- AUTO_INCREMENT de la tabla `marcas`
@@ -2320,7 +2356,7 @@ ALTER TABLE `marcas`
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT de la tabla `modulos`
@@ -2356,13 +2392,13 @@ ALTER TABLE `orden_salida_detalles`
 -- AUTO_INCREMENT de la tabla `orden_ventas`
 --
 ALTER TABLE `orden_ventas`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT de la tabla `orden_venta_detalles`
 --
 ALTER TABLE `orden_venta_detalles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT de la tabla `parametro_clientes`
@@ -2392,7 +2428,13 @@ ALTER TABLE `proformas`
 -- AUTO_INCREMENT de la tabla `proforma_detalles`
 --
 ALTER TABLE `proforma_detalles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `proforma_detalle_productos`
+--
+ALTER TABLE `proforma_detalle_productos`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedors`
@@ -2583,7 +2625,6 @@ ALTER TABLE `productos`
 -- Filtros para la tabla `proformas`
 --
 ALTER TABLE `proformas`
-  ADD CONSTRAINT `proformas_cliente_id_foreign` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`),
   ADD CONSTRAINT `proformas_sucursal_id_foreign` FOREIGN KEY (`sucursal_id`) REFERENCES `sucursals` (`id`),
   ADD CONSTRAINT `proformas_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
@@ -2591,9 +2632,16 @@ ALTER TABLE `proformas`
 -- Filtros para la tabla `proforma_detalles`
 --
 ALTER TABLE `proforma_detalles`
-  ADD CONSTRAINT `proforma_detalles_producto_id_foreign` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`),
-  ADD CONSTRAINT `proforma_detalles_proforma_id_foreign` FOREIGN KEY (`proforma_id`) REFERENCES `proformas` (`id`),
-  ADD CONSTRAINT `proforma_detalles_unidad_medida_id_foreign` FOREIGN KEY (`unidad_medida_id`) REFERENCES `unidad_medidas` (`id`);
+  ADD CONSTRAINT `proforma_detalles_proforma_id_foreign` FOREIGN KEY (`proforma_id`) REFERENCES `proformas` (`id`);
+
+--
+-- Filtros para la tabla `proforma_detalle_productos`
+--
+ALTER TABLE `proforma_detalle_productos`
+  ADD CONSTRAINT `proforma_detalle_productos_producto_id_foreign` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`),
+  ADD CONSTRAINT `proforma_detalle_productos_proforma_detalle_id_foreign` FOREIGN KEY (`proforma_detalle_id`) REFERENCES `proforma_detalles` (`id`),
+  ADD CONSTRAINT `proforma_detalle_productos_proforma_id_foreign` FOREIGN KEY (`proforma_id`) REFERENCES `proformas` (`id`),
+  ADD CONSTRAINT `proforma_detalle_productos_unidad_medida_id_foreign` FOREIGN KEY (`unidad_medida_id`) REFERENCES `unidad_medidas` (`id`);
 
 --
 -- Filtros para la tabla `solicitud_ingresos`

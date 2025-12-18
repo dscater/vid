@@ -28,17 +28,21 @@ class SucursalProductoService
             $join->on('sucursal_productos.producto_id', '=', 'productos.id')
                 ->where('sucursal_productos.sucursal_id', '=', $sucursal_id);
         })
+            ->leftJoin('unidad_medidas', 'unidad_medidas.id', '=', 'productos.unidad_medida_id')
             ->select(
-                "sucursal_productos.sucursal_id",
+                'sucursal_productos.sucursal_id',
                 'productos.id',
                 'productos.codigo',
                 'productos.nombre',
+                'productos.precio',
+                'productos.unidad_medida_id',
+                'unidad_medidas.nombre as nombre_unidad',
                 DB::raw('COALESCE(sucursal_productos.stock_actual, 0) as stock_actual'),
+                DB::raw('COALESCE(sucursal_productos.stock_actual, 0) as stock_actual_aux'),
                 DB::raw('COALESCE(sucursal_productos.cantidad_ideal, 0) as cantidad_ideal'),
                 DB::raw('COALESCE(sucursal_productos.cantidad_minima, 0) as cantidad_minima'),
-            );
-
-        $sucursal_productos = $sucursal_productos->get();
+            )
+            ->get();
         return $sucursal_productos;
     }
 

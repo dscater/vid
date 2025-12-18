@@ -18,14 +18,13 @@ class ProformaDetalleRule implements ValidationRule
             $fail("Debes agregar al menos 1 producto");
             return;
         }
-
         foreach ($value as $item) {
-            if (trim($item["cantidad"]) == '') {
-                $fail("Debes ingresar todas las cantidades solicitadas");
+            if (trim($item["cliente_id"]) == '') {
+                $fail("No se ingresó cliente");
                 return;
             }
-            if (trim($item["subtotal_f"]) == '') {
-                $fail("Ocurrió un error no se detecto SUBTOTAL en una fila");
+            if (trim($item["total"]) == '') {
+                $fail("No se detecto el total");
                 return;
             }
         }

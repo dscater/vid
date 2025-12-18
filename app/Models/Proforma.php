@@ -16,19 +16,10 @@ class Proforma extends Model
         "nro",
         "codigo",
         "sucursal_id",
-        "cliente_id",
         "fecha",
         "hora",
         "cantidad_total",
         "total",
-        "total_st",
-        "solicitud_descuento",
-        "descuento",
-        "total_f",
-        "forma_pago",
-        // "cancelado",
-        // "cambio",
-        "cs_f",
         "observaciones",
         "user_id",
     ];
@@ -75,11 +66,6 @@ class Proforma extends Model
     public function user()
     {
         return $this->belongsTo(User::class, "user_id");
-    }
-
-    public function cliente()
-    {
-        return $this->belongsTo(Cliente::class, "cliente_id");
     }
 
     public function proforma_detalles()

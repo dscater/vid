@@ -147,16 +147,9 @@ class ProformaController extends Controller
      */
     public function show(Proforma $proforma): JsonResponse
     {
-        $convertir = new NumeroALetras();
-        $array_monto = explode('.', $proforma->total_f);
-        $literal = $convertir->convertir($array_monto[0]);
-        $literal .= " " . $array_monto[1];
-        $literal = strtolower($literal);
-        $literal = ucfirst($literal) . "/100." . " Bolivianos";
 
         return response()->JSON([
-            "proforma" => $proforma->load(["proforma_detalles.producto:id,nombre", "proforma_detalles.unidad_medida:id,nombre", "cliente:id,razon_social,nit", "user:id,nombre,paterno,materno"]),
-            "literal" => $literal
+            "proforma" => $proforma->load(["proforma_detalles.proforma_detalle_productos",  "user:id,nombre,paterno,materno"]),
         ]);
     }
 

@@ -11,28 +11,26 @@ class ProformaDetalle extends Model
 
     protected $fillable  = [
         "proforma_id",
-        "producto_id",
-        "unidad_medida_id",
+        "cliente_id",
         "cantidad",
-        "precio",
-        "subtotal",
-        "descuento",
-        "subtotal_f",
+        "cantidad_entregada",
+        "total",
+        "saldo",
+        "estado", // PENDIENTE, ATENDIDO , PARCIALMENTE ATENDIDO
+        "verificado"
     ];
-
 
     public function proforma()
     {
         return $this->belongsTo(Proforma::class);
     }
 
-    public function producto()
+    public function cliente()
     {
-        return $this->belongsTo(Producto::class);
+        return $this->belongsTo(Cliente::class);
     }
-
-    public function unidad_medida()
+    public function proforma_detalle_productos()
     {
-        return $this->belongsTo(UnidadMedida::class);
+        return $this->hasMany(ProformaDetalleProducto::class);
     }
 }

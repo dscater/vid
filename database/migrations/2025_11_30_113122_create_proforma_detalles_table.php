@@ -14,19 +14,18 @@ return new class extends Migration
         Schema::create('proforma_detalles', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("proforma_id");
-            $table->unsignedBigInteger("producto_id");
-            $table->unsignedBigInteger("unidad_medida_id");
+            $table->unsignedBigInteger("cliente_id");
             $table->double("cantidad", 8, 2);
-            $table->decimal("precio", 24, 2);
-            $table->decimal("subtotal", 24, 2);
-            $table->decimal("descuento", 24, 2);
-            $table->decimal("subtotal_f", 24, 2);
+            $table->double("cantidad_entregada", 8, 2)->default(0);
+            $table->decimal("total", 24, 2);
+            $table->decimal("saldo", 24, 2);
+            $table->string("estado", 255); //PENDIENTE, ATENDIDO, PARCIALMENTE ATENDIDO
+            $table->integer("verificado")->default(0);
             $table->softDeletes();
             $table->timestamps();
 
             $table->foreign("proforma_id")->on("proformas")->references("id");
-            $table->foreign("producto_id")->on("productos")->references("id");
-            $table->foreign("unidad_medida_id")->on("unidad_medidas")->references("id");
+            $table->foreign("cliente_id")->on("clientes")->references("id");
         });
     }
 
