@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Rules\ProformaDetalleRule;
+use App\Rules\ProformaProductoRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProformaStoreRequest extends FormRequest
@@ -23,10 +24,12 @@ class ProformaStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "sucursal_id" => "required",
+            "sucursal_ids" => "required|array",
             "fecha" => "required|date",
             "hora" => "required",
             "total" => "nullable",
+            "proforma_productos" => ["required", new ProformaProductoRule()],
+            "eliminados_productos" => "nullable",
             "proforma_detalles" => ["required", new ProformaDetalleRule()],
             "eliminados_detalles" => "nullable",
         ];
@@ -35,7 +38,7 @@ class ProformaStoreRequest extends FormRequest
     public function messages(): array
     {
         return [
-            "sucursal_id.required" => "Debes completar este campo",
+            "sucursal_ids.required" => "Debes completar este campo",
             "cliente_id.required" => "Debes completar este campo",
             "fecha.required" => "Debes completar este campo",
             "hora.required" => "Debes completar este campo",

@@ -6,6 +6,7 @@ use App\Models\Producto;
 use App\Services\HistorialAccionService;
 use App\Models\Proforma;
 use App\Models\ProformaDetalle;
+use App\Models\ProformaProducto;
 use App\Models\Sucursal;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
@@ -46,7 +47,7 @@ class ProformaService
     public function listadoPaginado(int $length, int $page, string $search, array $columnsSerachLike = [], array $columnsFilter = [], array $columnsBetweenFilter = [], array $orderBy = []): LengthAwarePaginator
     {
         $proformas = Proforma::select("proformas.*")
-            ->with(["sucursal:id,nombre", "user:id,nombre,paterno,materno"]);
+            ->with(["user:id,nombre,paterno,materno"]);
 
         if (Auth::user()->sucursal_asignada) {
             $proformas->where("sucursal_id", Auth::user()->sucursal_asignada->id);
@@ -98,37 +99,51 @@ class ProformaService
         $proforma = Proforma::create([
             "nro" => $nuevo_codigo[0],
             "codigo" => $nuevo_codigo[1],
-            "sucursal_id" => $datos["sucursal_id"],
+            "sucursal_ids" => $datos["sucursal_ids"],
             "fecha" => $datos["fecha"],
             "hora" => $datos["hora"],
             "total" => $datos["total"],
             "user_id" => Auth::user()->id,
         ]);
 
-        foreach ($datos["proforma_detalles"] as $item) {
-            Log::debug($item);
-            // DETALLE
-            $proforma_detalle = $proforma->proforma_detalles()->create([
+
+        foreach ($datos["proforma_productos"] as $item_producto) {
+            $proforma_producto = ProformaProducto::create([
                 "proforma_id" => $proforma->id,
-                "cliente_id" => $item["cliente_id"],
-                "cantidad" => $item["cantidad"],
-                "total" => $item["total"],
-                "saldo" => $item["total"],
-                "estado" => "PENDIENTE",
+                "producto_id" => $item_producto["producto_id"],
+                "precio" => $item_producto["precio"],
+                "unidad_medida_id" => $item_producto["unidad_medida_id"],
+                "stock_actual" => $item_producto["stock_actual"],
             ]);
 
-            // DETALLE PRODUCTOS
-            foreach ($item["proforma_detalle_productos"] as $pdp) {
-                $proforma_detalle->proforma_detalle_productos()->create([
+            foreach ($datos["proforma_detalles"] as $item) {
+                Log::debug($item);
+                // DETALLE
+                $proforma_detalle = $proforma->proforma_detalles()->create([
                     "proforma_id" => $proforma->id,
-                    "producto_id" => $pdp["producto_id"],
-                    "unidad_medida_id" => $pdp["unidad_medida_id"],
-                    "cantidad" => $pdp["cantidad"],
-                    "precio" => $pdp["precio"],
-                    "subtotal" => $pdp["subtotal"],
+                    "cliente_id" => $item["cliente_id"],
+                    "cantidad" => $item["cantidad"],
+                    "total" => $item["total"],
+                    "saldo" => $item["total"],
+                    "estado" => "PENDIENTE",
                 ]);
+
+                // DETALLE PRODUCTOS
+                foreach ($item["proforma_detalle_productos"] as $pdp) {
+                    $proforma_detalle->proforma_detalle_productos()->create([
+                        "proforma_id" => $proforma->id,
+                        "proforma_detalle_id" => $proforma_detalle->id,
+                        "proforma_producto_id" => $proforma_producto->id,
+                        "producto_id" => $proforma_producto->producto_id,
+                        "unidad_medida_id" => $proforma_producto->unidad_medida_id,
+                        "cantidad" => $pdp["cantidad"],
+                        "precio" => $pdp["precio"],
+                        "subtotal" => $pdp["subtotal"],
+                    ]);
+                }
             }
         }
+
 
         // registrar accion
         $this->historialAccionService->registrarAccion($this->modulo, "CREACIÓN", "REGISTRO UNA PROFORMA", $proforma);

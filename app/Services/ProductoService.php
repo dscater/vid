@@ -21,7 +21,8 @@ class ProductoService
 
     public function listado(): Collection
     {
-        $productos = Producto::select("productos.*")->where("estado", 1)->get();
+        $productos = Producto::select("productos.*")
+            ->with(["unidad_medida:id,nombre"])->where("estado", 1)->get();
         return $productos;
     }
     /**

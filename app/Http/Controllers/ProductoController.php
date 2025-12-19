@@ -50,6 +50,8 @@ class ProductoController extends Controller
     {
         $codigo = $request->input("codigo", "");
         $productos = Producto::where("codigo", "LIKE", "%$codigo%")
+            ->with(["unidad_medida:id,nombre"])
+            ->where("estado", 1)
             ->get();
         return response()->JSON(["productos" => $productos]);
     }
@@ -175,7 +177,7 @@ class ProductoController extends Controller
      */
     public function show(Producto $producto): JsonResponse
     {
-        return response()->JSON($producto->load(["producto:id,nombre,precio"]));
+        return response()->JSON($producto);
     }
     public function actualizaPermiso(Producto $producto, Request $request)
     {

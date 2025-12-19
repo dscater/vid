@@ -11,23 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('proforma_detalle_productos', function (Blueprint $table) {
+        Schema::create('proforma_productos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("proforma_id");
-            $table->unsignedBigInteger("proforma_detalle_id");
-            $table->unsignedBigInteger("proforma_producto_id");
             $table->unsignedBigInteger("producto_id");
+            $table->decimal("precio", 24, 2)->nullable();
             $table->unsignedBigInteger("unidad_medida_id");
-            $table->double("cantidad", 8, 2)->nullable()->default(NULL);
-            $table->double("cantidad_entregada", 8, 2)->nullable()->default(NULL);
-            $table->decimal("precio", 24, 2)->nullable()->default(NULL);
-            $table->decimal("subtotal", 24, 2)->nullable()->default(NULL);
-            $table->integer("verificado")->default(0)->nullable();
+            $table->double("stock_actual", 8, 2)->nullable();
             $table->timestamps();
 
             $table->foreign("proforma_id")->on("proformas")->references("id");
-            $table->foreign("proforma_detalle_id")->on("proforma_detalles")->references("id");
-            $table->foreign("proforma_producto_id")->on("proforma_productos")->references("id");
             $table->foreign("producto_id")->on("productos")->references("id");
             $table->foreign("unidad_medida_id")->on("unidad_medidas")->references("id");
         });
@@ -38,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('proforma_detalle_productos');
+        Schema::dropIfExists('proforma_productos');
     }
 };

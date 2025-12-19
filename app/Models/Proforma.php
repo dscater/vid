@@ -15,7 +15,7 @@ class Proforma extends Model
     protected $fillable = [
         "nro",
         "codigo",
-        "sucursal_id",
+        "sucursal_ids",
         "fecha",
         "hora",
         "cantidad_total",
@@ -24,19 +24,30 @@ class Proforma extends Model
         "user_id",
     ];
 
-    protected $appends = ["fecha_t", "hora_t", "fecha_c", "fecha_ct"];
 
-    public function getLiteralTxtAttribute()
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
     {
-        $convertir = new NumeroALetras();
-        $array_monto = explode('.', $this->total_f);
-        $literal = $convertir->convertir($array_monto[0]);
-        $literal .= " " . $array_monto[1];
-        $literal = strtolower($literal);
-        $literal = ucfirst($literal) . "/100." . " Bolivianos";
-
-        return $literal;
+        return [
+            'sucursal_ids' => 'array',
+        ];
     }
+
+
+
+    protected $appends = ["fecha_t", "hora_t", "fecha_c", "fecha_ct", "sucursals_txt"];
+
+    public function getSucursalsTxtAttribute()
+    {
+        $nombres = Sucursal::whereIn("id", $this->sucursal_ids)->pluck("nombre")->toArray();
+
+        return implode(", ", $nombres);
+    }
+
     public function getFechaCtAttribute()
     {
         $dt = Carbon::parse($this->fecha . ' ' . $this->hora);
@@ -58,11 +69,6 @@ class Proforma extends Model
         return date("H:i", strtotime($this->hora));
     }
 
-    public function sucursal()
-    {
-        return $this->belongsTo(Sucursal::class);
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class, "user_id");
@@ -71,5 +77,10 @@ class Proforma extends Model
     public function proforma_detalles()
     {
         return $this->hasMany(ProformaDetalle::class, 'proforma_id');
+    }
+
+    public function proforma_productos()
+    {
+        return $this->hasMany(ProformaProducto::class, 'proforma_id');
     }
 }

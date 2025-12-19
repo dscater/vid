@@ -12,6 +12,7 @@ class ProformaDetalleProducto extends Model
     protected $fillable = [
         "proforma_id",
         "proforma_detalle_id",
+        "proforma_producto_id",
         "producto_id",
         "unidad_medida_id",
         "cantidad",
@@ -29,6 +30,11 @@ class ProformaDetalleProducto extends Model
     public function proforma_detalle()
     {
         return $this->belongsTo(ProformaDetalle::class);
+    }
+
+    public function proforma_producto()
+    {
+        return $this->belongsTo(ProformaProducto::class);
     }
 
     public function producto()

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger("nro");
             $table->string("codigo")->unique();
-            $table->unsignedBigInteger("sucursal_id");
+            $table->json("sucursal_ids");
             $table->date("fecha");
             $table->time("hora");
             $table->double("cantidad_total", 8, 2)->nullable();
@@ -25,7 +25,6 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign("sucursal_id")->on("sucursals")->references("id");
             $table->foreign("user_id")->on("users")->references("id");
         });
     }
