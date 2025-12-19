@@ -28,7 +28,7 @@ class ProformaService
     public function listado(): Collection
     {
         $proformas = Proforma::select("proformas.*")
-            ->with(["proforma_detalles.producto:id,nombre", "proforma_detalles.unidad_medida:id,nombre", "cliente:id,razon_social,nit", "user:id,nombre,paterno,materno", "sucursal:id,nombre"]);
+            ->with(["proforma_productos.producto.unidad_medida", "proforma_detalles.proforma_detalle_productos", "proforma_detalles.cliente",  "user:id,nombre,paterno,materno"]);
 
         $proformas = $proformas->get()->each
             ->append(["fecha_t", "hora_t", "fecha_c", "fecha_ct", "sucursals_txt"]);
