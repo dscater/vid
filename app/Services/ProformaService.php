@@ -31,7 +31,7 @@ class ProformaService
             ->with(["proforma_detalles.producto:id,nombre", "proforma_detalles.unidad_medida:id,nombre", "cliente:id,razon_social,nit", "user:id,nombre,paterno,materno", "sucursal:id,nombre"]);
 
         $proformas = $proformas->get()->each
-            ->append(["fecha_t", "hora_t", "fecha_c", "fecha_ct", "literal_txt"]);
+            ->append(["fecha_t", "hora_t", "fecha_c", "fecha_ct", "sucursals_txt"]);
 
         return $proformas;
     }
