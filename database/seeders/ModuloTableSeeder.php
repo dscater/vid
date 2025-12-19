@@ -371,6 +371,13 @@ class ModuloTableSeeder extends Seeder
 
         Modulo::create([
             "modulo" => "Solicitud de Ingresos",
+            "nombre" => "solicitud_ingresos.aprobar_costos",
+            "accion" => "APROBAR COSTOS",
+            "descripcion" => "APROBAR COSTOS SOLICITUD DE INGRESOS"
+        ]);
+
+        Modulo::create([
+            "modulo" => "Solicitud de Ingresos",
             "nombre" => "solicitud_ingresos.destroy",
             "accion" => "ELIMINAR",
             "descripcion" => "ELIMINAR SOLICITUD DE INGRESOS"

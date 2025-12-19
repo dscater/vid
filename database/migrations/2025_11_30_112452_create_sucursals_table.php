@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger("user_id")->nullable();
             $table->integer("almacen")->default(0);
             $table->integer("estado")->default(1);
-            $table->decimal("monto_dia", 30, 2)->nullable();
+            $table->decimal("monto_dia", 30, 0)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

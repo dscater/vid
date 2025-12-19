@@ -17,6 +17,7 @@ class ProformaDetalleProducto extends Model
         "unidad_medida_id",
         "cantidad",
         "cantidad_entregada",
+        "resta",
         "precio",
         "subtotal",
         "verificado",

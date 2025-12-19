@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SolicitudIngresoAprobarCostosRequest;
 use App\Http\Requests\SolicitudIngresoAprobarRequest;
 use App\Http\Requests\SolicitudIngresoStoreRequest;
 use App\Http\Requests\SolicitudIngresoUpdateRequest;
@@ -167,6 +168,25 @@ class SolicitudIngresoController extends Controller
         }
     }
 
+    public function aprobar_costos(SolicitudIngreso $solicitud_ingreso, SolicitudIngresoAprobarCostosRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+            // aprobar_costos solicitud_ingreso
+            $this->solicitud_ingresoService->aprobar_costos($request->validated(), $solicitud_ingreso);
+            DB::commit();
+            return response()->JSON([
+                "sw" => true,
+                "message" => "Proceso realizado con éxito"
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            // Log::debug($e->getMessage());
+            throw ValidationException::withMessages([
+                'error' =>  $e->getMessage(),
+            ]);
+        }
+    }
 
     /**
      * Eliminar solicitud_ingreso

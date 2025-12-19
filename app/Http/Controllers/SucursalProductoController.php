@@ -56,7 +56,7 @@ class SucursalProductoController extends Controller
             "codigo",
             "nombre",
         ];
-        Log::debug($columnsSerachLike);
+        // Log::debug($columnsSerachLike);
 
         $columnsFilter = [];
         $columnsBetweenFilter = [];

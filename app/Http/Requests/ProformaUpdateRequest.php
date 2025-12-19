@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Rules\ProformaDetalleRule;
+use App\Rules\ProformaProductoRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProformaUpdateRequest extends FormRequest
@@ -23,21 +24,12 @@ class ProformaUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "sucursal_id" => "required",
-            "cliente_id" => "required",
+            "sucursal_ids" => "required|array",
             "fecha" => "required|date",
             "hora" => "required",
-            "descripcion" => "nullable",
-            "cantidad_total" => "required",
-            "forma_pago" => "required",
-            "cs_f" => "required",
-            // "cancelado" => "required|decimal:0,2",
-            // "cambio" => "nullable|decimal:0,2",
-            "total" => "required",
-            "total_st" => "required",
-            "solicitud_descuento" => "nullable",
-            "descuento" => "nullable",
-            "total_f" => "required",
+            "total" => "nullable",
+            "proforma_productos" => ["required", new ProformaProductoRule()],
+            "eliminados_productos" => "nullable",
             "proforma_detalles" => ["required", new ProformaDetalleRule()],
             "eliminados_detalles" => "nullable",
         ];

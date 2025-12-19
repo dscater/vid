@@ -17,6 +17,7 @@ use App\Http\Controllers\ParametroClienteController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProformaController;
+use App\Http\Controllers\ProformaDetalleProductoController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\RoleController;
@@ -184,6 +185,7 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get("solicitud_ingresos/paginado", [SolicitudIngresoController::class, 'paginado'])->name("solicitud_ingresos.paginado");
     Route::get("solicitud_ingresos/listado", [SolicitudIngresoController::class, 'listado'])->name("solicitud_ingresos.listado");
     Route::put("solicitud_ingresos/aprobar/{solicitud_ingreso}", [SolicitudIngresoController::class, 'aprobar'])->name("solicitud_ingresos.aprobar");
+    Route::put("solicitud_ingresos/aprobar_costos/{solicitud_ingreso}", [SolicitudIngresoController::class, 'aprobar_costos'])->name("solicitud_ingresos.aprobar_costos");
     Route::resource("solicitud_ingresos", SolicitudIngresoController::class)->only(
         ["store", "edit", "show", "update", "destroy"]
     );
@@ -233,6 +235,10 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::resource("proformas", ProformaController::class)->only(
         ["store", "edit", "show", "update", "destroy"]
     );
+
+    // PROFORMAS-DETALLE-PRODUCTO
+    Route::put("proforma_detalle_productos/verificar/{proforma_detalle_producto}", [ProformaDetalleProductoController::class, 'verificar'])->name("proforma_detalle_productos.verificar");
+
 
     // TRANSFERENCIAS
     Route::get("transferencias/api", [TransferenciaController::class, 'api'])->name("transferencias.api");

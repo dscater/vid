@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger("unidad_medida_id");
             $table->double("cantidad", 8, 2)->nullable()->default(NULL);
             $table->double("cantidad_entregada", 8, 2)->nullable()->default(NULL);
+            $table->double("resta", 8, 2)->default(0);
             $table->decimal("precio", 24, 2)->nullable()->default(NULL);
             $table->decimal("subtotal", 24, 2)->nullable()->default(NULL);
             $table->integer("verificado")->default(0)->nullable();

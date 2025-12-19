@@ -38,4 +38,9 @@ class ProformaProducto extends Model
     {
         return $this->belongsTo(UnidadMedida::class);
     }
+
+    public function proforma_detalle_productos()
+    {
+        return $this->hasMany(ProformaDetalleProducto::class, 'proforma_producto_id');
+    }
 }

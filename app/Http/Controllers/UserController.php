@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\OrdenVenta;
+use App\Models\Proforma;
+use App\Models\SolicitudIngreso;
+use App\Models\Sucursal;
 use App\Models\User;
 use App\Services\PermisoService;
 use Illuminate\Support\Facades\Auth;
@@ -34,46 +38,47 @@ class UserController extends Controller
         if (Auth::check()) {
             $oUser = new User();
             $permisos = $oUser->permisos;
-            if ($permisos == '*' || (is_array($permisos) && in_array('usuarios.index', $permisos))) {
+            if ($permisos == '*' || (is_array($permisos) && in_array('sucursals.index', $permisos))) {
+                $total = Sucursal::count();
                 $array_infos[] = [
-                    'label' => 'USUARIOS',
-                    'cantidad' => User::where('id', '!=', 1)->count(),
+                    'label' => 'SUCURSALES',
+                    'cantidad' => $total,
                     'color' => 'bg-secundario',
                     'icon' => "fa-users",
-                    "url" => "usuarios.index"
+                    "url" => "sucursals.index"
                 ];
             }
 
-            if ($permisos == '*' || (is_array($permisos) && in_array('clientes.index', $permisos))) {
-                $total = Cliente::count();
+            if ($permisos == '*' || (is_array($permisos) && in_array('proformas.index', $permisos))) {
+                $total = Proforma::count();
                 $array_infos[] = [
-                    'label' => 'CLIENTES',
+                    'label' => 'PROFORMAS',
                     'cantidad' => $total,
                     'color' => 'bg-secundario',
                     'icon' => "fa-list",
-                    "url" => "clientes.index"
+                    "url" => "proformas.index"
                 ];
             }
 
-            if ($permisos == '*' || (is_array($permisos) && in_array('proveedors.index', $permisos))) {
-                $total = Cliente::count();
+            if ($permisos == '*' || (is_array($permisos) && in_array('orden_ventas.index', $permisos))) {
+                $total = OrdenVenta::count();
                 $array_infos[] = [
-                    'label' => 'PROVEEDORES',
+                    'label' => 'VENTAS',
                     'cantidad' => $total,
                     'color' => 'bg-secundario',
                     'icon' => "fa-list",
-                    "url" => "proveedors.index"
+                    "url" => "orden_ventas.index"
                 ];
             }
 
-            if ($permisos == '*' || (is_array($permisos) && in_array('productos.index', $permisos))) {
-                $total = Cliente::count();
+            if ($permisos == '*' || (is_array($permisos) && in_array('solicitud_ingresos.index', $permisos))) {
+                $total = SolicitudIngreso::count();
                 $array_infos[] = [
-                    'label' => 'PRODUCTOS',
+                    'label' => 'COMPRAS',
                     'cantidad' => $total,
                     'color' => 'bg-secundario',
                     'icon' => "fa-list",
-                    "url" => "productos.index"
+                    "url" => "solicitud_ingresos.index"
                 ];
             }
         }

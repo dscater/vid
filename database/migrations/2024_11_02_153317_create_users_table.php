@@ -27,8 +27,7 @@ return new class extends Migration
             $table->string("fono", 255)->nullable();
             $table->string("cel_dom", 255);
             $table->string("dir", 600);
-            $table->string("latitud", 600);
-            $table->string("longitud", 600);
+            $table->text("ubicacion");
             $table->string("correo", 255)->nullable();
             $table->string("foto", 255)->nullable();
             $table->string("carnet", 255)->nullable();

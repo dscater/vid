@@ -28,7 +28,7 @@ class SucursalUpdateRequest extends FormRequest
             "correo" => "nullable|email",
             "user_id" => "required",
             "estado" => "boolean|in:0,1",
-            "monto_dia" => "decimal:0,2"
+            "monto_dia" => "decimal:0,0"
         ];
     }
 

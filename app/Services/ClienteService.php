@@ -96,8 +96,7 @@ class ClienteService
             "cel" => mb_strtoupper($datos["cel"]),
             "fono" => mb_strtoupper($datos["fono"]),
             "dir" => mb_strtoupper($datos["dir"]),
-            "latitud" => $datos["latitud"],
-            "longitud" => $datos["longitud"],
+            "ubicacion" => $datos["ubicacion"],
             "ciudad" => mb_strtoupper($datos["ciudad"]),
             "contactos" => array_map(function ($contacto) {
                 return array_map(function ($valor) {
@@ -133,8 +132,7 @@ class ClienteService
             "cel" => mb_strtoupper($datos["cel"]),
             "fono" => mb_strtoupper($datos["fono"]),
             "dir" => mb_strtoupper($datos["dir"]),
-            "latitud" => $datos["latitud"],
-            "longitud" => $datos["longitud"],
+            "ubicacion" => $datos["ubicacion"],
             "ciudad" => mb_strtoupper($datos["ciudad"]),
             "contactos" => array_map(function ($contacto) {
                 return array_map(function ($valor) {

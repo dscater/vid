@@ -138,7 +138,19 @@
             color: white;
         }
 
-        .txt_rojo {}
+        th.vertical {
+            vertical-align: middle;
+            text-align: center;
+            height: 160px;
+            /* controla la altura de la fila */
+            padding: 0;
+        }
+
+        th.vertical div {
+            transform: rotate(-90deg);
+            white-space: nowrap;
+            font-size: 7pt;
+        }
 
         .img_celda img {
             width: 45px;
@@ -152,6 +164,12 @@
             font-size: 0.9em;
         }
 
+        .bgFinal {
+            background-color: rgb(255, 255, 232);
+            font-weight: bold;
+            font-size: 7.6pt;
+        }
+
         .punteado {
             display: block;
             width: 100%;
@@ -163,132 +181,184 @@
 
 <body>
     @inject('configuracion', 'App\Models\Configuracion')
-    @foreach ($sucursals as $key => $sucursal)
-        <div class="encabezado">
-            <div class="logo">
-                <img src="{{ $configuracion->first()->logo_b64 }}">
-            </div>
-            <h2 class="titulo">
-                {{ $configuracion->first()->nombre_sistema }}
-            </h2>
-            <h4 class="texto">CONTROL DIARIO DE SUCURSALES(VEHÍCULOS)</h4>
-            <h4 class="texto">Sucursal/Vehículo: {{ $sucursal->nombre }}</h4>
-            <h4 class="texto">Encargado/Chofer: {{ $sucursal->user->full_name }}</h4>
-            <h4 class="fecha">Expedido: {{ date('d-m-Y') }}</h4>
+    <div class="encabezado">
+        <div class="logo">
+            <img src="{{ $configuracion->first()->logo_b64 }}">
         </div>
-        @php
+        <h2 class="titulo">
+            {{ $configuracion->first()->nombre_sistema }}
+        </h2>
+        <h4 class="texto">CONTROL DIARIO DE SUCURSALES(VEHÍCULOS)</h4>
+        <h4 class="fecha">Expedido: {{ date('d-m-Y') }}</h4>
+    </div>
+    @php
 
-        @endphp
-        <table border="1">
-            <thead>
+    @endphp
+    <table border="1">
+        <thead>
+            <tr>
+                <th rowspan="2" width="2.3%">N°</th>
+                <th rowspan="2" width="7%">PRODUCTO</th>
+                <th rowspan="2">UNIDAD DE MEDIDA</th>
+                @foreach ($sucursals as $item)
+                    <th colspan="5">
+                        {{ $item->nombre }}
+                    </th>
+                @endforeach
+                <th colspan="5" class="bgFinal">SALDOS FINALES</th>
+            </tr>
+            <tr>
+                @foreach ($sucursals as $item)
+                    <th class="vertical">
+                        <div>AÑADIDOS</div>
+                    </th>
+                    <th class="vertical">
+                        <div>CANTIDAD ENTREGADA</div>
+                    </th>
+                    <th class="vertical">
+                        <div>DEVOLUCIONES</div>
+                    </th>
+                    <th class="vertical">
+                        <div>DIFERENCIAS/FALTANTES</div>
+                    </th>
+                    <th class="vertical">
+                        <div>SALDO FINAL</div>
+                    </th>
+                @endforeach
+                <th class="vertical bgFinal">
+                    <div>AÑADIDOS</div>
+                </th>
+                <th class="vertical bgFinal">
+                    <div>CANTIDAD ENTREGADA</div>
+                </th>
+                <th class="vertical bgFinal">
+                    <div>DEVOLUCIONES</div>
+                </th>
+                <th class="vertical bgFinal">
+                    <div>DIFERENCIAS/FALTANTES</div>
+                </th>
+                <th class="vertical bgFinal">
+                    <div>SALDO FINAL</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @php
+                $cont = 1;
+            @endphp
+            @foreach ($productos as $producto)
                 <tr>
-                    <th width="5%">N°</th>
-                    <th>PRODUCTO</th>
-                    <th>AÑADIDOS</th>
-                    <th>CANTIDAD ENTREGADA</th>
-                    <th>DEVOLUCIONES</th>
-                    <th>DIFERENCIAS/FALTANTES</th>
-                    <th>SALDO FINAL</th>
-                </tr>
-            </thead>
-            <tbody>
-                @php
-                    $cont = 1;
-                    $sucursal_id = $sucursal->id;
-                @endphp
-                @foreach ($productos as $producto)
+                    <td>{{ $cont++ }}</td>
+                    <td>{{ $producto->nombre }}</td>
+                    <td> {{ $producto->unidad_medida->nombre }}</td>
+
                     @php
-                        // INGRESOS ADICIONALES
-                        $ingresos_adicionales = App\Models\KardexProducto::where('producto_id', $producto->id)
-                            ->where('fecha', $fecha)
-                            ->where('tipo_is', 'INGRESO')
-                            ->where('sucursal_id', $sucursal_id)
-                            ->sum('cantidad_ingreso');
-
-                        // SALDO INICIAL
-                        $kardex_inicial = App\Models\KardexProducto::where('producto_id', $producto->id)
-                            ->where('fecha', $fecha)
-                            ->where('sucursal_id', $sucursal_id)
-                            ->get()
-                            ->first();
-                        if ($kardex_inicial) {
-                            if ($kardex_inicial->tipo_is == 'EGRESO') {
-                                $kardex_inicial = App\Models\KardexProducto::where('producto_id', $producto->id)
-                                    ->where('id', '<', $kardex_inicial->id)
-                                    ->where('tipo_is', 'INGRESO')
-                                    ->where('sucursal_id', $sucursal_id)
-                                    ->get()
-                                    ->last();
-                            }
-                            $saldo_inicial = $kardex_inicial->cantidad_saldo;
-                        } else {
-                            $saldo_inicial = 0;
-                        }
-
-                        // ENTREGADOS
-                        // ventas realizadas
-                        $ventas_realizadas = App\Models\OrdenVentaDetalle::where('producto_id', $producto->id);
-                        $ventas_realizadas->whereHas('orden_venta', function ($query) use ($fecha, $sucursal_id) {
-                            $query->where('fecha', $fecha)->where('sucursal_id', $sucursal_id);
-                        });
-                        $ventas_realizadas = $ventas_realizadas->sum('cantidad');
-
-                        // ventas realizadas
-                        $transferencias = App\Models\TransferenciaDetalle::where('producto_id', $producto->id);
-                        $transferencias->whereHas('transferencia', function ($query) use ($fecha, $sucursal_id) {
-                            $query->where('fecha', $fecha)->where('sucursal_id', $sucursal_id);
-                        });
-                        $transferencias = $transferencias->sum('cantidad_fisica');
-                        $total_entregados = (float) $ventas_realizadas + (float) $transferencias;
-
-                        // DEVOLUCIONES
-                        $devoluciones = App\Models\DevolucionClienteDetalle::where('producto_id', $producto->id);
-                        $devoluciones->whereHas('devolucion_cliente', function ($query) use ($fecha, $sucursal_id) {
-                            $query->where('fecha', $fecha)->where('sucursal_id', $sucursal_id);
-                        });
-                        $devoluciones = $devoluciones->sum('cantidad');
-
-                        // FALTANTES
-                        $faltantes = App\Models\TransferenciaDetalle::where('producto_id', $producto->id);
-                        $faltantes->whereHas('transferencia', function ($query) use ($fecha, $sucursal_id) {
-                            $query->where('fecha', $fecha)->where('sucursal_id', $sucursal_id);
-                        });
-                        $faltantes = $faltantes->sum(DB::raw('cantidad - cantidad_fisica'));
-
-                        $faltantes = 0;
-                        // SALDO FINAL
-                        $kardex_final = App\Models\KardexProducto::where('producto_id', $producto->id)
-                            ->where('fecha', $fecha)
-                            ->where('sucursal_id', $sucursal_id)
-                            ->where('tipo_registro', '!=', 'DEVOLUCIÓN DE STOCK')
-                            ->where('id', '>', $kardex_inicial ? $kardex_inicial->id : 0)
-                            ->get()
-                            ->last();
-                        $saldo_final = $kardex_final ? $kardex_final->cantidad_saldo : 0;
-
+                        $total1 = 0;
+                        $total2 = 0;
+                        $total3 = 0;
+                        $total4 = 0;
+                        $total5 = 0;
                     @endphp
-                    <tr>
-                        <td>{{ $cont++ }}</td>
-                        <td>{{ $producto->nombre }} {{ $producto->unidad_medida->nombre }}</td>
+                    @foreach ($sucursals as $sucursal)
+                        @php
+                            $sucursal_id = $sucursal->id;
+                            // INGRESOS ADICIONALES
+                            $ingresos_adicionales = App\Models\KardexProducto::where('producto_id', $producto->id)
+                                ->where('fecha', $fecha)
+                                ->where('tipo_is', 'INGRESO')
+                                ->where('sucursal_id', $sucursal_id)
+                                ->sum('cantidad_ingreso');
+
+                            // SALDO INICIAL
+                            $kardex_inicial = App\Models\KardexProducto::where('producto_id', $producto->id)
+                                ->where('fecha', $fecha)
+                                ->where('sucursal_id', $sucursal_id)
+                                ->get()
+                                ->first();
+                            if ($kardex_inicial) {
+                                if ($kardex_inicial->tipo_is == 'EGRESO') {
+                                    $kardex_inicial = App\Models\KardexProducto::where('producto_id', $producto->id)
+                                        ->where('id', '<', $kardex_inicial->id)
+                                        ->where('tipo_is', 'INGRESO')
+                                        ->where('sucursal_id', $sucursal_id)
+                                        ->get()
+                                        ->last();
+                                }
+                                $saldo_inicial = $kardex_inicial->cantidad_saldo;
+                            } else {
+                                $saldo_inicial = 0;
+                            }
+
+                            // ENTREGADOS
+                            // ventas realizadas
+                            $ventas_realizadas = App\Models\OrdenVentaDetalle::where('producto_id', $producto->id);
+                            $ventas_realizadas->whereHas('orden_venta', function ($query) use ($fecha, $sucursal_id) {
+                                $query->where('fecha', $fecha)->where('sucursal_id', $sucursal_id);
+                            });
+                            $ventas_realizadas = $ventas_realizadas->sum('cantidad');
+
+                            // ventas realizadas
+                            $transferencias = App\Models\TransferenciaDetalle::where('producto_id', $producto->id);
+                            $transferencias->whereHas('transferencia', function ($query) use ($fecha, $sucursal_id) {
+                                $query->where('fecha', $fecha)->where('sucursal_id', $sucursal_id);
+                            });
+                            $transferencias = $transferencias->sum('cantidad_fisica');
+                            $total_entregados = (float) $ventas_realizadas + (float) $transferencias;
+
+                            // DEVOLUCIONES
+                            $devoluciones = App\Models\DevolucionClienteDetalle::where('producto_id', $producto->id);
+                            $devoluciones->whereHas('devolucion_cliente', function ($query) use ($fecha, $sucursal_id) {
+                                $query->where('fecha', $fecha)->where('sucursal_id', $sucursal_id);
+                            });
+                            $devoluciones = $devoluciones->sum('cantidad');
+
+                            // FALTANTES
+                            $faltantes = App\Models\TransferenciaDetalle::where('producto_id', $producto->id);
+                            $faltantes->whereHas('transferencia', function ($query) use ($fecha, $sucursal_id) {
+                                $query->where('fecha', $fecha)->where('sucursal_id', $sucursal_id);
+                            });
+                            $faltantes = $faltantes->sum(DB::raw('cantidad - cantidad_fisica'));
+
+                            $faltantes = 0;
+                            // SALDO FINAL
+                            $kardex_final = App\Models\KardexProducto::where('producto_id', $producto->id)
+                                ->where('fecha', $fecha)
+                                ->where('sucursal_id', $sucursal_id)
+                                ->where('tipo_registro', '!=', 'DEVOLUCIÓN DE STOCK')
+                                ->where('id', '>', $kardex_inicial ? $kardex_inicial->id : 0)
+                                ->get()
+                                ->last();
+                            $saldo_final = $kardex_final ? $kardex_final->cantidad_saldo : 0;
+
+                        @endphp
                         <td class="centreado">{{ $ingresos_adicionales }}</td>
                         <td class="centreado">{{ $total_entregados }}</td>
                         <td class="centreado">{{ $devoluciones }}</td>
                         <td class="centreado">{{ $faltantes }}</td>
                         <td class="centreado">{{ $saldo_final }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+                        @php
+                            $total1 += (float) $ingresos_adicionales;
+                            $total2 += (float) $total_entregados;
+                            $total3 += (float) $devoluciones;
+                            $total4 += (float) $faltantes;
+                            $total5 += (float) $saldo_final;
+                        @endphp
+                    @endforeach
+                    <td class="bgFinal">{{ $total1 }}</td>
+                    <td class="bgFinal">{{ $total2 }}</td>
+                    <td class="bgFinal">{{ $total3 }}</td>
+                    <td class="bgFinal">{{ $total4 }}</td>
+                    <td class="bgFinal">{{ $total5 }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 
-        <p class='obs'>Observaciones:</p>
-        <p class='punteado'></p>
-        <p class='punteado'></p>
-        <p class='punteado'></p>
+    <p class='obs'>Observaciones:</p>
+    <p class='punteado'></p>
+    <p class='punteado'></p>
+    <p class='punteado'></p>
 
-        @if ($key < count($sucursals) - 1)
-            <div class="break_page"></div>
-        @endif
-    @endforeach
 </body>
 
 </html>

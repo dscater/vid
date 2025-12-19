@@ -6,6 +6,7 @@ use App\Models\Producto;
 use App\Services\HistorialAccionService;
 use App\Models\Proforma;
 use App\Models\ProformaDetalle;
+use App\Models\ProformaDetalleProducto;
 use App\Models\ProformaProducto;
 use App\Models\Sucursal;
 use Exception;
@@ -107,6 +108,7 @@ class ProformaService
         ]);
 
 
+        $ids_productos = [];
         foreach ($datos["proforma_productos"] as $item_producto) {
             $proforma_producto = ProformaProducto::create([
                 "proforma_id" => $proforma->id,
@@ -115,38 +117,42 @@ class ProformaService
                 "unidad_medida_id" => $item_producto["unidad_medida_id"],
                 "stock_actual" => $item_producto["stock_actual"],
             ]);
+            $ids_productos[] = $proforma_producto->id;
+        }
 
-            foreach ($datos["proforma_detalles"] as $item) {
-                Log::debug($item);
-                // DETALLE
-                $proforma_detalle = $proforma->proforma_detalles()->create([
+        foreach ($datos["proforma_detalles"] as $item) {
+            // Log::debug($item);
+            // DETALLE
+            $proforma_detalle = $proforma->proforma_detalles()->create([
+                "proforma_id" => $proforma->id,
+                "cliente_id" => $item["cliente_id"],
+                "cantidad" => $item["cantidad"],
+                "total" => $item["total"],
+                "saldo" => $item["total"],
+                "estado" => "PENDIENTE",
+            ]);
+            // DETALLE PRODUCTOS
+            foreach ($item["proforma_detalle_productos"] as $index => $pdp) {
+                $proforma_detalle->proforma_detalle_productos()->create([
                     "proforma_id" => $proforma->id,
-                    "cliente_id" => $item["cliente_id"],
-                    "cantidad" => $item["cantidad"],
-                    "total" => $item["total"],
-                    "saldo" => $item["total"],
-                    "estado" => "PENDIENTE",
+                    "proforma_detalle_id" => $proforma_detalle->id,
+                    "proforma_producto_id" => $ids_productos[$index],
+                    "producto_id" => $proforma_producto->producto_id,
+                    "unidad_medida_id" => $proforma_producto->unidad_medida_id,
+                    "cantidad" => $pdp["cantidad"],
+                    "resta" => $pdp["cantidad"] ?? 0,
+                    "precio" => $pdp["precio"],
+                    "subtotal" => $pdp["subtotal"],
                 ]);
-
-                // DETALLE PRODUCTOS
-                foreach ($item["proforma_detalle_productos"] as $pdp) {
-                    $proforma_detalle->proforma_detalle_productos()->create([
-                        "proforma_id" => $proforma->id,
-                        "proforma_detalle_id" => $proforma_detalle->id,
-                        "proforma_producto_id" => $proforma_producto->id,
-                        "producto_id" => $proforma_producto->producto_id,
-                        "unidad_medida_id" => $proforma_producto->unidad_medida_id,
-                        "cantidad" => $pdp["cantidad"],
-                        "precio" => $pdp["precio"],
-                        "subtotal" => $pdp["subtotal"],
-                    ]);
-                }
             }
         }
 
 
+
+
+
         // registrar accion
-        $this->historialAccionService->registrarAccion($this->modulo, "CREACIÓN", "REGISTRO UNA PROFORMA", $proforma);
+        $this->historialAccionService->registrarAccion($this->modulo, "CREACIÓN", "REGISTRO UNA PROFORMA", $proforma, null, ["proforma_productos", "proforma_detalles"]);
 
         return $proforma;
     }
@@ -174,62 +180,93 @@ class ProformaService
         $old_proforma = clone $proforma;
         $old_proforma->loadMissing(["proforma_detalles"]);
         $proforma->update([
-            "sucursal_id" => $datos["sucursal_id"],
-            "cliente_id" => $datos["cliente_id"],
+            "sucursal_ids" => $datos["sucursal_ids"],
             "fecha" => $datos["fecha"],
             "hora" => $datos["hora"],
-            "cantidad_total" => $datos["cantidad_total"],
-            "cs_f" => $datos["cs_f"],
-            "forma_pago" => $datos["forma_pago"],
-            // "cancelado" => $datos["cancelado"],
-            // "cambio" => $datos["cambio"],
             "total" => $datos["total"],
-            "total_st" => $datos["total_st"],
-            // "solicitud_descuento" => $datos["solicitud_descuento"],
-            "descuento" => $datos["descuento"],
-            "total_f" => $datos["total_f"],
         ]);
 
-        foreach ($datos["proforma_detalles"] as $item) {
-            $data = [
-                "producto_id" => $item["producto_id"],
-                "unidad_medida_id" => $item["unidad_medida_id"],
-                "cantidad" => $item["cantidad"],
-                "precio" => $item["precio"],
-                "subtotal" => $item["subtotal"],
-                "descuento" => $item["descuento"],
-                "subtotal_f" => $item["subtotal_f"],
+        $ids_productos = [];
+        foreach ($datos["proforma_productos"] as $item_producto) {
+            $data_proforma_producto = [
+                "proforma_id" => $proforma->id,
+                "producto_id" => $item_producto["producto_id"],
+                "precio" => $item_producto["precio"],
+                "unidad_medida_id" => $item_producto["unidad_medida_id"],
+                "stock_actual" => $item_producto["stock_actual"],
             ];
-            if ($item["id"] == 0) {
-                $proforma->proforma_detalles()->create($data);
+
+            if ($item_producto["id"] && $item_producto["id"] != 0) {
+                $proforma_producto = ProformaProducto::findOrFail($item_producto["id"]);
+                $proforma_producto->update($data_proforma_producto);
             } else {
+                $proforma_producto = ProformaProducto::create($data_proforma_producto);
+            }
+            $ids_productos[] = $proforma_producto->id;
+        }
+
+        foreach ($datos["proforma_detalles"] as $item) {
+            $data_detalle = [
+                "proforma_id" => $proforma->id,
+                "cliente_id" => $item["cliente_id"],
+                "cantidad" => $item["cantidad"],
+                "total" => $item["total"],
+                "saldo" => $item["total"],
+                "estado" => "PENDIENTE",
+            ];
+
+            // Log::debug($item);
+            // DETALLE
+            if (isset($item["id"]) && $item["id"] && $item["id"] != 0) {
                 $proforma_detalle = ProformaDetalle::findOrFail($item["id"]);
-                $proforma_detalle->update($data);
+                $proforma_detalle->update($data_detalle);
+            } else {
+                $proforma_detalle = $proforma->proforma_detalles()->create($data_detalle);
             }
 
-            if ($proforma->verificado == 2) {
-                $producto = Producto::findOrFail($item["producto_id"]);
-                // VERIFICAR STOCK DEL PRODUCTO
-                $resultado_stock = $this->sucursal_producto_service->verificaStockSucursalProducto($producto->id, $datos["sucursal_id"], $item["cantidad"]);
+            // DETALLE PRODUCTOS
+            foreach ($item["proforma_detalle_productos"] as $index => $pdp) {
+                $data_detalle_producto = [
+                    "proforma_id" => $proforma->id,
+                    "proforma_detalle_id" => $proforma_detalle->id,
+                    "proforma_producto_id" => $ids_productos[$index],
+                    "producto_id" => $proforma_producto->producto_id,
+                    "unidad_medida_id" => $proforma_producto->unidad_medida_id,
+                    "cantidad" => $pdp["cantidad"],
+                    "resta" => $pdp["cantidad"] ?? 0,
+                    "cantidad_entregada" => $pdp["cantidad_entregada"],
+                    "precio" => $pdp["precio"],
+                    "subtotal" => $pdp["subtotal"],
+                    "verificado" => $pdp["verificado"],
+                ];
 
-                if (!$resultado_stock[0]) {
-                    throw new Exception("Stock insuficiente del producto " . $producto->nombre . " ; su stock actual es " . $resultado_stock[1]);
+                if (isset($pdp["id"]) && $pdp["id"] && $pdp["id"] != 0) {
+                    $proforma_detalle_producto = ProformaDetalleProducto::findOrFail($pdp["id"]);
+                    $proforma_detalle_producto->update($data_detalle_producto);
+                } else {
+                    $proforma_detalle->proforma_detalle_productos()->create($data_detalle_producto);
                 }
-
-                // DESCONTAR STOCK DE SUCURSAL
-                $this->kardex_producto_service->registroEgreso("PROFORMA", $producto, $item["cantidad"], $producto->precio, "EGRESO POR PROFORMA", $datos["sucursal_id"], "ProformaDetalle", $proforma_detalle->id);
             }
         }
 
         if (isset($datos["eliminados_detalles"]) && !empty($datos["eliminados_detalles"])) {
             foreach ($datos["eliminados_detalles"] as $item) {
                 $proforma_detalle = ProformaDetalle::findOrFail($item);
+                $proforma_detalle->proforma_detalle_productos()->delete();
                 $proforma_detalle->delete();
             }
         }
 
+        if (isset($datos["eliminados_productos"]) && !empty($datos["eliminados_productos"])) {
+            foreach ($datos["eliminados_productos"] as $item) {
+                $proforma_producto = ProformaProducto::findOrFail($item);
+                $proforma_producto->proforma_detalle_productos()->delete();
+                $proforma_producto->delete();
+            }
+        }
+
         // registrar accion
-        $this->historialAccionService->registrarAccion($this->modulo, "MODIFICACIÓN", "ACTUALIZÓ UNA PROFORMA", $old_proforma, $proforma, ["proforma_detalles"]);
+        $this->historialAccionService->registrarAccion($this->modulo, "MODIFICACIÓN", "ACTUALIZÓ UNA PROFORMA", $old_proforma, $proforma, ["proforma_productos", "proforma_detalles"]);
         return $proforma;
     }
 

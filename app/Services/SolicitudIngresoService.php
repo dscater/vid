@@ -217,6 +217,46 @@ class SolicitudIngresoService
                 "motivo" => $item["cantidad"] != $item["cantidad_fisica"] ? $item["motivo"] : null,
             ]);
 
+            // // AUMENTAR STOCK ALMACEN
+            // $producto = Producto::findOrFail($item["producto_id"]);
+            // $this->kardex_producto_service->registroIngreso($almacen->id, "SOLICITUD INGRESO", $producto, $item["cantidad_fisica"], $solicitud_ingreso_detalle->costo, "INGRESO POR SOLICITUD", "SolicitudIngresoDetalle", $solicitud_ingreso_detalle->id);
+
+            // if ($item["cantidad"] != $item["cantidad_fisica"]) {
+            //     // REGISTRAR AJUSTE
+            //     $ajuste = (float)$item["cantidad"] - (float)$item["cantidad_fisica"];
+            //     $this->kardex_producto_service->registroIngreso($item["sucursal_ajuste"], "SOLICITUD INGRESO", $producto, $ajuste, $item["costo"], "INGRESO POR AJUSTE", "SolicitudIngresoDetalle", $solicitud_ingreso_detalle->id);
+            // }
+        }
+
+        // registrar accion
+        $this->historialAccionService->registrarAccion($this->modulo, "MODIFICACIÓN", "APROBO UNA SOLICITUD DE INGRESO", $old_solicitud_ingreso, $solicitud_ingreso, ["solicitud_ingreso_detalles"]);
+
+        return $solicitud_ingreso;
+    }
+
+    public function aprobar_costos(array $datos, SolicitudIngreso $solicitud_ingreso): SolicitudIngreso
+    {
+        $old_solicitud_ingreso = clone $solicitud_ingreso;
+        $old_solicitud_ingreso->loadMissing(["solicitud_ingreso_detalles"]);
+        $solicitud_ingreso->update([
+            "total" => $datos["total"],
+            "verificado" => 3,
+        ]);
+
+        $almacen = Sucursal::where("almacen", 1)->get()->first();
+        if (!$almacen) {
+            throw new Exception("Error al actualizar el registro, no se encontró un Almacen");
+        }
+
+        foreach ($datos["solicitud_ingreso_detalles"] as $item) {
+            $solicitud_ingreso_detalle = SolicitudIngresoDetalle::findOrFail($item["id"]);
+            $subtotal = (float)$item["cantidad_fisica"] * (float)$item["costo"];
+            $solicitud_ingreso_detalle->update([
+                "verificado" => 3,
+                "costo" => $item["costo"],
+                "subtotal" => $subtotal,
+            ]);
+
             // AUMENTAR STOCK ALMACEN
             $producto = Producto::findOrFail($item["producto_id"]);
             $this->kardex_producto_service->registroIngreso($almacen->id, "SOLICITUD INGRESO", $producto, $item["cantidad_fisica"], $solicitud_ingreso_detalle->costo, "INGRESO POR SOLICITUD", "SolicitudIngresoDetalle", $solicitud_ingreso_detalle->id);
@@ -229,10 +269,11 @@ class SolicitudIngresoService
         }
 
         // registrar accion
-        $this->historialAccionService->registrarAccion($this->modulo, "MODIFICACIÓN", "APROBO UNA SOLICITUD DE INGRESO", $old_solicitud_ingreso, $solicitud_ingreso, ["solicitud_ingreso_detalles"]);
+        $this->historialAccionService->registrarAccion($this->modulo, "MODIFICACIÓN", "APROBO LOS COSTOS DE UNA SOLICITUD DE INGRESO", $old_solicitud_ingreso, $solicitud_ingreso, ["solicitud_ingreso_detalles"]);
 
         return $solicitud_ingreso;
     }
+
 
     /**
      * Eliminar solicitud_ingreso

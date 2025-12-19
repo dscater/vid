@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\SolicitudDetalleVerificadoRule;
+use App\Rules\SolicitudIngresoAprobarCostosRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
 
-class SolicitudIngresoAprobarRequest extends FormRequest
+class SolicitudIngresoAprobarCostosRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +26,7 @@ class SolicitudIngresoAprobarRequest extends FormRequest
         return [
             "verificado" => "required",
             "total" => "required",
-            "solicitud_ingreso_detalles" => ["required", new SolicitudDetalleVerificadoRule()],
+            "solicitud_ingreso_detalles" => ["required", new SolicitudIngresoAprobarCostosRule()],
         ];
     }
 

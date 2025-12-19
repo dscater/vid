@@ -33,8 +33,10 @@ use Carbon\Carbon;
 use DateTime;
 use FPDF;
 use Illuminate\Support\Facades\DB;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 
 class ReporteController extends Controller
 {
@@ -2865,7 +2867,7 @@ class ReporteController extends Controller
                 "sucursals",
                 "productos",
                 "fecha",
-            ))->setPaper('letter', 'portrait');
+            ))->setPaper('legal', 'landscape');
 
             // ENUMERAR LAS PÁGINAS USANDO CANVAS
             $pdf->output();
@@ -2906,41 +2908,105 @@ class ReporteController extends Controller
 
             $fila = 2;
 
-            foreach ($sucursals as $sucursal) {
-                $sheet->setCellValue('A' . $fila, $this->configuracion->nombre_sistema);
-                $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
-                $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
-                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
-                $fila++;
-                $sheet->setCellValue('A' . $fila, "CONTROL DIARIO DE SUCURSALES(VEHÍCULOS)");
-                $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
-                $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
-                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
-                $fila++;
-                $sheet->setCellValue('A' . $fila, "Sucursal: " . $sucursal->nombre);
-                $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
-                $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
-                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
-                $fila++;
-                $sheet->setCellValue('A' . $fila, "Encargado: " . $sucursal->user->full_name);
-                $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
-                $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
-                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
-                $fila++;
-                $fila++;
-                $sheet->setCellValue('A' . $fila, 'N°');
-                $sheet->setCellValue('B' . $fila, 'PRODUCTO');
-                $sheet->setCellValue('C' . $fila, 'AÑADIDOS');
-                $sheet->setCellValue('D' . $fila, 'CANTIDAD ENTREGADA');
-                $sheet->setCellValue('E' . $fila, 'DEVOLUCIONES');
-                $sheet->setCellValue('F' . $fila, 'DIFERENCIAS/FALTANTES');
-                $sheet->setCellValue('G' . $fila, 'SALDO FINAL');
-                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->headerTabla);
-                $fila++;
+            $colIndex = 4;
 
-                $cont = 1;
-                $sucursal_id = $sucursal->id;
-                foreach ($productos as $key => $producto) {
+            foreach ($sucursals as $sucursal) {
+                // Columna inicio y fin del bloque de 5
+                $colStart = Coordinate::stringFromColumnIndex($colIndex);
+                $colEnd   = Coordinate::stringFromColumnIndex($colIndex + 4);
+                $colIndex += 5;
+            }
+            $colStart = Coordinate::stringFromColumnIndex($colIndex);
+            $colEnd   = Coordinate::stringFromColumnIndex($colIndex + 4);
+
+            $sheet->setCellValue('A' . $fila, $this->configuracion->nombre_sistema);
+            $sheet->mergeCells("A" . $fila . ":" . $colEnd . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':' . $colEnd . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':' . $colEnd . $fila)->applyFromArray($this->titulo);
+            $fila++;
+            $sheet->setCellValue('A' . $fila, "CONTROL DIARIO DE SUCURSALES(VEHÍCULOS)");
+            $sheet->mergeCells("A" . $fila . ":" . $colEnd . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':' . $colEnd . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':' . $colEnd . $fila)->applyFromArray($this->titulo);
+            // $fila++;
+            // $sheet->setCellValue('A' . $fila, "Sucursal: " . $sucursal->nombre);
+            // $sheet->mergeCells("A" . $fila . ":".$colEnd . $fila);  //COMBINAR CELDAS
+            // $sheet->getStyle('A' . $fila . ':'.$colEnd . $fila)->getAlignment()->setHorizontal('center');
+            // $sheet->getStyle('A' . $fila . ':'.$colEnd . $fila)->applyFromArray($this->titulo);
+            // $fila++;
+            // $sheet->setCellValue('A' . $fila, "Encargado: " . $sucursal->user->full_name);
+            // $sheet->mergeCells("A" . $fila . ":".$colEnd . $fila);  //COMBINAR CELDAS
+            // $sheet->getStyle('A' . $fila . ':'.$colEnd . $fila)->getAlignment()->setHorizontal('center');
+            // $sheet->getStyle('A' . $fila . ':'.$colEnd . $fila)->applyFromArray($this->titulo);
+            $fila++;
+            $fila++;
+            $sheet->setCellValue('A' . $fila, 'N°');
+            $sheet->mergeCells("A" . $fila . ":A" . $fila + 1);  //COMBINAR CELDAS
+            $sheet->setCellValue('B' . $fila, 'PRODUCTO');
+            $sheet->mergeCells("B" . $fila . ":B" . $fila + 1);  //COMBINAR CELDAS
+            $sheet->setCellValue('C' . $fila, 'UNIDAD DE MEDIDA');
+            $sheet->mergeCells("C" . $fila . ":C" . $fila + 1);  //COMBINAR CELDAS
+
+            $colIndex = 4;
+            // Subcolumnas (fila inferior)
+            $subHeaders = ['AÑADIDOS', 'CANTIDAD ENTREGADA', 'DEVOLUCIONES', 'DIFERENCIAS/FALTANTES', 'SALDO FINAL'];
+
+            foreach ($sucursals as $sucursal) {
+                // Columna inicio y fin del bloque de 5
+                $colStart = Coordinate::stringFromColumnIndex($colIndex);
+                $colEnd   = Coordinate::stringFromColumnIndex($colIndex + 4);
+
+                // Título de la sucursal (fila superior)
+                $sheet->setCellValue($colStart . $fila, $sucursal->nombre);
+                $sheet->mergeCells("{$colStart}{$fila}:{$colEnd}{$fila}");
+                $sheet->getStyle("{$colStart}{$fila}:{$colEnd}{$fila}")
+                    ->getAlignment()->setHorizontal('center');
+
+
+                foreach ($subHeaders as $i => $text) {
+                    $col = Coordinate::stringFromColumnIndex($colIndex + $i);
+                    $sheet->setCellValue($col . ($fila + 1), $text);
+                    $sheet->getStyle($col . ($fila + 1))
+                        ->getAlignment()
+                        ->setHorizontal(Alignment::HORIZONTAL_CENTER)
+                        ->setVertical(Alignment::VERTICAL_CENTER)
+                        ->setTextRotation(90); // 🔹 TEXTO VERTICAL
+                }
+                $colIndex += 5;
+            }
+
+            foreach ($subHeaders as $i => $text) {
+                $col = Coordinate::stringFromColumnIndex($colIndex + $i);
+                $sheet->setCellValue($col . ($fila + 1), $text);
+                $sheet->getStyle($col . ($fila + 1))
+                    ->getAlignment()
+                    ->setHorizontal(Alignment::HORIZONTAL_CENTER)
+                    ->setVertical(Alignment::VERTICAL_CENTER)
+                    ->setTextRotation(90); // 🔹 TEXTO VERTICAL
+            }
+            $colStart = Coordinate::stringFromColumnIndex($colIndex);
+            $colEnd   = Coordinate::stringFromColumnIndex($colIndex + 4);
+
+            $sheet->getStyle('A' . $fila . ':' . $colEnd . $fila)->applyFromArray($this->headerTabla);
+
+            $sheet->setCellValue($colStart . $fila, 'SALDOS FINALES');
+            $sheet->getStyle($colStart . $fila . ':' . $colEnd . $fila + 1)->getAlignment()->setHorizontal('center');
+            $sheet->mergeCells($colStart . $fila . ":" . $colEnd . $fila);  //COMBINAR CELDAS
+            $fila++;
+            $sheet->getStyle('A' . $fila . ':' . $colEnd . $fila)->applyFromArray($this->headerTabla);
+            $fila++;
+            $cont = 1;
+            foreach ($productos as $key => $producto) {
+
+                $total1 = 0;
+                $total2 = 0;
+                $total3 = 0;
+                $total4 = 0;
+                $total5 = 0;
+                $colIndex = 4;
+
+                foreach ($sucursals as $sucursal) {
+                    $sucursal_id = $sucursal->id;
                     // INGRESOS ADICIONALES
                     $ingresos_adicionales = KardexProducto::where('producto_id', $producto->id)
                         ->where('fecha', $fecha)
@@ -3008,18 +3074,73 @@ class ReporteController extends Controller
                         ->get()
                         ->last();
                     $saldo_final = $kardex_final ? $kardex_final->cantidad_saldo : 0;
-                    $sheet->setCellValue('A' . $fila, $cont++);
-                    $sheet->setCellValue('B' . $fila, $producto->nombre . ' ' . $producto->unidad_medida->nombre);
-                    $sheet->setCellValue('C' . $fila, $ingresos_adicionales);
-                    $sheet->setCellValue('D' . $fila, $total_entregados);
-                    $sheet->setCellValue('E' . $fila, $devoluciones);
-                    $sheet->setCellValue('F' . $fila, $faltantes);
-                    $sheet->setCellValue('G' . $fila, $saldo_final);
-                    $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->bodyTabla);
-                    $fila++;
+
+
+                    $sheet->setCellValue('A' . $fila, ($key + 1));
+                    $sheet->setCellValue('B' . $fila, $producto->nombre);
+                    $sheet->setCellValue('B' . $fila, $producto->unidad_medida->nombre);
+                    $sheet->setCellValue(
+                        Coordinate::stringFromColumnIndex($colIndex) . $fila,
+                        $ingresos_adicionales
+                    );
+
+                    $sheet->setCellValue(
+                        Coordinate::stringFromColumnIndex($colIndex + 1) . $fila,
+                        $total_entregados
+                    );
+
+                    $sheet->setCellValue(
+                        Coordinate::stringFromColumnIndex($colIndex + 2) . $fila,
+                        $devoluciones
+                    );
+
+                    $sheet->setCellValue(
+                        Coordinate::stringFromColumnIndex($colIndex + 3) . $fila,
+                        $faltantes
+                    );
+
+                    $sheet->setCellValue(
+                        Coordinate::stringFromColumnIndex($colIndex + 4) . $fila,
+                        $saldo_final
+                    );
+
+                    $total1 += (float) $ingresos_adicionales;
+                    $total2 += (float) $total_entregados;
+                    $total3 += (float) $devoluciones;
+                    $total4 += (float) $faltantes;
+                    $total5 += (float) $saldo_final;
+                    $colIndex += 5;
                 }
-                $fila += 4;
+
+                $sheet->setCellValue(
+                    Coordinate::stringFromColumnIndex($colIndex) . $fila,
+                    $total1
+                );
+
+                $sheet->setCellValue(
+                    Coordinate::stringFromColumnIndex($colIndex + 1) . $fila,
+                    $total2
+                );
+
+                $sheet->setCellValue(
+                    Coordinate::stringFromColumnIndex($colIndex + 2) . $fila,
+                    $total3
+                );
+
+                $sheet->setCellValue(
+                    Coordinate::stringFromColumnIndex($colIndex + 3) . $fila,
+                    $total4
+                );
+
+                $sheet->setCellValue(
+                    Coordinate::stringFromColumnIndex($colIndex + 4) . $fila,
+                    $total5
+                );
+
+                $sheet->getStyle('A' . $fila . ':' . $colEnd . $fila)->applyFromArray($this->bodyTabla);
+                $fila++;
             }
+
 
             $sheet->getColumnDimension('A')->setWidth(6);
             $sheet->getColumnDimension('B')->setWidth(25);
@@ -3029,7 +3150,7 @@ class ReporteController extends Controller
             $sheet->getColumnDimension('F')->setWidth(15);
             $sheet->getColumnDimension('G')->setWidth(15);
 
-            foreach (range('A', 'G') as $columnID) {
+            foreach (range('A', $colEnd) as $columnID) {
                 $sheet->getStyle($columnID)->getAlignment()->setWrapText(true);
             }
 
@@ -3038,7 +3159,7 @@ class ReporteController extends Controller
             $sheet->getPageMargins()->setRight(0.1);
             $sheet->getPageMargins()->setLeft(0.1);
             $sheet->getPageMargins()->setBottom(0.1);
-            $sheet->getPageSetup()->setPrintArea('A:G');
+            $sheet->getPageSetup()->setPrintArea('A:' . $colEnd);
             $sheet->getPageSetup()->setFitToWidth(1);
             $sheet->getPageSetup()->setFitToHeight(0);
 

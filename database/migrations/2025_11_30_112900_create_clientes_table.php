@@ -23,8 +23,7 @@ return new class extends Migration
             $table->string("cel");
             $table->string("fono");
             $table->string("dir");
-            $table->string("latitud");
-            $table->string("longitud");
+            $table->text("ubicacion");
             $table->string("ciudad");
             $table->string("categoria")->default("");
             $table->integer("rank")->nullable()->default(NULL);
