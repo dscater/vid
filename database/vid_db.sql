@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 18-12-2025 a las 22:24:52
+-- Tiempo de generación: 19-12-2025 a las 01:51:05
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.2.22
 
@@ -627,7 +627,8 @@ INSERT INTO `historial_accions` (`id`, `user_id`, `accion`, `descripcion`, `dato
 (223, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 58, \"qr\": 1, \"con\": 1, \"cre\": 1, \"nro\": 39, \"cs_f\": \"CON FACTURA\", \"hora\": \"10:51\", \"fecha\": \"2025-12-17\", \"total\": 635, \"cambio\": -35, \"codigo\": \"OV.39\", \"estado\": \"FINALIZADO\", \"credito\": 35, \"total_f\": 635, \"user_id\": 1, \"total_st\": 635, \"cancelado\": 600, \"descuento\": null, \"cliente_id\": 1, \"created_at\": \"2025-12-17T14:53:16.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-17T14:53:16.000000Z\", \"verificado\": 2, \"cancelado_c\": 300, \"sucursal_id\": 2, \"cancelado_qr\": 300, \"solicitud_sw\": null, \"cantidad_total\": 2, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2025-12-17', '10:53:16', '2025-12-17 14:53:16', '2025-12-17 14:53:16'),
 (224, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 59, \"qr\": 1, \"con\": 1, \"cre\": 0, \"nro\": 40, \"cs_f\": \"CON FACTURA\", \"hora\": \"11:52\", \"fecha\": \"2025-12-17\", \"total\": 295, \"cambio\": 0, \"codigo\": \"OV.40\", \"estado\": \"FINALIZADO\", \"credito\": 0, \"total_f\": 295, \"user_id\": 1, \"total_st\": 295, \"cancelado\": 295, \"descuento\": null, \"cliente_id\": 1, \"created_at\": \"2025-12-17T15:53:34.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2025-12-17T15:53:34.000000Z\", \"verificado\": 2, \"cancelado_c\": 200, \"sucursal_id\": 2, \"cancelado_qr\": 95, \"solicitud_sw\": null, \"cantidad_total\": 1, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2025-12-17', '11:53:35', '2025-12-17 15:53:35', '2025-12-17 15:53:35'),
 (225, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UN CLIENTE', '{\"id\": 4, \"cel\": \"67676767\", \"dir\": \"LOS PEDREGALES\", \"nit\": \"123123\", \"fono\": \"454554\", \"tipo\": \"PERSONA\", \"ciudad\": \"LA PAZ\", \"correo\": null, \"estado\": \"1\", \"ci_prop\": \"234234234\", \"latitud\": \"1213123\", \"longitud\": \"123123\", \"contactos\": [{\"cel\": \"676767\", \"fono\": \"67676767\", \"nombre\": \"JUAN PEREZ\", \"observacion\": null}], \"created_at\": \"2025-12-18T21:37:23.000000Z\", \"updated_at\": \"2025-12-18T21:37:23.000000Z\", \"nombre_prop\": \"JUAN PEREZ\", \"nombre_punto\": \"PUNTO VENTA JUAN PEREZ\", \"razon_social\": \"JUAN PEREZ\"}', NULL, 'CLIENTES', '2025-12-18', '17:37:23', '2025-12-18 21:37:23', '2025-12-18 21:37:23'),
-(226, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA PROFORMA', '{\"id\": 7, \"nro\": 1, \"hora\": \"17:57\", \"fecha\": \"2025-12-18\", \"total\": null, \"codigo\": \"PF.1\", \"user_id\": 1, \"created_at\": \"2025-12-18T22:00:24.000000Z\", \"updated_at\": \"2025-12-18T22:00:24.000000Z\", \"sucursal_id\": 2}', NULL, 'PROFORMA', '2025-12-18', '18:00:24', '2025-12-18 22:00:24', '2025-12-18 22:00:24');
+(226, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA PROFORMA', '{\"id\": 7, \"nro\": 1, \"hora\": \"17:57\", \"fecha\": \"2025-12-18\", \"total\": null, \"codigo\": \"PF.1\", \"user_id\": 1, \"created_at\": \"2025-12-18T22:00:24.000000Z\", \"updated_at\": \"2025-12-18T22:00:24.000000Z\", \"sucursal_id\": 2}', NULL, 'PROFORMA', '2025-12-18', '18:00:24', '2025-12-18 22:00:24', '2025-12-18 22:00:24'),
+(227, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA PROFORMA', '{\"id\": 4, \"nro\": 1, \"hora\": \"21:23\", \"fecha\": \"2025-12-18\", \"total\": null, \"codigo\": \"PF.1\", \"user_id\": 1, \"created_at\": \"2025-12-19T01:27:50.000000Z\", \"updated_at\": \"2025-12-19T01:27:50.000000Z\", \"sucursal_ids\": [2, 3]}', NULL, 'PROFORMA', '2025-12-18', '21:27:50', '2025-12-19 01:27:50', '2025-12-19 01:27:50');
 
 -- --------------------------------------------------------
 
@@ -907,7 +908,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (39, '2025_12_12_202751_create_failed_jobs_table', 5),
 (40, '2025_12_13_121456_create_notificacions_table', 6),
 (41, '2025_12_13_121459_create_notificacion_users_table', 6),
-(42, '2025_12_18_163352_create_proforma_detalle_productos_table', 7);
+(42, '2025_12_18_163351_create_proforma_productos_table', 7),
+(43, '2025_12_18_163352_create_proforma_detalle_productos_table', 7);
 
 -- --------------------------------------------------------
 
@@ -1475,7 +1477,7 @@ CREATE TABLE `proformas` (
   `id` bigint UNSIGNED NOT NULL,
   `nro` bigint NOT NULL,
   `codigo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sucursal_id` bigint UNSIGNED NOT NULL,
+  `sucursal_ids` json NOT NULL,
   `fecha` date NOT NULL,
   `hora` time NOT NULL,
   `cantidad_total` double DEFAULT NULL,
@@ -1491,8 +1493,8 @@ CREATE TABLE `proformas` (
 -- Volcado de datos para la tabla `proformas`
 --
 
-INSERT INTO `proformas` (`id`, `nro`, `codigo`, `sucursal_id`, `fecha`, `hora`, `cantidad_total`, `total`, `observaciones`, `user_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(7, 1, 'PF.1', 2, '2025-12-18', '17:57:00', NULL, NULL, NULL, 1, NULL, '2025-12-18 22:00:24', '2025-12-18 22:00:24');
+INSERT INTO `proformas` (`id`, `nro`, `codigo`, `sucursal_ids`, `fecha`, `hora`, `cantidad_total`, `total`, `observaciones`, `user_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(4, 1, 'PF.1', '[2, 3]', '2025-12-18', '21:23:00', NULL, NULL, NULL, 1, NULL, '2025-12-19 01:27:50', '2025-12-19 01:27:50');
 
 -- --------------------------------------------------------
 
@@ -1520,8 +1522,10 @@ CREATE TABLE `proforma_detalles` (
 --
 
 INSERT INTO `proforma_detalles` (`id`, `proforma_id`, `cliente_id`, `cantidad`, `cantidad_entregada`, `total`, `saldo`, `estado`, `verificado`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(5, 7, 1, 4, 0.00, 1290.00, 1290.00, 'PENDIENTE', 0, NULL, '2025-12-18 22:00:24', '2025-12-18 22:00:24'),
-(6, 7, 4, 1, 0.00, 97.00, 97.00, 'PENDIENTE', 0, NULL, '2025-12-18 22:00:24', '2025-12-18 22:00:24');
+(4, 4, 1, 3, 0.00, 900.00, 900.00, 'PENDIENTE', 0, NULL, '2025-12-19 01:27:50', '2025-12-19 01:27:50'),
+(5, 4, 4, 2, 0.00, 690.00, 690.00, 'PENDIENTE', 0, NULL, '2025-12-19 01:27:50', '2025-12-19 01:27:50'),
+(6, 4, 1, 3, 0.00, 900.00, 900.00, 'PENDIENTE', 0, NULL, '2025-12-19 01:27:50', '2025-12-19 01:27:50'),
+(7, 4, 4, 2, 0.00, 690.00, 690.00, 'PENDIENTE', 0, NULL, '2025-12-19 01:27:50', '2025-12-19 01:27:50');
 
 -- --------------------------------------------------------
 
@@ -1533,13 +1537,14 @@ CREATE TABLE `proforma_detalle_productos` (
   `id` bigint UNSIGNED NOT NULL,
   `proforma_id` bigint UNSIGNED NOT NULL,
   `proforma_detalle_id` bigint UNSIGNED NOT NULL,
+  `proforma_producto_id` bigint UNSIGNED NOT NULL,
   `producto_id` bigint UNSIGNED NOT NULL,
   `unidad_medida_id` bigint UNSIGNED NOT NULL,
   `cantidad` double DEFAULT NULL,
-  `cantidad_entregada` double(8,2) DEFAULT NULL,
+  `cantidad_entregada` double DEFAULT NULL,
   `precio` decimal(24,2) DEFAULT NULL,
   `subtotal` decimal(24,2) DEFAULT NULL,
-  `verificado` int NOT NULL DEFAULT '0',
+  `verificado` int DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1548,13 +1553,40 @@ CREATE TABLE `proforma_detalle_productos` (
 -- Volcado de datos para la tabla `proforma_detalle_productos`
 --
 
-INSERT INTO `proforma_detalle_productos` (`id`, `proforma_id`, `proforma_detalle_id`, `producto_id`, `unidad_medida_id`, `cantidad`, `cantidad_entregada`, `precio`, `subtotal`, `verificado`, `created_at`, `updated_at`) VALUES
-(7, 7, 5, 3, 1, 2, NULL, 300.00, 600.00, 0, '2025-12-18 22:00:24', '2025-12-18 22:00:24'),
-(8, 7, 5, 4, 2, 2, NULL, 345.00, 690.00, 0, '2025-12-18 22:00:24', '2025-12-18 22:00:24'),
-(9, 7, 5, 5, 1, NULL, NULL, 97.00, NULL, 0, '2025-12-18 22:00:24', '2025-12-18 22:00:24'),
-(10, 7, 6, 3, 1, NULL, NULL, 300.00, NULL, 0, '2025-12-18 22:00:24', '2025-12-18 22:00:24'),
-(11, 7, 6, 4, 2, NULL, NULL, 345.00, NULL, 0, '2025-12-18 22:00:24', '2025-12-18 22:00:24'),
-(12, 7, 6, 5, 1, 1, NULL, 97.00, 97.00, 0, '2025-12-18 22:00:24', '2025-12-18 22:00:24');
+INSERT INTO `proforma_detalle_productos` (`id`, `proforma_id`, `proforma_detalle_id`, `proforma_producto_id`, `producto_id`, `unidad_medida_id`, `cantidad`, `cantidad_entregada`, `precio`, `subtotal`, `verificado`, `created_at`, `updated_at`) VALUES
+(1, 4, 4, 4, 3, 1, 3, NULL, 300.00, 900.00, 0, '2025-12-19 01:27:50', '2025-12-19 01:27:50'),
+(2, 4, 4, 4, 3, 1, NULL, NULL, NULL, NULL, 0, '2025-12-19 01:27:50', '2025-12-19 01:27:50'),
+(3, 4, 5, 4, 3, 1, NULL, NULL, 300.00, NULL, 0, '2025-12-19 01:27:50', '2025-12-19 01:27:50'),
+(4, 4, 5, 4, 3, 1, 2, NULL, 345.00, 690.00, 0, '2025-12-19 01:27:50', '2025-12-19 01:27:50'),
+(5, 4, 6, 5, 4, 2, 3, NULL, 300.00, 900.00, 0, '2025-12-19 01:27:50', '2025-12-19 01:27:50'),
+(6, 4, 6, 5, 4, 2, NULL, NULL, NULL, NULL, 0, '2025-12-19 01:27:50', '2025-12-19 01:27:50'),
+(7, 4, 7, 5, 4, 2, NULL, NULL, 300.00, NULL, 0, '2025-12-19 01:27:50', '2025-12-19 01:27:50'),
+(8, 4, 7, 5, 4, 2, 2, NULL, 345.00, 690.00, 0, '2025-12-19 01:27:50', '2025-12-19 01:27:50');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `proforma_productos`
+--
+
+CREATE TABLE `proforma_productos` (
+  `id` bigint UNSIGNED NOT NULL,
+  `proforma_id` bigint UNSIGNED NOT NULL,
+  `producto_id` bigint UNSIGNED NOT NULL,
+  `precio` decimal(24,2) DEFAULT NULL,
+  `unidad_medida_id` bigint UNSIGNED NOT NULL,
+  `stock_actual` double DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `proforma_productos`
+--
+
+INSERT INTO `proforma_productos` (`id`, `proforma_id`, `producto_id`, `precio`, `unidad_medida_id`, `stock_actual`, `created_at`, `updated_at`) VALUES
+(4, 4, 3, 300.00, 1, 88, '2025-12-19 01:27:50', '2025-12-19 01:27:50'),
+(5, 4, 4, 345.00, 2, 61, '2025-12-19 01:27:50', '2025-12-19 01:27:50');
 
 -- --------------------------------------------------------
 
@@ -1781,7 +1813,8 @@ INSERT INTO `sucursal_productos` (`id`, `sucursal_id`, `producto_id`, `cantidad_
 (7, 3, 4, 0, 0, 4, NULL, '2025-12-06 14:31:33', '2025-12-09 21:53:43'),
 (8, 1, 5, 0, 0, 18, NULL, '2025-12-14 00:26:45', '2025-12-14 00:26:45'),
 (9, 2, 5, 0, 0, 2, NULL, '2025-12-14 00:26:45', '2025-12-14 00:26:45'),
-(10, 4, 3, 0, 0, 19, NULL, '2025-12-14 00:34:12', '2025-12-14 00:34:12');
+(10, 4, 3, 0, 0, 19, NULL, '2025-12-14 00:34:12', '2025-12-14 00:34:12'),
+(11, 3, 5, 0, 0, 0, NULL, '2025-12-19 01:20:27', '2025-12-19 01:20:27');
 
 -- --------------------------------------------------------
 
@@ -2142,7 +2175,6 @@ ALTER TABLE `productos`
 ALTER TABLE `proformas`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `proformas_codigo_unique` (`codigo`),
-  ADD KEY `proformas_sucursal_id_foreign` (`sucursal_id`),
   ADD KEY `proformas_user_id_foreign` (`user_id`);
 
 --
@@ -2159,8 +2191,18 @@ ALTER TABLE `proforma_detalle_productos`
   ADD PRIMARY KEY (`id`),
   ADD KEY `proforma_detalle_productos_proforma_id_foreign` (`proforma_id`),
   ADD KEY `proforma_detalle_productos_proforma_detalle_id_foreign` (`proforma_detalle_id`),
+  ADD KEY `proforma_detalle_productos_proforma_producto_id_foreign` (`proforma_producto_id`),
   ADD KEY `proforma_detalle_productos_producto_id_foreign` (`producto_id`),
   ADD KEY `proforma_detalle_productos_unidad_medida_id_foreign` (`unidad_medida_id`);
+
+--
+-- Indices de la tabla `proforma_productos`
+--
+ALTER TABLE `proforma_productos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `proforma_productos_proforma_id_foreign` (`proforma_id`),
+  ADD KEY `proforma_productos_producto_id_foreign` (`producto_id`),
+  ADD KEY `proforma_productos_unidad_medida_id_foreign` (`unidad_medida_id`);
 
 --
 -- Indices de la tabla `proveedors`
@@ -2332,7 +2374,7 @@ ALTER TABLE `gastos`
 -- AUTO_INCREMENT de la tabla `historial_accions`
 --
 ALTER TABLE `historial_accions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=227;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=228;
 
 --
 -- AUTO_INCREMENT de la tabla `jobs`
@@ -2356,7 +2398,7 @@ ALTER TABLE `marcas`
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT de la tabla `modulos`
@@ -2422,19 +2464,25 @@ ALTER TABLE `productos`
 -- AUTO_INCREMENT de la tabla `proformas`
 --
 ALTER TABLE `proformas`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `proforma_detalles`
 --
 ALTER TABLE `proforma_detalles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `proforma_detalle_productos`
 --
 ALTER TABLE `proforma_detalle_productos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de la tabla `proforma_productos`
+--
+ALTER TABLE `proforma_productos`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedors`
@@ -2476,7 +2524,7 @@ ALTER TABLE `sucursals`
 -- AUTO_INCREMENT de la tabla `sucursal_productos`
 --
 ALTER TABLE `sucursal_productos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `transferencias`
@@ -2625,7 +2673,6 @@ ALTER TABLE `productos`
 -- Filtros para la tabla `proformas`
 --
 ALTER TABLE `proformas`
-  ADD CONSTRAINT `proformas_sucursal_id_foreign` FOREIGN KEY (`sucursal_id`) REFERENCES `sucursals` (`id`),
   ADD CONSTRAINT `proformas_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
@@ -2641,7 +2688,16 @@ ALTER TABLE `proforma_detalle_productos`
   ADD CONSTRAINT `proforma_detalle_productos_producto_id_foreign` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`),
   ADD CONSTRAINT `proforma_detalle_productos_proforma_detalle_id_foreign` FOREIGN KEY (`proforma_detalle_id`) REFERENCES `proforma_detalles` (`id`),
   ADD CONSTRAINT `proforma_detalle_productos_proforma_id_foreign` FOREIGN KEY (`proforma_id`) REFERENCES `proformas` (`id`),
+  ADD CONSTRAINT `proforma_detalle_productos_proforma_producto_id_foreign` FOREIGN KEY (`proforma_producto_id`) REFERENCES `proforma_productos` (`id`),
   ADD CONSTRAINT `proforma_detalle_productos_unidad_medida_id_foreign` FOREIGN KEY (`unidad_medida_id`) REFERENCES `unidad_medidas` (`id`);
+
+--
+-- Filtros para la tabla `proforma_productos`
+--
+ALTER TABLE `proforma_productos`
+  ADD CONSTRAINT `proforma_productos_producto_id_foreign` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`),
+  ADD CONSTRAINT `proforma_productos_proforma_id_foreign` FOREIGN KEY (`proforma_id`) REFERENCES `proformas` (`id`),
+  ADD CONSTRAINT `proforma_productos_unidad_medida_id_foreign` FOREIGN KEY (`unidad_medida_id`) REFERENCES `unidad_medidas` (`id`);
 
 --
 -- Filtros para la tabla `solicitud_ingresos`
