@@ -104,6 +104,7 @@ class ClienteService
                 }, $contacto);
             }, $datos["contactos"]),
             "estado" => mb_strtoupper($datos["estado"]),
+            "credito" => mb_strtoupper($datos["credito"]),
         ]);
         // registrar accion
         $this->historialAccionService->registrarAccion($this->modulo, "CREACIÓN", "REGISTRO UN CLIENTE", $cliente);
@@ -140,6 +141,7 @@ class ClienteService
                 }, $contacto);
             }, $datos["contactos"]),
             "estado" => mb_strtoupper($datos["estado"]),
+            "credito" => mb_strtoupper($datos["credito"]),
         ]);
         // registrar accion
         $this->historialAccionService->registrarAccion($this->modulo, "MODIFICACIÓN", "ACTUALIZÓ UN CLIENTE", $old_cliente, $cliente);

@@ -191,10 +191,10 @@
                     <th>N°</th>
                     <th>CANTIDAD</th>
                     <th>DESCRIPCIÓN</th>
-                    <th>P/U</th>
-                    <th>SUBTOTAL</th>
-                    <th>DESCUENTO</th>
-                    <th>TOTAL</th>
+                    <th>P/U Bs.</th>
+                    <th>SUBTOTAL Bs.</th>
+                    <th>DESCUENTO Bs.</th>
+                    <th>TOTAL Bs.</th>
                 </tr>
                 @foreach ($item->orden_venta_detalles as $key => $si)
                     <tr>

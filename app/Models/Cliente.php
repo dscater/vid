@@ -29,6 +29,7 @@ class Cliente extends Model
         "factor",
         "contactos",
         "estado",
+        "credito",
     ];
 
     protected $appends = [

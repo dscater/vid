@@ -31,6 +31,7 @@ return new class extends Migration
             $table->double("factor", 8, 4)->nullable()->default(NULL);
             $table->json("contactos")->nullable();
             $table->integer("estado")->default(1);
+            $table->integer("credito")->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

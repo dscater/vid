@@ -37,6 +37,7 @@ class ClienteStoreRequest extends FormRequest
             "ciudad" => "required",
             "contactos" => ["required", "array", "min:1", new ClienteContactosRule()],
             "estado" => "required",
+            "credito" => "required",
         ];
     }
 
@@ -59,6 +60,7 @@ class ClienteStoreRequest extends FormRequest
             "contactos.required" => "Debes completar este campo",
             "contactos.min" => "Debes agregar al menos :min contacto",
             "estado.required" => "Debes completar este campo",
+            "credito.required" => "Debes completar este campo",
         ];
     }
 }

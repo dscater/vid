@@ -175,12 +175,12 @@
                     <td class="centreado">{{ $cont++ }}</td>
                     <td class="">{{ $item->descripcion }}</td>
                     <td class="centreado">{{ $item->fecha_c }}</td>
-                    <td class="derecha">{{ $item->monto }}</td>
+                    <td class="derecha">Bs. {{ $item->monto }}</td>
                 </tr>
             @endforeach
             <tr>
                 <th colspan="3">TOTAL</th>
-                <th class="derecha">{{ $gastos->sum('monto') }}</th>
+                <th class="derecha">Bs. {{ $gastos->sum('monto') }}</th>
             </tr>
         </tbody>
     </table>

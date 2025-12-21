@@ -233,6 +233,12 @@
                             }
                         }
 
+                        $kardex_productos->whereIn('detalle', [
+                            'ORDEN DE SALIDA',
+                            'TRANSFERENCIA',
+                            'SOLICITUD INGRESO',
+                            'DEVOLUCIÓN DE STOCK',
+                        ]);
                         if ($fecha) {
                             $kardex_productos->where('fecha', $fecha);
                         }

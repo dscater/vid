@@ -180,9 +180,9 @@
                     <td class="">{{ $item->fecha_c }}</td>
                     <td class="">{{ $item->cliente->razon_social }}</td>
                     <td class="">{{ $item->orden_venta->codigo }}</td>
-                    <td class="centreado">{{ $item->total }}</td>
-                    <td class="centreado">{{ $item->cancelado }}</td>
-                    <td class="centreado">{{ $item->saldo }}</td>
+                    <td class="centreado">Bs. {{ $item->total }}</td>
+                    <td class="centreado">Bs. {{ $item->cancelado }}</td>
+                    <td class="centreado">Bs. {{ $item->saldo }}</td>
                 </tr>
             @endforeach
             @php
@@ -192,9 +192,9 @@
             @endphp
             <tr>
                 <th colspan="4">TOTAL</th>
-                <th>{{ $total }}</th>
-                <th>{{ $cancelado }}</th>
-                <th>{{ $saldo }}</th>
+                <th>Bs.{{ $total }}</th>
+                <th>Bs.{{ $cancelado }}</th>
+                <th>Bs.{{ $saldo }}</th>
             </tr>
         </tbody>
     </table>
