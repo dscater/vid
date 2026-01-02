@@ -38,8 +38,8 @@ class OrdenVenta extends Model
         "cambio",
         "cs_f",
         "observaciones",
-        "estado", // para controlar:PENDIENTE, APROBADO, FINALIZADO, RECHAZADO
-        "verificado", // 0:PENDIENTE, 1: APROBADO, 2: FINALIZADO, 3: RECHAZADO
+        "estado", // para controlar:PENDIENTE, APROBADO, FINALIZADO, RECHAZADO, ANULADO
+        "verificado", // 0:PENDIENTE, 1: APROBADO, 2: FINALIZADO, 3: RECHAZADO, 4: ANULADO
         "user_id",
     ];
 

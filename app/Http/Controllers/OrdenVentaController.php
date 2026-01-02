@@ -80,10 +80,7 @@ class OrdenVentaController extends Controller
         $desc = $request->orderAsc;
 
         $columnsSerachLike = [];
-        $columnsFilter = [
-            "codigo"
-
-        ];
+        $columnsFilter = [];
         $columnsBetweenFilter = [];
         $arrayOrderBy = [];
         if ($orderByCol && $desc) {
@@ -216,6 +213,30 @@ class OrdenVentaController extends Controller
         }
     }
 
+
+    /**
+     * anular orden_venta
+     *
+     * @param OrdenVenta $orden_venta
+     * @return JsonResponse|Response
+     */
+    public function anular(OrdenVenta $orden_venta): JsonResponse|Response
+    {
+        DB::beginTransaction();
+        try {
+            $this->orden_ventaService->anular($orden_venta);
+            DB::commit();
+            return response()->JSON([
+                "sw" => true,
+                'message' => 'El registro se eliminó correctamente'
+            ], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw ValidationException::withMessages([
+                'error' =>  $e->getMessage(),
+            ]);
+        }
+    }
 
     /**
      * Eliminar orden_venta

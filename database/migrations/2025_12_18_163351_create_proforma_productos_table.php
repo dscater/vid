@@ -18,6 +18,8 @@ return new class extends Migration
             $table->decimal("precio", 24, 2)->nullable();
             $table->unsignedBigInteger("unidad_medida_id");
             $table->double("stock_actual", 8, 2)->nullable();
+            $table->double("agregados", 8, 2)->nullable();
+            $table->double("suma", 8, 2)->nullable();
             $table->timestamps();
 
             $table->foreign("proforma_id")->on("proformas")->references("id");

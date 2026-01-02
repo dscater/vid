@@ -15,6 +15,8 @@ class ProformaProducto extends Model
         "precio",
         "unidad_medida_id",
         "stock_actual",
+        "agregados",
+        "suma",
     ];
 
     protected $appends = ["stock_actual_aux"];

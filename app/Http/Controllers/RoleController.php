@@ -110,10 +110,19 @@ class RoleController extends Controller
      * @param Role $role
      * @return JsonResponse
      */
-    public function show(Role $role): JsonResponse
+    public function show(Role $role, Request $request): JsonResponse
     {
+        $activos = $request->input("activos", false);
 
-        $modulos_group = Modulo::select('modulo')->distinct()->pluck('modulo');
+        $modulos_group = Modulo::select('modulo');
+
+        if ($activos) {
+            $modulos_group->whereHas("permisos", function ($query) use ($role) {
+                $query->where("role_id", $role->id);
+            });
+        }
+
+        $modulos_group = $modulos_group->distinct()->pluck('modulo');
 
         $array_modulos = [];
         $array_permisos = [];

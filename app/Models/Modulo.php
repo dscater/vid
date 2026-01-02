@@ -15,4 +15,10 @@ class Modulo extends Model
         "accion",
         "descripcion",
     ];
+
+
+    public function permisos()
+    {
+        return $this->hasMany(Permiso::class, 'modulo_id');
+    }
 }

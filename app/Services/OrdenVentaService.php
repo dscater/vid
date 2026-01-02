@@ -11,6 +11,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
@@ -56,19 +57,36 @@ class OrdenVentaService
             $orden_ventas->where("sucursal_id", Auth::user()->sucursal_asignada->id);
         }
 
-        // Filtros exactos
-        foreach ($columnsFilter as $key => $value) {
-            if (!is_null($value)) {
-                $orden_ventas->where(function ($query) use ($search, $value) {
-                    $query->where("orden_ventas." . $value, "LIKE", "%$search%");
-                    if (!empty($search)) {
-                        $query->orWhereHas("cliente", function ($query2) use ($search) {
-                            $query2->where("razon_social", "LIKE", "%$search%");
-                        });
-                    }
-                });
-            }
+
+        if (!empty($search)) {
+            $orden_ventas->orWhere("codigo", "LIKE", "%$search%");
+            $orden_ventas->orWhere("estado", "LIKE", "%$search%");
+            $orden_ventas->orWhereHas("sucursal", function ($query) use ($search) {
+                $query->where("nombre", "LIKE", "%$search%");
+            });
+            $orden_ventas->orWhereHas("cliente", function ($query) use ($search) {
+                $query->where("razon_social", "LIKE", "%$search%");
+            });
+            $orden_ventas->orWhereHas("cliente", function ($query) use ($search) {
+                $query->where("razon_social", "LIKE", "%$search%");
+            });
+            if (mb_strtolower($search) == 'qr')
+                $orden_ventas->orWhere("qr", 1);
+            if (mb_strtolower($search) == 'credito' || mb_strtolower($search) == 'crédito')
+                $orden_ventas->orWhere("cre", 1);
+            if (mb_strtolower($search) == 'contado')
+                $orden_ventas->orWhere("con", 1);
+
+
+            $orden_ventas->orWhereHas("user", function ($query) use ($search) {
+                $query->where(
+                    DB::raw("CONCAT(nombre, ' ', paterno, ' ', materno)"),
+                    'LIKE',
+                    "%{$search}%"
+                );
+            });
         }
+
 
         // Ordenamiento
         foreach ($orderBy as $value) {
@@ -301,6 +319,29 @@ class OrdenVentaService
         $this->historialAccionService->registrarAccion($this->modulo, "MODIFICACIÓN", "APROBO EL DESCUENTO DE UNA ORDEN DE VENTA", $old_orden_venta, $orden_venta, ["orden_venta_detalles"]);
 
         return $orden_venta;
+    }
+
+    /**
+     * Eliminar orden_venta
+     *
+     * @param OrdenVenta $orden_venta
+     * @return boolean
+     */
+    public function anular(OrdenVenta $orden_venta): bool|Exception
+    {
+        $old_orden_venta = clone $orden_venta;
+        $orden_venta->estado = 'ANULADO';
+        $orden_venta->verificado = 4;
+        $orden_venta->save();
+
+        foreach ($orden_venta->orden_venta_detalles as $orden_venta_detalle) {
+            // INCREMENTAR STOCK DE SUCURSAL
+            $this->kardex_producto_service->registroIngreso($orden_venta->sucursal_id, "ORDEN DE VENTA", $orden_venta_detalle->producto, $orden_venta_detalle->cantidad, $orden_venta_detalle->precio, "INGRESO POR ANULACIÓN DE ORDEN DE VENTA",  "OrdenVentaDetalle", $orden_venta_detalle->id);
+        }
+
+        // registrar accion
+        $this->historialAccionService->registrarAccion($this->modulo, "ANULACIÓN", "ANULÓ UNA ORDEN DE VENTA", $old_orden_venta, null, ["orden_venta_detalles"]);
+        return true;
     }
 
     /**

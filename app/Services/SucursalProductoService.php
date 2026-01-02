@@ -233,7 +233,9 @@ class SucursalProductoService
      */
     public function getSucursalProducto(int $producto_id, int $sucursal_id): SucursalProducto
     {
-        $sucursal_producto = SucursalProducto::where("producto_id", $producto_id)
+        $sucursal_producto = SucursalProducto::with(
+            ["sucursal:id,nombre", "producto:id,nombre"]
+        )->where("producto_id", $producto_id)
             ->where("sucursal_id", $sucursal_id)
             ->get()->first();
 
