@@ -27,7 +27,7 @@ class SolicitudIngreso extends Model
         "total",
         "estado",
         "user_id",
-        "verificado"
+        "verificado" // 0:PENDIENTE, 1: APROBADO, 2: APROBADO CON OBSERVACIONES, 3: COSTOS APROBADOS
     ];
 
     protected $appends = ["fecha_ingreso_t", "hora_ingreso_t", "fecha_c"];

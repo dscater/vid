@@ -80,6 +80,22 @@ class ReporteController extends Controller
         ],
     ];
 
+    public $headerTabla2 = [
+        'font' => [
+            'bold' => true,
+            'size' => 10,
+            'color' => ['argb' => '000000'],
+        ],
+        'alignment' => [
+            'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+        ],
+        'borders' => [
+            'allBorders' => [
+                'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+            ],
+        ],
+    ];
+
     public $bodyTabla = [
         'font' => [
             'size' => 10,
@@ -113,6 +129,42 @@ class ReporteController extends Controller
         ],
     ];
 
+    public $bg0 = [
+        'fill' => [
+            'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+            'color' => ['rgb' => 'cff3f3']
+        ],
+    ];
+
+    public $bg1 = [
+        'fill' => [
+            'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+            'color' => ['rgb' => 'ffe9ff']
+        ],
+    ];
+
+    public $bg2 = [
+        'fill' => [
+            'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+            'color' => ['rgb' => 'f7ffe0']
+        ],
+    ];
+
+    public $bg3 = [
+        'fill' => [
+            'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+            'color' => ['rgb' => 'ecfcdd']
+        ],
+    ];
+
+    public $bg4 = [
+        'fill' => [
+            'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+            'color' => ['rgb' => 'faeee4']
+        ],
+    ];
+
+    protected array $bgStyles = [];
     private $configuracion = null;
     public function __construct()
     {
@@ -126,6 +178,13 @@ class ReporteController extends Controller
                 "dir" => "LOS OLIVOS",
             ]);
         }
+        $this->bgStyles = [
+            $this->bg0,
+            $this->bg1,
+            $this->bg2,
+            $this->bg3,
+            $this->bg4,
+        ];
     }
 
     public function usuarios(Request $request)
@@ -1686,28 +1745,16 @@ class ReporteController extends Controller
         ini_set('memory_limit', '1024M');
         set_time_limit(-1);
         $sucursal_id =  $request->sucursal_id;
-        $anio =  $request->anio;
-
-        $meses = [
-            "01" => "ENERO",
-            "02" => "FEBRERO",
-            "03" => "MARZO",
-            "04" => "ABRIL",
-            "05" => "MAYO",
-            "06" => "JUNIO",
-            "07" => "JULIO",
-            "08" => "AGOSTO",
-            "09" => "SEPTIEMBRE",
-            "10" => "OCTUBRE",
-            "11" => "NOVIEMBRE",
-            "12" => "DICIEMBRE",
-        ];
+        $fecha_ini =  $request->fecha_ini;
+        $fecha_fin =  $request->fecha_fin;
+        $productos = Producto::where("estado", 1)->get();
 
         if ($request->tipo == 'pdf') {
             $pdf = PDF::loadView('reportes.utilidad_ordens', compact(
                 'sucursal_id',
-                "anio",
-                'meses'
+                "fecha_ini",
+                "fecha_fin",
+                "productos",
             ))->setPaper('letter', 'portrait');
 
             // ENUMERAR LAS PÁGINAS USANDO CANVAS
@@ -1749,38 +1796,60 @@ class ReporteController extends Controller
 
             $fila = 2;
             $sheet->setCellValue('A' . $fila, $this->configuracion->nombre_sistema);
-            $sheet->mergeCells("A" . $fila . ":D" . $fila);  //COMBINAR CELDAS
-            $sheet->getStyle('A' . $fila . ':D' . $fila)->getAlignment()->setHorizontal('center');
-            $sheet->getStyle('A' . $fila . ':D' . $fila)->applyFromArray($this->titulo);
+            $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
             $fila++;
             $sheet->setCellValue('A' . $fila, "UTILIDAD DE ORDENDES DE VENTA");
-            $sheet->mergeCells("A" . $fila . ":D" . $fila);  //COMBINAR CELDAS
-            $sheet->getStyle('A' . $fila . ':D' . $fila)->getAlignment()->setHorizontal('center');
-            $sheet->getStyle('A' . $fila . ':D' . $fila)->applyFromArray($this->titulo);
+            $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
             $fila++;
             $fila++;
-            $sheet->setCellValue('A' . $fila, 'MES');
-            $sheet->setCellValue('B' . $fila, 'TOTAL VENTA');
-            $sheet->setCellValue('C' . $fila, 'COMPRA');
+            $sheet->setCellValue('A' . $fila, 'PRODUCTOS');
+            $sheet->setCellValue('B' . $fila, 'UNIDAD');
+            $sheet->setCellValue('C' . $fila, 'CANTIDAD VENDIDA');
             $sheet->setCellValue('D' . $fila, 'TOTAL');
-            $sheet->getStyle('A' . $fila . ':D' . $fila)->applyFromArray($this->headerTabla);
+            $sheet->setCellValue('E' . $fila, 'CANTIDAD COMPRADA');
+            $sheet->setCellValue('F' . $fila, 'TOTAL');
+            $sheet->setCellValue('G' . $fila, 'UTILIDAD');
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->headerTabla);
             $fila++;
+
 
             $total_final1 = 0;
             $total_final2 = 0;
             $total_final3 = 0;
+            $total_final4 = 0;
+            $total_final5 = 0;
 
-            foreach ($meses as $key => $value) {
-                $orden_ventas = OrdenVenta::select('orden_ventas.*');
+            foreach ($productos as $key => $value) {
+                $orden_venta_detalles = OrdenVentaDetalle::select('orden_venta_detalles.*')->where(
+                    'producto_id',
+                    $value->id,
+                );
                 if ($sucursal_id != 'todos') {
-                    $orden_ventas->where('sucursal_id', $sucursal_id);
+                    $orden_venta_detalles->whereHas('orden_venta', function ($query) use ($sucursal_id) {
+                        $query->where('sucursal_id', $sucursal_id);
+                    });
                 }
-                $orden_ventas->where('fecha', 'LIKE', "$anio-$key%");
-                $total_ventas = $orden_ventas->where('estado', 'FINALIZADO')->sum('total_f');
+                $orden_venta_detalles->whereHas('orden_venta', function ($query) use ($fecha_ini, $fecha_fin) {
+                    $query->whereBetween('fecha', [$fecha_ini, $fecha_fin]);
+                });
+                $total_ventas = $orden_venta_detalles
+                    ->whereHas('orden_venta', function ($query) use ($sucursal_id) {
+                        $query->where('estado', 'FINALIZADO');
+                    })
+                    ->sum('subtotal_f');
+                $total_ventas_cantidad = $orden_venta_detalles
+                    ->whereHas('orden_venta', function ($query) use ($sucursal_id) {
+                        $query->where('estado', 'FINALIZADO');
+                    })
+                    ->sum('cantidad');
 
                 $solicitud_ingreso_detalles = SolicitudIngresoDetalle::select(
                     'solicitud_ingreso_detalles.*',
-                );
+                )->where('producto_id', $value->id);
                 // if ($sucursal_id != 'todos') {
                 //     $solicitud_ingreso_detalles->whereHas('solicitud_ingreso', function ($query) use (
                 //         $sucursal_id,
@@ -1791,39 +1860,50 @@ class ReporteController extends Controller
 
                 $solicitud_ingreso_detalles->whereHas('solicitud_ingreso', function ($query) use (
                     $key,
-                    $anio,
+                    $fecha_ini,
+                    $fecha_fin,
                 ) {
-                    $query->whereIn('verificado', [1, 2]);
-                    $query->where('fecha_ingreso', 'LIKE', "$anio-$key%");
+                    $query->whereIn('verificado', [1, 2, 3]);
+                    $query->whereBetween('fecha_ingreso', [$fecha_ini, $fecha_fin]);
                 });
 
                 $total_compras = $solicitud_ingreso_detalles->sum(DB::raw('cantidad_fisica * costo'));
 
+                $total_compras_cantidad = $solicitud_ingreso_detalles->sum('cantidad_fisica');
+
                 $saldo = (float) $total_ventas - (float) $total_compras;
-
-                $total_final1 += (float) $total_ventas;
-                $total_final2 += (float) $total_compras;
-                $total_final3 += (float) $saldo;
-
-                $sheet->setCellValue('A' . $fila, $value);
-                $sheet->setCellValue('B' . $fila, $total_ventas);
-                $sheet->setCellValue('C' . $fila, $total_compras);
-                $sheet->setCellValue('D' . $fila, number_format($saldo, 2, ".", ""));
-                $sheet->getStyle('A' . $fila . ':D' . $fila)->applyFromArray($this->bodyTabla);
+                $total_final1 += (float) $total_ventas_cantidad;
+                $total_final2 += (float) $total_ventas;
+                $total_final3 += (float) $total_compras_cantidad;
+                $total_final4 += (float) $total_compras;
+                $total_final5 += (float) $saldo;
+                $sheet->setCellValue('A' . $fila, $value->nombre);
+                $sheet->setCellValue('B' . $fila, $value->unidad_medida->nombre);
+                $sheet->setCellValue('C' . $fila, $total_ventas_cantidad);
+                $sheet->setCellValue('D' . $fila, number_format($total_ventas, 2, ".", ","));
+                $sheet->setCellValue('E' . $fila, $total_compras_cantidad);
+                $sheet->setCellValue('F' . $fila, number_format($total_compras, 2, ".", ","));
+                $sheet->setCellValue('G' . $fila, number_format($saldo, 2, ".", ","));
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->bodyTabla);
                 $fila++;
             }
             $sheet->setCellValue('A' . $fila, "TOTAL");
-            $sheet->setCellValue('B' . $fila, number_format($total_final1, 2, '.', ''));
-            $sheet->setCellValue('C' . $fila, number_format($total_final2, 2, '.', ''));
-            $sheet->setCellValue('D' . $fila, number_format($total_final3, 2, '.', ''));
-            $sheet->getStyle('A' . $fila . ':D' . $fila)->applyFromArray($this->headerTabla);
-
+            $sheet->mergeCells("A" . $fila . ":B" . $fila);  //COMBINAR CELDAS
+            $sheet->setCellValue('C' . $fila, number_format($total_final1, 2, '.', ','));
+            $sheet->setCellValue('D' . $fila, number_format($total_final2, 2, '.', ','));
+            $sheet->setCellValue('E' . $fila, number_format($total_final3, 2, '.', ','));
+            $sheet->setCellValue('F' . $fila, number_format($total_final4, 2, '.', ','));
+            $sheet->setCellValue('G' . $fila, number_format($total_final5, 2, '.', ','));
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->headerTabla);
             $sheet->getColumnDimension('A')->setWidth(15);
             $sheet->getColumnDimension('B')->setWidth(15);
             $sheet->getColumnDimension('C')->setWidth(15);
             $sheet->getColumnDimension('D')->setWidth(15);
+            $sheet->getColumnDimension('E')->setWidth(15);
+            $sheet->getColumnDimension('F')->setWidth(15);
+            $sheet->getColumnDimension('G')->setWidth(15);
 
-            foreach (range('A', 'D') as $columnID) {
+            foreach (range('A', 'G') as $columnID) {
                 $sheet->getStyle($columnID)->getAlignment()->setWrapText(true);
             }
 
@@ -1832,7 +1912,7 @@ class ReporteController extends Controller
             $sheet->getPageMargins()->setRight(0.1);
             $sheet->getPageMargins()->setLeft(0.1);
             $sheet->getPageMargins()->setBottom(0.1);
-            $sheet->getPageSetup()->setPrintArea('A:D');
+            $sheet->getPageSetup()->setPrintArea('A:G');
             $sheet->getPageSetup()->setFitToWidth(1);
             $sheet->getPageSetup()->setFitToHeight(0);
 
@@ -1852,52 +1932,67 @@ class ReporteController extends Controller
     public function utilidad_ordens_g(Request $request)
     {
         $sucursal_id =  $request->sucursal_id;
-        $anio =  $request->anio;
-
-        $meses = [
-            "01" => "ENERO",
-            "02" => "FEBRERO",
-            "03" => "MARZO",
-            "04" => "ABRIL",
-            "05" => "MAYO",
-            "06" => "JUNIO",
-            "07" => "JULIO",
-            "08" => "AGOSTO",
-            "09" => "SEPTIEMBRE",
-            "10" => "OCTUBRE",
-            "11" => "NOVIEMBRE",
-            "12" => "DICIEMBRE",
-        ];
+        $fecha_ini =  $request->fecha_ini;
+        $fecha_fin =  $request->fecha_fin;
+        $productos = Producto::where("estado", 1)->get();
 
         $categories = [];
         $data = [];
 
-        foreach ($meses as $key => $value) {
-            $categories[] = $value;
-            $orden_ventas = OrdenVenta::select('orden_ventas.*');
+
+        foreach ($productos as $key => $value) {
+            $orden_venta_detalles = OrdenVentaDetalle::select('orden_venta_detalles.*')->where(
+                'producto_id',
+                $value->id,
+            );
             if ($sucursal_id != 'todos') {
-                $orden_ventas->where('sucursal_id', $sucursal_id);
+                $orden_venta_detalles->whereHas('orden_venta', function ($query) use ($sucursal_id) {
+                    $query->where('sucursal_id', $sucursal_id);
+                });
             }
-            $orden_ventas->where('fecha', 'LIKE', "$anio-$key%");
-            $total_ventas = $orden_ventas->where('estado', 'FINALIZADO')->sum('total_f');
+            $orden_venta_detalles->whereHas('orden_venta', function ($query) use ($fecha_ini, $fecha_fin) {
+                $query->whereBetween('fecha', [$fecha_ini, $fecha_fin]);
+            });
+            $total_ventas = $orden_venta_detalles
+                ->whereHas('orden_venta', function ($query) use ($sucursal_id) {
+                    $query->where('estado', 'FINALIZADO');
+                })
+                ->sum('subtotal_f');
+            $total_ventas_cantidad = $orden_venta_detalles
+                ->whereHas('orden_venta', function ($query) use ($sucursal_id) {
+                    $query->where('estado', 'FINALIZADO');
+                })
+                ->sum('cantidad');
 
             $solicitud_ingreso_detalles = SolicitudIngresoDetalle::select(
                 'solicitud_ingreso_detalles.*',
-            );
+            )->where('producto_id', $value->id);
+            // if ($sucursal_id != 'todos') {
+            //     $solicitud_ingreso_detalles->whereHas('solicitud_ingreso', function ($query) use (
+            //         $sucursal_id,
+            //     ) {
+            //         $query->where('sucursal_id', $sucursal_id);
+            //     });
+            // }
+
             $solicitud_ingreso_detalles->whereHas('solicitud_ingreso', function ($query) use (
                 $key,
-                $anio,
+                $fecha_ini,
+                $fecha_fin,
             ) {
-                $query->whereIn('verificado', [1, 2]);
-                $query->where('fecha_ingreso', 'LIKE', "$anio-$key%");
+                $query->whereIn('verificado', [1, 2, 3]);
+                $query->whereBetween('fecha_ingreso', [$fecha_ini, $fecha_fin]);
             });
 
             $total_compras = $solicitud_ingreso_detalles->sum(DB::raw('cantidad_fisica * costo'));
 
+            $total_compras_cantidad = $solicitud_ingreso_detalles->sum('cantidad_fisica');
+
+            $saldo = (float) $total_ventas - (float) $total_compras;
             $saldo = (float) $total_ventas - (float) $total_compras;
 
             $data[] = [
-                'name' => $value,
+                'name' => $value->nombre,
                 'y' => (float) $saldo,
             ];
         }
@@ -2354,6 +2449,11 @@ class ReporteController extends Controller
                 $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
                 $fila++;
                 $sheet->setCellValue('A' . $fila, "Sucursal: " . $sucursal->nombre);
+                $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
+                $fila++;
+                $sheet->setCellValue('A' . $fila, "Fecha: " . date("d/m/Y", strtotime($fecha)));
                 $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
                 $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
                 $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
@@ -2847,8 +2947,6 @@ class ReporteController extends Controller
         }
     }
 
-
-
     public function diario_vehiculos(Request $request)
     {
         ini_set('memory_limit', '1024M');
@@ -2916,10 +3014,11 @@ class ReporteController extends Controller
 
             $colIndex = 4;
 
-            foreach ($sucursals as $sucursal) {
+            foreach ($sucursals as $key => $sucursal) {
                 // Columna inicio y fin del bloque de 5
                 $colStart = Coordinate::stringFromColumnIndex($colIndex);
                 $colEnd   = Coordinate::stringFromColumnIndex($colIndex + 4);
+
                 $colIndex += 5;
             }
             $colStart = Coordinate::stringFromColumnIndex($colIndex);
@@ -2957,7 +3056,9 @@ class ReporteController extends Controller
             // Subcolumnas (fila inferior)
             $subHeaders = ['AÑADIDOS', 'CANTIDAD ENTREGADA', 'DEVOLUCIONES', 'DIFERENCIAS/FALTANTES', 'SALDO FINAL'];
 
-            foreach ($sucursals as $sucursal) {
+            foreach ($sucursals as $i => $sucursal) {
+                $colorIndex = $i % count($this->bgStyles);
+
                 // Columna inicio y fin del bloque de 5
                 $colStart = Coordinate::stringFromColumnIndex($colIndex);
                 $colEnd   = Coordinate::stringFromColumnIndex($colIndex + 4);
@@ -2968,6 +3069,8 @@ class ReporteController extends Controller
                 $sheet->getStyle("{$colStart}{$fila}:{$colEnd}{$fila}")
                     ->getAlignment()->setHorizontal('center');
 
+                $sheet->getStyle("{$colStart}{$fila}:{$colEnd}{$fila}")
+                    ->applyFromArray($this->bgStyles[$colorIndex]);
 
                 foreach ($subHeaders as $i => $text) {
                     $col = Coordinate::stringFromColumnIndex($colIndex + $i);
@@ -2977,6 +3080,8 @@ class ReporteController extends Controller
                         ->setHorizontal(Alignment::HORIZONTAL_CENTER)
                         ->setVertical(Alignment::VERTICAL_CENTER)
                         ->setTextRotation(90); // 🔹 TEXTO VERTICAL
+                    $sheet->getStyle($col . ($fila + 1))
+                        ->applyFromArray($this->bgStyles[$colorIndex]);
                 }
                 $colIndex += 5;
             }
@@ -2993,13 +3098,14 @@ class ReporteController extends Controller
             $colStart = Coordinate::stringFromColumnIndex($colIndex);
             $colEnd   = Coordinate::stringFromColumnIndex($colIndex + 4);
 
-            $sheet->getStyle('A' . $fila . ':' . $colEnd . $fila)->applyFromArray($this->headerTabla);
+            $sheet->getStyle('A' . $fila . ':' . 'C' . $fila)->applyFromArray($this->headerTabla);
+            $sheet->getStyle('D' . $fila . ':' . $colEnd . $fila)->applyFromArray($this->headerTabla2);
 
             $sheet->setCellValue($colStart . $fila, 'SALDOS FINALES');
             $sheet->getStyle($colStart . $fila . ':' . $colEnd . $fila + 1)->getAlignment()->setHorizontal('center');
             $sheet->mergeCells($colStart . $fila . ":" . $colEnd . $fila);  //COMBINAR CELDAS
             $fila++;
-            $sheet->getStyle('A' . $fila . ':' . $colEnd . $fila)->applyFromArray($this->headerTabla);
+            $sheet->getStyle('A' . $fila . ':' . $colEnd . $fila)->applyFromArray($this->headerTabla2);
             $fila++;
             $cont = 1;
             foreach ($productos as $key => $producto) {
@@ -3011,7 +3117,9 @@ class ReporteController extends Controller
                 $total5 = 0;
                 $colIndex = 4;
 
-                foreach ($sucursals as $sucursal) {
+                foreach ($sucursals as $i =>  $sucursal) {
+                    $colorIndex = $i % count($this->bgStyles);
+
                     $sucursal_id = $sucursal->id;
                     // INGRESOS ADICIONALES
                     $ingresos_adicionales = KardexProducto::where('producto_id', $producto->id)
@@ -3089,26 +3197,42 @@ class ReporteController extends Controller
                         Coordinate::stringFromColumnIndex($colIndex) . $fila,
                         $ingresos_adicionales
                     );
+                    $cell = Coordinate::stringFromColumnIndex($colIndex) . $fila;
+                    $sheet->getStyle($cell)
+                        ->applyFromArray($this->bgStyles[$colorIndex]);
 
                     $sheet->setCellValue(
                         Coordinate::stringFromColumnIndex($colIndex + 1) . $fila,
                         $total_entregados
                     );
 
+                    $cell = Coordinate::stringFromColumnIndex($colIndex + 1) . $fila;
+                    $sheet->getStyle($cell)
+                        ->applyFromArray($this->bgStyles[$colorIndex]);
+
                     $sheet->setCellValue(
                         Coordinate::stringFromColumnIndex($colIndex + 2) . $fila,
                         $devoluciones
                     );
+                    $cell = Coordinate::stringFromColumnIndex($colIndex + 2) . $fila;
+                    $sheet->getStyle($cell)
+                        ->applyFromArray($this->bgStyles[$colorIndex]);
 
                     $sheet->setCellValue(
                         Coordinate::stringFromColumnIndex($colIndex + 3) . $fila,
                         $faltantes
                     );
+                    $cell = Coordinate::stringFromColumnIndex($colIndex + 3) . $fila;
+                    $sheet->getStyle($cell)
+                        ->applyFromArray($this->bgStyles[$colorIndex]);
 
                     $sheet->setCellValue(
                         Coordinate::stringFromColumnIndex($colIndex + 4) . $fila,
                         $saldo_final
                     );
+                    $cell = Coordinate::stringFromColumnIndex($colIndex + 4) . $fila;
+                    $sheet->getStyle($cell)
+                        ->applyFromArray($this->bgStyles[$colorIndex]);
 
                     $total1 += (float) $ingresos_adicionales;
                     $total2 += (float) $total_entregados;

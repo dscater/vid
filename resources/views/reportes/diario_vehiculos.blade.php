@@ -176,6 +176,26 @@
             border-bottom: dotted 1px black;
             margin-top: 25px;
         }
+
+        .bg0 {
+            background: #cff3f3;
+        }
+
+        .bg1 {
+            background: #ffe9ff;
+        }
+
+        .bg2 {
+            background: #f7ffe0;
+        }
+
+        .bg3 {
+            background: #ecfcdd;
+        }
+
+        .bg4 {
+            background: #faeee4;
+        }
     </style>
 </head>
 
@@ -200,28 +220,36 @@
                 <th rowspan="2" width="2.3%">N°</th>
                 <th rowspan="2" width="7%">PRODUCTO</th>
                 <th rowspan="2">UNIDAD DE MEDIDA</th>
-                @foreach ($sucursals as $item)
-                    <th colspan="5">
+                @foreach ($sucursals as $key => $item)
+                    @php
+                        $colorIndex = $key % 5;
+                        $class = 'bg' . $colorIndex;
+                    @endphp
+                    <th colspan="5" class={{ $class }}>
                         {{ $item->nombre }}
                     </th>
                 @endforeach
                 <th colspan="5" class="bgFinal">SALDOS FINALES</th>
             </tr>
             <tr>
-                @foreach ($sucursals as $item)
-                    <th class="vertical">
+                @foreach ($sucursals as $key => $item)
+                    @php
+                        $colorIndex = $key % 5;
+                        $class = 'bg' . $colorIndex;
+                    @endphp
+                    <th class="vertical {{ $class }}">
                         <div>AÑADIDOS</div>
                     </th>
-                    <th class="vertical">
+                    <th class="vertical {{ $class }}">
                         <div>CANTIDAD ENTREGADA</div>
                     </th>
-                    <th class="vertical">
+                    <th class="vertical {{ $class }}">
                         <div>DEVOLUCIONES</div>
                     </th>
-                    <th class="vertical">
+                    <th class="vertical {{ $class }}">
                         <div>DIFERENCIAS/FALTANTES</div>
                     </th>
-                    <th class="vertical">
+                    <th class="vertical {{ $class }}">
                         <div>SALDO FINAL</div>
                     </th>
                 @endforeach
@@ -259,8 +287,11 @@
                         $total4 = 0;
                         $total5 = 0;
                     @endphp
-                    @foreach ($sucursals as $sucursal)
+                    @foreach ($sucursals as $key => $sucursal)
                         @php
+                            $colorIndex = $key % 5;
+                            $class = 'bg' . $colorIndex;
+
                             $sucursal_id = $sucursal->id;
                             // INGRESOS ADICIONALES
                             $ingresos_adicionales = App\Models\KardexProducto::where('producto_id', $producto->id)
@@ -331,11 +362,11 @@
                             $saldo_final = $kardex_final ? $kardex_final->cantidad_saldo : 0;
 
                         @endphp
-                        <td class="centreado">{{ $ingresos_adicionales }}</td>
-                        <td class="centreado">{{ $total_entregados }}</td>
-                        <td class="centreado">{{ $devoluciones }}</td>
-                        <td class="centreado">{{ $faltantes }}</td>
-                        <td class="centreado">{{ $saldo_final }}</td>
+                        <td class="centreado {{ $class }}">{{ $ingresos_adicionales }}</td>
+                        <td class="centreado {{ $class }}">{{ $total_entregados }}</td>
+                        <td class="centreado {{ $class }}">{{ $devoluciones }}</td>
+                        <td class="centreado {{ $class }}">{{ $faltantes }}</td>
+                        <td class="centreado {{ $class }}">{{ $saldo_final }}</td>
                         @php
                             $total1 += (float) $ingresos_adicionales;
                             $total2 += (float) $total_entregados;

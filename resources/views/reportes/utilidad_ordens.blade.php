@@ -160,10 +160,13 @@
     <table border="1">
         <thead>
             <tr>
-                <th>MES</th>
-                <th>TOTAL VENTA</th>
-                <th>COMPRA</th>
+                <th>PRODUCTOS</th>
+                <th>UNIDAD</th>
+                <th>CANTIDAD VENDIDA</th>
                 <th>TOTAL</th>
+                <th>CANTIDAD COMPRADA</th>
+                <th>TOTAL</th>
+                <th>UTILIDAD</th>
             </tr>
         </thead>
         <tbody>
@@ -171,19 +174,37 @@
                 $total_final1 = 0;
                 $total_final2 = 0;
                 $total_final3 = 0;
+                $total_final4 = 0;
+                $total_final5 = 0;
             @endphp
-            @foreach ($meses as $key => $value)
+            @foreach ($productos as $key => $value)
                 @php
-                    $orden_ventas = App\Models\OrdenVenta::select('orden_ventas.*');
+                    $orden_venta_detalles = App\Models\OrdenVentaDetalle::select('orden_venta_detalles.*')->where(
+                        'producto_id',
+                        $value->id,
+                    );
                     if ($sucursal_id != 'todos') {
-                        $orden_ventas->where('sucursal_id', $sucursal_id);
+                        $orden_venta_detalles->whereHas('orden_venta', function ($query) use ($sucursal_id) {
+                            $query->where('sucursal_id', $sucursal_id);
+                        });
                     }
-                    $orden_ventas->where('fecha', 'LIKE', "$anio-$key%");
-                    $total_ventas = $orden_ventas->where('estado', 'FINALIZADO')->sum('total_f');
+                    $orden_venta_detalles->whereHas('orden_venta', function ($query) use ($fecha_ini, $fecha_fin) {
+                        $query->whereBetween('fecha', [$fecha_ini, $fecha_fin]);
+                    });
+                    $total_ventas = $orden_venta_detalles
+                        ->whereHas('orden_venta', function ($query) use ($sucursal_id) {
+                            $query->where('estado', 'FINALIZADO');
+                        })
+                        ->sum('subtotal_f');
+                    $total_ventas_cantidad = $orden_venta_detalles
+                        ->whereHas('orden_venta', function ($query) use ($sucursal_id) {
+                            $query->where('estado', 'FINALIZADO');
+                        })
+                        ->sum('cantidad');
 
                     $solicitud_ingreso_detalles = App\Models\SolicitudIngresoDetalle::select(
                         'solicitud_ingreso_detalles.*',
-                    );
+                    )->where('producto_id', $value->id);
                     // if ($sucursal_id != 'todos') {
                     //     $solicitud_ingreso_detalles->whereHas('solicitud_ingreso', function ($query) use (
                     //         $sucursal_id,
@@ -192,31 +213,43 @@
                     //     });
                     // }
 
-                    $solicitud_ingreso_detalles->whereHas('solicitud_ingreso', function ($query) use ($key, $anio) {
-                        $query->whereIn('verificado', [1, 2]);
-                        $query->where('fecha_ingreso', 'LIKE', "$anio-$key%");
+                    $solicitud_ingreso_detalles->whereHas('solicitud_ingreso', function ($query) use (
+                        $key,
+                        $fecha_ini,
+                        $fecha_fin,
+                    ) {
+                        $query->whereIn('verificado', [1, 2, 3]);
+                        $query->whereBetween('fecha_ingreso', [$fecha_ini, $fecha_fin]);
                     });
 
                     $total_compras = $solicitud_ingreso_detalles->sum(DB::raw('cantidad_fisica * costo'));
 
-                    $saldo = (float) $total_ventas - (float) $total_compras;
+                    $total_compras_cantidad = $solicitud_ingreso_detalles->sum('cantidad_fisica');
 
-                    $total_final1 += (float) $total_ventas;
-                    $total_final2 += (float) $total_compras;
-                    $total_final3 += (float) $saldo;
+                    $saldo = (float) $total_ventas - (float) $total_compras;
+                    $total_final1 += (float) $total_ventas_cantidad;
+                    $total_final2 += (float) $total_ventas;
+                    $total_final3 += (float) $total_compras_cantidad;
+                    $total_final4 += (float) $total_compras;
+                    $total_final5 += (float) $saldo;
                 @endphp
                 <tr>
-                    <td>{{ $value }}</td>
-                    <td class="centreado">{{ $total_ventas }}</td>
-                    <td class="centreado">{{ $total_compras }}</td>
-                    <td class="centreado">{{ number_format($saldo, 2, '.', '') }}</td>
+                    <td>{{ $value->nombre }}</td>
+                    <td>{{ $value->unidad_medida->nombre }}</td>
+                    <td class="centreado">{{ $total_ventas_cantidad }}</td>
+                    <td class="centreado">{{ number_format($total_ventas, 2, '.', ',') }}</td>
+                    <td class="centreado">{{ $total_compras_cantidad }}</td>
+                    <td class="centreado">{{ number_format($total_compras, 2, '.', ',') }}</td>
+                    <td class="centreado">{{ number_format($saldo, 2, '.', ',') }}</td>
                 </tr>
             @endforeach
             <tr>
-                <th>TOTAL</th>
-                <th>{{ number_format($total_final1, 2, '.', '') }}</th>
-                <th>{{ number_format($total_final2, 2, '.', '') }}</th>
-                <th>{{ number_format($total_final3, 2, '.', '') }}</th>
+                <th colspan="2">TOTAL</th>
+                <th>{{ $total_final1 }}</th>
+                <th>{{ number_format($total_final2, 2, '.', ',') }}</th>
+                <th>{{ $total_final3 }}</th>,
+                <th>{{ number_format($total_final4, 2, '.', ',') }}</th>
+                <th>{{ number_format($total_final5, 2, '.', ',') }}</th>
             </tr>
         </tbody>
     </table>

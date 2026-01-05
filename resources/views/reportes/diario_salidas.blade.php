@@ -174,6 +174,7 @@
             <h4 class="texto">REPORTE DIARIO DE SALIDAS POR SUCURSAL</h4>
             <h4 class="texto">Sucursal: {{ $sucursal->nombre }}</h4>
             <h4 class="texto">Encargado: {{ $sucursal->user->full_name }}</h4>
+            <h4 class="fecha">Fecha: {{ date('d-m-Y', strtotime($fecha)) }}</h4>
             <h4 class="fecha">Expedido: {{ date('d-m-Y') }}</h4>
         </div>
         @php

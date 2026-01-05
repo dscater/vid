@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 02-01-2026 a las 14:34:42
+-- Tiempo de generación: 05-01-2026 a las 17:36:29
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.2.22
 
@@ -1929,11 +1929,12 @@ CREATE TABLE `sucursals` (
 --
 
 INSERT INTO `sucursals` (`id`, `nombre`, `direccion`, `fono`, `correo`, `user_id`, `almacen`, `estado`, `monto_dia`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'ALMACEN', '', '', NULL, NULL, 1, 1, NULL, NULL, NULL, NULL),
+(1, 'ALMACÉN CENTRAL', '', '', NULL, NULL, 1, 1, NULL, NULL, NULL, NULL),
 (2, 'SUCURSAL 1', 'LOS OLIVOS', '43535335', NULL, 15, 0, 1, 3000, NULL, '2025-12-05 14:26:18', '2025-12-05 14:26:18'),
 (3, 'SUCURSAL 2', 'DIR SUC 2', '7877878', NULL, 16, 0, 1, 3000, NULL, '2025-12-05 14:27:08', '2025-12-05 14:27:08'),
 (4, 'SUCURSAL 3', 'LOS PEDREGALES', '7667676767', NULL, 17, 0, 1, 3000, NULL, '2025-12-13 20:39:39', '2025-12-13 20:39:39'),
-(5, 'SUCURSAL 4', 'LOS OLIVOS', '345345345', NULL, 18, 0, 1, 10000, NULL, '2025-12-19 14:00:09', '2025-12-19 14:00:09');
+(5, 'SUCURSAL 4', 'LOS OLIVOS', '345345345', NULL, 18, 0, 1, 10000, NULL, '2025-12-19 14:00:09', '2025-12-19 14:00:09'),
+(6, 'AJUSTES', '', '', NULL, NULL, 2, 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2682,7 +2683,7 @@ ALTER TABLE `sub_categorias`
 -- AUTO_INCREMENT de la tabla `sucursals`
 --
 ALTER TABLE `sucursals`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `sucursal_productos`

@@ -149,7 +149,7 @@ class ProformaController extends Controller
     {
 
         return response()->JSON([
-            "proforma" => $proforma->load(["proforma_productos.producto.unidad_medida", "proforma_detalles.proforma_detalle_productos", "proforma_detalles.cliente",  "user:id,nombre,paterno,materno"]),
+            "proforma" => $proforma->load(["proforma_productos.producto.unidad_medida", "proforma_detalles.proforma_detalle_productos.producto.unidad_medida", "proforma_detalles.cliente",  "user:id,nombre,paterno,materno"]),
         ]);
     }
 
