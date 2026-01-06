@@ -650,6 +650,21 @@ class ModuloTableSeeder extends Seeder
             "descripcion" => "ELIMINAR PROFORMAS"
         ]);
 
+        // AJUSTES
+        Modulo::create([
+            "modulo" => "Ajustes",
+            "nombre" => "ajustes.index",
+            "accion" => "VER",
+            "descripcion" => "VER LA LISTA DE AJUSTES"
+        ]);
+
+        Modulo::create([
+            "modulo" => "Ajustes",
+            "nombre" => "ajustes.edit",
+            "accion" => "EDITAR",
+            "descripcion" => "REPONER AJUSTES"
+        ]);
+
         // NOTIFICACIONES
         Modulo::create([
             "modulo" => "Notificaciones",

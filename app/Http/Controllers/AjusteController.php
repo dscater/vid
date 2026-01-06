@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CategoriaStoreRequest;
-use App\Http\Requests\CategoriaUpdateRequest;
+use App\Http\Requests\AjusteStoreRequest;
+use App\Http\Requests\AjusteUpdateRequest;
 use App\Models\HistorialAccion;
 use App\Models\Modulo;
 use App\Models\Permiso;
-use App\Models\Categoria;
+use App\Models\Ajuste;
 use App\Models\User;
-use App\Services\CategoriaService;
+use App\Services\AjusteService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -21,19 +21,19 @@ use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response as ResponseInertia;
 
-class CategoriaController extends Controller
+class AjusteController extends Controller
 {
-    public function __construct(private CategoriaService $categoriaService) {}
+    public function __construct(private AjusteService $ajusteService) {}
 
     /**
-     * Listado de categorias sin ids: 1 y 2
+     * Listado de ajustes sin ids: 1 y 2
      *
      * @return JsonResponse
      */
     public function listado(): JsonResponse
     {
         return response()->JSON([
-            "categorias" => $this->categoriaService->listado()
+            "ajustes" => $this->ajusteService->listado()
         ]);
     }
 
@@ -46,7 +46,7 @@ class CategoriaController extends Controller
         $desc = $request->desc;
 
         $columnsSerachLike = [
-            "descripcion"
+            "motivo"
         ];
         $columnsFilter = [];
         $columnsBetweenFilter = [];
@@ -57,17 +57,17 @@ class CategoriaController extends Controller
             ];
         }
 
-        $categorias = $this->categoriaService->listadoPaginado($perPage, $page, $search, $columnsSerachLike, $columnsFilter, $columnsBetweenFilter, $arrayOrderBy);
+        $ajustes = $this->ajusteService->listadoPaginado($perPage, $page, $search, $columnsSerachLike, $columnsFilter, $columnsBetweenFilter, $arrayOrderBy);
         return response()->JSON([
-            "data" => $categorias->items(),
-            "total" => $categorias->total(),
-            "lastPage" => $categorias->lastPage()
+            "data" => $ajustes->items(),
+            "total" => $ajustes->total(),
+            "lastPage" => $ajustes->lastPage()
         ]);
     }
 
 
     /**
-     * Endpoint para obtener la lista de categorias paginado para datatable
+     * Endpoint para obtener la lista de ajustes paginado para datatable
      *
      * @param Request $request
      * @return JsonResponse
@@ -79,17 +79,17 @@ class CategoriaController extends Controller
     }
 
     /**
-     * Registrar un nuevo categoria
+     * Registrar un nuevo ajuste
      *
-     * @param CategoriaStoreRequest $request
+     * @param AjusteStoreRequest $request
      * @return RedirectResponse|Response
      */
-    public function store(CategoriaStoreRequest $request): Response|JsonResponse
+    public function store(AjusteStoreRequest $request): Response|JsonResponse
     {
         DB::beginTransaction();
         try {
-            // crear el Categoria
-            $this->categoriaService->crear($request->validated());
+            // crear el Ajuste
+            $this->ajusteService->crear($request->validated());
             DB::commit();
             return response()->JSON([
                 "sw" => true,
@@ -104,22 +104,22 @@ class CategoriaController extends Controller
     }
 
     /**
-     * Mostrar un categoria
+     * Mostrar un ajuste
      *
-     * @param Categoria $categoria
+     * @param Ajuste $ajuste
      * @return JsonResponse
      */
-    public function show(Categoria $categoria): JsonResponse
+    public function show(Ajuste $ajuste): JsonResponse
     {
-        return response()->JSON($categoria);
+        return response()->JSON($ajuste);
     }
 
-    public function update(Categoria $categoria, CategoriaUpdateRequest $request)
+    public function update(Ajuste $ajuste, AjusteUpdateRequest $request)
     {
         DB::beginTransaction();
         try {
-            // actualizar categoria
-            $this->categoriaService->actualizar($request->validated(), $categoria);
+            // actualizar ajuste
+            $this->ajusteService->actualizar($request->validated(), $ajuste);
             DB::commit();
             return response()->JSON([
                 "sw" => true,
@@ -135,16 +135,16 @@ class CategoriaController extends Controller
     }
 
     /**
-     * Eliminar categoria
+     * Eliminar ajuste
      *
-     * @param Categoria $categoria
+     * @param Ajuste $ajuste
      * @return JsonResponse|Response
      */
-    public function destroy(Categoria $categoria): JsonResponse|Response
+    public function destroy(Ajuste $ajuste): JsonResponse|Response
     {
         DB::beginTransaction();
         try {
-            $this->categoriaService->eliminar($categoria);
+            $this->ajusteService->eliminar($ajuste);
             DB::commit();
             return response()->JSON([
                 "sw" => true,

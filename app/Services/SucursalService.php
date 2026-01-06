@@ -156,4 +156,19 @@ class SucursalService
 
         return true;
     }
+
+    public function getSucursalAjuste()
+    {
+        $sucursal = Sucursal::where("almacen", 2)->get()->first();
+        if (!$sucursal) {
+            $sucursal = Sucursal::create([
+                "nombre" => "AJUSTES",
+                "direccion" => "",
+                "fono" => "",
+                "estado" => 1,
+            ]);
+        }
+
+        return $sucursal;
+    }
 }

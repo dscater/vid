@@ -20,7 +20,9 @@ class SolicitudIngresoService
     private $modulo = "SOLICITUD DE INGRESO";
     public function __construct(
         private HistorialAccionService $historialAccionService,
-        private KardexProductoService $kardex_producto_service
+        private KardexProductoService $kardex_producto_service,
+        private SucursalService $sucursal_service,
+        private AjusteService $ajuste_service
     ) {}
 
     public function listado(): Collection
@@ -263,8 +265,17 @@ class SolicitudIngresoService
 
             if ($item["cantidad"] != $item["cantidad_fisica"]) {
                 // REGISTRAR AJUSTE
+                $sucursal_ajuste = $this->sucursal_service->getSucursalAjuste();
                 $ajuste = (float)$item["cantidad"] - (float)$item["cantidad_fisica"];
-                $this->kardex_producto_service->registroIngreso($item["sucursal_ajuste"], "SOLICITUD INGRESO", $producto, $ajuste, $item["costo"], "INGRESO POR AJUSTE", "SolicitudIngresoDetalle", $solicitud_ingreso_detalle->id);
+                $this->kardex_producto_service->registroIngreso($sucursal_ajuste->id, "SOLICITUD INGRESO", $producto, $ajuste, $item["costo"], "INGRESO POR AJUSTE", "SolicitudIngresoDetalle", $solicitud_ingreso_detalle->id);
+
+                $this->ajuste_service->crear([
+                    "sucursal_id" => $sucursal_ajuste->id,
+                    "sucursal_origen" => $solicitud_ingreso->sucursal_id,
+                    "producto_id" => $producto->id,
+                    "cantidad" => $ajuste,
+                    "motivo" => $item["motivo"],
+                ]);
             }
         }
 

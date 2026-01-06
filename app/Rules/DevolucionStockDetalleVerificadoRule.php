@@ -26,8 +26,8 @@ class DevolucionStockDetalleVerificadoRule implements ValidationRule
             }
 
             if ($item["cantidad"] != $item["cantidad_fisica"]) {
-                if (!$item["sucursal_ajuste"] || !$item["motivo"])
-                    $fail("Debes indicar la sucursal y motivo de todas las filas con observación");
+                if (!$item["motivo"])
+                    $fail("Debes indicar el motivo de todas las filas con observación");
                 return;
             }
         }

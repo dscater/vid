@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AjusteController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ClienteController;
@@ -266,6 +267,14 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get("notificacions/listadoByUserNoVisto", [NotificacionController::class, 'listadoByUserNoVisto'])->name("notificacions.listadoByUserNoVisto");
     Route::resource("notificacions", NotificacionController::class)->only(
         ["show"]
+    );
+
+    // AJUSTES
+    Route::get("ajustes/api", [AjusteController::class, 'api'])->name("ajustes.api");
+    Route::get("ajustes/paginado", [AjusteController::class, 'paginado'])->name("ajustes.paginado");
+    Route::get("ajustes/listado", [AjusteController::class, 'listado'])->name("ajustes.listado");
+    Route::resource("ajustes", AjusteController::class)->only(
+        ["store", "edit", "show", "update", "destroy"]
     );
 
     // REPORTES

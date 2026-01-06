@@ -21,7 +21,9 @@ class TransferenciaService
         private HistorialAccionService $historialAccionService,
         private KardexProductoService $kardex_producto_service,
         private SucursalProductoService $sucursal_producto_service,
-        private NotificacionService $notificacion_service
+        private NotificacionService $notificacion_service,
+        private SucursalService $sucursal_service,
+        private AjusteService $ajuste_service
     ) {}
 
     public function listado(): Collection
@@ -237,8 +239,17 @@ class TransferenciaService
 
             if ($item["cantidad"] != $item["cantidad_fisica"]) {
                 // REGISTRAR AJUSTE
+                $sucursal_ajuste = $this->sucursal_service->getSucursalAjuste();
                 $ajuste = (float)$item["cantidad"] - (float)$item["cantidad_fisica"];
-                $this->kardex_producto_service->registroIngreso($item["sucursal_ajuste"], "TRANSFERENCIA", $producto, $ajuste, $item["costo"], "INGRESO POR AJUSTE", "TransferenciaDetalle", $transferencia_detalle->id);
+                $this->kardex_producto_service->registroIngreso($sucursal_ajuste->id, "TRANSFERENCIA", $producto, $ajuste, $item["costo"], "INGRESO POR AJUSTE", "TransferenciaDetalle", $transferencia_detalle->id);
+
+                $this->ajuste_service->crear([
+                    "sucursal_id" => $sucursal_ajuste->id,
+                    "sucursal_origen" => $transferencia->sucursal_id,
+                    "producto_id" => $producto->id,
+                    "cantidad" => $ajuste,
+                    "motivo" => $item["motivo"],
+                ]);
             }
 
             // VERIFICAR PARA NOTIFICACION

@@ -20,7 +20,9 @@ class DevolucionStockService
     public function __construct(
         private HistorialAccionService $historialAccionService,
         private KardexProductoService $kardex_producto_service,
-        private SucursalProductoService $sucursal_producto_service
+        private SucursalProductoService $sucursal_producto_service,
+        private SucursalService $sucursal_service,
+        private AjusteService $ajuste_service
     ) {}
 
     public function listado(): Collection
@@ -222,14 +224,23 @@ class DevolucionStockService
             // DESCONTAR STOCK SUCURSAL
             $this->kardex_producto_service->registroEgreso("DEVOLUCIÓN DE STOCK", $producto, $item["cantidad_fisica"], $producto->precio, "EGRESO POR DEVOLUCIÓN DE STOCK", $devolucion_stock->sucursal_id, "DevolucionStockDetalle", $devolucion_stock_detalle->id);
 
-            // INCREMENTAR STOCK DEL ALMACEN
+            // INCREMENTAR STOCK DEL ALMACEN CANTIDAD FISISCA
             $this->kardex_producto_service->registroIngreso($almacen->id, "DEVOLUCIÓN DE STOCK", $producto, $item["cantidad_fisica"], $producto->precio, "INGRESO POR DEVOLUCIÓN DE STOCK", "DevolucionStockDetalle", $devolucion_stock_detalle->id);
 
 
             if ($item["cantidad"] != $item["cantidad_fisica"]) {
                 // REGISTRAR AJUSTE
+                $sucursal_ajuste = $this->sucursal_service->getSucursalAjuste();
                 $ajuste = (float)$item["cantidad"] - (float)$item["cantidad_fisica"];
-                $this->kardex_producto_service->registroIngreso($item["sucursal_ajuste"], "DEVOLUCIÓN DE STOCK", $producto, $ajuste, $item["costo"], "INGRESO POR AJUSTE", "DevolucionStockDetalle", $devolucion_stock_detalle->id);
+                $this->kardex_producto_service->registroIngreso($sucursal_ajuste->id, "DEVOLUCIÓN DE STOCK", $producto, $ajuste, $item["costo"], "INGRESO POR AJUSTE", "DevolucionStockDetalle", $devolucion_stock_detalle->id);
+
+                $this->ajuste_service->crear([
+                    "sucursal_id" => $sucursal_ajuste->id,
+                    "sucursal_origen" => $devolucion_stock->sucursal_id,
+                    "producto_id" => $producto->id,
+                    "cantidad" => $ajuste,
+                    "motivo" => $item["motivo"],
+                ]);
             }
         }
 
