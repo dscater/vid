@@ -158,7 +158,7 @@
             {{ $configuracion->first()->nombre_sistema }}
         </h2>
         <h4 class="texto">ÓRDENES DE SALIDA</h4>
-        <h4 class="fecha">Expedido: {{ date('d-m-Y') }}</h4>
+        <h4 class="fecha">Fecha: {{ date('d-m-Y', strtotime($fecha)) }}</h4>
     </div>
     @foreach ($orden_salidas as $item)
         <table border="1">

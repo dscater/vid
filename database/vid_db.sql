@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 07-01-2026 a las 17:30:26
+-- Tiempo de generación: 07-01-2026 a las 18:58:14
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.2.22
 
@@ -442,7 +442,8 @@ CREATE TABLE `gastos` (
 --
 
 INSERT INTO `gastos` (`id`, `descripcion`, `monto`, `fecha`, `hora`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'GASTO 1', 250.00, '2025-12-10', '10:07:00', NULL, '2025-12-10 14:07:36', '2025-12-10 14:09:23');
+(1, 'GASTO 1', 250.00, '2025-12-10', '10:07:00', NULL, '2025-12-10 14:07:36', '2025-12-10 14:09:23'),
+(2, 'GASTO PRUEBA', 1000.00, '2026-01-07', '14:35:00', NULL, '2026-01-07 18:35:48', '2026-01-07 18:35:48');
 
 -- --------------------------------------------------------
 
@@ -775,7 +776,8 @@ INSERT INTO `historial_accions` (`id`, `user_id`, `accion`, `descripcion`, `dato
 (306, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ LA HORA DE GUARDADO DE STOCK DE SUCURSALES', '{\"id\": 1, \"valor1\": \"10:22:00\", \"valor2\": \"20:00:00\", \"created_at\": null, \"updated_at\": \"2026-01-07T14:22:48.000000Z\"}', '{\"id\": 1, \"valor1\": \"10:25\", \"valor2\": \"20:00:00\", \"created_at\": null, \"updated_at\": \"2026-01-07T14:22:57.000000Z\"}', 'PARAMETRO SUCURSALES', '2026-01-07', '10:22:57', '2026-01-07 14:22:57', '2026-01-07 14:22:57'),
 (307, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ LA HORA DE GUARDADO DE STOCK DE SUCURSALES', '{\"id\": 1, \"valor1\": \"10:25:00\", \"valor2\": \"20:00:00\", \"created_at\": null, \"updated_at\": \"2026-01-07T14:22:57.000000Z\"}', '{\"id\": 1, \"valor1\": \"10:23\", \"valor2\": \"20:00:00\", \"created_at\": null, \"updated_at\": \"2026-01-07T14:23:45.000000Z\"}', 'PARAMETRO SUCURSALES', '2026-01-07', '10:23:45', '2026-01-07 14:23:45', '2026-01-07 14:23:45'),
 (308, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ LA HORA DE GUARDADO DE STOCK DE SUCURSALES', '{\"id\": 1, \"valor1\": \"10:23:00\", \"valor2\": \"20:00:00\", \"created_at\": null, \"updated_at\": \"2026-01-07T14:23:45.000000Z\"}', '{\"id\": 1, \"valor1\": \"10:27\", \"valor2\": \"20:00:00\", \"created_at\": null, \"updated_at\": \"2026-01-07T14:27:46.000000Z\"}', 'PARAMETRO SUCURSALES', '2026-01-07', '10:27:46', '2026-01-07 14:27:46', '2026-01-07 14:27:46'),
-(309, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ LA HORA DE GUARDADO DE STOCK DE SUCURSALES', '{\"id\": 1, \"valor1\": \"10:27:00\", \"valor2\": \"20:00:00\", \"created_at\": null, \"updated_at\": \"2026-01-07T14:27:46.000000Z\"}', '{\"id\": 1, \"valor1\": \"10:28\", \"valor2\": \"20:00:00\", \"created_at\": null, \"updated_at\": \"2026-01-07T14:28:03.000000Z\"}', 'PARAMETRO SUCURSALES', '2026-01-07', '10:28:03', '2026-01-07 14:28:03', '2026-01-07 14:28:03');
+(309, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ LA HORA DE GUARDADO DE STOCK DE SUCURSALES', '{\"id\": 1, \"valor1\": \"10:27:00\", \"valor2\": \"20:00:00\", \"created_at\": null, \"updated_at\": \"2026-01-07T14:27:46.000000Z\"}', '{\"id\": 1, \"valor1\": \"10:28\", \"valor2\": \"20:00:00\", \"created_at\": null, \"updated_at\": \"2026-01-07T14:28:03.000000Z\"}', 'PARAMETRO SUCURSALES', '2026-01-07', '10:28:03', '2026-01-07 14:28:03', '2026-01-07 14:28:03'),
+(310, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UN GASTO', '{\"id\": 2, \"hora\": \"14:35\", \"fecha\": \"2026-01-07\", \"monto\": \"1000\", \"created_at\": \"2026-01-07T18:35:48.000000Z\", \"updated_at\": \"2026-01-07T18:35:48.000000Z\", \"descripcion\": \"GASTO PRUEBA\"}', NULL, 'GASTOS', '2026-01-07', '14:35:48', '2026-01-07 18:35:48', '2026-01-07 18:35:48');
 
 -- --------------------------------------------------------
 
@@ -864,7 +866,8 @@ INSERT INTO `jobs` (`id`, `queue`, `payload`, `attempts`, `reserved_at`, `availa
 (86, 'default', '{\"uuid\":\"a0b349b2-8e0c-491f-a68d-75d110e12ccb\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1766440497, 1766440497),
 (87, 'default', '{\"uuid\":\"695cee53-ee49-44a0-a677-5ba1ccc60f67\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1766440677, 1766440677),
 (88, 'default', '{\"uuid\":\"476e73e6-c2a1-4c0a-a297-bef2b7077943\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1767792661, 1767792661),
-(89, 'default', '{\"uuid\":\"762b6081-e00a-402f-9bc0-93f23bb533f6\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1767806269, 1767806269);
+(89, 'default', '{\"uuid\":\"762b6081-e00a-402f-9bc0-93f23bb533f6\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1767806269, 1767806269),
+(90, 'default', '{\"uuid\":\"3a6966f7-3764-4c6f-b001-01b765ec22a2\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1767810953, 1767810953);
 
 -- --------------------------------------------------------
 
@@ -2705,19 +2708,19 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT de la tabla `gastos`
 --
 ALTER TABLE `gastos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `historial_accions`
 --
 ALTER TABLE `historial_accions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=310;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=311;
 
 --
 -- AUTO_INCREMENT de la tabla `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT de la tabla `kardex_productos`

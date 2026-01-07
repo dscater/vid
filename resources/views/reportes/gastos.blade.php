@@ -155,7 +155,7 @@
             {{ $configuracion->first()->nombre_sistema }}
         </h2>
         <h4 class="texto">LISTA DE GASTOS</h4>
-        <h4 class="fecha">Expedido: {{ date('d-m-Y') }}</h4>
+        <h4 class="fecha">Del {{ date('d/m/Y', strtotime($fecha_ini)) }} al {{ date('d/m/Y', strtotime($fecha_fin)) }}
     </div>
     <table border="1">
         <thead class="bg-principal">
@@ -180,7 +180,7 @@
             @endforeach
             <tr>
                 <th colspan="3">TOTAL</th>
-                <th class="derecha">Bs. {{ $gastos->sum('monto') }}</th>
+                <th class="derecha">Bs. {{ number_format($gastos->sum('monto'), 2, '.', ',') }}</th>
             </tr>
         </tbody>
     </table>

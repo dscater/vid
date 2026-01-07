@@ -153,7 +153,7 @@
             {{ $configuracion->first()->nombre_sistema }}
         </h2>
         <h4 class="texto">UTILIDAD DE ORDENDES DE VENTAS</h4>
-        <h4 class="fecha">Expedido: {{ date('d-m-Y') }}</h4>
+        <h4 class="fecha">Del {{ date('d/m/Y', strtotime($fecha_ini)) }} al {{ date('d/m/Y', strtotime($fecha_fin)) }}
     </div>
 
 

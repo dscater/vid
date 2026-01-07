@@ -1491,11 +1491,20 @@ class ReporteController extends Controller
 
     public function movimiento_inventario_g(Request $request)
     {
+        ini_set('memory_limit', '1024M');
+        set_time_limit(-1);
         $producto_id =  $request->producto_id;
         $sucursal_id =  $request->sucursal_id;
         $user_id =  $request->user_id;
         $tipo_movimiento =  $request->tipo_movimiento;
-        $fecha =  $request->fecha;
+        $fecha_ini =  $request->fecha_ini;
+        $fecha_fin =  $request->fecha_fin;
+        $sucursals = Sucursal::select("sucursals.*");
+
+        if ($sucursal_id != 'todos') {
+            $sucursals->where('id', $sucursal_id);
+        }
+        $sucursals = $sucursals->where("estado", 1)->get();
         $productos = Producto::select("productos.*");
         if ($producto_id != 'todos') {
             $productos->where("id", $producto_id);
@@ -1503,54 +1512,37 @@ class ReporteController extends Controller
 
         $productos = $productos->where("estado", 1)->get();
 
-        $categories = ["INGRESO", "EGRESO", "AJUSTE"];
+        $array_dias = [
+            '0' => 'Domingo',
+            '1' => 'Lunes',
+            '2' => 'Martes',
+            '3' => 'Miércoles',
+            '4' => 'Jueves',
+            '5' => 'Viernes',
+            '6' => 'Sábado',
+        ];
+        $array_meses = [
+            '01' => 'enero',
+            '02' => 'febrero',
+            '03' => 'marzo',
+            '04' => 'abril',
+            '05' => 'mayo',
+            '06' => 'junio',
+            '07' => 'julio',
+            '08' => 'agosto',
+            '09' => 'septiembre',
+            '10' => 'octubre',
+            '11' => 'noviembre',
+            '12' => 'diciembre',
+        ];
 
-        if ($tipo_movimiento != 'todos') {
-            $categories = [$tipo_movimiento == 'ajuste' ? 'AJUSTE' : $tipo_movimiento];
+        if ($sucursal_id != 'todos') {
+            $html = view('reportes.parcial.movimiento_inventario_sucursal', compact('sucursals', 'productos', 'array_dias', 'array_meses', 'fecha_ini', 'fecha_fin', 'user_id', 'tipo_movimiento'))->render();
+        } else {
+            $html = view('reportes.parcial.movimiento_inventario', compact('sucursals', 'productos', 'array_dias', 'array_meses', 'fecha_ini', 'fecha_fin', 'user_id', 'tipo_movimiento'))->render();
         }
 
-        $data = [];
-        foreach ($categories as $item) {
-
-            $total = 0;
-            if ($item == 'AJUSTE') {
-                $kardex = KardexProducto::where("tipo_is", $item);
-            } else {
-                $kardex = KardexProducto::where("detalle", "INGRESO POR AJUSTE");
-            }
-
-            if ($producto_id != 'todos') {
-                $kardex->where("producto_id", $producto_id);
-            }
-
-            if ($user_id != 'todos') {
-                $kardex->where("user_id", $user_id);
-            }
-
-            if ($sucursal_id != 'todos') {
-                $kardex->where("sucursal_id", $sucursal_id);
-            }
-
-            if ($fecha) {
-                $kardex->where("fecha", $fecha);
-            }
-
-            if ($item == 'INGRESO' || $item == 'AJUSTE') {
-                $total = $kardex->sum("cantidad_ingreso");
-            } else {
-                $total = $kardex->sum("cantidad_salida");
-            }
-
-            $data[] = [
-                'name' => $item,
-                'y' => (float) $total,
-            ];
-        }
-
-        return response()->JSON([
-            "categories" => $categories,
-            "data" => $data,
-        ]);
+        return response()->JSON($html);
     }
 
     public function solicitud_ingresos(Request $request)
@@ -1577,7 +1569,7 @@ class ReporteController extends Controller
         $solicitud_ingresos = $solicitud_ingresos->get();
 
         if ($request->tipo == 'pdf') {
-            $pdf = PDF::loadView('reportes.solicitud_ingresos', compact('solicitud_ingresos'))->setPaper('letter', 'portrait');
+            $pdf = PDF::loadView('reportes.solicitud_ingresos', compact('solicitud_ingresos', 'fecha'))->setPaper('letter', 'portrait');
 
             // ENUMERAR LAS PÁGINAS USANDO CANVAS
             $pdf->output();
@@ -1626,6 +1618,12 @@ class ReporteController extends Controller
             $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
             $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
             $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
+            $fila++;
+            $sheet->setCellValue('A' . $fila, "FECHA: " . date("d/m/Y", strtotime($fecha)));
+            $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
+
             $fila++;
             $fila++;
             foreach ($solicitud_ingresos as $key => $item) {
@@ -1732,7 +1730,7 @@ class ReporteController extends Controller
         $orden_salidas = $orden_salidas->get();
 
         if ($request->tipo == 'pdf') {
-            $pdf = PDF::loadView('reportes.orden_salidas', compact('orden_salidas'))->setPaper('letter', 'portrait');
+            $pdf = PDF::loadView('reportes.orden_salidas', compact('orden_salidas', 'fecha'))->setPaper('letter', 'portrait');
 
             // ENUMERAR LAS PÁGINAS USANDO CANVAS
             $pdf->output();
@@ -1778,6 +1776,11 @@ class ReporteController extends Controller
             $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->titulo);
             $fila++;
             $sheet->setCellValue('A' . $fila, "ÓRDENDES DE SALIDA");
+            $sheet->mergeCells("A" . $fila . ":F" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':F' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->titulo);
+            $fila++;
+            $sheet->setCellValue('A' . $fila, "FECHA: " . date("d/m/Y", strtotime($fecha)));
             $sheet->mergeCells("A" . $fila . ":F" . $fila);  //COMBINAR CELDAS
             $sheet->getStyle('A' . $fila . ':F' . $fila)->getAlignment()->setHorizontal('center');
             $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->titulo);
@@ -1884,7 +1887,7 @@ class ReporteController extends Controller
         $devolucion_stocks = $devolucion_stocks->get();
 
         if ($request->tipo == 'pdf') {
-            $pdf = PDF::loadView('reportes.devolucions', compact('devolucion_stocks'))->setPaper('letter', 'portrait');
+            $pdf = PDF::loadView('reportes.devolucions', compact('devolucion_stocks', 'fecha'))->setPaper('letter', 'portrait');
 
             // ENUMERAR LAS PÁGINAS USANDO CANVAS
             $pdf->output();
@@ -1930,6 +1933,11 @@ class ReporteController extends Controller
             $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->titulo);
             $fila++;
             $sheet->setCellValue('A' . $fila, "DEVOLUCIONES DE STOCK");
+            $sheet->mergeCells("A" . $fila . ":F" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':F' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->titulo);
+            $fila++;
+            $sheet->setCellValue('A' . $fila, "FECHA: " . date("d/m/Y", strtotime($fecha)));
             $sheet->mergeCells("A" . $fila . ":F" . $fila);  //COMBINAR CELDAS
             $sheet->getStyle('A' . $fila . ':F' . $fila)->getAlignment()->setHorizontal('center');
             $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->titulo);
@@ -2332,6 +2340,11 @@ class ReporteController extends Controller
             $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
             $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
             $fila++;
+            $sheet->setCellValue('A' . $fila, "Del " . date("d/m/Y", strtotime($fecha_ini)) . ' al ' . date("d/m/Y", strtotime($fecha_fin)));
+            $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
+            $fila++;
             $fila++;
             $sheet->setCellValue('A' . $fila, 'PRODUCTOS');
             $sheet->setCellValue('B' . $fila, 'UNIDAD');
@@ -2610,9 +2623,9 @@ class ReporteController extends Controller
                 $sheet->setCellValue('B' . $fila, $item->fecha_c);
                 $sheet->setCellValue('C' . $fila, $item->cliente->razon_social);
                 $sheet->setCellValue('D' . $fila, $item->orden_venta->codigo);
-                $sheet->setCellValue('E' . $fila, $item->total);
-                $sheet->setCellValue('F' . $fila, $item->cancelado);
-                $sheet->setCellValue('G' . $fila, $item->saldo);
+                $sheet->setCellValue('E' . $fila, number_format($item->total, 2, ".", ","));
+                $sheet->setCellValue('F' . $fila, number_format($item->cancelado, 2, ".", ","));
+                $sheet->setCellValue('G' . $fila, number_format($item->saldo, 2, ".", ","));
                 $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->bodyTabla);
                 $fila++;
             }
@@ -2621,9 +2634,9 @@ class ReporteController extends Controller
             $saldo = $cuenta_cobrars->sum('saldo');
             $sheet->setCellValue('A' . $fila, "TOTAL");
             $sheet->mergeCells("A" . $fila . ":D" . $fila);  //COMBINAR CELDAS
-            $sheet->setCellValue('E' . $fila, $total);
-            $sheet->setCellValue('F' . $fila, $cancelado);
-            $sheet->setCellValue('G' . $fila, $saldo);
+            $sheet->setCellValue('E' . $fila, number_format($total, 2, ".", ","));
+            $sheet->setCellValue('F' . $fila, number_format($cancelado, 2, ".", ","));
+            $sheet->setCellValue('G' . $fila, number_format($saldo, 2, ".", ","));
             $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->headerTabla);
 
             $sheet->getColumnDimension('A')->setWidth(7);
@@ -2691,7 +2704,7 @@ class ReporteController extends Controller
             ->take(10)->get();
 
         if ($request->tipo == 'pdf') {
-            $pdf = PDF::loadView('reportes.rotacion', compact('productosMasVendidos'))->setPaper('letter', 'portrait');
+            $pdf = PDF::loadView('reportes.rotacion', compact('productosMasVendidos', 'fecha_ini', 'fecha_fin'))->setPaper('letter', 'portrait');
 
             // ENUMERAR LAS PÁGINAS USANDO CANVAS
             $pdf->output();
@@ -2737,6 +2750,11 @@ class ReporteController extends Controller
             $sheet->getStyle('A' . $fila . ':C' . $fila)->applyFromArray($this->titulo);
             $fila++;
             $sheet->setCellValue('A' . $fila, "ROTACIÓN DE PRODUCTOS");
+            $sheet->mergeCells("A" . $fila . ":C" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':C' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':C' . $fila)->applyFromArray($this->titulo);
+            $fila++;
+            $sheet->setCellValue('A' . $fila, "Del " . date("d/m/Y", strtotime($fecha_ini)) . ' al ' . date("d/m/Y", strtotime($fecha_fin)));
             $sheet->mergeCells("A" . $fila . ":C" . $fila);  //COMBINAR CELDAS
             $sheet->getStyle('A' . $fila . ':C' . $fila)->getAlignment()->setHorizontal('center');
             $sheet->getStyle('A' . $fila . ':C' . $fila)->applyFromArray($this->titulo);
@@ -2800,7 +2818,7 @@ class ReporteController extends Controller
         $gastos = $gastos->get();
 
         if ($request->tipo == 'pdf') {
-            $pdf = PDF::loadView('reportes.gastos', compact('gastos'))->setPaper('letter', 'portrait');
+            $pdf = PDF::loadView('reportes.gastos', compact('gastos', 'fecha_ini', 'fecha_fin'))->setPaper('letter', 'portrait');
 
             // ENUMERAR LAS PÁGINAS USANDO CANVAS
             $pdf->output();
@@ -2850,6 +2868,11 @@ class ReporteController extends Controller
             $sheet->getStyle('A' . $fila . ':D' . $fila)->getAlignment()->setHorizontal('center');
             $sheet->getStyle('A' . $fila . ':D' . $fila)->applyFromArray($this->titulo);
             $fila++;
+            $sheet->setCellValue('A' . $fila, "Del " . date("d/m/Y", strtotime($fecha_ini)) . ' al ' . date("d/m/Y", strtotime($fecha_fin)));
+            $sheet->mergeCells("A" . $fila . ":D" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':D' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':D' . $fila)->applyFromArray($this->titulo);
+            $fila++;
             $fila++;
             $sheet->setCellValue('A' . $fila, 'N°');
             $sheet->setCellValue('B' . $fila, 'DESCRIPCIÓN');
@@ -2868,7 +2891,7 @@ class ReporteController extends Controller
             }
             $sheet->setCellValue('A' . $fila, 'TOTAL');
             $sheet->mergeCells("A" . $fila . ":C" . $fila);  //COMBINAR CELDAS
-            $sheet->setCellValue('D' . $fila, $gastos->sum("monto"));
+            $sheet->setCellValue('D' . $fila, number_format($gastos->sum("monto"), 2, ".", ","));
             $sheet->getStyle('A' . $fila . ':D' . $fila)->applyFromArray($this->headerTabla);
 
             $sheet->getColumnDimension('A')->setWidth(8);
@@ -3197,6 +3220,11 @@ class ReporteController extends Controller
                 $sheet->getStyle('A' . $fila . ':' . $lastCol . $fila)->getAlignment()->setHorizontal('center');
                 $sheet->getStyle('A' . $fila . ':' . $lastCol . $fila)->applyFromArray($this->titulo);
                 $fila++;
+                $sheet->setCellValue('A' . $fila, "Del " . date("d/m/Y", strtotime($fecha_ini)) . ' al ' . date("d/m/Y", strtotime($fecha_fin)));
+                $sheet->mergeCells("A" . $fila . ":" . $lastCol . $fila);  //COMBINAR CELDAS
+                $sheet->getStyle('A' . $fila . ':' . $lastCol . $fila)->getAlignment()->setHorizontal('center');
+                $sheet->getStyle('A' . $fila . ':' . $lastCol . $fila)->applyFromArray($this->titulo);
+                $fila++;
                 $sheet->setCellValue('A' . $fila, "Sucursal: " . $sucursal->nombre);
                 $sheet->mergeCells("A" . $fila . ":" . $lastCol . $fila);  //COMBINAR CELDAS
                 $sheet->getStyle('A' . $fila . ':' . $lastCol . $fila)->getAlignment()->setHorizontal('center');
@@ -3387,6 +3415,11 @@ class ReporteController extends Controller
             $sheet->getStyle('A' . $fila . ':F' . $fila)->getAlignment()->setHorizontal('center');
             $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->titulo);
             $fila++;
+            $sheet->setCellValue('A' . $fila, "FECHA: " . date("d/m/Y", strtotime($fecha)));
+            $sheet->mergeCells("A" . $fila . ":F" . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':F' . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':F' . $fila)->applyFromArray($this->titulo);
+            $fila++;
             $fila++;
             $sheet->setCellValue('A' . $fila, 'N°');
             $sheet->setCellValue('B' . $fila, 'CÓD. PRODUCTO');
@@ -3562,6 +3595,11 @@ class ReporteController extends Controller
             $sheet->getStyle('A' . $fila . ':' . $colEnd . $fila)->applyFromArray($this->titulo);
             $fila++;
             $sheet->setCellValue('A' . $fila, "CONTROL DIARIO DE SUCURSALES(VEHÍCULOS)");
+            $sheet->mergeCells("A" . $fila . ":" . $colEnd . $fila);  //COMBINAR CELDAS
+            $sheet->getStyle('A' . $fila . ':' . $colEnd . $fila)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A' . $fila . ':' . $colEnd . $fila)->applyFromArray($this->titulo);
+            $fila++;
+            $sheet->setCellValue('A' . $fila, "FECHA: " . date("d/m/Y", strtotime($fecha)));
             $sheet->mergeCells("A" . $fila . ":" . $colEnd . $fila);  //COMBINAR CELDAS
             $sheet->getStyle('A' . $fila . ':' . $colEnd . $fila)->getAlignment()->setHorizontal('center');
             $sheet->getStyle('A' . $fila . ':' . $colEnd . $fila)->applyFromArray($this->titulo);

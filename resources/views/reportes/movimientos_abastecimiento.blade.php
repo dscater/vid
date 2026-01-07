@@ -174,7 +174,9 @@
             <h4 class="texto">REPORTE SEMANAL DE MOVIMIENTOS Y ABASTECIMIENTO</h4>
             <h4 class="texto">Sucursal: {{ $sucursal->nombre }}</h4>
             <h4 class="texto">Encargado: {{ $sucursal->user->full_name }}</h4>
-            <h4 class="fecha">Expedido: {{ date('d-m-Y') }}</h4>
+            <h4 class="fecha">Del {{ date('d/m/Y', strtotime($fecha_ini)) }} al
+                {{ date('d/m/Y', strtotime($fecha_fin)) }}
+                {{-- <h4 class="fecha">Expedido: {{ date('d-m-Y') }}</h4> --}}
         </div>
         @php
             $fecha_aux = date('Y-m-d', strtotime($fecha_ini));
