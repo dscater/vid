@@ -186,6 +186,7 @@
                     if ($sucursal_id != 'todos') {
                         $orden_venta_detalles->whereHas('orden_venta', function ($query) use ($sucursal_id) {
                             $query->where('sucursal_id', $sucursal_id);
+                            $query->where('verificado', 2);
                         });
                     }
                     $orden_venta_detalles->whereHas('orden_venta', function ($query) use ($fecha_ini, $fecha_fin) {

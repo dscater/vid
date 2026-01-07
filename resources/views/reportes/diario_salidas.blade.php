@@ -223,6 +223,7 @@
                         $ventas_realizadas = App\Models\OrdenVentaDetalle::where('producto_id', $producto->id);
                         $ventas_realizadas->whereHas('orden_venta', function ($query) use ($fecha, $sucursal_id) {
                             $query->where('fecha', $fecha)->where('sucursal_id', $sucursal_id);
+                            $query->where('verificado', 2);
                         });
                         $ventas_realizadas = $ventas_realizadas->sum('cantidad');
 

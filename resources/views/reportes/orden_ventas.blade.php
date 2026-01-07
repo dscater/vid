@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>OrdenVentas</title>
+    <title>MovimientoInventario</title>
     <style type="text/css">
         * {
             font-family: sans-serif;
@@ -30,12 +30,12 @@
             word-wrap: break-word;
         }
 
-        table th {
-            font-size: 8pt;
+        table thead tr th {
+            font-size: 7pt;
         }
 
         table tbody tr td {
-            font-size: 7pt;
+            font-size: 6pt;
         }
 
 
@@ -60,16 +60,16 @@
         }
 
         .texto {
-            width: 250px;
+            width: 350px;
             text-align: center;
             margin: auto;
             margin-top: 15px;
             font-weight: bold;
-            font-size: 1.1em;
+            font-size: 1em;
         }
 
         .fecha {
-            width: 250px;
+            width: 350px;
             text-align: center;
             margin: auto;
             margin-top: 15px;
@@ -130,7 +130,7 @@
         }
 
         .gray {
-            background: rgb(241, 241, 241);
+            background: rgb(202, 202, 202);
         }
 
         .bg-principal {
@@ -138,89 +138,190 @@
             color: white;
         }
 
-        .bold {
-            font-weight: bold;
+        th.vertical {
+            vertical-align: middle;
+            text-align: center;
+            height: 220px;
+            /* controla la altura de la fila */
+            padding: 0;
+        }
+
+        th.vertical div {
+            transform: rotate(-90deg);
+            white-space: nowrap;
+            font-size: 7pt;
         }
 
         .img_celda img {
             width: 45px;
         }
 
-        .derecha {
-            text-align: right;
+        .break_page {
+            page-break-after: always;
+        }
+
+        .obs {
+            font-size: 0.9em;
+        }
+
+        .bgFinal {
+            background-color: rgb(255, 255, 232);
+            font-weight: bold;
+            font-size: 7.6pt;
+        }
+
+        .punteado {
+            display: block;
+            width: 100%;
+            border-bottom: dotted 1px black;
+            margin-top: 25px;
+        }
+
+        .bg0 {
+            background: #cff3f3;
+        }
+
+        .bg1 {
+            background: #ffe9ff;
+        }
+
+        .bg2 {
+            background: #f7ffe0;
+        }
+
+        .bg3 {
+            background: #ecfcdd;
+        }
+
+        .bg4 {
+            background: #faeee4;
+        }
+
+        .nueva_pagina {
+            page-break-after: always;
         }
     </style>
 </head>
 
 <body>
     @inject('configuracion', 'App\Models\Configuracion')
-    <div class="encabezado">
-        <div class="logo">
-            <img src="{{ $configuracion->first()->logo_b64 }}">
+    @inject('parametroSucursal', 'App\Models\ParametroSucursal')
+    @php
+        $horaInicial = date('H:i', strtotime($parametroSucursal->first()->valor1)) ?? '08:00';
+        $horaFinal = date('H:i', strtotime($parametroSucursal->first()->valor2)) ?? '20:00';
+    @endphp
+
+    @foreach ($sucursals as $key => $sucursal)
+        <div class="encabezado">
+            <div class="logo">
+                <img src="{{ $configuracion->first()->logo_b64 }}">
+            </div>
+            <h2 class="titulo">
+                {{ $configuracion->first()->nombre_sistema }}
+            </h2>
+            <h4 class="texto">ORDENES DE VENTAS</h4>
+            <h4 class="texto">SUCURSAL: {{ $sucursal->nombre }}</h4>
+            <h4 class="fecha">Del {{ date('d/m/Y', strtotime($fecha_ini)) }} al
+                {{ date('d/m/Y', strtotime($fecha_fin)) }}
+            </h4>
         </div>
-        <h2 class="titulo">
-            {{ $configuracion->first()->nombre_sistema }}
-        </h2>
-        <h4 class="texto">ORDENES DE VENTAS</h4>
-        <h4 class="fecha">Expedido: {{ date('d-m-Y') }}</h4>
-    </div>
-    @foreach ($orden_ventas as $item)
+        @php
+
+        @endphp
         <table border="1">
+            <thead>
+                <tr>
+                    <th width="7%">PRODUCTO</th>
+                    <th>UNIDAD DE MEDIDA</th>
+                    @foreach ($clientes as $key => $item)
+                        <th class="vertical">
+                            <div>
+                                {{ $item->razon_social }}
+                            </div>
+                        </th>
+                    @endforeach
+                    <th class="bg0 vertical">
+                        <div>
+                            STOCK DIARIO
+                        </div>
+                    </th>
+                    <th class="bg1 vertical">
+                        <div>
+                            VENTAS
+                        </div>
+                    </th>
+                    <th class="bg2 vertical">
+                        <div>
+                            DEVOLUCIÓN
+                        </div>
+                    </th>
+                </tr>
+            </thead>
             <tbody>
-                <tr>
-                    <td class="bold" width="6%">Nro.: </td>
-                    <td>{{ $item->codigo }}</td>
-                    <td class="bold">Cliente: </td>
-                    <td>{{ $item->cliente->razon_social }}</td>
-                    <td class="bold">Empleado: </td>
-                    <td colspan="2">{{ $item->user->full_name }}</td>
-                </tr>
-                <tr>
-                    <td class="bold">Fecha: </td>
-                    <td>{{ $item->fecha_c }}</td>
-                    <td class="bold">Forma de pago: </td>
-                    <td>{{ $item->forma_pago }}</td=>
-                    <td class="bold">Sucursal: </td>
-                    <td colspan="2">{{ $item->sucursal->nombre }}</td>
-                </tr>
-                <tr>
-                    <td class="bold">Estado: </td>
-                    <td colspan="6">{{ $item->estado }}</td>
-                </tr>
-                <tr class="gray">
-                    <th>N°</th>
-                    <th>CANTIDAD</th>
-                    <th>DESCRIPCIÓN</th>
-                    <th>P/U Bs.</th>
-                    <th>SUBTOTAL Bs.</th>
-                    <th>DESCUENTO Bs.</th>
-                    <th>TOTAL Bs.</th>
-                </tr>
-                @foreach ($item->orden_venta_detalles as $key => $si)
+                @php
+                    $cont = 1;
+                @endphp
+                @foreach ($productos as $producto)
                     <tr>
-                        <td>{{ $key + 1 }}</td>
-                        <td>{{ $si->cantidad }}</td>
-                        <td>{{ $si->producto->nombre }} {{ $si->producto->unidad_medida->nombre }}</td>
-                        <td class="derecha">{{ $si->precio }}</td>
-                        <td class="derecha">{{ $si->subtotal }}</td>
-                        <td class="derecha">{{ $si->descuento }}</td>
-                        <td class="derecha">{{ $si->subtotal_f }}</td>
+                        <td>{{ $producto->nombre }}</td>
+                        <td>{{ $producto->unidad_medida->nombre }}</td>
+                        @foreach ($clientes as $cliente)
+                            @php
+                                $cantidad = App\Models\OrdenVentaDetalle::whereHas('orden_venta', function (
+                                    $query,
+                                ) use ($sucursal, $cliente, $fecha_ini, $fecha_fin) {
+                                    $query->where('sucursal_id', $sucursal->id);
+                                    $query->where('cliente_id', $cliente->id);
+                                    $query->whereBetween('fecha', [$fecha_ini, $fecha_fin]);
+                                    $query->where('verificado', 2);
+                                })
+                                    ->where('producto_id', $producto->id)
+                                    ->sum('cantidad');
+                            @endphp
+                            <td>{{ $cantidad }}</td>
+                        @endforeach
+                        @php
+                            $stock_diario = App\Models\SucursalProducto::where('sucursal_id', $sucursal->id)
+                                ->where('producto_id', $producto->id)
+                                ->value('stock_actual');
+                        @endphp
+                        <td>{{ $stock_diario }}</td>
+                        @php
+                            $ventas = App\Models\OrdenVentaDetalle::whereHas('orden_venta', function ($query) use (
+                                $sucursal,
+                                $cliente,
+                                $fecha_ini,
+                                $fecha_fin,
+                            ) {
+                                $query->where('sucursal_id', $sucursal->id);
+                                $query->whereBetween('fecha', [$fecha_ini, $fecha_fin]);
+                                $query->where('verificado', 2);
+                            })
+                                ->where('producto_id', $producto->id)
+                                ->sum('cantidad');
+                        @endphp
+                        <td>{{ $ventas }}</td>
+                        @php
+                            $devoluciones = App\Models\DevolucionClienteDetalle::whereHas(
+                                'devolucion_cliente',
+                                function ($query) use ($sucursal, $cliente, $fecha_ini, $fecha_fin) {
+                                    $query->where('sucursal_id', $sucursal->id);
+                                    // $query->where('cliente_id', $cliente->id);
+                                    $query->whereBetween('fecha', [$fecha_ini, $fecha_fin]);
+                                },
+                            )
+                                ->where('producto_id', $producto->id)
+                                ->sum('cantidad');
+                        @endphp
+                        <td>{{ $devoluciones }}</td>
                     </tr>
                 @endforeach
-                <tr class="gray">
-                    <th colspan="6">TOTAL</th>
-                    <th>{{ $item->total_st }}</th>
-                </tr>
-                <tr class="gray">
-                    <th colspan="6">DESCUENTO</th>
-                    <th>{{ $item->descuento ?? 0 }}</th>
-                </tr>
-                <tr class="gray">
-                    <th colspan="6">TOTAL FINAL</th>
-                    <th>{{ $item->total_f ?? 0 }}</th>
-                </tr>
             </tbody>
         </table>
+
+        @if ($key < count($sucursals) - 1)
+            <div class="nueva_pagina"></div>
+        @endif
     @endforeach
 </body>
 

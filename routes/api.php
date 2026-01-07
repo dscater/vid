@@ -15,6 +15,7 @@ use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\OrdenSalidaController;
 use App\Http\Controllers\OrdenVentaController;
 use App\Http\Controllers\ParametroClienteController;
+use App\Http\Controllers\ParametroSucursalController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProformaController;
@@ -99,6 +100,10 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::resource("sucursals", SucursalController::class)->only(
         ["store", "edit", "show", "update", "destroy"]
     );
+
+    // parametro sucursal
+    Route::get("parametro_sucursals", [ParametroSucursalController::class, 'index'])->name("parametro_sucursals.index");
+    Route::post("parametro_sucursals", [ParametroSucursalController::class, 'store'])->name("parametro_sucursals.store");
 
     // SUCURSAL PRODUCTOS
     Route::get("sucursal_productos/getSucursalProducto", [SucursalProductoController::class, 'getSucursalProducto'])->name("sucursal_productos.getSucursalProducto");

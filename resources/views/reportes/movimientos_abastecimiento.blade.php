@@ -228,6 +228,7 @@
                                         $sucursal_id,
                                     ) {
                                         $query->where('fecha', $fecha_aux)->where('sucursal_id', $sucursal_id);
+                                        $query->where('verificado', 2);
                                     });
                                     $total = $ventas_realizadas->sum('cantidad');
                                 } else {

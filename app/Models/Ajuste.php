@@ -16,6 +16,7 @@ class Ajuste extends Model
         "cantidad",
         "motivo",
         "estado",
+        "fecha",
     ];
 
     public function sucursal()
