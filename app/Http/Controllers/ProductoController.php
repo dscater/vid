@@ -58,32 +58,64 @@ class ProductoController extends Controller
 
     public function ppp(Producto $producto)
     {
-        $subtotal = SolicitudIngresoDetalle::where('producto_id', $producto->id)
-            ->whereHas('solicitud_ingreso', function ($query) {
-                $query->where('verificado', 1);
-            })
-            ->sum(DB::raw('cantidad_fisica * costo'));
+        // $subtotal = SolicitudIngresoDetalle::where('producto_id', $producto->id)
+        //     ->whereHas('solicitud_ingreso', function ($query) {
+        //         $query->whereIn('verificado', [1, 2, 3]);
+        //     })
+        //     ->sum(DB::raw('cantidad_fisica * costo'));
 
-        $cantidad = SolicitudIngresoDetalle::where('producto_id', $producto->id)
-            ->whereHas('solicitud_ingreso', function ($query) {
-                $query->where('verificado', 1);
-            })
-            ->sum('cantidad_fisica');
+        // $cantidad = SolicitudIngresoDetalle::where('producto_id', $producto->id)
+        //     ->whereHas('solicitud_ingreso', function ($query) {
+        //         $query->whereIn('verificado', [1, 2, 3]);
+        //     })
+        //     ->sum('cantidad_fisica');
 
-        Log::debug("CANTIDAD: " . $cantidad);
-        Log::debug("subtotal: " . $subtotal);
-        if ($cantidad > 0) {
-            $ppp = $subtotal / $cantidad;
-        } else {
-            $ppp = 0;
+
+        $penultimo = null;
+        $ultimo = SolicitudIngresoDetalle::where('producto_id', $producto->id)
+            ->whereHas('solicitud_ingreso', function ($query) {
+                $query->whereIn('verificado', [1, 2, 3]);
+            })
+            ->get()->last();
+        if ($ultimo) {
+            $penultimo = SolicitudIngresoDetalle::where('producto_id', $producto->id)
+                ->where("id", "<", $ultimo->id)
+                ->whereHas('solicitud_ingreso', function ($query) {
+                    $query->whereIn('verificado', [1, 2, 3]);
+                })
+                ->get()->last();
         }
 
-        $res = round($ppp, 2);
-        if ($ppp > 0) {
-            $producto->precio_ppp = $res;
-            $producto->save();
+
+        $cantidad_anterior = $penultimo ? $penultimo->cantidad_fisica : 0;
+        $precio_calculado_anterior = $penultimo ? $penultimo->calculado : 0;
+        $cantidad = $ultimo ?  $ultimo->cantidad_fisica : 0;
+        $calculado = $ultimo ? $ultimo->calculado : 0;
+
+        // Log::debug("Canti anterior: " . $cantidad_anterior);
+        // Log::debug("Precio anterior: " . $precio_calculado_anterior);
+        // Log::debug("Canti: " . $cantidad);
+        // Log::debug("Precio: " . $calculado);
+
+        $ppp = 0;
+        if ($cantidad_anterior > 0  || $cantidad > 0) {
+            $m1 = $cantidad_anterior * $precio_calculado_anterior;
+            $m2 = $cantidad * $calculado;
+            $m3 = $m1 + $m2;
+            $m4 = $cantidad_anterior + $cantidad;
+
+            Log::debug("M1: " . $m1);
+            Log::debug("M2: " . $m2);
+            Log::debug("M3: " . $m3);
+            Log::debug("M4: " . $m4);
+
+            $ppp = $m3 / $m4;
+            $ppp = round($ppp, 2);
         }
-        return response()->JSON($res);
+
+        $producto->precio_ppp = $ppp;
+        $producto->save();
+        return response()->JSON($ppp);
     }
 
     public function ppp_update(Request $request, Producto $producto)

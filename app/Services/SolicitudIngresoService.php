@@ -253,9 +253,15 @@ class SolicitudIngresoService
         foreach ($datos["solicitud_ingreso_detalles"] as $item) {
             $solicitud_ingreso_detalle = SolicitudIngresoDetalle::findOrFail($item["id"]);
             $subtotal = (float)$item["cantidad_fisica"] * (float)$item["costo"];
+            $pc_facturado = (float)$item["costo_facturado"] * 0.03;
+            $pc_facturado = round($pc_facturado, 2);
+            $calculado = (float)$item["costo"] - $pc_facturado;
             $solicitud_ingreso_detalle->update([
                 "verificado" => 3,
                 "costo" => $item["costo"],
+                "costo_facturado" => $item["costo_facturado"],
+                "pc_facturado" => $pc_facturado,
+                "calculado" => $calculado,
                 "subtotal" => $subtotal,
             ]);
 

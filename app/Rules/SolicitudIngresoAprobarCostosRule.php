@@ -20,8 +20,12 @@ class SolicitudIngresoAprobarCostosRule implements ValidationRule
         }
 
         foreach ($value as $item) {
-            if ($item["costo"] == '') {
+            if ($item["costo"] == '' || $item["costo"] == 0) {
                 $fail("Debes indicar el costo");
+                return;
+            }
+            if ($item["costo_facturado"] == '' || $item["costo_facturado"] == 0) {
+                $fail("Debes indicar el costo facturado");
                 return;
             }
         }

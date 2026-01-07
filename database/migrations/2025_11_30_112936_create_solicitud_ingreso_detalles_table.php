@@ -18,6 +18,9 @@ return new class extends Migration
             $table->double("cantidad", 8, 2);
             $table->double("cantidad_fisica", 8, 2);
             $table->decimal("costo", 24, 2);
+            $table->decimal("costo_facturado", 24, 2);
+            $table->decimal("pc_facturado", 24, 2);
+            $table->decimal("calculado", 24, 2);
             $table->decimal("subtotal", 24, 2);
             $table->integer("verificado")->default(0);
             $table->unsignedBigInteger("sucursal_ajuste")->nullable();
