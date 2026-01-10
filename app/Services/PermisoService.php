@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Permiso;
 use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class PermisoService
 {
@@ -49,10 +50,6 @@ class PermisoService
         if (!Auth::check()) {
             return [];
         }
-        $tipo = Auth::user()->tipo;
-        if ($tipo == 'POSTULANTE') {
-            return $this->arrayPermisos[$tipo];
-        }
         $role_id = Auth::user()->role_id;
         $role = Role::find($role_id);
         if ($role->permisos == 1) {
@@ -63,6 +60,9 @@ class PermisoService
             ->where("permisos.role_id", $role->id)
             ->pluck("modulos.nombre")
             ->toArray();
+        Log::debug("AsdDS");
+        Log::debug($role->id);
+        Log::debug($permisos);
         return $permisos;
     }
 }

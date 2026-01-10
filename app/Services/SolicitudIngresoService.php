@@ -43,7 +43,7 @@ class SolicitudIngresoService
     public function listadoPaginado(int $length, int $page, string $search, array $columnsSerachLike = [], array $columnsFilter = [], array $columnsBetweenFilter = [], array $orderBy = []): LengthAwarePaginator
     {
         $solicitud_ingresos = SolicitudIngreso::select("solicitud_ingresos.*")
-            ->with(["proveedor:id,razon_social", "user:id,nombre,paterno,materno"]);
+            ->with(["proveedor:id,razon_social", "user:id,nombre,paterno,materno", "solicitud_ingreso_detalles.producto"]);
         // Filtros exactos
         foreach ($columnsFilter as $key => $value) {
             if (!is_null($value)) {
@@ -277,10 +277,12 @@ class SolicitudIngresoService
 
                 $this->ajuste_service->crear([
                     "sucursal_id" => $sucursal_ajuste->id,
-                    "sucursal_origen" => $solicitud_ingreso->sucursal_id,
+                    "sucursal_origen" => $almacen->id,
                     "producto_id" => $producto->id,
                     "cantidad" => $ajuste,
                     "motivo" => $item["motivo"],
+                    "tipo" => "SOLICITUD DE INGRESO",
+                    "registro_id" => $solicitud_ingreso_detalle->id
                 ]);
             }
         }

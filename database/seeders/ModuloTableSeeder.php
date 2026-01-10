@@ -12,6 +12,14 @@ class ModuloTableSeeder extends Seeder
      */
     public function run(): void
     {
+        // PERFIL
+        Modulo::create([
+            "modulo" => "Perfil de Usuario",
+            "nombre" => "profile.edit",
+            "accion" => "EDITAR CONTRASEÑA",
+            "descripcion" => "ACTUALIZAR CONTRASEÑA"
+        ]);
+
         // GESTIÓN DE USUARIOS
         Modulo::create([
             "modulo" => "Gestión de usuarios",

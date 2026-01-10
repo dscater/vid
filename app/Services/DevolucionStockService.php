@@ -240,6 +240,8 @@ class DevolucionStockService
                     "producto_id" => $producto->id,
                     "cantidad" => $ajuste,
                     "motivo" => $item["motivo"],
+                    "tipo" => "DEVOLUCION DE STOCK",
+                    "registro_id" => $devolucion_stock_detalle->id
                 ]);
             }
         }

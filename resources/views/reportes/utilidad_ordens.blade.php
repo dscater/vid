@@ -17,7 +17,7 @@
         }
 
         table {
-            width: 80%;
+            width: 100%;
             border-collapse: collapse;
             table-layout: fixed;
             margin-top: 20px;
@@ -31,12 +31,12 @@
             word-wrap: break-word;
         }
 
-        table thead tr th {
-            font-size: 7pt;
+        table tr th {
+            font-size: 8pt;
         }
 
-        table tbody tr td {
-            font-size: 6pt;
+        table tr td {
+            font-size: 7pt;
         }
 
 
@@ -238,19 +238,19 @@
                     <td>{{ $value->nombre }}</td>
                     <td>{{ $value->unidad_medida->nombre }}</td>
                     <td class="centreado">{{ $total_ventas_cantidad }}</td>
-                    <td class="centreado">{{ number_format($total_ventas, 2, '.', ',') }}</td>
+                    <td class="centreado">Bs {{ number_format($total_ventas, 2, '.', ',') }}</td>
                     <td class="centreado">{{ $total_compras_cantidad }}</td>
-                    <td class="centreado">{{ number_format($total_compras, 2, '.', ',') }}</td>
-                    <td class="centreado">{{ number_format($saldo, 2, '.', ',') }}</td>
+                    <td class="centreado">Bs {{ number_format($total_compras, 2, '.', ',') }}</td>
+                    <td class="centreado">Bs {{ number_format($saldo, 2, '.', ',') }}</td>
                 </tr>
             @endforeach
             <tr>
                 <th colspan="2">TOTAL</th>
                 <th>{{ $total_final1 }}</th>
-                <th>{{ number_format($total_final2, 2, '.', ',') }}</th>
+                <th>Bs {{ number_format($total_final2, 2, '.', ',') }}</th>
                 <th>{{ $total_final3 }}</th>,
-                <th>{{ number_format($total_final4, 2, '.', ',') }}</th>
-                <th>{{ number_format($total_final5, 2, '.', ',') }}</th>
+                <th>Bs {{ number_format($total_final4, 2, '.', ',') }}</th>
+                <th>Bs {{ number_format($total_final5, 2, '.', ',') }}</th>
             </tr>
         </tbody>
     </table>

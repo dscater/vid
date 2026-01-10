@@ -167,7 +167,7 @@
                     <td class="bold" width="6%">Código: </td>
                     <td>{{ $item->codigo }}</td>
                     <td class="bold">Proveedor: </td>
-                    <td colspan="4">{{ $item->proveedor->razon_social }}</td>
+                    <td colspan="5">{{ $item->proveedor->razon_social }}</td>
                 </tr>
                 <tr>
                     <td class="bold">Fecha: </td>
@@ -175,7 +175,7 @@
                     <td class="bold">Usuario Solicitante: </td>
                     <td colspan="2">{{ $item->user->full_name }}</td>
                     <td class="bold">Estado: </td>
-                    <td>{{ $item->estado }}</td>
+                    <td colspan="2">{{ $item->estado }}</td>
                 </tr>
                 <tr class="gray">
                     <th>N°</th>
@@ -184,9 +184,17 @@
                     <th>MARCA</th>
                     <th>CATEGORÍA</th>
                     <th>CANTIDAD</th>
+                    <th>CANTIDAD STOCK DE AJUSTES</th>
                     <th>CANTIDAD FÍSICA</th>
                 </tr>
+                @php
+                    $total_ajuste = 0;
+                @endphp
                 @foreach ($item->solicitud_ingreso_detalles as $key => $si)
+                    @php
+                        $ajuste = (float) $si->cantidad - (float) $si->cantidad_fisica;
+                        $total_ajuste += (float) $ajuste;
+                    @endphp
                     <tr>
                         <td>{{ $key + 1 }}</td>
                         <td>{{ $si->producto->codigo }}</td>
@@ -194,12 +202,14 @@
                         <td>{{ $si->producto->marca->nombre }}</td>
                         <td>{{ $si->producto->categoria->nombre }}</td>
                         <td class="centreado">{{ $si->cantidad }}</td>
+                        <td class="centreado">{{ $ajuste }}</td>
                         <td class="centreado">{{ $si->cantidad_fisica }}</td>
                     </tr>
                 @endforeach
                 <tr class="gray">
                     <th colspan="5">TOTAL</th>
                     <th>{{ $item->cantidad_total }}</th>
+                    <th>{{ $total_ajuste }}</th>
                     <th>{{ $item->solicitud_ingreso_detalles->sum('cantidad_fisica') }}</th>
                 </tr>
             </tbody>

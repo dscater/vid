@@ -245,10 +245,12 @@ class TransferenciaService
 
                 $this->ajuste_service->crear([
                     "sucursal_id" => $sucursal_ajuste->id,
-                    "sucursal_origen" => $transferencia->sucursal_id,
+                    "sucursal_origen" => $transferencia->sucursal_destino,
                     "producto_id" => $producto->id,
                     "cantidad" => $ajuste,
                     "motivo" => $item["motivo"],
+                    "tipo" => "TRANSFERENCIA",
+                    "registro_id" => $transferencia_detalle->id
                 ]);
             }
 

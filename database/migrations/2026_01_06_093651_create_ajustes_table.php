@@ -19,6 +19,8 @@ return new class extends Migration
             $table->double("cantidad", 8, 2);
             $table->string("motivo", 900);
             $table->string("estado", 300);
+            $table->string("tipo", 255);
+            $table->unsignedBigInteger("registro_id")->nullable();
             $table->date("fecha")->nullable();
             $table->timestamps();
 

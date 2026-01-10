@@ -233,6 +233,8 @@ class OrdenSalidaService
                     "producto_id" => $producto->id,
                     "cantidad" => $ajuste,
                     "motivo" => $item["motivo"],
+                    "tipo" => "ORDEN DE SALIDA",
+                    "registro_id" => $orden_salida_detalle->id
                 ]);
             }
         }

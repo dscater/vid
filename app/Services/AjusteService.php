@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Services\HistorialAccionService;
 use App\Models\Ajuste;
 use App\Models\Producto;
+use App\Models\Sucursal;
 use App\Models\User;
 use Exception;
 use Illuminate\Container\Attributes\Auth;
@@ -41,7 +42,8 @@ class AjusteService
     public function listadoPaginado(int $length, int $page, string $search, array $columnsSerachLike = [], array $columnsFilter = [], array $columnsBetweenFilter = [], array $orderBy = []): LengthAwarePaginator
     {
         $ajustes = Ajuste::select("ajustes.*")
-            ->with(["producto:id,codigo,nombre"]);
+            ->with(["producto:id,codigo,nombre", "sucursal", "oSucursalOrigen"])
+            ->join("productos", "productos.id", "=", "ajustes.producto_id");
 
         // Filtros exactos
         foreach ($columnsFilter as $key => $value) {
@@ -94,6 +96,8 @@ class AjusteService
             "cantidad" => $datos["cantidad"],
             "motivo" => $datos["motivo"],
             "estado" => "NO REPUESTO",
+            "tipo" => $datos["tipo"],
+            "registro_id" => $datos["registro_id"] ?? NULL,
             "fecha" => date("Y-m-d")
         ]);
         // registrar accion
@@ -116,6 +120,28 @@ class AjusteService
             "estado" => "REPUESTO",
         ]);
 
+        // verificar sucursal de reposición
+        $almacen = Sucursal::where("almacen", 1)->get()->first();
+        if ($ajuste->tipo == 'DEVOLUCION DE STOCK') {
+            if (!$almacen) {
+                throw new Exception("Error al actualizar el registro, no se encontró un Almacen");
+            }
+        }
+
+        if ($ajuste->tipo == 'SOLICITUD DE INGRESO') {
+            if (!$almacen) {
+                throw new Exception("Error al actualizar el registro, no se encontró un Almacen");
+            }
+        }
+
+        if ($ajuste->tipo == 'TRANSFERENCIA') {
+            $almacen = $ajuste->oSucursalOrigen;
+        }
+
+        if ($ajuste->tipo == 'ORDEN DE SALIDA') {
+            $almacen = $ajuste->oSucursalOrigen;
+        }
+
         $ajuste_reposicion = $this->ajuste_reposicion_service->crear([
             "ajuste_id" => $ajuste->id,
             "sucursal_id" => $datos["sucursal_origen"],
@@ -123,9 +149,17 @@ class AjusteService
             "cantidad" => $ajuste->cantidad,
         ]);
 
-        // INCREMENTAR STOCK DEL ALMACEN CANTIDAD FISISCA
+        // INCREMENTAR STOCK DEL ALMACEN CENTRAL CANTIDAD
         $producto = Producto::findOrFail($ajuste->producto_id);
-        $this->kardex_producto_service->registroIngreso($ajuste_reposicion->sucursal_id, "AJUSTE REPOSICIÓN", $producto, $ajuste->cantidad, $producto->precio, "INGRESO POR REPOSICIÓN DE AJUSTE", "AjusteReposicion", $ajuste_reposicion->id);
+        $this->kardex_producto_service->registroIngreso($almacen->id, "AJUSTE REPOSICIÓN", $producto, $ajuste->cantidad, $producto->precio, "INGRESO POR REPOSICIÓN DE AJUSTE", "AjusteReposicion", $ajuste_reposicion->id);
+
+        // DESCONTAR STOCK ALMACEN AJUSTE
+        $almacen_ajuste = Sucursal::where("almacen", 2)->get()->first();
+        if (!$almacen_ajuste) {
+            throw new Exception("Error al actualizar el registro, no se encontró un Almacen AJUSTES");
+        }
+
+        $this->kardex_producto_service->registroEgreso("AJUSTE REPOSICIÓN", $producto, $ajuste->cantidad, $producto->precio, "EGRESO POR REPOSICIÓN DE AJUSTE", $almacen_ajuste->id, "AjusteReposicion", $ajuste_reposicion->id);
 
         // registrar accion
         $this->historialAccionService->registrarAccion($this->modulo, "MODIFICACIÓN", "REPOSICIÓN DE PRODUCTO", $old_ajuste, $ajuste);

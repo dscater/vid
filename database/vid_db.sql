@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 07-01-2026 a las 18:58:14
+-- Tiempo de generación: 10-01-2026 a las 14:54:32
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.2.22
 
@@ -33,8 +33,10 @@ CREATE TABLE `ajustes` (
   `sucursal_origen` bigint UNSIGNED NOT NULL,
   `producto_id` bigint UNSIGNED NOT NULL,
   `cantidad` double NOT NULL,
-  `motivo` varchar(900) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `estado` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `motivo` varchar(900) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `registro_id` bigint UNSIGNED DEFAULT NULL,
   `fecha` date DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -44,8 +46,10 @@ CREATE TABLE `ajustes` (
 -- Volcado de datos para la tabla `ajustes`
 --
 
-INSERT INTO `ajustes` (`id`, `sucursal_id`, `sucursal_origen`, `producto_id`, `cantidad`, `motivo`, `estado`, `fecha`, `created_at`, `updated_at`) VALUES
-(1, 6, 2, 3, 1, 'POR FALTANTE DE PROVEEDOR', 'REPUESTO', '2026-01-06', '2026-01-06 13:46:15', '2026-01-06 14:14:40');
+INSERT INTO `ajustes` (`id`, `sucursal_id`, `sucursal_origen`, `producto_id`, `cantidad`, `motivo`, `estado`, `tipo`, `registro_id`, `fecha`, `created_at`, `updated_at`) VALUES
+(1, 6, 2, 3, 1, 'POR FALTANTE DE PROVEEDOR', 'REPUESTO', 'DEVOLUCION DE STOCK', 4, '2026-01-06', '2026-01-06 13:46:15', '2026-01-06 14:14:40'),
+(2, 6, 2, 3, 1, 'ROBO', 'REPUESTO', 'DEVOLUCION DE STOCK', 5, '2026-01-10', '2026-01-10 14:04:03', '2026-01-10 14:10:25'),
+(3, 6, 1, 3, 1, 'ROTURA', 'NO REPUESTO', 'SOLICITUD DE INGRESO', 25, '2026-01-10', '2026-01-10 14:15:27', '2026-01-10 14:15:27');
 
 -- --------------------------------------------------------
 
@@ -69,7 +73,8 @@ CREATE TABLE `ajuste_reposicions` (
 --
 
 INSERT INTO `ajuste_reposicions` (`id`, `ajuste_id`, `sucursal_id`, `producto_id`, `cantidad`, `fecha`, `created_at`, `updated_at`) VALUES
-(1, 1, 2, 3, 1, '2026-01-06', '2026-01-06 14:14:40', '2026-01-06 14:14:40');
+(1, 1, 2, 3, 1, '2026-01-06', '2026-01-06 14:14:40', '2026-01-06 14:14:40'),
+(2, 2, 2, 3, 1, '2026-01-10', '2026-01-10 14:10:25', '2026-01-10 14:10:25');
 
 -- --------------------------------------------------------
 
@@ -341,7 +346,8 @@ CREATE TABLE `devolucion_stocks` (
 INSERT INTO `devolucion_stocks` (`id`, `nro`, `codigo`, `sucursal_id`, `cantidad_total`, `total`, `cantidad_total_v`, `total_v`, `fecha`, `hora`, `observaciones`, `estado`, `user_id`, `verificado`, `user_ver`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (2, 1, 'DEV.1', 2, 6, 1935.00, 6, 1935.00, '2025-12-06', '11:08:00', '', 'APROBADO', 1, 1, 1, NULL, '2025-12-06 15:14:42', '2025-12-06 15:20:26'),
 (3, 2, 'DEV.2', 2, 1, 300.00, 1, 300.00, '2025-12-21', '07:12:00', '', 'APROBADO', 1, 1, 1, NULL, '2025-12-21 11:13:13', '2025-12-21 11:13:18'),
-(4, 3, 'DEV.3', 2, 5, 1500.00, 5, 1500.00, '2026-01-06', '09:33:00', '', 'APROBADO CON OBSERVACIONES', 1, 2, 1, NULL, '2026-01-06 13:33:04', '2026-01-06 13:46:15');
+(4, 3, 'DEV.3', 2, 5, 1500.00, 5, 1500.00, '2026-01-06', '09:33:00', '', 'APROBADO CON OBSERVACIONES', 1, 2, 1, NULL, '2026-01-06 13:33:04', '2026-01-06 13:46:15'),
+(5, 4, 'DEV.4', 2, 2, 600.00, 2, 600.00, '2026-01-10', '10:03:00', '', 'APROBADO CON OBSERVACIONES', 1, 2, 1, NULL, '2026-01-10 14:03:49', '2026-01-10 14:04:03');
 
 -- --------------------------------------------------------
 
@@ -372,7 +378,8 @@ INSERT INTO `devolucion_stock_detalles` (`id`, `devolucion_stock_id`, `producto_
 (1, 2, 3, 3, 3, 300.00, 900.00, 1, NULL, NULL, '2025-12-06 15:14:42', '2025-12-06 15:20:26'),
 (2, 2, 4, 3, 3, 345.00, 1035.00, 1, NULL, NULL, '2025-12-06 15:14:42', '2025-12-06 15:20:26'),
 (3, 3, 3, 1, 1, 300.00, 300.00, 1, NULL, NULL, '2025-12-21 11:13:13', '2025-12-21 11:13:18'),
-(4, 4, 3, 5, 4, 300.00, 1500.00, 1, NULL, 'POR FALTANTE DE PROVEEDOR', '2026-01-06 13:33:04', '2026-01-06 13:46:15');
+(4, 4, 3, 5, 4, 300.00, 1500.00, 1, NULL, 'POR FALTANTE DE PROVEEDOR', '2026-01-06 13:33:04', '2026-01-06 13:46:15'),
+(5, 5, 3, 2, 1, 300.00, 600.00, 1, NULL, 'ROBO', '2026-01-10 14:03:50', '2026-01-10 14:04:03');
 
 -- --------------------------------------------------------
 
@@ -777,7 +784,20 @@ INSERT INTO `historial_accions` (`id`, `user_id`, `accion`, `descripcion`, `dato
 (307, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ LA HORA DE GUARDADO DE STOCK DE SUCURSALES', '{\"id\": 1, \"valor1\": \"10:25:00\", \"valor2\": \"20:00:00\", \"created_at\": null, \"updated_at\": \"2026-01-07T14:22:57.000000Z\"}', '{\"id\": 1, \"valor1\": \"10:23\", \"valor2\": \"20:00:00\", \"created_at\": null, \"updated_at\": \"2026-01-07T14:23:45.000000Z\"}', 'PARAMETRO SUCURSALES', '2026-01-07', '10:23:45', '2026-01-07 14:23:45', '2026-01-07 14:23:45'),
 (308, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ LA HORA DE GUARDADO DE STOCK DE SUCURSALES', '{\"id\": 1, \"valor1\": \"10:23:00\", \"valor2\": \"20:00:00\", \"created_at\": null, \"updated_at\": \"2026-01-07T14:23:45.000000Z\"}', '{\"id\": 1, \"valor1\": \"10:27\", \"valor2\": \"20:00:00\", \"created_at\": null, \"updated_at\": \"2026-01-07T14:27:46.000000Z\"}', 'PARAMETRO SUCURSALES', '2026-01-07', '10:27:46', '2026-01-07 14:27:46', '2026-01-07 14:27:46'),
 (309, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ LA HORA DE GUARDADO DE STOCK DE SUCURSALES', '{\"id\": 1, \"valor1\": \"10:27:00\", \"valor2\": \"20:00:00\", \"created_at\": null, \"updated_at\": \"2026-01-07T14:27:46.000000Z\"}', '{\"id\": 1, \"valor1\": \"10:28\", \"valor2\": \"20:00:00\", \"created_at\": null, \"updated_at\": \"2026-01-07T14:28:03.000000Z\"}', 'PARAMETRO SUCURSALES', '2026-01-07', '10:28:03', '2026-01-07 14:28:03', '2026-01-07 14:28:03'),
-(310, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UN GASTO', '{\"id\": 2, \"hora\": \"14:35\", \"fecha\": \"2026-01-07\", \"monto\": \"1000\", \"created_at\": \"2026-01-07T18:35:48.000000Z\", \"updated_at\": \"2026-01-07T18:35:48.000000Z\", \"descripcion\": \"GASTO PRUEBA\"}', NULL, 'GASTOS', '2026-01-07', '14:35:48', '2026-01-07 18:35:48', '2026-01-07 18:35:48');
+(310, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UN GASTO', '{\"id\": 2, \"hora\": \"14:35\", \"fecha\": \"2026-01-07\", \"monto\": \"1000\", \"created_at\": \"2026-01-07T18:35:48.000000Z\", \"updated_at\": \"2026-01-07T18:35:48.000000Z\", \"descripcion\": \"GASTO PRUEBA\"}', NULL, 'GASTOS', '2026-01-07', '14:35:48', '2026-01-07 18:35:48', '2026-01-07 18:35:48'),
+(311, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA DEVOLUCIÓN DE STOCK', '{\"id\": 5, \"nro\": 4, \"hora\": \"10:03\", \"fecha\": \"2026-01-10\", \"total\": 600, \"codigo\": \"DEV.4\", \"estado\": \"PENDIENTE\", \"total_v\": 600, \"user_id\": 1, \"created_at\": \"2026-01-10T14:03:49.000000Z\", \"updated_at\": \"2026-01-10T14:03:49.000000Z\", \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 2, \"cantidad_total_v\": 2}', NULL, 'DEVOLUCIÓN DE STOCK', '2026-01-10', '10:03:50', '2026-01-10 14:03:50', '2026-01-10 14:03:50'),
+(312, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UN AJUSTE', '{\"id\": 2, \"tipo\": \"DEVOLUCION DE STOCK\", \"fecha\": \"2026-01-10\", \"estado\": \"NO REPUESTO\", \"motivo\": \"ROBO\", \"cantidad\": 1, \"created_at\": \"2026-01-10T14:04:03.000000Z\", \"updated_at\": \"2026-01-10T14:04:03.000000Z\", \"producto_id\": 3, \"registro_id\": 5, \"sucursal_id\": 6, \"sucursal_origen\": 2}', NULL, 'AJUSTES', '2026-01-10', '10:04:03', '2026-01-10 14:04:03', '2026-01-10 14:04:03'),
+(313, 1, 'MODIFICACIÓN', 'EL USUARIO admin APROBO UNA DEVOLUCIÓN DE STOCK', '{\"id\": 5, \"nro\": 4, \"hora\": \"10:03:00\", \"fecha\": \"2026-01-10\", \"total\": \"600.00\", \"codigo\": \"DEV.4\", \"estado\": \"PENDIENTE\", \"total_v\": \"600.00\", \"user_id\": 1, \"user_ver\": null, \"created_at\": \"2026-01-10T14:03:49.000000Z\", \"deleted_at\": null, \"updated_at\": \"2026-01-10T14:03:49.000000Z\", \"verificado\": 0, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 2, \"cantidad_total_v\": 2, \"devolucion_stock_detalles\": [{\"id\": 5, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 2, \"subtotal\": \"600.00\", \"created_at\": \"2026-01-10T14:03:50.000000Z\", \"updated_at\": \"2026-01-10T14:03:50.000000Z\", \"verificado\": 0, \"producto_id\": 3, \"cantidad_fisica\": 2, \"sucursal_ajuste\": null, \"devolucion_stock_id\": 5}]}', '{\"id\": 5, \"nro\": 4, \"hora\": \"10:03:00\", \"fecha\": \"2026-01-10\", \"total\": \"600.00\", \"codigo\": \"DEV.4\", \"estado\": \"APROBADO CON OBSERVACIONES\", \"total_v\": \"600.00\", \"user_id\": 1, \"user_ver\": 1, \"created_at\": \"2026-01-10T14:03:49.000000Z\", \"deleted_at\": null, \"updated_at\": \"2026-01-10T14:04:03.000000Z\", \"verificado\": 2, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 2, \"cantidad_total_v\": 2, \"devolucion_stock_detalles\": [{\"id\": 5, \"costo\": \"300.00\", \"motivo\": \"ROBO\", \"cantidad\": 2, \"subtotal\": \"600.00\", \"created_at\": \"2026-01-10T14:03:50.000000Z\", \"updated_at\": \"2026-01-10T14:04:03.000000Z\", \"verificado\": 1, \"producto_id\": 3, \"cantidad_fisica\": 1, \"sucursal_ajuste\": null, \"devolucion_stock_id\": 5}]}', 'DEVOLUCIÓN DE STOCK', '2026-01-10', '10:04:03', '2026-01-10 14:04:03', '2026-01-10 14:04:03'),
+(314, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA REPOSICIÓN', '{\"id\": 2, \"fecha\": \"2026-01-10\", \"cantidad\": 1, \"ajuste_id\": 2, \"created_at\": \"2026-01-10T14:10:25.000000Z\", \"updated_at\": \"2026-01-10T14:10:25.000000Z\", \"producto_id\": 3, \"sucursal_id\": 2}', NULL, 'AJUSTES REPOSICIÓN', '2026-01-10', '10:10:25', '2026-01-10 14:10:25', '2026-01-10 14:10:25'),
+(315, 1, 'MODIFICACIÓN', 'EL USUARIO admin REPOSICIÓN DE PRODUCTO', '{\"id\": 2, \"tipo\": \"DEVOLUCION DE STOCK\", \"fecha\": \"2026-01-10\", \"estado\": \"NO REPUESTO\", \"motivo\": \"ROBO\", \"cantidad\": 1, \"created_at\": \"2026-01-10T14:04:03.000000Z\", \"updated_at\": \"2026-01-10T14:04:03.000000Z\", \"producto_id\": 3, \"registro_id\": 5, \"sucursal_id\": 6, \"sucursal_origen\": 2}', '{\"id\": 2, \"tipo\": \"DEVOLUCION DE STOCK\", \"fecha\": \"2026-01-10\", \"estado\": \"REPUESTO\", \"motivo\": \"ROBO\", \"cantidad\": 1, \"created_at\": \"2026-01-10T14:04:03.000000Z\", \"updated_at\": \"2026-01-10T14:10:25.000000Z\", \"producto_id\": 3, \"registro_id\": 5, \"sucursal_id\": 6, \"sucursal_origen\": 2}', 'AJUSTES', '2026-01-10', '10:10:25', '2026-01-10 14:10:25', '2026-01-10 14:10:25'),
+(316, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA SOLICITUD DE INGRESO', '{\"id\": 12, \"nro\": 12, \"cs_f\": \"CON FATURA\", \"total\": 600, \"codigo\": \"SOL.12\", \"estado\": \"PENDIENTE\", \"gastos\": 0, \"user_id\": 1, \"hora_sis\": \"10:10\", \"fecha_sis\": \"2026-01-10\", \"created_at\": \"2026-01-10T14:10:57.000000Z\", \"updated_at\": \"2026-01-10T14:10:57.000000Z\", \"descripcion\": \"\", \"tipo_cambio\": 6.98, \"hora_ingreso\": \"10:10\", \"proveedor_id\": 1, \"fecha_ingreso\": \"2026-01-10\", \"observaciones\": \"\", \"cantidad_total\": 2}', NULL, 'SOLICITUD DE INGRESO', '2026-01-10', '10:10:57', '2026-01-10 14:10:57', '2026-01-10 14:10:57'),
+(317, 1, 'MODIFICACIÓN', 'EL USUARIO admin APROBO UNA SOLICITUD DE INGRESO', '{\"id\": 12, \"nro\": 12, \"cs_f\": \"CON FATURA\", \"total\": \"600.00\", \"codigo\": \"SOL.12\", \"estado\": \"PENDIENTE\", \"gastos\": \"0.00\", \"user_id\": 1, \"hora_sis\": \"10:10:00\", \"fecha_sis\": \"2026-01-10\", \"created_at\": \"2026-01-10T14:10:57.000000Z\", \"deleted_at\": null, \"updated_at\": \"2026-01-10T14:10:57.000000Z\", \"verificado\": 0, \"descripcion\": \"\", \"tipo_cambio\": \"6.98\", \"hora_ingreso\": \"10:10:00\", \"proveedor_id\": 1, \"fecha_ingreso\": \"2026-01-10\", \"observaciones\": \"\", \"cantidad_total\": 2, \"solicitud_ingreso_detalles\": [{\"id\": 24, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 2, \"subtotal\": \"600.00\", \"calculado\": \"0.00\", \"created_at\": \"2026-01-10T14:10:57.000000Z\", \"updated_at\": \"2026-01-10T14:10:57.000000Z\", \"verificado\": 0, \"producto_id\": 3, \"pc_facturado\": \"0.00\", \"cantidad_fisica\": 2, \"costo_facturado\": \"0.00\", \"sucursal_ajuste\": null, \"solicitud_ingreso_id\": 12}]}', '{\"id\": 12, \"nro\": 12, \"cs_f\": \"CON FATURA\", \"total\": \"600.00\", \"codigo\": \"SOL.12\", \"estado\": \"APROBADO\", \"gastos\": \"0.00\", \"user_id\": 1, \"hora_sis\": \"10:10:00\", \"fecha_sis\": \"2026-01-10\", \"created_at\": \"2026-01-10T14:10:57.000000Z\", \"deleted_at\": null, \"updated_at\": \"2026-01-10T14:11:07.000000Z\", \"verificado\": 1, \"descripcion\": \"\", \"tipo_cambio\": \"6.98\", \"hora_ingreso\": \"10:10:00\", \"proveedor_id\": 1, \"fecha_ingreso\": \"2026-01-10\", \"observaciones\": \"\", \"cantidad_total\": 2, \"solicitud_ingreso_detalles\": [{\"id\": 24, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 2, \"subtotal\": \"600.00\", \"calculado\": \"0.00\", \"created_at\": \"2026-01-10T14:10:57.000000Z\", \"updated_at\": \"2026-01-10T14:11:07.000000Z\", \"verificado\": 1, \"producto_id\": 3, \"pc_facturado\": \"0.00\", \"cantidad_fisica\": 2, \"costo_facturado\": \"0.00\", \"sucursal_ajuste\": null, \"solicitud_ingreso_id\": 12}]}', 'SOLICITUD DE INGRESO', '2026-01-10', '10:11:07', '2026-01-10 14:11:07', '2026-01-10 14:11:07'),
+(318, 1, 'MODIFICACIÓN', 'EL USUARIO admin APROBO LOS COSTOS DE UNA SOLICITUD DE INGRESO', '{\"id\": 12, \"nro\": 12, \"cs_f\": \"CON FATURA\", \"total\": \"600.00\", \"codigo\": \"SOL.12\", \"estado\": \"APROBADO\", \"gastos\": \"0.00\", \"user_id\": 1, \"hora_sis\": \"10:10:00\", \"fecha_sis\": \"2026-01-10\", \"created_at\": \"2026-01-10T14:10:57.000000Z\", \"deleted_at\": null, \"updated_at\": \"2026-01-10T14:11:07.000000Z\", \"verificado\": 1, \"descripcion\": \"\", \"tipo_cambio\": \"6.98\", \"hora_ingreso\": \"10:10:00\", \"proveedor_id\": 1, \"fecha_ingreso\": \"2026-01-10\", \"observaciones\": \"\", \"cantidad_total\": 2, \"solicitud_ingreso_detalles\": [{\"id\": 24, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 2, \"subtotal\": \"600.00\", \"calculado\": \"0.00\", \"created_at\": \"2026-01-10T14:10:57.000000Z\", \"updated_at\": \"2026-01-10T14:11:07.000000Z\", \"verificado\": 1, \"producto_id\": 3, \"pc_facturado\": \"0.00\", \"cantidad_fisica\": 2, \"costo_facturado\": \"0.00\", \"sucursal_ajuste\": null, \"solicitud_ingreso_id\": 12}]}', '{\"id\": 12, \"nro\": 12, \"cs_f\": \"CON FATURA\", \"total\": 580, \"codigo\": \"SOL.12\", \"estado\": \"APROBADO\", \"gastos\": \"0.00\", \"user_id\": 1, \"hora_sis\": \"10:10:00\", \"fecha_sis\": \"2026-01-10\", \"created_at\": \"2026-01-10T14:10:57.000000Z\", \"deleted_at\": null, \"updated_at\": \"2026-01-10T14:11:33.000000Z\", \"verificado\": 3, \"descripcion\": \"\", \"tipo_cambio\": \"6.98\", \"hora_ingreso\": \"10:10:00\", \"proveedor_id\": 1, \"fecha_ingreso\": \"2026-01-10\", \"observaciones\": \"\", \"cantidad_total\": 2, \"solicitud_ingreso_detalles\": [{\"id\": 24, \"costo\": \"290.00\", \"motivo\": null, \"cantidad\": 2, \"subtotal\": \"580.00\", \"calculado\": \"281.90\", \"created_at\": \"2026-01-10T14:10:57.000000Z\", \"updated_at\": \"2026-01-10T14:11:33.000000Z\", \"verificado\": 3, \"producto_id\": 3, \"pc_facturado\": \"8.10\", \"cantidad_fisica\": 2, \"costo_facturado\": \"270.00\", \"sucursal_ajuste\": null, \"solicitud_ingreso_id\": 12}]}', 'SOLICITUD DE INGRESO', '2026-01-10', '10:11:33', '2026-01-10 14:11:33', '2026-01-10 14:11:33'),
+(319, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA SOLICITUD DE INGRESO', '{\"id\": 13, \"nro\": 13, \"cs_f\": \"CON FATURA\", \"total\": 1500, \"codigo\": \"SOL.13\", \"estado\": \"PENDIENTE\", \"gastos\": 0, \"user_id\": 1, \"hora_sis\": \"10:11\", \"fecha_sis\": \"2026-01-10\", \"created_at\": \"2026-01-10T14:11:58.000000Z\", \"updated_at\": \"2026-01-10T14:11:58.000000Z\", \"descripcion\": \"\", \"tipo_cambio\": 6.98, \"hora_ingreso\": \"10:11\", \"proveedor_id\": 1, \"fecha_ingreso\": \"2026-01-10\", \"observaciones\": \"\", \"cantidad_total\": 5}', NULL, 'SOLICITUD DE INGRESO', '2026-01-10', '10:11:58', '2026-01-10 14:11:58', '2026-01-10 14:11:58');
+INSERT INTO `historial_accions` (`id`, `user_id`, `accion`, `descripcion`, `datos_original`, `datos_nuevo`, `modulo`, `fecha`, `hora`, `created_at`, `updated_at`) VALUES
+(320, 1, 'MODIFICACIÓN', 'EL USUARIO admin APROBO UNA SOLICITUD DE INGRESO', '{\"id\": 13, \"nro\": 13, \"cs_f\": \"CON FATURA\", \"total\": \"1500.00\", \"codigo\": \"SOL.13\", \"estado\": \"PENDIENTE\", \"gastos\": \"0.00\", \"user_id\": 1, \"hora_sis\": \"10:11:00\", \"fecha_sis\": \"2026-01-10\", \"created_at\": \"2026-01-10T14:11:58.000000Z\", \"deleted_at\": null, \"updated_at\": \"2026-01-10T14:11:58.000000Z\", \"verificado\": 0, \"descripcion\": \"\", \"tipo_cambio\": \"6.98\", \"hora_ingreso\": \"10:11:00\", \"proveedor_id\": 1, \"fecha_ingreso\": \"2026-01-10\", \"observaciones\": \"\", \"cantidad_total\": 5, \"solicitud_ingreso_detalles\": [{\"id\": 25, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 5, \"subtotal\": \"1500.00\", \"calculado\": \"0.00\", \"created_at\": \"2026-01-10T14:11:58.000000Z\", \"updated_at\": \"2026-01-10T14:11:58.000000Z\", \"verificado\": 0, \"producto_id\": 3, \"pc_facturado\": \"0.00\", \"cantidad_fisica\": 5, \"costo_facturado\": \"0.00\", \"sucursal_ajuste\": null, \"solicitud_ingreso_id\": 13}]}', '{\"id\": 13, \"nro\": 13, \"cs_f\": \"CON FATURA\", \"total\": \"1500.00\", \"codigo\": \"SOL.13\", \"estado\": \"APROBADO CON OBSERVACIONES\", \"gastos\": \"0.00\", \"user_id\": 1, \"hora_sis\": \"10:11:00\", \"fecha_sis\": \"2026-01-10\", \"created_at\": \"2026-01-10T14:11:58.000000Z\", \"deleted_at\": null, \"updated_at\": \"2026-01-10T14:12:39.000000Z\", \"verificado\": 2, \"descripcion\": \"\", \"tipo_cambio\": \"6.98\", \"hora_ingreso\": \"10:11:00\", \"proveedor_id\": 1, \"fecha_ingreso\": \"2026-01-10\", \"observaciones\": \"\", \"cantidad_total\": 5, \"solicitud_ingreso_detalles\": [{\"id\": 25, \"costo\": \"300.00\", \"motivo\": \"ROTURA\", \"cantidad\": 5, \"subtotal\": \"1200.00\", \"calculado\": \"0.00\", \"created_at\": \"2026-01-10T14:11:58.000000Z\", \"updated_at\": \"2026-01-10T14:12:39.000000Z\", \"verificado\": 1, \"producto_id\": 3, \"pc_facturado\": \"0.00\", \"cantidad_fisica\": 4, \"costo_facturado\": \"0.00\", \"sucursal_ajuste\": null, \"solicitud_ingreso_id\": 13}]}', 'SOLICITUD DE INGRESO', '2026-01-10', '10:12:39', '2026-01-10 14:12:39', '2026-01-10 14:12:39'),
+(321, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UN AJUSTE', '{\"id\": 3, \"tipo\": \"SOLICITUD DE INGRESO\", \"fecha\": \"2026-01-10\", \"estado\": \"NO REPUESTO\", \"motivo\": \"ROTURA\", \"cantidad\": 1, \"created_at\": \"2026-01-10T14:15:27.000000Z\", \"updated_at\": \"2026-01-10T14:15:27.000000Z\", \"producto_id\": 3, \"registro_id\": 25, \"sucursal_id\": 6, \"sucursal_origen\": 1}', NULL, 'AJUSTES', '2026-01-10', '10:15:27', '2026-01-10 14:15:27', '2026-01-10 14:15:27'),
+(322, 1, 'MODIFICACIÓN', 'EL USUARIO admin APROBO LOS COSTOS DE UNA SOLICITUD DE INGRESO', '{\"id\": 13, \"nro\": 13, \"cs_f\": \"CON FATURA\", \"total\": \"1500.00\", \"codigo\": \"SOL.13\", \"estado\": \"APROBADO CON OBSERVACIONES\", \"gastos\": \"0.00\", \"user_id\": 1, \"hora_sis\": \"10:11:00\", \"fecha_sis\": \"2026-01-10\", \"created_at\": \"2026-01-10T14:11:58.000000Z\", \"deleted_at\": null, \"updated_at\": \"2026-01-10T14:12:39.000000Z\", \"verificado\": 2, \"descripcion\": \"\", \"tipo_cambio\": \"6.98\", \"hora_ingreso\": \"10:11:00\", \"proveedor_id\": 1, \"fecha_ingreso\": \"2026-01-10\", \"observaciones\": \"\", \"cantidad_total\": 5, \"solicitud_ingreso_detalles\": [{\"id\": 25, \"costo\": \"300.00\", \"motivo\": \"ROTURA\", \"cantidad\": 5, \"subtotal\": \"1200.00\", \"calculado\": \"0.00\", \"created_at\": \"2026-01-10T14:11:58.000000Z\", \"updated_at\": \"2026-01-10T14:12:39.000000Z\", \"verificado\": 1, \"producto_id\": 3, \"pc_facturado\": \"0.00\", \"cantidad_fisica\": 4, \"costo_facturado\": \"0.00\", \"sucursal_ajuste\": null, \"solicitud_ingreso_id\": 13}]}', '{\"id\": 13, \"nro\": 13, \"cs_f\": \"CON FATURA\", \"total\": \"1500.00\", \"codigo\": \"SOL.13\", \"estado\": \"APROBADO CON OBSERVACIONES\", \"gastos\": \"0.00\", \"user_id\": 1, \"hora_sis\": \"10:11:00\", \"fecha_sis\": \"2026-01-10\", \"created_at\": \"2026-01-10T14:11:58.000000Z\", \"deleted_at\": null, \"updated_at\": \"2026-01-10T14:15:27.000000Z\", \"verificado\": 3, \"descripcion\": \"\", \"tipo_cambio\": \"6.98\", \"hora_ingreso\": \"10:11:00\", \"proveedor_id\": 1, \"fecha_ingreso\": \"2026-01-10\", \"observaciones\": \"\", \"cantidad_total\": 5, \"solicitud_ingreso_detalles\": [{\"id\": 25, \"costo\": \"300.00\", \"motivo\": \"ROTURA\", \"cantidad\": 5, \"subtotal\": \"1200.00\", \"calculado\": \"291.30\", \"created_at\": \"2026-01-10T14:11:58.000000Z\", \"updated_at\": \"2026-01-10T14:15:27.000000Z\", \"verificado\": 3, \"producto_id\": 3, \"pc_facturado\": \"8.70\", \"cantidad_fisica\": 4, \"costo_facturado\": \"290.00\", \"sucursal_ajuste\": null, \"solicitud_ingreso_id\": 13}]}', 'SOLICITUD DE INGRESO', '2026-01-10', '10:15:27', '2026-01-10 14:15:27', '2026-01-10 14:15:27');
 
 -- --------------------------------------------------------
 
@@ -867,7 +887,8 @@ INSERT INTO `jobs` (`id`, `queue`, `payload`, `attempts`, `reserved_at`, `availa
 (87, 'default', '{\"uuid\":\"695cee53-ee49-44a0-a677-5ba1ccc60f67\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1766440677, 1766440677),
 (88, 'default', '{\"uuid\":\"476e73e6-c2a1-4c0a-a297-bef2b7077943\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1767792661, 1767792661),
 (89, 'default', '{\"uuid\":\"762b6081-e00a-402f-9bc0-93f23bb533f6\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1767806269, 1767806269),
-(90, 'default', '{\"uuid\":\"3a6966f7-3764-4c6f-b001-01b765ec22a2\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1767810953, 1767810953);
+(90, 'default', '{\"uuid\":\"3a6966f7-3764-4c6f-b001-01b765ec22a2\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1767810953, 1767810953),
+(91, 'default', '{\"uuid\":\"5935afbc-9763-4162-9155-3de0f1c0f86a\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1768056419, 1768056419);
 
 -- --------------------------------------------------------
 
@@ -1042,7 +1063,15 @@ INSERT INTO `kardex_productos` (`id`, `sucursal_id`, `tipo_registro`, `registro_
 (158, 6, 'DEVOLUCIÓN DE STOCK', 4, 'DevolucionStockDetalle', 3, 'INGRESO POR AJUSTE', 300.00, 'INGRESO', 1, NULL, 1, 300.00, 300.00, NULL, 300.00, '2026-01-06', 1, 1, '2026-01-06 13:46:15', '2026-01-06 13:46:15'),
 (159, 1, 'SOLICITUD INGRESO', 21, 'SolicitudIngresoDetalle', 3, 'INGRESO POR SOLICITUD', 300.00, 'INGRESO', 20, NULL, 168, 300.00, 6000.00, NULL, 47642.00, '2026-01-06', 1, 1, '2026-01-06 20:06:34', '2026-01-06 20:06:34'),
 (160, 1, 'SOLICITUD INGRESO', 22, 'SolicitudIngresoDetalle', 4, 'INGRESO POR SOLICITUD', 345.00, 'INGRESO', 20, NULL, 150, 345.00, 6900.00, NULL, 49515.00, '2026-01-06', 1, 1, '2026-01-06 20:06:34', '2026-01-06 20:06:34'),
-(161, 1, 'SOLICITUD INGRESO', 23, 'SolicitudIngresoDetalle', 5, 'INGRESO POR SOLICITUD', 97.00, 'INGRESO', 20, NULL, 82, 97.00, 1940.00, NULL, 7730.00, '2026-01-06', 1, 1, '2026-01-06 20:06:34', '2026-01-06 20:06:34');
+(161, 1, 'SOLICITUD INGRESO', 23, 'SolicitudIngresoDetalle', 5, 'INGRESO POR SOLICITUD', 97.00, 'INGRESO', 20, NULL, 82, 97.00, 1940.00, NULL, 7730.00, '2026-01-06', 1, 1, '2026-01-06 20:06:34', '2026-01-06 20:06:34'),
+(162, 2, 'DEVOLUCIÓN DE STOCK', 5, 'DevolucionStockDetalle', 3, 'EGRESO POR DEVOLUCIÓN DE STOCK', 300.00, 'EGRESO', NULL, 1, 74, 300.00, NULL, 300.00, 22140.00, '2026-01-10', 1, 1, '2026-01-10 14:04:03', '2026-01-10 14:04:03'),
+(163, 1, 'DEVOLUCIÓN DE STOCK', 5, 'DevolucionStockDetalle', 3, 'INGRESO POR DEVOLUCIÓN DE STOCK', 300.00, 'INGRESO', 1, NULL, 169, 300.00, 300.00, NULL, 47942.00, '2026-01-10', 1, 1, '2026-01-10 14:04:03', '2026-01-10 14:04:03'),
+(164, 6, 'DEVOLUCIÓN DE STOCK', 5, 'DevolucionStockDetalle', 3, 'INGRESO POR AJUSTE', 300.00, 'INGRESO', 1, NULL, 2, 300.00, 300.00, NULL, 600.00, '2026-01-10', 1, 1, '2026-01-10 14:04:03', '2026-01-10 14:04:03'),
+(165, 1, 'AJUSTE REPOSICIÓN', 2, 'AjusteReposicion', 3, 'INGRESO POR REPOSICIÓN DE AJUSTE', 300.00, 'INGRESO', 1, NULL, 170, 300.00, 300.00, NULL, 48242.00, '2026-01-10', 1, 1, '2026-01-10 14:10:25', '2026-01-10 14:10:25'),
+(166, 6, 'AJUSTE REPOSICIÓN', 2, 'AjusteReposicion', 3, 'EGRESO POR REPOSICIÓN DE AJUSTE', 300.00, 'EGRESO', NULL, 1, 1, 300.00, NULL, 300.00, 300.00, '2026-01-10', 1, 1, '2026-01-10 14:10:25', '2026-01-10 14:10:25'),
+(167, 1, 'SOLICITUD INGRESO', 24, 'SolicitudIngresoDetalle', 3, 'INGRESO POR SOLICITUD', 290.00, 'INGRESO', 2, NULL, 172, 300.00, 580.00, NULL, 48822.00, '2026-01-10', 1, 1, '2026-01-10 14:11:33', '2026-01-10 14:11:33'),
+(170, 1, 'SOLICITUD INGRESO', 25, 'SolicitudIngresoDetalle', 3, 'INGRESO POR SOLICITUD', 300.00, 'INGRESO', 4, NULL, 176, 300.00, 1200.00, NULL, 50022.00, '2026-01-10', 1, 1, '2026-01-10 14:15:27', '2026-01-10 14:15:27'),
+(171, 6, 'SOLICITUD INGRESO', 25, 'SolicitudIngresoDetalle', 3, 'INGRESO POR AJUSTE', 300.00, 'INGRESO', 1, NULL, 2, 300.00, 300.00, NULL, 600.00, '2026-01-10', 1, 1, '2026-01-10 14:15:27', '2026-01-10 14:15:27');
 
 -- --------------------------------------------------------
 
@@ -1152,113 +1181,114 @@ CREATE TABLE `modulos` (
 --
 
 INSERT INTO `modulos` (`id`, `modulo`, `nombre`, `accion`, `descripcion`, `created_at`, `updated_at`) VALUES
-(1, 'Gestión de usuarios', 'usuarios.index', 'VER', 'VER LA LISTA DE USUARIOS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(2, 'Gestión de usuarios', 'usuarios.create', 'CREAR', 'CREAR USUARIOS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(3, 'Gestión de usuarios', 'usuarios.edit', 'EDITAR', 'EDITAR USUARIOS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(4, 'Gestión de usuarios', 'usuarios.destroy', 'ELIMINAR', 'ELIMINAR USUARIOS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(5, 'Roles y Permisos', 'roles.index', 'VER', 'VER LA LISTA DE ROLES Y PERMISOS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(6, 'Roles y Permisos', 'roles.create', 'CREAR', 'CREAR ROLES Y PERMISOS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(7, 'Roles y Permisos', 'roles.edit', 'EDITAR', 'EDITAR ROLES Y PERMISOS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(8, 'Roles y Permisos', 'roles.destroy', 'ELIMINAR', 'ELIMINAR ROLES Y PERMISOS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(9, 'Configuración', 'configuracions.index', 'VER', 'VER INFORMACIÓN DE LA CONFIGURACIÓN DEL SISTEMA', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(10, 'Configuración', 'configuracions.edit', 'EDITAR', 'EDITAR LA CONFIGURACIÓN DEL SISTEMA', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(11, 'Sucursales', 'sucursals.index', 'VER', 'VER LA LISTA DE SUCURSALES', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(12, 'Sucursales', 'sucursals.create', 'CREAR', 'CREAR SUCURSALES', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(13, 'Sucursales', 'sucursals.edit', 'EDITAR', 'EDITAR SUCURSALES', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(14, 'Sucursales', 'sucursals.destroy', 'ELIMINAR', 'ELIMINAR SUCURSALES', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(15, 'Productos Sucursal', 'sucursal_productos.index', 'VER', 'VER LA LISTA DE PRODUCTOS DE SUCURSAL', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(16, 'Productos Sucursal', 'sucursal_productos.edit', 'EDITAR', 'EDITAR PRODUCTOS DE SUCURSAL', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(17, 'Categorías', 'categorias.index', 'VER', 'VER LA LISTA DE CATEGORÍAS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(18, 'Categorías', 'categorias.create', 'CREAR', 'CREAR CATEGORÍAS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(19, 'Categorías', 'categorias.edit', 'EDITAR', 'EDITAR CATEGORÍAS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(20, 'Categorías', 'categorias.destroy', 'ELIMINAR', 'ELIMINAR CATEGORÍAS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(21, 'Subcategorías', 'sub_categorias.index', 'VER', 'VER LA LISTA DE SUBCATEGORÍAS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(22, 'Subcategorías', 'sub_categorias.create', 'CREAR', 'CREAR SUBCATEGORÍAS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(23, 'Subcategorías', 'sub_categorias.edit', 'EDITAR', 'EDITAR SUBCATEGORÍAS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(24, 'Subcategorías', 'sub_categorias.destroy', 'ELIMINAR', 'ELIMINAR SUBCATEGORÍAS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(25, 'Marcas', 'marcas.index', 'VER', 'VER LA LISTA DE MARCAS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(26, 'Marcas', 'marcas.create', 'CREAR', 'CREAR MARCAS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(27, 'Marcas', 'marcas.edit', 'EDITAR', 'EDITAR MARCAS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(28, 'Marcas', 'marcas.destroy', 'ELIMINAR', 'ELIMINAR MARCAS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(29, 'Unidades de Medida', 'unidad_medidas.index', 'VER', 'VER LA LISTA DE UNIDADES DE MEDIDA', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(30, 'Unidades de Medida', 'unidad_medidas.create', 'CREAR', 'CREAR UNIDADES DE MEDIDA', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(31, 'Unidades de Medida', 'unidad_medidas.edit', 'EDITAR', 'EDITAR UNIDADES DE MEDIDA', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(32, 'Unidades de Medida', 'unidad_medidas.destroy', 'ELIMINAR', 'ELIMINAR UNIDADES DE MEDIDA', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(33, 'Productos', 'productos.index', 'VER', 'VER LA LISTA DE PRODUCTOS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(34, 'Productos', 'productos.create', 'CREAR', 'CREAR PRODUCTOS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(35, 'Productos', 'productos.edit', 'EDITAR', 'EDITAR PRODUCTOS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(36, 'Productos', 'productos.destroy', 'ELIMINAR', 'ELIMINAR PRODUCTOS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(37, 'Clientes', 'clientes.index', 'VER', 'VER LA LISTA DE CLIENTES', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(38, 'Clientes', 'clientes.create', 'CREAR', 'CREAR CLIENTES', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(39, 'Clientes', 'clientes.edit', 'EDITAR', 'EDITAR CLIENTES', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(40, 'Clientes', 'clientes.destroy', 'ELIMINAR', 'ELIMINAR CLIENTES', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(41, 'Clientes', 'clientes.parametro_clientes', 'EDITAR PARAMETROS', 'EDITAR LOS PARAMETROS PARA EL CÁLCULO DE RANKING', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(42, 'Proveedores', 'proveedors.index', 'VER', 'VER LA LISTA DE PROVEEDORES', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(43, 'Proveedores', 'proveedors.create', 'CREAR', 'CREAR PROVEEDORES', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(44, 'Proveedores', 'proveedors.edit', 'EDITAR', 'EDITAR PROVEEDORES', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(45, 'Proveedores', 'proveedors.destroy', 'ELIMINAR', 'ELIMINAR PROVEEDORES', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(46, 'Solicitud de Ingresos', 'solicitud_ingresos.index', 'VER', 'VER LA LISTA DE SOLICITUD DE INGRESOS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(47, 'Solicitud de Ingresos', 'solicitud_ingresos.create', 'CREAR', 'CREAR SOLICITUD DE INGRESOS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(48, 'Solicitud de Ingresos', 'solicitud_ingresos.edit', 'EDITAR', 'EDITAR SOLICITUD DE INGRESOS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(49, 'Solicitud de Ingresos', 'solicitud_ingresos.aprobar', 'APROBAR', 'APROBAR SOLICITUD DE INGRESOS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(50, 'Solicitud de Ingresos', 'solicitud_ingresos.aprobar_costos', 'APROBAR COSTOS', 'APROBAR COSTOS SOLICITUD DE INGRESOS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(51, 'Solicitud de Ingresos', 'solicitud_ingresos.destroy', 'ELIMINAR', 'ELIMINAR SOLICITUD DE INGRESOS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(52, 'Ordenes de Salida', 'orden_salidas.index', 'VER', 'VER LA LISTA DE ORDENES DE SALIDA', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(53, 'Ordenes de Salida', 'orden_salidas.create', 'CREAR', 'CREAR ORDENES DE SALIDA', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(54, 'Ordenes de Salida', 'orden_salidas.edit', 'EDITAR', 'EDITAR ORDENES DE SALIDA', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(55, 'Ordenes de Salida', 'orden_salidas.aprobar', 'APROBAR', 'APROBAR ORDENES DE SALIDA', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(56, 'Ordenes de Salida', 'orden_salidas.destroy', 'ELIMINAR', 'ELIMINAR ORDENES DE SALIDA', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(57, 'Devolución de Stock', 'devolucion_stocks.index', 'VER', 'VER LA LISTA DE DEVOLUCIÓN DE STOCK', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(58, 'Devolución de Stock', 'devolucion_stocks.create', 'CREAR', 'CREAR DEVOLUCIÓN DE STOCK', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(59, 'Devolución de Stock', 'devolucion_stocks.edit', 'EDITAR', 'EDITAR DEVOLUCIÓN DE STOCK', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(60, 'Devolución de Stock', 'devolucion_stocks.aprobar', 'APROBAR', 'APROBAR DEVOLUCIÓN DE STOCK', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(61, 'Devolución de Stock', 'devolucion_stocks.destroy', 'ELIMINAR', 'ELIMINAR DEVOLUCIÓN DE STOCK', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(62, 'Ordenes de Venta', 'orden_ventas.index', 'VER', 'VER LA LISTA DE ORDENDES DE VENTA', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(63, 'Ordenes de Venta', 'orden_ventas.create', 'CREAR', 'CREAR ORDENDES DE VENTA', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(64, 'Ordenes de Venta', 'orden_ventas.edit', 'EDITAR', 'EDITAR ORDENDES DE VENTA', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(65, 'Ordenes de Venta', 'orden_ventas.aprobar_descuentos', 'APROBAR DESCUENTOS', 'APROBAR DESCUENTOS ORDENDES DE VENTA', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(66, 'Ordenes de Venta', 'orden_ventas.destroy', 'ELIMINAR', 'ELIMINAR ORDENDES DE VENTA', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(67, 'Transferencias de Stock', 'transferencias.index', 'VER', 'VER LA LISTA DE TRANSFERENCIAS DE STOCK', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(68, 'Transferencias de Stock', 'transferencias.create', 'CREAR', 'CREAR TRANSFERENCIAS DE STOCK', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(69, 'Transferencias de Stock', 'transferencias.edit', 'EDITAR', 'EDITAR TRANSFERENCIAS DE STOCK', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(70, 'Transferencias de Stock', 'transferencias.aprobar', 'APROBAR', 'APROBAR TRANSFERENCIAS DE STOCK', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(71, 'Transferencias de Stock', 'transferencias.destroy', 'ELIMINAR', 'ELIMINAR TRANSFERENCIAS DE STOCK', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(72, 'Devolución de Clientes', 'devolucion_clientes.index', 'VER', 'VER LA LISTA DE DEVOLUCIÓN DE CLIENTES', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(73, 'Devolución de Clientes', 'devolucion_clientes.create', 'CREAR', 'CREAR DEVOLUCIÓN DE CLIENTES', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(74, 'Devolución de Clientes', 'devolucion_clientes.edit', 'EDITAR', 'EDITAR DEVOLUCIÓN DE CLIENTES', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(75, 'Devolución de Clientes', 'devolucion_clientes.destroy', 'ELIMINAR', 'ELIMINAR DEVOLUCIÓN DE CLIENTES', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(76, 'Cuentas por Cobrar', 'cuenta_cobrars.index', 'VER', 'VER LA LISTA DE CUENTAS POR COBRAR', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(77, 'Cuentas por Cobrar', 'cuenta_cobrars.create', 'CREAR', 'CREAR CUENTAS POR COBRAR', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(78, 'Cuentas por Cobrar', 'orden_ventas.pago', 'REGISTRAR PAGO', 'REGISTRAR PAGOS DE CUENTAS POR COBRAR', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(79, 'Cuentas por Cobrar', 'cuenta_cobrars.destroy', 'ELIMINAR', 'ELIMINAR CUENTAS POR COBRAR', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(80, 'Registro de Gastos', 'gastos.index', 'VER', 'VER LA LISTA DE REGISTRO DE GASTOS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(81, 'Registro de Gastos', 'gastos.create', 'CREAR', 'CREAR REGISTRO DE GASTOS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(82, 'Registro de Gastos', 'gastos.edit', 'EDITAR', 'EDITAR REGISTRO DE GASTOS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(83, 'Registro de Gastos', 'gastos.destroy', 'ELIMINAR', 'ELIMINAR REGISTRO DE GASTOS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(84, 'Proformas', 'proformas.index', 'VER', 'VER LA LISTA DE PROFORMAS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(85, 'Proformas', 'proformas.create', 'CREAR', 'CREAR PROFORMAS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(86, 'Proformas', 'proformas.edit', 'EDITAR', 'EDITAR PROFORMAS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(87, 'Proformas', 'proformas.destroy', 'ELIMINAR', 'ELIMINAR PROFORMAS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(88, 'Ajustes', 'ajustes.index', 'VER', 'VER LA LISTA DE AJUSTES', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(89, 'Ajustes', 'ajustes.edit', 'EDITAR', 'REPONER AJUSTES', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(90, 'Notificaciones', 'notificacions.index', 'VER', 'VER Y RECIBIR NOTIFICACIONES', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(91, 'Reportes', 'reportes.usuarios', 'REPORTE LISTA DE USUARIOS', 'GENERAR REPORTES DE LISTA DE USUARIOS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(92, 'Reportes', 'reportes.productos', 'REPORTE LISTA DE PRODUCTOS', 'GENERAR REPORTES DE LISTA DE PRODUCTOS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(93, 'Reportes', 'reportes.clientes', 'REPORTE LISTA DE CLIENTES', 'GENERAR REPORTES DE LISTA DE CLIENTES', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(94, 'Reportes', 'reportes.proveedors', 'REPORTE LISTA DE PROVEEDORES', 'GENERAR REPORTES DE LISTA DE PROVEEDORES', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(95, 'Reportes', 'reportes.movimiento_inventario', 'REPORTE DE MOVIMIENTO DE INVENTARIO', 'GENERAR REPORTES DE MOVIMIENTO DE INVENTARIO', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(96, 'Reportes', 'reportes.solicitud_ingresos', 'REPORTE DE SOLICITUDES DE INGRESO', 'GENERAR REPORTES DE SOLICITUDES DE INGRESO', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(97, 'Reportes', 'reportes.orden_salidas', 'REPORTE DE ORDENES DE SALIDA', 'GENERAR REPORTES DE ORDENES DE SALIDA', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(98, 'Reportes', 'reportes.devolucions', 'REPORTE DE DEVOLUCIONES', 'GENERAR REPORTES DE DEVOLUCIONES', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(99, 'Reportes', 'reportes.orden_ventas', 'REPORTE DE ORDENES DE VENTA', 'GENERAR REPORTES DE ORDENES DE VENTA', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(100, 'Reportes', 'reportes.utilidad_ordens', 'REPORTE DE UTILIDADES DE ORDENES DE VENTA', 'GENERAR REPORTES DE UTILIDADES DE ORDENES DE VENTA', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(101, 'Reportes', 'reportes.cuenta_cobrars', 'REPORTE DE CUENTAS POR COBRAR', 'GENERAR REPORTES DE CUENTAS POR COBRAR', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(102, 'Reportes', 'reportes.rotacion', 'REPORTE DE ROTACIÓN DE INVENTARIO', 'GENERAR REPORTES DE ROTACIÓN DE INVENTARIO', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(103, 'Reportes', 'reportes.gastos', 'REPORTE DE GASTOS', 'GENERAR REPORTES DE GASTOS', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(104, 'Reportes', 'reportes.diario_salidas', 'REPORTE DE DIARIO DE SALIDAS POR SUCURSAL', 'GENERAR REPORTES DE DIARIO DE SALIDAS POR SUCURSAL', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(105, 'Reportes', 'reportes.movimientos_abastecimiento', 'REPORTE DE SEMANAL DE MOVIMIENTOS Y ABASTECIMIENTO', 'GENERAR REPORTES DE SEMANAL DE MOVIMIENTOS Y ABASTECIMIENTO', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(106, 'Reportes', 'reportes.saldos_almacen_central', 'REPORTE DE SALDOS DEL ALMACÉN CENTRAL', 'GENERAR REPORTES DE SALDOS DEL ALMACÉN CENTRAL', '2026-01-06 13:59:21', '2026-01-06 13:59:21'),
-(107, 'Reportes', 'reportes.diario_vehiculos', 'REPORTE DE CONTROL DIARIO DE VEHÍCULOS', 'GENERAR REPORTES DE CONTROL DIARIO DE VEHÍCULOS', '2026-01-06 13:59:21', '2026-01-06 13:59:21');
+(1, 'Perfil de Usuario', 'profile.edit', 'EDITAR CONTRASEÑA', 'ACTUALIZAR CONTRASEÑA', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(2, 'Gestión de usuarios', 'usuarios.index', 'VER', 'VER LA LISTA DE USUARIOS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(3, 'Gestión de usuarios', 'usuarios.create', 'CREAR', 'CREAR USUARIOS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(4, 'Gestión de usuarios', 'usuarios.edit', 'EDITAR', 'EDITAR USUARIOS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(5, 'Gestión de usuarios', 'usuarios.destroy', 'ELIMINAR', 'ELIMINAR USUARIOS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(6, 'Roles y Permisos', 'roles.index', 'VER', 'VER LA LISTA DE ROLES Y PERMISOS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(7, 'Roles y Permisos', 'roles.create', 'CREAR', 'CREAR ROLES Y PERMISOS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(8, 'Roles y Permisos', 'roles.edit', 'EDITAR', 'EDITAR ROLES Y PERMISOS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(9, 'Roles y Permisos', 'roles.destroy', 'ELIMINAR', 'ELIMINAR ROLES Y PERMISOS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(10, 'Configuración', 'configuracions.index', 'VER', 'VER INFORMACIÓN DE LA CONFIGURACIÓN DEL SISTEMA', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(11, 'Configuración', 'configuracions.edit', 'EDITAR', 'EDITAR LA CONFIGURACIÓN DEL SISTEMA', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(12, 'Sucursales', 'sucursals.index', 'VER', 'VER LA LISTA DE SUCURSALES', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(13, 'Sucursales', 'sucursals.create', 'CREAR', 'CREAR SUCURSALES', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(14, 'Sucursales', 'sucursals.edit', 'EDITAR', 'EDITAR SUCURSALES', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(15, 'Sucursales', 'sucursals.destroy', 'ELIMINAR', 'ELIMINAR SUCURSALES', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(16, 'Productos Sucursal', 'sucursal_productos.index', 'VER', 'VER LA LISTA DE PRODUCTOS DE SUCURSAL', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(17, 'Productos Sucursal', 'sucursal_productos.edit', 'EDITAR', 'EDITAR PRODUCTOS DE SUCURSAL', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(18, 'Categorías', 'categorias.index', 'VER', 'VER LA LISTA DE CATEGORÍAS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(19, 'Categorías', 'categorias.create', 'CREAR', 'CREAR CATEGORÍAS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(20, 'Categorías', 'categorias.edit', 'EDITAR', 'EDITAR CATEGORÍAS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(21, 'Categorías', 'categorias.destroy', 'ELIMINAR', 'ELIMINAR CATEGORÍAS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(22, 'Subcategorías', 'sub_categorias.index', 'VER', 'VER LA LISTA DE SUBCATEGORÍAS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(23, 'Subcategorías', 'sub_categorias.create', 'CREAR', 'CREAR SUBCATEGORÍAS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(24, 'Subcategorías', 'sub_categorias.edit', 'EDITAR', 'EDITAR SUBCATEGORÍAS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(25, 'Subcategorías', 'sub_categorias.destroy', 'ELIMINAR', 'ELIMINAR SUBCATEGORÍAS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(26, 'Marcas', 'marcas.index', 'VER', 'VER LA LISTA DE MARCAS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(27, 'Marcas', 'marcas.create', 'CREAR', 'CREAR MARCAS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(28, 'Marcas', 'marcas.edit', 'EDITAR', 'EDITAR MARCAS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(29, 'Marcas', 'marcas.destroy', 'ELIMINAR', 'ELIMINAR MARCAS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(30, 'Unidades de Medida', 'unidad_medidas.index', 'VER', 'VER LA LISTA DE UNIDADES DE MEDIDA', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(31, 'Unidades de Medida', 'unidad_medidas.create', 'CREAR', 'CREAR UNIDADES DE MEDIDA', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(32, 'Unidades de Medida', 'unidad_medidas.edit', 'EDITAR', 'EDITAR UNIDADES DE MEDIDA', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(33, 'Unidades de Medida', 'unidad_medidas.destroy', 'ELIMINAR', 'ELIMINAR UNIDADES DE MEDIDA', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(34, 'Productos', 'productos.index', 'VER', 'VER LA LISTA DE PRODUCTOS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(35, 'Productos', 'productos.create', 'CREAR', 'CREAR PRODUCTOS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(36, 'Productos', 'productos.edit', 'EDITAR', 'EDITAR PRODUCTOS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(37, 'Productos', 'productos.destroy', 'ELIMINAR', 'ELIMINAR PRODUCTOS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(38, 'Clientes', 'clientes.index', 'VER', 'VER LA LISTA DE CLIENTES', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(39, 'Clientes', 'clientes.create', 'CREAR', 'CREAR CLIENTES', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(40, 'Clientes', 'clientes.edit', 'EDITAR', 'EDITAR CLIENTES', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(41, 'Clientes', 'clientes.destroy', 'ELIMINAR', 'ELIMINAR CLIENTES', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(42, 'Clientes', 'clientes.parametro_clientes', 'EDITAR PARAMETROS', 'EDITAR LOS PARAMETROS PARA EL CÁLCULO DE RANKING', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(43, 'Proveedores', 'proveedors.index', 'VER', 'VER LA LISTA DE PROVEEDORES', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(44, 'Proveedores', 'proveedors.create', 'CREAR', 'CREAR PROVEEDORES', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(45, 'Proveedores', 'proveedors.edit', 'EDITAR', 'EDITAR PROVEEDORES', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(46, 'Proveedores', 'proveedors.destroy', 'ELIMINAR', 'ELIMINAR PROVEEDORES', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(47, 'Solicitud de Ingresos', 'solicitud_ingresos.index', 'VER', 'VER LA LISTA DE SOLICITUD DE INGRESOS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(48, 'Solicitud de Ingresos', 'solicitud_ingresos.create', 'CREAR', 'CREAR SOLICITUD DE INGRESOS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(49, 'Solicitud de Ingresos', 'solicitud_ingresos.edit', 'EDITAR', 'EDITAR SOLICITUD DE INGRESOS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(50, 'Solicitud de Ingresos', 'solicitud_ingresos.aprobar', 'APROBAR', 'APROBAR SOLICITUD DE INGRESOS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(51, 'Solicitud de Ingresos', 'solicitud_ingresos.aprobar_costos', 'APROBAR COSTOS', 'APROBAR COSTOS SOLICITUD DE INGRESOS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(52, 'Solicitud de Ingresos', 'solicitud_ingresos.destroy', 'ELIMINAR', 'ELIMINAR SOLICITUD DE INGRESOS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(53, 'Ordenes de Salida', 'orden_salidas.index', 'VER', 'VER LA LISTA DE ORDENES DE SALIDA', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(54, 'Ordenes de Salida', 'orden_salidas.create', 'CREAR', 'CREAR ORDENES DE SALIDA', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(55, 'Ordenes de Salida', 'orden_salidas.edit', 'EDITAR', 'EDITAR ORDENES DE SALIDA', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(56, 'Ordenes de Salida', 'orden_salidas.aprobar', 'APROBAR', 'APROBAR ORDENES DE SALIDA', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(57, 'Ordenes de Salida', 'orden_salidas.destroy', 'ELIMINAR', 'ELIMINAR ORDENES DE SALIDA', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(58, 'Devolución de Stock', 'devolucion_stocks.index', 'VER', 'VER LA LISTA DE DEVOLUCIÓN DE STOCK', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(59, 'Devolución de Stock', 'devolucion_stocks.create', 'CREAR', 'CREAR DEVOLUCIÓN DE STOCK', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(60, 'Devolución de Stock', 'devolucion_stocks.edit', 'EDITAR', 'EDITAR DEVOLUCIÓN DE STOCK', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(61, 'Devolución de Stock', 'devolucion_stocks.aprobar', 'APROBAR', 'APROBAR DEVOLUCIÓN DE STOCK', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(62, 'Devolución de Stock', 'devolucion_stocks.destroy', 'ELIMINAR', 'ELIMINAR DEVOLUCIÓN DE STOCK', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(63, 'Ordenes de Venta', 'orden_ventas.index', 'VER', 'VER LA LISTA DE ORDENDES DE VENTA', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(64, 'Ordenes de Venta', 'orden_ventas.create', 'CREAR', 'CREAR ORDENDES DE VENTA', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(65, 'Ordenes de Venta', 'orden_ventas.edit', 'EDITAR', 'EDITAR ORDENDES DE VENTA', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(66, 'Ordenes de Venta', 'orden_ventas.aprobar_descuentos', 'APROBAR DESCUENTOS', 'APROBAR DESCUENTOS ORDENDES DE VENTA', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(67, 'Ordenes de Venta', 'orden_ventas.destroy', 'ELIMINAR', 'ELIMINAR ORDENDES DE VENTA', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(68, 'Transferencias de Stock', 'transferencias.index', 'VER', 'VER LA LISTA DE TRANSFERENCIAS DE STOCK', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(69, 'Transferencias de Stock', 'transferencias.create', 'CREAR', 'CREAR TRANSFERENCIAS DE STOCK', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(70, 'Transferencias de Stock', 'transferencias.edit', 'EDITAR', 'EDITAR TRANSFERENCIAS DE STOCK', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(71, 'Transferencias de Stock', 'transferencias.aprobar', 'APROBAR', 'APROBAR TRANSFERENCIAS DE STOCK', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(72, 'Transferencias de Stock', 'transferencias.destroy', 'ELIMINAR', 'ELIMINAR TRANSFERENCIAS DE STOCK', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(73, 'Devolución de Clientes', 'devolucion_clientes.index', 'VER', 'VER LA LISTA DE DEVOLUCIÓN DE CLIENTES', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(74, 'Devolución de Clientes', 'devolucion_clientes.create', 'CREAR', 'CREAR DEVOLUCIÓN DE CLIENTES', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(75, 'Devolución de Clientes', 'devolucion_clientes.edit', 'EDITAR', 'EDITAR DEVOLUCIÓN DE CLIENTES', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(76, 'Devolución de Clientes', 'devolucion_clientes.destroy', 'ELIMINAR', 'ELIMINAR DEVOLUCIÓN DE CLIENTES', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(77, 'Cuentas por Cobrar', 'cuenta_cobrars.index', 'VER', 'VER LA LISTA DE CUENTAS POR COBRAR', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(78, 'Cuentas por Cobrar', 'cuenta_cobrars.create', 'CREAR', 'CREAR CUENTAS POR COBRAR', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(79, 'Cuentas por Cobrar', 'orden_ventas.pago', 'REGISTRAR PAGO', 'REGISTRAR PAGOS DE CUENTAS POR COBRAR', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(80, 'Cuentas por Cobrar', 'cuenta_cobrars.destroy', 'ELIMINAR', 'ELIMINAR CUENTAS POR COBRAR', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(81, 'Registro de Gastos', 'gastos.index', 'VER', 'VER LA LISTA DE REGISTRO DE GASTOS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(82, 'Registro de Gastos', 'gastos.create', 'CREAR', 'CREAR REGISTRO DE GASTOS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(83, 'Registro de Gastos', 'gastos.edit', 'EDITAR', 'EDITAR REGISTRO DE GASTOS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(84, 'Registro de Gastos', 'gastos.destroy', 'ELIMINAR', 'ELIMINAR REGISTRO DE GASTOS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(85, 'Proformas', 'proformas.index', 'VER', 'VER LA LISTA DE PROFORMAS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(86, 'Proformas', 'proformas.create', 'CREAR', 'CREAR PROFORMAS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(87, 'Proformas', 'proformas.edit', 'EDITAR', 'EDITAR PROFORMAS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(88, 'Proformas', 'proformas.destroy', 'ELIMINAR', 'ELIMINAR PROFORMAS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(89, 'Ajustes', 'ajustes.index', 'VER', 'VER LA LISTA DE AJUSTES', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(90, 'Ajustes', 'ajustes.edit', 'EDITAR', 'REPONER AJUSTES', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(91, 'Notificaciones', 'notificacions.index', 'VER', 'VER Y RECIBIR NOTIFICACIONES', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(92, 'Reportes', 'reportes.usuarios', 'REPORTE LISTA DE USUARIOS', 'GENERAR REPORTES DE LISTA DE USUARIOS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(93, 'Reportes', 'reportes.productos', 'REPORTE LISTA DE PRODUCTOS', 'GENERAR REPORTES DE LISTA DE PRODUCTOS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(94, 'Reportes', 'reportes.clientes', 'REPORTE LISTA DE CLIENTES', 'GENERAR REPORTES DE LISTA DE CLIENTES', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(95, 'Reportes', 'reportes.proveedors', 'REPORTE LISTA DE PROVEEDORES', 'GENERAR REPORTES DE LISTA DE PROVEEDORES', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(96, 'Reportes', 'reportes.movimiento_inventario', 'REPORTE DE MOVIMIENTO DE INVENTARIO', 'GENERAR REPORTES DE MOVIMIENTO DE INVENTARIO', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(97, 'Reportes', 'reportes.solicitud_ingresos', 'REPORTE DE SOLICITUDES DE INGRESO', 'GENERAR REPORTES DE SOLICITUDES DE INGRESO', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(98, 'Reportes', 'reportes.orden_salidas', 'REPORTE DE ORDENES DE SALIDA', 'GENERAR REPORTES DE ORDENES DE SALIDA', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(99, 'Reportes', 'reportes.devolucions', 'REPORTE DE DEVOLUCIONES', 'GENERAR REPORTES DE DEVOLUCIONES', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(100, 'Reportes', 'reportes.orden_ventas', 'REPORTE DE ORDENES DE VENTA', 'GENERAR REPORTES DE ORDENES DE VENTA', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(101, 'Reportes', 'reportes.utilidad_ordens', 'REPORTE DE UTILIDADES DE ORDENES DE VENTA', 'GENERAR REPORTES DE UTILIDADES DE ORDENES DE VENTA', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(102, 'Reportes', 'reportes.cuenta_cobrars', 'REPORTE DE CUENTAS POR COBRAR', 'GENERAR REPORTES DE CUENTAS POR COBRAR', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(103, 'Reportes', 'reportes.rotacion', 'REPORTE DE ROTACIÓN DE INVENTARIO', 'GENERAR REPORTES DE ROTACIÓN DE INVENTARIO', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(104, 'Reportes', 'reportes.gastos', 'REPORTE DE GASTOS', 'GENERAR REPORTES DE GASTOS', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(105, 'Reportes', 'reportes.diario_salidas', 'REPORTE DE DIARIO DE SALIDAS POR SUCURSAL', 'GENERAR REPORTES DE DIARIO DE SALIDAS POR SUCURSAL', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(106, 'Reportes', 'reportes.movimientos_abastecimiento', 'REPORTE DE SEMANAL DE MOVIMIENTOS Y ABASTECIMIENTO', 'GENERAR REPORTES DE SEMANAL DE MOVIMIENTOS Y ABASTECIMIENTO', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(107, 'Reportes', 'reportes.saldos_almacen_central', 'REPORTE DE SALDOS DEL ALMACÉN CENTRAL', 'GENERAR REPORTES DE SALDOS DEL ALMACÉN CENTRAL', '2026-01-10 14:20:58', '2026-01-10 14:20:58'),
+(108, 'Reportes', 'reportes.diario_vehiculos', 'REPORTE DE CONTROL DIARIO DE VEHÍCULOS', 'GENERAR REPORTES DE CONTROL DIARIO DE VEHÍCULOS', '2026-01-10 14:20:58', '2026-01-10 14:20:58');
 
 -- --------------------------------------------------------
 
@@ -1956,7 +1986,9 @@ INSERT INTO `solicitud_ingresos` (`id`, `nro`, `codigo`, `proveedor_id`, `fecha_
 (8, 8, 'SOL.8', 1, '2025-12-21', '07:23:00', '2025-12-21', '07:23:00', 'CON FATURA', 6.98, 0.00, '', '', 60, 17700.00, 'APROBADO', 1, 3, NULL, '2025-12-21 11:23:56', '2025-12-21 11:33:58'),
 (9, 9, 'SOL.9', 1, '2025-12-22', '17:26:00', '2025-12-22', '17:27:00', 'CON FATURA', 6.98, 0.00, '', '', 40, 12400.00, 'APROBADO CON OBSERVACIONES', 1, 3, NULL, '2025-12-22 21:27:07', '2025-12-22 21:33:24'),
 (10, 10, 'SOL.10', 2, '2025-12-22', '17:35:00', '2025-12-22', '17:35:00', 'CON FATURA', 6.98, 0.00, '', '', 40, 3500.00, 'APROBADO', 1, 3, NULL, '2025-12-22 21:35:49', '2025-12-22 21:38:02'),
-(11, 11, 'SOL.11', 1, '2026-01-06', '15:50:00', '2026-01-06', '15:51:00', 'CON FATURA', 6.98, 0.00, '', '', 60, 14840.00, 'APROBADO', 1, 3, NULL, '2026-01-06 19:51:02', '2026-01-06 20:06:34');
+(11, 11, 'SOL.11', 1, '2026-01-06', '15:50:00', '2026-01-06', '15:51:00', 'CON FATURA', 6.98, 0.00, '', '', 60, 14840.00, 'APROBADO', 1, 3, NULL, '2026-01-06 19:51:02', '2026-01-06 20:06:34'),
+(12, 12, 'SOL.12', 1, '2026-01-10', '10:10:00', '2026-01-10', '10:10:00', 'CON FATURA', 6.98, 0.00, '', '', 2, 580.00, 'APROBADO', 1, 3, NULL, '2026-01-10 14:10:57', '2026-01-10 14:11:33'),
+(13, 13, 'SOL.13', 1, '2026-01-10', '10:11:00', '2026-01-10', '10:11:00', 'CON FATURA', 6.98, 0.00, '', '', 5, 1500.00, 'APROBADO CON OBSERVACIONES', 1, 3, NULL, '2026-01-10 14:11:58', '2026-01-10 14:15:27');
 
 -- --------------------------------------------------------
 
@@ -2009,7 +2041,9 @@ INSERT INTO `solicitud_ingreso_detalles` (`id`, `solicitud_ingreso_id`, `product
 (20, 10, 6, 20, 20, 85.00, 0.00, 0.00, 0.00, 1700.00, 3, NULL, NULL, '2025-12-22 21:35:49', '2025-12-22 21:38:02'),
 (21, 11, 3, 20, 20, 300.00, 291.30, 8.70, 290.00, 6000.00, 3, NULL, NULL, '2026-01-06 19:51:02', '2026-01-06 20:06:34'),
 (22, 11, 4, 20, 20, 345.00, 336.00, 9.00, 300.00, 6900.00, 3, NULL, NULL, '2026-01-06 19:51:02', '2026-01-06 20:06:34'),
-(23, 11, 5, 20, 20, 97.00, 94.30, 2.70, 90.00, 1940.00, 3, NULL, NULL, '2026-01-06 19:51:02', '2026-01-06 20:06:34');
+(23, 11, 5, 20, 20, 97.00, 94.30, 2.70, 90.00, 1940.00, 3, NULL, NULL, '2026-01-06 19:51:02', '2026-01-06 20:06:34'),
+(24, 12, 3, 2, 2, 290.00, 281.90, 8.10, 270.00, 580.00, 3, NULL, NULL, '2026-01-10 14:10:57', '2026-01-10 14:11:33'),
+(25, 13, 3, 5, 4, 300.00, 291.30, 8.70, 290.00, 1200.00, 3, NULL, 'ROTURA', '2026-01-10 14:11:58', '2026-01-10 14:15:27');
 
 -- --------------------------------------------------------
 
@@ -2090,9 +2124,9 @@ CREATE TABLE `sucursal_productos` (
 --
 
 INSERT INTO `sucursal_productos` (`id`, `sucursal_id`, `producto_id`, `cantidad_ideal`, `cantidad_minima`, `stock_actual`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 3, 5, 5, 168, NULL, '2025-12-05 15:07:00', '2026-01-06 20:06:34'),
+(1, 1, 3, 5, 5, 176, NULL, '2025-12-05 15:07:00', '2026-01-10 14:15:27'),
 (2, 1, 4, 0, 0, 150, NULL, '2025-12-05 15:07:00', '2026-01-06 20:06:34'),
-(4, 2, 3, 30, 6, 75, NULL, '2025-12-05 16:08:14', '2026-01-06 13:46:15'),
+(4, 2, 3, 30, 6, 74, NULL, '2025-12-05 16:08:14', '2026-01-10 14:04:03'),
 (5, 2, 4, 2, 2, 60, NULL, '2025-12-05 16:14:58', '2026-01-02 13:32:17'),
 (6, 3, 3, 0, 0, 15, NULL, '2025-12-06 14:30:40', '2025-12-22 21:33:24'),
 (7, 3, 4, 0, 0, 4, NULL, '2025-12-06 14:31:33', '2025-12-09 21:53:43'),
@@ -2110,7 +2144,7 @@ INSERT INTO `sucursal_productos` (`id`, `sucursal_id`, `producto_id`, `cantidad_
 (19, 5, 6, 0, 0, 0, NULL, '2025-12-19 14:07:09', '2025-12-19 14:07:09'),
 (20, 4, 6, 0, 0, 0, NULL, '2025-12-19 14:07:09', '2025-12-19 14:07:09'),
 (21, 1, 6, 0, 0, 46, NULL, '2025-12-19 14:42:26', '2025-12-22 21:38:02'),
-(22, 6, 3, 0, 0, 1, NULL, '2026-01-06 13:46:15', '2026-01-06 13:46:15');
+(22, 6, 3, 0, 0, 2, NULL, '2026-01-06 13:46:15', '2026-01-10 14:15:27');
 
 -- --------------------------------------------------------
 
@@ -2624,13 +2658,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `ajustes`
 --
 ALTER TABLE `ajustes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `ajuste_reposicions`
 --
 ALTER TABLE `ajuste_reposicions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `categorias`
@@ -2684,13 +2718,13 @@ ALTER TABLE `devolucion_cliente_detalles`
 -- AUTO_INCREMENT de la tabla `devolucion_stocks`
 --
 ALTER TABLE `devolucion_stocks`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `devolucion_stock_detalles`
 --
 ALTER TABLE `devolucion_stock_detalles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `documentos`
@@ -2714,19 +2748,19 @@ ALTER TABLE `gastos`
 -- AUTO_INCREMENT de la tabla `historial_accions`
 --
 ALTER TABLE `historial_accions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=311;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=323;
 
 --
 -- AUTO_INCREMENT de la tabla `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- AUTO_INCREMENT de la tabla `kardex_productos`
 --
 ALTER TABLE `kardex_productos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=162;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=172;
 
 --
 -- AUTO_INCREMENT de la tabla `marcas`
@@ -2744,7 +2778,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT de la tabla `modulos`
 --
 ALTER TABLE `modulos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
 
 --
 -- AUTO_INCREMENT de la tabla `movimiento_horas`
@@ -2852,13 +2886,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `solicitud_ingresos`
 --
 ALTER TABLE `solicitud_ingresos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `solicitud_ingreso_detalles`
 --
 ALTER TABLE `solicitud_ingreso_detalles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `sub_categorias`

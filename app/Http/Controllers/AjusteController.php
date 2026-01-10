@@ -42,18 +42,22 @@ class AjusteController extends Controller
         $perPage = $request->perPage;
         $page = (int)($request->input("page", 1));
         $search = (string)$request->input("search", "");
-        $orderByCol = $request->orderByCol;
-        $desc = $request->desc;
+        $orderBy = $request->orderBy;
+        $orderAsc = $request->orderAsc;
 
         $columnsSerachLike = [
-            "motivo"
+            "motivo",
+            "productos.codigo",
+            "productos.nombre",
+            "ajustes.estado",
+            "tipo",
         ];
         $columnsFilter = [];
         $columnsBetweenFilter = [];
         $arrayOrderBy = [];
-        if ($orderByCol && $desc) {
+        if ($orderBy && $orderAsc) {
             $arrayOrderBy = [
-                [$orderByCol, $desc]
+                [$orderBy, $orderAsc]
             ];
         }
 
@@ -111,7 +115,7 @@ class AjusteController extends Controller
      */
     public function show(Ajuste $ajuste): JsonResponse
     {
-        return response()->JSON($ajuste);
+        return response()->JSON($ajuste->load(["sucursal", "oSucursalOrigen"]));
     }
 
     public function update(Ajuste $ajuste, AjusteUpdateRequest $request)

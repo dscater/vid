@@ -227,7 +227,7 @@
                         <td class="">{{ $item->categoria->nombre }}</td>
                         <td class="">{{ $item->marca->nombre }}</td>
                         <td class="">{{ $item->unidad_medida->nombre }}</td>
-                        <td class="">{{ $item->precio }}</td>
+                        <td class="">Bs {{ $item->precio }}</td>
                         <td class="">{{ $item->stock_actual ?? 0 }}</td>
                         <td class="">{{ $item->cantidad_minima ?? 0 }}</td>
                         <td class="">{{ $item->cantidad_ideal ?? 0 }}</td>
