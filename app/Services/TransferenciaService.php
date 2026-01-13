@@ -123,6 +123,13 @@ class TransferenciaService
         ]);
 
         foreach ($datos["transferencia_detalles"] as $item) {
+            // VERIFICAR STOCK DEL PRODUCTO
+            $producto = Producto::findOrFail($item["producto_id"]);
+            $resultado_stock = $this->sucursal_producto_service->verificaStockSucursalProducto($producto->id, $transferencia->sucursal_id, $item["cantidad"]);
+            if (!$resultado_stock[0]) {
+                throw new Exception("Stock insuficiente del producto " . $producto->nombre . " ; su stock actual es " . $resultado_stock[1]);
+            }
+
             $transferencia->transferencia_detalles()->create([
                 "producto_id" => $item["producto_id"],
                 "cantidad" => $item["cantidad"],

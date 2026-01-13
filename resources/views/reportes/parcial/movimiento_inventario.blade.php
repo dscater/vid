@@ -21,40 +21,40 @@
             <th width="7%">PRODUCTO</th>
             <th>UNIDAD DE MEDIDA</th>
             @foreach ($sucursals as $key => $item)
-                <th class="vertical">
+                <th class="vertical bg0">
                     <div>
                         STOCK INICIAL {{ $item->nombre }}<br />
                         {{ $horaInicial }}
                     </div>
                 </th>
             @endforeach
-            <th class="bgFinal vertical">
+            <th class="bg1 vertical">
                 <div>
                     TOTAL STOCK INICIAL<br />
                     {{ $horaInicial }}
                 </div>
             </th>
             @foreach ($sucursals as $key => $item)
-                <th class="vertical">
+                <th class="vertical bg2">
                     <div>
                         VENTAS {{ $item->nombre }}
                     </div>
                 </th>
             @endforeach
-            <th class="bgFinal vertical">
+            <th class="bg3 vertical">
                 <div>
                     TOTAL VENTAS
                 </div>
             </th>
             @foreach ($sucursals as $key => $item)
-                <th class="vertical">
+                <th class="vertical bg4">
                     <div>
                         STOCK FINAL {{ $item->nombre }}<br />
                         {{ $horaFinal }}
                     </div>
                 </th>
             @endforeach
-            <th class="bgFinal vertical">
+            <th class="bg0 vertical">
                 <div>
                     TOTAL STOCK FINAL<br />
                     {{ $horaFinal }}
@@ -85,7 +85,7 @@
                         {{ $stock_inicial }}
                     </td>
                 @endforeach
-                <td>{{ $total_inicial }}</td>
+                <td class="bg1">{{ $total_inicial }}</td>
                 @php
                     $total_ventas = 0;
                 @endphp
@@ -106,7 +106,7 @@
                         {{ $cantidad_vendida }}
                     </td>
                 @endforeach
-                <td>{{ $total_ventas }}</td>
+                <td class="bg3">{{ $total_ventas }}</td>
                 @php
                     $total_final = 0;
                 @endphp
@@ -122,7 +122,7 @@
                         {{ $stock_final }}
                     </td>
                 @endforeach
-                <td>{{ $total_final }}</td>
+                <td class="bg0">{{ $total_final }}</td>
             </tr>
         @endforeach
     </tbody>

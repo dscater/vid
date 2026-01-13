@@ -125,7 +125,7 @@ class TransferenciaController extends Controller
     public function show(Transferencia $transferencia): JsonResponse
     {
         return response()->JSON([
-            "transferencia" => $transferencia->load(["transferencia_detalles.producto", "transferencia_detalles.oSucursalAjuste"]),
+            "transferencia" => $transferencia->load(["transferencia_detalles.producto", "transferencia_detalles.oSucursalAjuste", "sucursal", "sucursalDestino", "user_solicitante", "user_aprobo"]),
         ]);
     }
 

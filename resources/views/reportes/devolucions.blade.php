@@ -167,13 +167,14 @@
                     <td class="bold" width="6%">Sucursal/Vehículo: </td>
                     <td colspan="2">{{ $item->sucursal->nombre }}</td>
                     <td class="bold">Encargado: </td>
-                    <td colspan="2">{{ $item->sucursal->user->full_name }}</td>
+                    <td colspan="2">{{ $item->sucursal->user ? $item->sucursal->user->full_name : 'SIN ASIGNAR' }}
+                    </td>
                 </tr>
                 <tr>
                     <td class="bold">Fecha: </td>
                     <td>{{ $item->fecha_c }}</td>
                     <td class="bold">Usuario Aprobador: </td>
-                    <td>{{ $item->user_verificador->full_name }}</td=>
+                    <td>{{ $item->user_verificador ? $item->user_verificador->full_name : '' }}</td=>
                     <td class="bold">Estado: </td>
                     <td>{{ $item->estado }}</td>
                 </tr>

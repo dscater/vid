@@ -158,6 +158,26 @@
             border-bottom: dotted 1px black;
             margin-top: 25px;
         }
+
+        .bg0 {
+            background: #cff3f3;
+        }
+
+        .bg1 {
+            background: #ffe9ff;
+        }
+
+        .bg2 {
+            background: #f7ffe0;
+        }
+
+        .bg3 {
+            background: #ecfcdd;
+        }
+
+        .bg4 {
+            background: #faeee4;
+        }
     </style>
 </head>
 
@@ -185,13 +205,13 @@
         <table border="1">
             <thead>
                 <tr>
-                    <th>N°</th>
+                    <th width="4%">N°</th>
                     <th>PRODUCTO</th>
-                    <th>SALDO INICIAL</th>
-                    <th>VENTAS REALIZADAS</th>
-                    <th>DEVOLUCIONES</th>
-                    <th>PRODUCTOS AÑADIDOS</th>
-                    <th>SALDO FINAL</th>
+                    <th class="bg0">SALDO INICIAL</th>
+                    <th class="bg1">VENTAS REALIZADAS</th>
+                    <th class="bg2">DEVOLUCIONES</th>
+                    <th class="bg3">PRODUCTOS AÑADIDOS</th>
+                    <th class="bg4">SALDO FINAL</th>
                 </tr>
             </thead>
             <tbody>
@@ -256,11 +276,11 @@
                     <tr>
                         <td>{{ $cont++ }}</td>
                         <td>{{ $producto->nombre }} {{ $producto->unidad_medida->nombre }}</td>
-                        <td>{{ $saldo_inicial }}</td>
-                        <td>{{ $ventas_realizadas }}</td>
-                        <td>{{ $devoluciones }}</td>
-                        <td>{{ $ingresos_adicionales }}</td>
-                        <td>{{ $saldo_final }}</td>
+                        <td class="centreado">{{ $saldo_inicial }}</td>
+                        <td class="centreado">{{ $ventas_realizadas }}</td>
+                        <td class="centreado">{{ $devoluciones }}</td>
+                        <td class="centreado">{{ $ingresos_adicionales }}</td>
+                        <td class="centreado">{{ $saldo_final }}</td>
                     </tr>
                 @endforeach
             </tbody>

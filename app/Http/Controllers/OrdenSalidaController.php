@@ -129,7 +129,7 @@ class OrdenSalidaController extends Controller
     public function show(OrdenSalida $orden_salida): JsonResponse
     {
         return response()->JSON([
-            "orden_salida" => $orden_salida->load(["orden_salida_detalles.producto", "orden_salida_detalles.oSucursalAjuste"]),
+            "orden_salida" => $orden_salida->load(["orden_salida_detalles.producto", "orden_salida_detalles.oSucursalAjuste", "sucursal", "user_solicitante", "user_aprobador"]),
         ]);
     }
 

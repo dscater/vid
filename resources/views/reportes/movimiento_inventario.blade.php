@@ -259,7 +259,7 @@
                         </div>
                     </th>
                 @endforeach
-                <th class="bgFinal vertical bg0">
+                <th class="vertical bg0">
                     <div>
                         TOTAL STOCK FINAL<br />
                         {{ $horaFinal }}

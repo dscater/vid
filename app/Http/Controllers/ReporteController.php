@@ -3021,21 +3021,30 @@ class ReporteController extends Controller
                 $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
                 $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
                 $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
-                $fila++;
-                $sheet->setCellValue('A' . $fila, "Encargado: " . $sucursal->user->full_name);
-                $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
-                $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
+                if ($sucursal->almacen == 0) {
+                    $fila++;
+                    $sheet->setCellValue('A' . $fila, "Encargado: " . $sucursal->user->full_name);
+                    $sheet->mergeCells("A" . $fila . ":G" . $fila);  //COMBINAR CELDAS
+                    $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal('center');
+                }
                 $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->titulo);
                 $fila++;
                 $fila++;
                 $sheet->setCellValue('A' . $fila, 'N°');
+                $sheet->getStyle('A' . $fila)->applyFromArray($this->bg0);
                 $sheet->setCellValue('B' . $fila, 'PRODUCTO');
+                $sheet->getStyle('B' . $fila)->applyFromArray($this->bg0);
                 $sheet->setCellValue('C' . $fila, 'SALDO INICIAL');
+                $sheet->getStyle('C' . $fila)->applyFromArray($this->bg0);
                 $sheet->setCellValue('D' . $fila, 'VENTAS REALIZADAS');
+                $sheet->getStyle('D' . $fila)->applyFromArray($this->bg1);
                 $sheet->setCellValue('E' . $fila, 'DEVOLUCIONES');
+                $sheet->getStyle('E' . $fila)->applyFromArray($this->bg2);
                 $sheet->setCellValue('F' . $fila, 'PRODUCTOS AÑADIDOS');
+                $sheet->getStyle('F' . $fila)->applyFromArray($this->bg3);
                 $sheet->setCellValue('G' . $fila, 'SALDO FINAL');
-                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->headerTabla);
+                $sheet->getStyle('G' . $fila)->applyFromArray($this->bg4);
+                $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($this->headerTabla2);
                 $fila++;
 
                 $cont = 1;

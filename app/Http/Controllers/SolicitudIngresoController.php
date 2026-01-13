@@ -124,7 +124,7 @@ class SolicitudIngresoController extends Controller
     public function show(SolicitudIngreso $solicitud_ingreso): JsonResponse
     {
         return response()->JSON([
-            "solicitud_ingreso" => $solicitud_ingreso->load(["solicitud_ingreso_detalles.producto", "solicitud_ingreso_detalles.oSucursalAjuste"]),
+            "solicitud_ingreso" => $solicitud_ingreso->load(["solicitud_ingreso_detalles.producto", "solicitud_ingreso_detalles.oSucursalAjuste", "proveedor"]),
         ]);
     }
 

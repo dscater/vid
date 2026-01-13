@@ -120,7 +120,7 @@ class DevolucionStockController extends Controller
     public function show(DevolucionStock $devolucion_stock): JsonResponse
     {
         return response()->JSON([
-            "devolucion_stock" => $devolucion_stock->load(["devolucion_stock_detalles.producto", "devolucion_stock_detalles.oSucursalAjuste"]),
+            "devolucion_stock" => $devolucion_stock->load(["devolucion_stock_detalles.producto", "devolucion_stock_detalles.oSucursalAjuste", "sucursal.user"]),
         ]);
     }
 
