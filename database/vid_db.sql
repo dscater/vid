@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 10-01-2026 a las 14:54:32
+-- Tiempo de generación: 14-01-2026 a las 14:53:22
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.2.22
 
@@ -35,7 +35,10 @@ CREATE TABLE `ajustes` (
   `cantidad` double NOT NULL,
   `motivo` varchar(900) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `estado` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tipo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `modelo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `modelo_id` bigint UNSIGNED DEFAULT NULL,
+  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `registro_id` bigint UNSIGNED DEFAULT NULL,
   `fecha` date DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -46,10 +49,11 @@ CREATE TABLE `ajustes` (
 -- Volcado de datos para la tabla `ajustes`
 --
 
-INSERT INTO `ajustes` (`id`, `sucursal_id`, `sucursal_origen`, `producto_id`, `cantidad`, `motivo`, `estado`, `tipo`, `registro_id`, `fecha`, `created_at`, `updated_at`) VALUES
-(1, 6, 2, 3, 1, 'POR FALTANTE DE PROVEEDOR', 'REPUESTO', 'DEVOLUCION DE STOCK', 4, '2026-01-06', '2026-01-06 13:46:15', '2026-01-06 14:14:40'),
-(2, 6, 2, 3, 1, 'ROBO', 'REPUESTO', 'DEVOLUCION DE STOCK', 5, '2026-01-10', '2026-01-10 14:04:03', '2026-01-10 14:10:25'),
-(3, 6, 1, 3, 1, 'ROTURA', 'NO REPUESTO', 'SOLICITUD DE INGRESO', 25, '2026-01-10', '2026-01-10 14:15:27', '2026-01-10 14:15:27');
+INSERT INTO `ajustes` (`id`, `sucursal_id`, `sucursal_origen`, `producto_id`, `cantidad`, `motivo`, `estado`, `tipo`, `modelo`, `modelo_id`, `codigo`, `registro_id`, `fecha`, `created_at`, `updated_at`) VALUES
+(1, 6, 2, 3, 1, 'POR FALTANTE DE PROVEEDOR', 'REPUESTO', 'DEVOLUCION DE STOCK', NULL, NULL, NULL, 4, '2026-01-06', '2026-01-06 13:46:15', '2026-01-06 14:14:40'),
+(2, 6, 2, 3, 1, 'ROBO', 'REPUESTO', 'DEVOLUCION DE STOCK', NULL, NULL, NULL, 5, '2026-01-10', '2026-01-10 14:04:03', '2026-01-10 14:10:25'),
+(3, 6, 1, 3, 1, 'ROTURA', 'NO REPUESTO', 'SOLICITUD DE INGRESO', NULL, NULL, NULL, 25, '2026-01-10', '2026-01-10 14:15:27', '2026-01-10 14:15:27'),
+(4, 6, 2, 3, 3, 'POR CONTEO', 'REPUESTO', 'DEVOLUCION DE STOCK', NULL, NULL, NULL, 6, '2026-01-13', '2026-01-13 13:37:02', '2026-01-13 13:44:02');
 
 -- --------------------------------------------------------
 
@@ -74,7 +78,8 @@ CREATE TABLE `ajuste_reposicions` (
 
 INSERT INTO `ajuste_reposicions` (`id`, `ajuste_id`, `sucursal_id`, `producto_id`, `cantidad`, `fecha`, `created_at`, `updated_at`) VALUES
 (1, 1, 2, 3, 1, '2026-01-06', '2026-01-06 14:14:40', '2026-01-06 14:14:40'),
-(2, 2, 2, 3, 1, '2026-01-10', '2026-01-10 14:10:25', '2026-01-10 14:10:25');
+(2, 2, 2, 3, 1, '2026-01-10', '2026-01-10 14:10:25', '2026-01-10 14:10:25'),
+(5, 4, 2, 3, 3, '2026-01-13', '2026-01-13 13:44:02', '2026-01-13 13:44:02');
 
 -- --------------------------------------------------------
 
@@ -347,7 +352,10 @@ INSERT INTO `devolucion_stocks` (`id`, `nro`, `codigo`, `sucursal_id`, `cantidad
 (2, 1, 'DEV.1', 2, 6, 1935.00, 6, 1935.00, '2025-12-06', '11:08:00', '', 'APROBADO', 1, 1, 1, NULL, '2025-12-06 15:14:42', '2025-12-06 15:20:26'),
 (3, 2, 'DEV.2', 2, 1, 300.00, 1, 300.00, '2025-12-21', '07:12:00', '', 'APROBADO', 1, 1, 1, NULL, '2025-12-21 11:13:13', '2025-12-21 11:13:18'),
 (4, 3, 'DEV.3', 2, 5, 1500.00, 5, 1500.00, '2026-01-06', '09:33:00', '', 'APROBADO CON OBSERVACIONES', 1, 2, 1, NULL, '2026-01-06 13:33:04', '2026-01-06 13:46:15'),
-(5, 4, 'DEV.4', 2, 2, 600.00, 2, 600.00, '2026-01-10', '10:03:00', '', 'APROBADO CON OBSERVACIONES', 1, 2, 1, NULL, '2026-01-10 14:03:49', '2026-01-10 14:04:03');
+(5, 4, 'DEV.4', 2, 2, 600.00, 2, 600.00, '2026-01-10', '10:03:00', '', 'APROBADO CON OBSERVACIONES', 1, 2, 1, NULL, '2026-01-10 14:03:49', '2026-01-10 14:04:03'),
+(6, 5, 'DEV.5', 2, 8, 2400.00, 8, 2400.00, '2026-01-13', '09:26:00', '', 'APROBADO CON OBSERVACIONES', 1, 2, 1, NULL, '2026-01-13 13:27:13', '2026-01-13 13:37:02'),
+(7, 6, 'DEV.6', 2, 5, 1500.00, 5, 1500.00, '2026-01-13', '09:57:00', '', 'PENDIENTE', 1, 0, NULL, NULL, '2026-01-13 13:58:10', '2026-01-13 13:58:10'),
+(8, 7, 'DEV.7', 2, 5, 1500.00, 5, 1500.00, '2026-01-13', '09:58:00', '', 'PENDIENTE', 1, 0, NULL, NULL, '2026-01-13 13:59:03', '2026-01-13 13:59:03');
 
 -- --------------------------------------------------------
 
@@ -379,7 +387,10 @@ INSERT INTO `devolucion_stock_detalles` (`id`, `devolucion_stock_id`, `producto_
 (2, 2, 4, 3, 3, 345.00, 1035.00, 1, NULL, NULL, '2025-12-06 15:14:42', '2025-12-06 15:20:26'),
 (3, 3, 3, 1, 1, 300.00, 300.00, 1, NULL, NULL, '2025-12-21 11:13:13', '2025-12-21 11:13:18'),
 (4, 4, 3, 5, 4, 300.00, 1500.00, 1, NULL, 'POR FALTANTE DE PROVEEDOR', '2026-01-06 13:33:04', '2026-01-06 13:46:15'),
-(5, 5, 3, 2, 1, 300.00, 600.00, 1, NULL, 'ROBO', '2026-01-10 14:03:50', '2026-01-10 14:04:03');
+(5, 5, 3, 2, 1, 300.00, 600.00, 1, NULL, 'ROBO', '2026-01-10 14:03:50', '2026-01-10 14:04:03'),
+(6, 6, 3, 8, 5, 300.00, 2400.00, 1, NULL, 'POR CONTEO', '2026-01-13 13:27:13', '2026-01-13 13:37:02'),
+(7, 7, 3, 5, 5, 300.00, 1500.00, 0, NULL, NULL, '2026-01-13 13:58:10', '2026-01-13 13:58:10'),
+(8, 8, 3, 5, 5, 300.00, 1500.00, 0, NULL, NULL, '2026-01-13 13:59:03', '2026-01-13 13:59:03');
 
 -- --------------------------------------------------------
 
@@ -797,7 +808,20 @@ INSERT INTO `historial_accions` (`id`, `user_id`, `accion`, `descripcion`, `dato
 INSERT INTO `historial_accions` (`id`, `user_id`, `accion`, `descripcion`, `datos_original`, `datos_nuevo`, `modulo`, `fecha`, `hora`, `created_at`, `updated_at`) VALUES
 (320, 1, 'MODIFICACIÓN', 'EL USUARIO admin APROBO UNA SOLICITUD DE INGRESO', '{\"id\": 13, \"nro\": 13, \"cs_f\": \"CON FATURA\", \"total\": \"1500.00\", \"codigo\": \"SOL.13\", \"estado\": \"PENDIENTE\", \"gastos\": \"0.00\", \"user_id\": 1, \"hora_sis\": \"10:11:00\", \"fecha_sis\": \"2026-01-10\", \"created_at\": \"2026-01-10T14:11:58.000000Z\", \"deleted_at\": null, \"updated_at\": \"2026-01-10T14:11:58.000000Z\", \"verificado\": 0, \"descripcion\": \"\", \"tipo_cambio\": \"6.98\", \"hora_ingreso\": \"10:11:00\", \"proveedor_id\": 1, \"fecha_ingreso\": \"2026-01-10\", \"observaciones\": \"\", \"cantidad_total\": 5, \"solicitud_ingreso_detalles\": [{\"id\": 25, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 5, \"subtotal\": \"1500.00\", \"calculado\": \"0.00\", \"created_at\": \"2026-01-10T14:11:58.000000Z\", \"updated_at\": \"2026-01-10T14:11:58.000000Z\", \"verificado\": 0, \"producto_id\": 3, \"pc_facturado\": \"0.00\", \"cantidad_fisica\": 5, \"costo_facturado\": \"0.00\", \"sucursal_ajuste\": null, \"solicitud_ingreso_id\": 13}]}', '{\"id\": 13, \"nro\": 13, \"cs_f\": \"CON FATURA\", \"total\": \"1500.00\", \"codigo\": \"SOL.13\", \"estado\": \"APROBADO CON OBSERVACIONES\", \"gastos\": \"0.00\", \"user_id\": 1, \"hora_sis\": \"10:11:00\", \"fecha_sis\": \"2026-01-10\", \"created_at\": \"2026-01-10T14:11:58.000000Z\", \"deleted_at\": null, \"updated_at\": \"2026-01-10T14:12:39.000000Z\", \"verificado\": 2, \"descripcion\": \"\", \"tipo_cambio\": \"6.98\", \"hora_ingreso\": \"10:11:00\", \"proveedor_id\": 1, \"fecha_ingreso\": \"2026-01-10\", \"observaciones\": \"\", \"cantidad_total\": 5, \"solicitud_ingreso_detalles\": [{\"id\": 25, \"costo\": \"300.00\", \"motivo\": \"ROTURA\", \"cantidad\": 5, \"subtotal\": \"1200.00\", \"calculado\": \"0.00\", \"created_at\": \"2026-01-10T14:11:58.000000Z\", \"updated_at\": \"2026-01-10T14:12:39.000000Z\", \"verificado\": 1, \"producto_id\": 3, \"pc_facturado\": \"0.00\", \"cantidad_fisica\": 4, \"costo_facturado\": \"0.00\", \"sucursal_ajuste\": null, \"solicitud_ingreso_id\": 13}]}', 'SOLICITUD DE INGRESO', '2026-01-10', '10:12:39', '2026-01-10 14:12:39', '2026-01-10 14:12:39'),
 (321, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UN AJUSTE', '{\"id\": 3, \"tipo\": \"SOLICITUD DE INGRESO\", \"fecha\": \"2026-01-10\", \"estado\": \"NO REPUESTO\", \"motivo\": \"ROTURA\", \"cantidad\": 1, \"created_at\": \"2026-01-10T14:15:27.000000Z\", \"updated_at\": \"2026-01-10T14:15:27.000000Z\", \"producto_id\": 3, \"registro_id\": 25, \"sucursal_id\": 6, \"sucursal_origen\": 1}', NULL, 'AJUSTES', '2026-01-10', '10:15:27', '2026-01-10 14:15:27', '2026-01-10 14:15:27'),
-(322, 1, 'MODIFICACIÓN', 'EL USUARIO admin APROBO LOS COSTOS DE UNA SOLICITUD DE INGRESO', '{\"id\": 13, \"nro\": 13, \"cs_f\": \"CON FATURA\", \"total\": \"1500.00\", \"codigo\": \"SOL.13\", \"estado\": \"APROBADO CON OBSERVACIONES\", \"gastos\": \"0.00\", \"user_id\": 1, \"hora_sis\": \"10:11:00\", \"fecha_sis\": \"2026-01-10\", \"created_at\": \"2026-01-10T14:11:58.000000Z\", \"deleted_at\": null, \"updated_at\": \"2026-01-10T14:12:39.000000Z\", \"verificado\": 2, \"descripcion\": \"\", \"tipo_cambio\": \"6.98\", \"hora_ingreso\": \"10:11:00\", \"proveedor_id\": 1, \"fecha_ingreso\": \"2026-01-10\", \"observaciones\": \"\", \"cantidad_total\": 5, \"solicitud_ingreso_detalles\": [{\"id\": 25, \"costo\": \"300.00\", \"motivo\": \"ROTURA\", \"cantidad\": 5, \"subtotal\": \"1200.00\", \"calculado\": \"0.00\", \"created_at\": \"2026-01-10T14:11:58.000000Z\", \"updated_at\": \"2026-01-10T14:12:39.000000Z\", \"verificado\": 1, \"producto_id\": 3, \"pc_facturado\": \"0.00\", \"cantidad_fisica\": 4, \"costo_facturado\": \"0.00\", \"sucursal_ajuste\": null, \"solicitud_ingreso_id\": 13}]}', '{\"id\": 13, \"nro\": 13, \"cs_f\": \"CON FATURA\", \"total\": \"1500.00\", \"codigo\": \"SOL.13\", \"estado\": \"APROBADO CON OBSERVACIONES\", \"gastos\": \"0.00\", \"user_id\": 1, \"hora_sis\": \"10:11:00\", \"fecha_sis\": \"2026-01-10\", \"created_at\": \"2026-01-10T14:11:58.000000Z\", \"deleted_at\": null, \"updated_at\": \"2026-01-10T14:15:27.000000Z\", \"verificado\": 3, \"descripcion\": \"\", \"tipo_cambio\": \"6.98\", \"hora_ingreso\": \"10:11:00\", \"proveedor_id\": 1, \"fecha_ingreso\": \"2026-01-10\", \"observaciones\": \"\", \"cantidad_total\": 5, \"solicitud_ingreso_detalles\": [{\"id\": 25, \"costo\": \"300.00\", \"motivo\": \"ROTURA\", \"cantidad\": 5, \"subtotal\": \"1200.00\", \"calculado\": \"291.30\", \"created_at\": \"2026-01-10T14:11:58.000000Z\", \"updated_at\": \"2026-01-10T14:15:27.000000Z\", \"verificado\": 3, \"producto_id\": 3, \"pc_facturado\": \"8.70\", \"cantidad_fisica\": 4, \"costo_facturado\": \"290.00\", \"sucursal_ajuste\": null, \"solicitud_ingreso_id\": 13}]}', 'SOLICITUD DE INGRESO', '2026-01-10', '10:15:27', '2026-01-10 14:15:27', '2026-01-10 14:15:27');
+(322, 1, 'MODIFICACIÓN', 'EL USUARIO admin APROBO LOS COSTOS DE UNA SOLICITUD DE INGRESO', '{\"id\": 13, \"nro\": 13, \"cs_f\": \"CON FATURA\", \"total\": \"1500.00\", \"codigo\": \"SOL.13\", \"estado\": \"APROBADO CON OBSERVACIONES\", \"gastos\": \"0.00\", \"user_id\": 1, \"hora_sis\": \"10:11:00\", \"fecha_sis\": \"2026-01-10\", \"created_at\": \"2026-01-10T14:11:58.000000Z\", \"deleted_at\": null, \"updated_at\": \"2026-01-10T14:12:39.000000Z\", \"verificado\": 2, \"descripcion\": \"\", \"tipo_cambio\": \"6.98\", \"hora_ingreso\": \"10:11:00\", \"proveedor_id\": 1, \"fecha_ingreso\": \"2026-01-10\", \"observaciones\": \"\", \"cantidad_total\": 5, \"solicitud_ingreso_detalles\": [{\"id\": 25, \"costo\": \"300.00\", \"motivo\": \"ROTURA\", \"cantidad\": 5, \"subtotal\": \"1200.00\", \"calculado\": \"0.00\", \"created_at\": \"2026-01-10T14:11:58.000000Z\", \"updated_at\": \"2026-01-10T14:12:39.000000Z\", \"verificado\": 1, \"producto_id\": 3, \"pc_facturado\": \"0.00\", \"cantidad_fisica\": 4, \"costo_facturado\": \"0.00\", \"sucursal_ajuste\": null, \"solicitud_ingreso_id\": 13}]}', '{\"id\": 13, \"nro\": 13, \"cs_f\": \"CON FATURA\", \"total\": \"1500.00\", \"codigo\": \"SOL.13\", \"estado\": \"APROBADO CON OBSERVACIONES\", \"gastos\": \"0.00\", \"user_id\": 1, \"hora_sis\": \"10:11:00\", \"fecha_sis\": \"2026-01-10\", \"created_at\": \"2026-01-10T14:11:58.000000Z\", \"deleted_at\": null, \"updated_at\": \"2026-01-10T14:15:27.000000Z\", \"verificado\": 3, \"descripcion\": \"\", \"tipo_cambio\": \"6.98\", \"hora_ingreso\": \"10:11:00\", \"proveedor_id\": 1, \"fecha_ingreso\": \"2026-01-10\", \"observaciones\": \"\", \"cantidad_total\": 5, \"solicitud_ingreso_detalles\": [{\"id\": 25, \"costo\": \"300.00\", \"motivo\": \"ROTURA\", \"cantidad\": 5, \"subtotal\": \"1200.00\", \"calculado\": \"291.30\", \"created_at\": \"2026-01-10T14:11:58.000000Z\", \"updated_at\": \"2026-01-10T14:15:27.000000Z\", \"verificado\": 3, \"producto_id\": 3, \"pc_facturado\": \"8.70\", \"cantidad_fisica\": 4, \"costo_facturado\": \"290.00\", \"sucursal_ajuste\": null, \"solicitud_ingreso_id\": 13}]}', 'SOLICITUD DE INGRESO', '2026-01-10', '10:15:27', '2026-01-10 14:15:27', '2026-01-10 14:15:27'),
+(323, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA DEVOLUCIÓN DE STOCK', '{\"id\": 6, \"nro\": 5, \"hora\": \"09:26\", \"fecha\": \"2026-01-13\", \"total\": 2400, \"codigo\": \"DEV.5\", \"estado\": \"PENDIENTE\", \"total_v\": 2400, \"user_id\": 1, \"created_at\": \"2026-01-13T13:27:13.000000Z\", \"updated_at\": \"2026-01-13T13:27:13.000000Z\", \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 8, \"cantidad_total_v\": 8}', NULL, 'DEVOLUCIÓN DE STOCK', '2026-01-13', '09:27:13', '2026-01-13 13:27:13', '2026-01-13 13:27:13'),
+(324, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UN AJUSTE', '{\"id\": 4, \"tipo\": \"DEVOLUCION DE STOCK\", \"fecha\": \"2026-01-13\", \"estado\": \"NO REPUESTO\", \"motivo\": \"POR CONTEO\", \"cantidad\": 3, \"created_at\": \"2026-01-13T13:37:02.000000Z\", \"updated_at\": \"2026-01-13T13:37:02.000000Z\", \"producto_id\": 3, \"registro_id\": 6, \"sucursal_id\": 6, \"sucursal_origen\": 2}', NULL, 'AJUSTES', '2026-01-13', '09:37:02', '2026-01-13 13:37:02', '2026-01-13 13:37:02'),
+(325, 1, 'MODIFICACIÓN', 'EL USUARIO admin APROBO UNA DEVOLUCIÓN DE STOCK', '{\"id\": 6, \"nro\": 5, \"hora\": \"09:26:00\", \"fecha\": \"2026-01-13\", \"total\": \"2400.00\", \"codigo\": \"DEV.5\", \"estado\": \"PENDIENTE\", \"total_v\": \"2400.00\", \"user_id\": 1, \"user_ver\": null, \"created_at\": \"2026-01-13T13:27:13.000000Z\", \"deleted_at\": null, \"updated_at\": \"2026-01-13T13:27:13.000000Z\", \"verificado\": 0, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 8, \"cantidad_total_v\": 8, \"devolucion_stock_detalles\": [{\"id\": 6, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 8, \"subtotal\": \"2400.00\", \"created_at\": \"2026-01-13T13:27:13.000000Z\", \"updated_at\": \"2026-01-13T13:27:13.000000Z\", \"verificado\": 0, \"producto_id\": 3, \"cantidad_fisica\": 8, \"sucursal_ajuste\": null, \"devolucion_stock_id\": 6}]}', '{\"id\": 6, \"nro\": 5, \"hora\": \"09:26:00\", \"fecha\": \"2026-01-13\", \"total\": \"2400.00\", \"codigo\": \"DEV.5\", \"estado\": \"APROBADO CON OBSERVACIONES\", \"total_v\": \"2400.00\", \"user_id\": 1, \"user_ver\": 1, \"created_at\": \"2026-01-13T13:27:13.000000Z\", \"deleted_at\": null, \"updated_at\": \"2026-01-13T13:37:02.000000Z\", \"verificado\": 2, \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 8, \"cantidad_total_v\": 8, \"devolucion_stock_detalles\": [{\"id\": 6, \"costo\": \"300.00\", \"motivo\": \"POR CONTEO\", \"cantidad\": 8, \"subtotal\": \"2400.00\", \"created_at\": \"2026-01-13T13:27:13.000000Z\", \"updated_at\": \"2026-01-13T13:37:02.000000Z\", \"verificado\": 1, \"producto_id\": 3, \"cantidad_fisica\": 5, \"sucursal_ajuste\": null, \"devolucion_stock_id\": 6}]}', 'DEVOLUCIÓN DE STOCK', '2026-01-13', '09:37:02', '2026-01-13 13:37:02', '2026-01-13 13:37:02'),
+(328, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA REPOSICIÓN', '{\"id\": 5, \"fecha\": \"2026-01-13\", \"cantidad\": 3, \"ajuste_id\": 4, \"created_at\": \"2026-01-13T13:44:02.000000Z\", \"updated_at\": \"2026-01-13T13:44:02.000000Z\", \"producto_id\": 3, \"sucursal_id\": 2}', NULL, 'AJUSTES REPOSICIÓN', '2026-01-13', '09:44:02', '2026-01-13 13:44:02', '2026-01-13 13:44:02'),
+(329, 1, 'MODIFICACIÓN', 'EL USUARIO admin REPOSICIÓN DE PRODUCTO', '{\"id\": 4, \"tipo\": \"DEVOLUCION DE STOCK\", \"fecha\": \"2026-01-13\", \"estado\": \"NO REPUESTO\", \"motivo\": \"POR CONTEO\", \"cantidad\": 3, \"created_at\": \"2026-01-13T13:37:02.000000Z\", \"updated_at\": \"2026-01-13T13:37:02.000000Z\", \"producto_id\": 3, \"registro_id\": 6, \"sucursal_id\": 6, \"sucursal_origen\": 2}', '{\"id\": 4, \"tipo\": \"DEVOLUCION DE STOCK\", \"fecha\": \"2026-01-13\", \"estado\": \"REPUESTO\", \"motivo\": \"POR CONTEO\", \"cantidad\": 3, \"created_at\": \"2026-01-13T13:37:02.000000Z\", \"updated_at\": \"2026-01-13T13:44:02.000000Z\", \"producto_id\": 3, \"registro_id\": 6, \"sucursal_id\": 6, \"sucursal_origen\": 2}', 'AJUSTES', '2026-01-13', '09:44:02', '2026-01-13 13:44:02', '2026-01-13 13:44:02'),
+(330, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA DEVOLUCIÓN DE STOCK', '{\"id\": 7, \"nro\": 6, \"hora\": \"09:57\", \"fecha\": \"2026-01-13\", \"total\": 1500, \"codigo\": \"DEV.6\", \"estado\": \"PENDIENTE\", \"total_v\": 1500, \"user_id\": 1, \"created_at\": \"2026-01-13T13:58:10.000000Z\", \"updated_at\": \"2026-01-13T13:58:10.000000Z\", \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 5, \"cantidad_total_v\": 5}', NULL, 'DEVOLUCIÓN DE STOCK', '2026-01-13', '09:58:10', '2026-01-13 13:58:10', '2026-01-13 13:58:10'),
+(331, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA DEVOLUCIÓN DE STOCK', '{\"id\": 8, \"nro\": 7, \"hora\": \"09:58\", \"fecha\": \"2026-01-13\", \"total\": 1500, \"codigo\": \"DEV.7\", \"estado\": \"PENDIENTE\", \"total_v\": 1500, \"user_id\": 1, \"created_at\": \"2026-01-13T13:59:03.000000Z\", \"updated_at\": \"2026-01-13T13:59:03.000000Z\", \"sucursal_id\": 2, \"observaciones\": \"\", \"cantidad_total\": 5, \"cantidad_total_v\": 5}', NULL, 'DEVOLUCIÓN DE STOCK', '2026-01-13', '09:59:03', '2026-01-13 13:59:03', '2026-01-13 13:59:03'),
+(332, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA SOLICITUD DE INGRESO', '{\"id\": 14, \"nro\": 14, \"cs_f\": \"CON FATURA\", \"total\": 1500, \"codigo\": \"SOL.14\", \"estado\": \"PENDIENTE\", \"gastos\": 0, \"user_id\": 1, \"hora_sis\": \"09:59\", \"fecha_sis\": \"2026-01-13\", \"created_at\": \"2026-01-13T13:59:32.000000Z\", \"updated_at\": \"2026-01-13T13:59:32.000000Z\", \"descripcion\": \"\", \"tipo_cambio\": 6.97, \"hora_ingreso\": \"09:59\", \"proveedor_id\": 1, \"fecha_ingreso\": \"2026-01-13\", \"observaciones\": \"\", \"cantidad_total\": 5}', NULL, 'SOLICITUD DE INGRESO', '2026-01-13', '09:59:32', '2026-01-13 13:59:32', '2026-01-13 13:59:32'),
+(333, 1, 'MODIFICACIÓN', 'EL USUARIO admin APROBO UNA SOLICITUD DE INGRESO', '{\"id\": 14, \"nro\": 14, \"cs_f\": \"CON FATURA\", \"total\": \"1500.00\", \"codigo\": \"SOL.14\", \"estado\": \"PENDIENTE\", \"gastos\": \"0.00\", \"user_id\": 1, \"hora_sis\": \"09:59:00\", \"fecha_sis\": \"2026-01-13\", \"created_at\": \"2026-01-13T13:59:32.000000Z\", \"deleted_at\": null, \"updated_at\": \"2026-01-13T13:59:32.000000Z\", \"verificado\": 0, \"descripcion\": \"\", \"tipo_cambio\": \"6.97\", \"hora_ingreso\": \"09:59:00\", \"proveedor_id\": 1, \"fecha_ingreso\": \"2026-01-13\", \"observaciones\": \"\", \"cantidad_total\": 5, \"solicitud_ingreso_detalles\": [{\"id\": 26, \"costo\": \"300.00\", \"motivo\": null, \"cantidad\": 5, \"subtotal\": \"1500.00\", \"calculado\": \"0.00\", \"created_at\": \"2026-01-13T13:59:32.000000Z\", \"updated_at\": \"2026-01-13T13:59:32.000000Z\", \"verificado\": 0, \"producto_id\": 3, \"pc_facturado\": \"0.00\", \"cantidad_fisica\": 5, \"costo_facturado\": \"0.00\", \"sucursal_ajuste\": null, \"solicitud_ingreso_id\": 14}]}', '{\"id\": 14, \"nro\": 14, \"cs_f\": \"CON FATURA\", \"total\": \"1500.00\", \"codigo\": \"SOL.14\", \"estado\": \"APROBADO CON OBSERVACIONES\", \"gastos\": \"0.00\", \"user_id\": 1, \"hora_sis\": \"09:59:00\", \"fecha_sis\": \"2026-01-13\", \"created_at\": \"2026-01-13T13:59:32.000000Z\", \"deleted_at\": null, \"updated_at\": \"2026-01-13T14:00:38.000000Z\", \"verificado\": 2, \"descripcion\": \"\", \"tipo_cambio\": \"6.97\", \"hora_ingreso\": \"09:59:00\", \"proveedor_id\": 1, \"fecha_ingreso\": \"2026-01-13\", \"observaciones\": \"\", \"cantidad_total\": 5, \"solicitud_ingreso_detalles\": [{\"id\": 26, \"costo\": \"300.00\", \"motivo\": \"POR CONTEO\", \"cantidad\": 5, \"subtotal\": \"1200.00\", \"calculado\": \"0.00\", \"created_at\": \"2026-01-13T13:59:32.000000Z\", \"updated_at\": \"2026-01-13T14:00:38.000000Z\", \"verificado\": 1, \"producto_id\": 3, \"pc_facturado\": \"0.00\", \"cantidad_fisica\": 4, \"costo_facturado\": \"0.00\", \"sucursal_ajuste\": null, \"solicitud_ingreso_id\": 14}]}', 'SOLICITUD DE INGRESO', '2026-01-13', '10:00:38', '2026-01-13 14:00:38', '2026-01-13 14:00:38'),
+(334, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN PRODUCTO', '{\"id\": 6, \"ppp\": 0, \"codigo\": \"P004\", \"estado\": 1, \"imagen\": null, \"nombre\": \"PRODUCTO 4\", \"precio\": \"90.00\", \"marca_id\": 2, \"created_at\": \"2025-12-19T14:07:05.000000Z\", \"deleted_at\": null, \"precio_ppp\": \"0.00\", \"updated_at\": \"2026-01-06T20:42:08.000000Z\", \"descripcion\": \"\", \"categoria_id\": 1, \"unidades_caja\": 30, \"unidad_medida_id\": 2}', '{\"id\": 6, \"ppp\": 0, \"codigo\": \"P004\", \"estado\": \"1\", \"imagen\": null, \"nombre\": \"PRODUCTO 4\", \"precio\": \"90.00\", \"marca_id\": \"2\", \"created_at\": \"2025-12-19T14:07:05.000000Z\", \"deleted_at\": null, \"precio_ppp\": \"0.00\", \"updated_at\": \"2026-01-13T14:12:10.000000Z\", \"descripcion\": \"IT IS A LONG ESTABLISHED FACT THAT A READER WILL BE DISTRACTED BY THE READABLE CONTENT OF A PAGE WHEN LOOKING AT ITS LAYOUT. THE POINT OF USING LOREM IPSUM IS THAT IT HAS A MORE-OR-LESS NORMAL DISTRIBUTION OF LETTERS, AS OPPOSED TO USING \'CONTENT HERE, CONTENT HERE\', MAKING IT LOOK LIKE READABLE ENGLISH. MANY DESKTOP PUBLISHING PACKAGES AND WEB PAGE EDITORS NOW USE LOREM IPSUM AS THEIR DEFAULT MODEL TEXT, AND A SEARCH FOR \'LOREM IPSUM\' WILL UNCOVER MANY WEB SITES STILL IN THEIR INFANCY. VARIOUS VERSIONS HAVE EVOLVED OVER THE YEARS, SOMETIMES BY ACCIDENT, SOMETIMES ON PURPOSE (INJECTED HUMOUR AND THE LIKE).\", \"categoria_id\": \"1\", \"unidades_caja\": \"30\", \"unidad_medida_id\": \"2\"}', 'PRODUCTOS', '2026-01-13', '10:12:10', '2026-01-13 14:12:10', '2026-01-13 14:12:10'),
+(335, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UN USUARIO', '{\"ci\": \"34545435\", \"id\": 20, \"cel\": \"787878\", \"dir\": \"LOS PEDREGALES\", \"fono\": null, \"sexo\": \"FEMENINO\", \"tipo\": \"EMPLEADO\", \"acceso\": 0, \"ci_exp\": \"LP\", \"correo\": \"mariag@gmail.com\", \"nombre\": \"MARIA\", \"cel_dom\": \"787878\", \"materno\": \"\", \"paterno\": \"GONZALES\", \"role_id\": null, \"usuario\": \"mariag@gmail.com\", \"grupo_san\": \"ORH+\", \"profesion\": \"\", \"ubicacion\": \"urlgps\", \"created_at\": \"2026-01-14T14:21:24.000000Z\", \"documentos\": [], \"updated_at\": \"2026-01-14T14:21:24.000000Z\", \"certificados\": [], \"nacionalidad\": \"BOLIVIANO\", \"fecha_registro\": \"2026-01-14\"}', NULL, 'USUARIOS', '2026-01-14', '10:21:24', '2026-01-14 14:21:24', '2026-01-14 14:21:24'),
+(336, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN PROVEEDOR', '{\"id\": 2, \"dir\": \"LOS OLIVOS #23\", \"nit\": \"121231\", \"tipo\": \"MIXTO\", \"ciudad\": \"EL ALTO\", \"correo\": \"prove2@gmail.com\", \"estado\": 1, \"marcas\": [2], \"moneda\": \"boliviano\", \"fono_emp\": \"234234234\", \"contactos\": [{\"cel\": \"7878787878\", \"fono\": \"MAMANI\", \"nombre\": \"JUAN\", \"observacion\": null}], \"categorias\": [2], \"created_at\": \"2025-12-03T16:16:35.000000Z\", \"deleted_at\": null, \"nombre_com\": \"\", \"updated_at\": \"2025-12-03T16:16:35.000000Z\", \"razon_social\": \"PROVEEDOR 2 S.R.L\", \"observaciones\": \"\"}', '{\"id\": 2, \"dir\": \"LOS OLIVOS #23\", \"nit\": \"121231\", \"tipo\": \"MIXTO\", \"ciudad\": \"EL ALTO\", \"correo\": \"prove2@gmail.com\", \"estado\": 1, \"marcas\": [2], \"moneda\": \"boliviano\", \"fono_emp\": \"234234234\", \"contactos\": [{\"cel\": \"7878787878\", \"fono\": \"MAMANI\", \"nombre\": \"JUAN\", \"observacion\": \"IT IS A LONG ESTABLISHED FACT THAT A READER WILL BE DISTRACTED BY THE READABLE CONTENT OF A PAGE WHEN LOOKING AT ITS LAYOUT. THE POINT OF USING LOREM IPSUM IS THAT IT HAS A MORE-OR-LESS NORMAL DISTRIBUTION OF LETTERS, AS OPPOSED TO USING \'CONTENT HERE, CONTENT HERE\', MAKING IT LOOK LIKE READABLE ENGLISH. MANY DESKTOP PUBLISHING PACKAGES AND WEB PAGE EDITORS NOW USE LOREM IPSUM AS THEIR DEFAULT MODEL TEXT, AND A SEARCH FOR \'LOREM IPSUM\' WILL UNCOVER MANY WEB SITES STILL IN THEIR INFANCY. VARIOUS VERSIONS HAVE EVOLVED OVER THE YEARS, SOMETIMES BY ACCIDENT, SOMETIMES ON PURPOSE (INJECTED HUMOUR AND THE LIKE).\"}], \"categorias\": [2], \"created_at\": \"2025-12-03T16:16:35.000000Z\", \"deleted_at\": null, \"nombre_com\": \"\", \"updated_at\": \"2026-01-14T14:47:48.000000Z\", \"razon_social\": \"PROVEEDOR 2 S.R.L\", \"observaciones\": \"\"}', 'PROVEEDORES', '2026-01-14', '10:47:48', '2026-01-14 14:47:48', '2026-01-14 14:47:48'),
+(337, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN PROVEEDOR', '{\"id\": 2, \"dir\": \"LOS OLIVOS #23\", \"nit\": \"121231\", \"tipo\": \"MIXTO\", \"ciudad\": \"EL ALTO\", \"correo\": \"prove2@gmail.com\", \"estado\": 1, \"marcas\": [2], \"moneda\": \"boliviano\", \"fono_emp\": \"234234234\", \"contactos\": [{\"cel\": \"7878787878\", \"fono\": \"MAMANI\", \"nombre\": \"JUAN\", \"observacion\": \"IT IS A LONG ESTABLISHED FACT THAT A READER WILL BE DISTRACTED BY THE READABLE CONTENT OF A PAGE WHEN LOOKING AT ITS LAYOUT. THE POINT OF USING LOREM IPSUM IS THAT IT HAS A MORE-OR-LESS NORMAL DISTRIBUTION OF LETTERS, AS OPPOSED TO USING \'CONTENT HERE, CONTENT HERE\', MAKING IT LOOK LIKE READABLE ENGLISH. MANY DESKTOP PUBLISHING PACKAGES AND WEB PAGE EDITORS NOW USE LOREM IPSUM AS THEIR DEFAULT MODEL TEXT, AND A SEARCH FOR \'LOREM IPSUM\' WILL UNCOVER MANY WEB SITES STILL IN THEIR INFANCY. VARIOUS VERSIONS HAVE EVOLVED OVER THE YEARS, SOMETIMES BY ACCIDENT, SOMETIMES ON PURPOSE (INJECTED HUMOUR AND THE LIKE).\"}], \"categorias\": [2], \"created_at\": \"2025-12-03T16:16:35.000000Z\", \"deleted_at\": null, \"nombre_com\": \"\", \"updated_at\": \"2026-01-14T14:47:48.000000Z\", \"razon_social\": \"PROVEEDOR 2 S.R.L\", \"observaciones\": \"\"}', '{\"id\": 2, \"dir\": \"LOS OLIVOS #23\", \"nit\": \"121231\", \"tipo\": \"MIXTO\", \"ciudad\": \"EL ALTO\", \"correo\": \"prove2@gmail.com\", \"estado\": 1, \"marcas\": [2], \"moneda\": \"boliviano\", \"fono_emp\": \"234234234\", \"contactos\": [{\"cel\": \"7878787878\", \"fono\": \"MAMANI\", \"nombre\": \"JUAN\", \"observacion\": null}], \"categorias\": [2], \"created_at\": \"2025-12-03T16:16:35.000000Z\", \"deleted_at\": null, \"nombre_com\": \"\", \"updated_at\": \"2026-01-14T14:48:22.000000Z\", \"razon_social\": \"PROVEEDOR 2 S.R.L\", \"observaciones\": \"IT IS A LONG ESTABLISHED FACT THAT A READER WILL BE DISTRACTED BY THE READABLE CONTENT OF A PAGE WHEN LOOKING AT ITS LAYOUT. THE POINT OF USING LOREM IPSUM IS THAT IT HAS A MORE-OR-LESS NORMAL DISTRIBUTION OF LETTERS, AS OPPOSED TO USING \'CONTENT HERE, CONTENT HERE\', MAKING IT LOOK LIKE READABLE ENGLISH. MANY DESKTOP PUBLISHING PACKAGES AND WEB PAGE EDITORS NOW USE LOREM IPSUM AS THEIR DEFAULT MODEL TEXT, AND A SEARCH FOR \'LOREM IPSUM\' WILL UNCOVER MANY WEB SITES STILL IN THEIR INFANCY. VARIOUS VERSIONS HAVE EVOLVED OVER THE YEARS, SOMETIMES BY ACCIDENT, SOMETIMES ON PURPOSE (INJECTED HUMOUR AND THE LIKE).\"}', 'PROVEEDORES', '2026-01-14', '10:48:22', '2026-01-14 14:48:22', '2026-01-14 14:48:22');
 
 -- --------------------------------------------------------
 
@@ -1071,7 +1095,13 @@ INSERT INTO `kardex_productos` (`id`, `sucursal_id`, `tipo_registro`, `registro_
 (166, 6, 'AJUSTE REPOSICIÓN', 2, 'AjusteReposicion', 3, 'EGRESO POR REPOSICIÓN DE AJUSTE', 300.00, 'EGRESO', NULL, 1, 1, 300.00, NULL, 300.00, 300.00, '2026-01-10', 1, 1, '2026-01-10 14:10:25', '2026-01-10 14:10:25'),
 (167, 1, 'SOLICITUD INGRESO', 24, 'SolicitudIngresoDetalle', 3, 'INGRESO POR SOLICITUD', 290.00, 'INGRESO', 2, NULL, 172, 300.00, 580.00, NULL, 48822.00, '2026-01-10', 1, 1, '2026-01-10 14:11:33', '2026-01-10 14:11:33'),
 (170, 1, 'SOLICITUD INGRESO', 25, 'SolicitudIngresoDetalle', 3, 'INGRESO POR SOLICITUD', 300.00, 'INGRESO', 4, NULL, 176, 300.00, 1200.00, NULL, 50022.00, '2026-01-10', 1, 1, '2026-01-10 14:15:27', '2026-01-10 14:15:27'),
-(171, 6, 'SOLICITUD INGRESO', 25, 'SolicitudIngresoDetalle', 3, 'INGRESO POR AJUSTE', 300.00, 'INGRESO', 1, NULL, 2, 300.00, 300.00, NULL, 600.00, '2026-01-10', 1, 1, '2026-01-10 14:15:27', '2026-01-10 14:15:27');
+(171, 6, 'SOLICITUD INGRESO', 25, 'SolicitudIngresoDetalle', 3, 'INGRESO POR AJUSTE', 300.00, 'INGRESO', 1, NULL, 2, 300.00, 300.00, NULL, 600.00, '2026-01-10', 1, 1, '2026-01-10 14:15:27', '2026-01-10 14:15:27'),
+(172, 2, 'DEVOLUCIÓN DE STOCK', 6, 'DevolucionStockDetalle', 3, 'EGRESO POR DEVOLUCIÓN DE STOCK', 300.00, 'EGRESO', NULL, 8, 66, 300.00, NULL, 2400.00, 19740.00, '2026-01-13', 1, 1, '2026-01-13 13:37:02', '2026-01-13 13:37:02'),
+(173, 1, 'DEVOLUCIÓN DE STOCK', 6, 'DevolucionStockDetalle', 3, 'INGRESO POR DEVOLUCIÓN DE STOCK', 300.00, 'INGRESO', 5, NULL, 181, 300.00, 1500.00, NULL, 51522.00, '2026-01-13', 1, 1, '2026-01-13 13:37:02', '2026-01-13 13:37:02'),
+(174, 6, 'DEVOLUCIÓN DE STOCK', 6, 'DevolucionStockDetalle', 3, 'INGRESO POR AJUSTE', 300.00, 'INGRESO', 3, NULL, 5, 300.00, 900.00, NULL, 1500.00, '2026-01-13', 1, 1, '2026-01-13 13:37:02', '2026-01-13 13:37:02'),
+(177, 1, 'AJUSTE REPOSICIÓN', 5, 'AjusteReposicion', 3, 'INGRESO POR REPOSICIÓN DE AJUSTE', 300.00, 'INGRESO', 3, NULL, 184, 300.00, 900.00, NULL, 52422.00, '2026-01-13', 1, 1, '2026-01-13 13:44:02', '2026-01-13 13:44:02'),
+(178, 2, 'DEVOLUCIÓN DE STOCK', 6, 'AjusteReposicion', 3, 'EGRESO POR REPOSICIÓN DE AJUSTE', 300.00, 'EGRESO', NULL, 3, 63, 300.00, NULL, 900.00, 18840.00, '2026-01-13', 1, 1, '2026-01-13 13:44:02', '2026-01-13 13:44:02'),
+(179, 6, 'AJUSTE REPOSICIÓN', 5, 'AjusteReposicion', 3, 'EGRESO POR REPOSICIÓN DE AJUSTE', 300.00, 'EGRESO', NULL, 3, 2, 300.00, NULL, 900.00, 600.00, '2026-01-13', 1, 1, '2026-01-13 13:44:02', '2026-01-13 13:44:02');
 
 -- --------------------------------------------------------
 
@@ -1710,6 +1740,17 @@ CREATE TABLE `permisos` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `permisos`
+--
+
+INSERT INTO `permisos` (`id`, `role_id`, `modulo_id`, `created_at`, `updated_at`) VALUES
+(1, 2, 1, '2026-01-10 15:03:24', '2026-01-10 15:03:24'),
+(2, 2, 12, '2026-01-10 15:06:52', '2026-01-10 15:06:52'),
+(3, 2, 16, '2026-01-10 15:06:57', '2026-01-10 15:06:57'),
+(4, 2, 35, '2026-01-10 15:08:51', '2026-01-10 15:08:51'),
+(5, 2, 34, '2026-01-10 15:08:54', '2026-01-10 15:08:54');
+
 -- --------------------------------------------------------
 
 --
@@ -1743,7 +1784,7 @@ INSERT INTO `productos` (`id`, `codigo`, `nombre`, `unidades_caja`, `descripcion
 (3, 'P001', 'PRODUCTO 1', 20, 'DESCRIPCION', 1, 1, 300.00, 149.38, 0, 1, 1, '31764682791.png', NULL, '2025-12-02 13:39:51', '2026-01-06 20:42:39'),
 (4, 'P002', 'PRODUCTO 2', 20, '', 2, 2, 345.00, 345.00, 0, 2, 1, NULL, NULL, '2025-12-04 22:16:21', '2025-12-13 01:43:04'),
 (5, 'P003', 'PRODUCTO 3', 40, '', 1, 1, 97.00, NULL, 0, 1, 1, NULL, NULL, '2025-12-13 00:52:12', '2025-12-13 00:52:12'),
-(6, 'P004', 'PRODUCTO 4', 30, '', 1, 2, 90.00, 0.00, 0, 2, 1, NULL, NULL, '2025-12-19 14:07:05', '2026-01-06 20:42:08');
+(6, 'P004', 'PRODUCTO 4', 30, 'IT IS A LONG ESTABLISHED FACT THAT A READER WILL BE DISTRACTED BY THE READABLE CONTENT OF A PAGE WHEN LOOKING AT ITS LAYOUT. THE POINT OF USING LOREM IPSUM IS THAT IT HAS A MORE-OR-LESS NORMAL DISTRIBUTION OF LETTERS, AS OPPOSED TO USING \'CONTENT HERE, CONTENT HERE\', MAKING IT LOOK LIKE READABLE ENGLISH. MANY DESKTOP PUBLISHING PACKAGES AND WEB PAGE EDITORS NOW USE LOREM IPSUM AS THEIR DEFAULT MODEL TEXT, AND A SEARCH FOR \'LOREM IPSUM\' WILL UNCOVER MANY WEB SITES STILL IN THEIR INFANCY. VARIOUS VERSIONS HAVE EVOLVED OVER THE YEARS, SOMETIMES BY ACCIDENT, SOMETIMES ON PURPOSE (INJECTED HUMOUR AND THE LIKE).', 1, 2, 90.00, 0.00, 0, 2, 1, NULL, NULL, '2025-12-19 14:07:05', '2026-01-13 14:12:14');
 
 -- --------------------------------------------------------
 
@@ -1913,7 +1954,7 @@ CREATE TABLE `proveedors` (
 
 INSERT INTO `proveedors` (`id`, `razon_social`, `nombre_com`, `nit`, `moneda`, `fono_emp`, `correo`, `dir`, `ciudad`, `tipo`, `estado`, `observaciones`, `categorias`, `marcas`, `contactos`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (1, 'PROVEEDOR 1 S.A.', 'PROVEEDOR S.A.', '11111111', 'bolivianos', '222222', 'proveedor1@gmail.com', 'LOS OLIVOS #22', 'LA PAZ', 'PRODUCTOS', 1, 'OBSERVACIONES', '[1, 2]', '[1]', '[{\"cel\": \"67676767\", \"fono\": \"74454545\", \"nombre\": \"EDUARDO PEREZ\", \"observacion\": null}]', NULL, '2025-12-03 16:11:34', '2025-12-03 16:16:02'),
-(2, 'PROVEEDOR 2 S.R.L', '', '121231', 'boliviano', '234234234', 'prove2@gmail.com', 'LOS OLIVOS #23', 'EL ALTO', 'MIXTO', 1, '', '[2]', '[2]', '[{\"cel\": \"7878787878\", \"fono\": \"MAMANI\", \"nombre\": \"JUAN\", \"observacion\": null}]', NULL, '2025-12-03 16:16:35', '2025-12-03 16:16:35');
+(2, 'PROVEEDOR 2 S.R.L', '', '121231', 'boliviano', '234234234', 'prove2@gmail.com', 'LOS OLIVOS #23', 'EL ALTO', 'MIXTO', 1, 'IT IS A LONG ESTABLISHED FACT THAT A READER WILL BE DISTRACTED BY THE READABLE CONTENT OF A PAGE WHEN LOOKING AT ITS LAYOUT. THE POINT OF USING LOREM IPSUM IS THAT IT HAS A MORE-OR-LESS NORMAL DISTRIBUTION OF LETTERS, AS OPPOSED TO USING \'CONTENT HERE, CONTENT HERE\', MAKING IT LOOK LIKE READABLE ENGLISH. MANY DESKTOP PUBLISHING PACKAGES AND WEB PAGE EDITORS NOW USE LOREM IPSUM AS THEIR DEFAULT MODEL TEXT, AND A SEARCH FOR \'LOREM IPSUM\' WILL UNCOVER MANY WEB SITES STILL IN THEIR INFANCY. VARIOUS VERSIONS HAVE EVOLVED OVER THE YEARS, SOMETIMES BY ACCIDENT, SOMETIMES ON PURPOSE (INJECTED HUMOUR AND THE LIKE).', '[2]', '[2]', '[{\"cel\": \"7878787878\", \"fono\": \"MAMANI\", \"nombre\": \"JUAN\", \"observacion\": null}]', NULL, '2025-12-03 16:16:35', '2026-01-14 14:48:22');
 
 -- --------------------------------------------------------
 
@@ -1988,7 +2029,8 @@ INSERT INTO `solicitud_ingresos` (`id`, `nro`, `codigo`, `proveedor_id`, `fecha_
 (10, 10, 'SOL.10', 2, '2025-12-22', '17:35:00', '2025-12-22', '17:35:00', 'CON FATURA', 6.98, 0.00, '', '', 40, 3500.00, 'APROBADO', 1, 3, NULL, '2025-12-22 21:35:49', '2025-12-22 21:38:02'),
 (11, 11, 'SOL.11', 1, '2026-01-06', '15:50:00', '2026-01-06', '15:51:00', 'CON FATURA', 6.98, 0.00, '', '', 60, 14840.00, 'APROBADO', 1, 3, NULL, '2026-01-06 19:51:02', '2026-01-06 20:06:34'),
 (12, 12, 'SOL.12', 1, '2026-01-10', '10:10:00', '2026-01-10', '10:10:00', 'CON FATURA', 6.98, 0.00, '', '', 2, 580.00, 'APROBADO', 1, 3, NULL, '2026-01-10 14:10:57', '2026-01-10 14:11:33'),
-(13, 13, 'SOL.13', 1, '2026-01-10', '10:11:00', '2026-01-10', '10:11:00', 'CON FATURA', 6.98, 0.00, '', '', 5, 1500.00, 'APROBADO CON OBSERVACIONES', 1, 3, NULL, '2026-01-10 14:11:58', '2026-01-10 14:15:27');
+(13, 13, 'SOL.13', 1, '2026-01-10', '10:11:00', '2026-01-10', '10:11:00', 'CON FATURA', 6.98, 0.00, '', '', 5, 1500.00, 'APROBADO CON OBSERVACIONES', 1, 3, NULL, '2026-01-10 14:11:58', '2026-01-10 14:15:27'),
+(14, 14, 'SOL.14', 1, '2026-01-13', '09:59:00', '2026-01-13', '09:59:00', 'CON FATURA', 6.97, 0.00, '', '', 5, 1500.00, 'APROBADO CON OBSERVACIONES', 1, 2, NULL, '2026-01-13 13:59:32', '2026-01-13 14:00:38');
 
 -- --------------------------------------------------------
 
@@ -2043,7 +2085,8 @@ INSERT INTO `solicitud_ingreso_detalles` (`id`, `solicitud_ingreso_id`, `product
 (22, 11, 4, 20, 20, 345.00, 336.00, 9.00, 300.00, 6900.00, 3, NULL, NULL, '2026-01-06 19:51:02', '2026-01-06 20:06:34'),
 (23, 11, 5, 20, 20, 97.00, 94.30, 2.70, 90.00, 1940.00, 3, NULL, NULL, '2026-01-06 19:51:02', '2026-01-06 20:06:34'),
 (24, 12, 3, 2, 2, 290.00, 281.90, 8.10, 270.00, 580.00, 3, NULL, NULL, '2026-01-10 14:10:57', '2026-01-10 14:11:33'),
-(25, 13, 3, 5, 4, 300.00, 291.30, 8.70, 290.00, 1200.00, 3, NULL, 'ROTURA', '2026-01-10 14:11:58', '2026-01-10 14:15:27');
+(25, 13, 3, 5, 4, 300.00, 291.30, 8.70, 290.00, 1200.00, 3, NULL, 'ROTURA', '2026-01-10 14:11:58', '2026-01-10 14:15:27'),
+(26, 14, 3, 5, 4, 300.00, 0.00, 0.00, 0.00, 1200.00, 1, NULL, 'POR CONTEO', '2026-01-13 13:59:32', '2026-01-13 14:00:38');
 
 -- --------------------------------------------------------
 
@@ -2124,9 +2167,9 @@ CREATE TABLE `sucursal_productos` (
 --
 
 INSERT INTO `sucursal_productos` (`id`, `sucursal_id`, `producto_id`, `cantidad_ideal`, `cantidad_minima`, `stock_actual`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 3, 5, 5, 176, NULL, '2025-12-05 15:07:00', '2026-01-10 14:15:27'),
+(1, 1, 3, 5, 5, 184, NULL, '2025-12-05 15:07:00', '2026-01-13 13:44:02'),
 (2, 1, 4, 0, 0, 150, NULL, '2025-12-05 15:07:00', '2026-01-06 20:06:34'),
-(4, 2, 3, 30, 6, 74, NULL, '2025-12-05 16:08:14', '2026-01-10 14:04:03'),
+(4, 2, 3, 30, 6, 63, NULL, '2025-12-05 16:08:14', '2026-01-13 13:44:02'),
 (5, 2, 4, 2, 2, 60, NULL, '2025-12-05 16:14:58', '2026-01-02 13:32:17'),
 (6, 3, 3, 0, 0, 15, NULL, '2025-12-06 14:30:40', '2025-12-22 21:33:24'),
 (7, 3, 4, 0, 0, 4, NULL, '2025-12-06 14:31:33', '2025-12-09 21:53:43'),
@@ -2144,7 +2187,7 @@ INSERT INTO `sucursal_productos` (`id`, `sucursal_id`, `producto_id`, `cantidad_
 (19, 5, 6, 0, 0, 0, NULL, '2025-12-19 14:07:09', '2025-12-19 14:07:09'),
 (20, 4, 6, 0, 0, 0, NULL, '2025-12-19 14:07:09', '2025-12-19 14:07:09'),
 (21, 1, 6, 0, 0, 46, NULL, '2025-12-19 14:42:26', '2025-12-22 21:38:02'),
-(22, 6, 3, 0, 0, 2, NULL, '2026-01-06 13:46:15', '2026-01-10 14:15:27');
+(22, 6, 3, 0, 0, 2, NULL, '2026-01-06 13:46:15', '2026-01-13 13:44:02');
 
 -- --------------------------------------------------------
 
@@ -2285,7 +2328,8 @@ INSERT INTO `users` (`id`, `usuario`, `nombre`, `paterno`, `materno`, `ci`, `ci_
 (16, 'maria@gmail.com', 'MARIA', 'GONZALES', '', '12312312', 'LP', 'ORH+', 'FEMENINO', 'BOLIVIANA', '', '67676767', '22232323', '676767', 'LOS OLIVOS', '11111', 'maria@gmail.com', NULL, NULL, '$2y$12$Br/h92SuGVk1alSb5xDlQOpbJBmH1n0xAc.rSGIWchdkqbmJv3m2O', 'USUARIO', 3, 1, '2025-12-01', 1, NULL, '2025-12-02 00:07:39', '2025-12-02 00:07:39'),
 (17, 'jorge@gmail.com', 'JORGE', 'GONZALES', '', '453543', 'LP', 'ORH+', 'MASCULINO', 'BOLIVIANO', '', '67676767', '22322332', '65665', 'LOS PEDRAGLES', '111', 'jorge@gmail.com', NULL, NULL, '$2y$12$SxmukOtIP.U3x3aexRyEbeHJHXbYhQsDFsHR53jf2CAVGEIf6WoGe', 'USUARIO', 3, 1, '2025-12-13', 1, NULL, '2025-12-02 00:08:20', '2025-12-13 23:39:30'),
 (18, 'john@gmail.com', 'JOHN', 'SOLIZ', '', '4545454', 'LP', 'OR+', 'MASCULINO', 'BOLIVIANO', '', '67676767', NULL, '6767676767', 'LOS PEDREGALES', 'https://maps.app.goo.gl/tuZ7h8crgcBX2zXm7', 'john@gmail.com', '181766152773.png', NULL, '$2y$12$0r1uZ4RuO/Fpc9Aq87hKeuEBLWZg7WyvIBbvAfMT.2DQbHFkO6PeO', 'USUARIO', 3, 1, '2025-12-19', 1, NULL, '2025-12-19 13:59:33', '2025-12-19 15:33:14'),
-(19, 'josue@gmail.com', 'JOSUE', 'MARTINEZ', '', '2342342', 'LP', 'ORH+', 'MASCULINO', 'BOLIVIANO', '', '7878787878', NULL, '6767667', 'LOS PEDREGALES', 'url gp', 'josue@gmail.com', NULL, NULL, '$2y$12$QPD.A.Gj3zET3uQsA/x2e.V2f7OvV6BsTcCEhjncx/iSVl/VRxX9q', 'USUARIO', 2, 1, '2026-01-02', 1, NULL, '2026-01-02 13:19:48', '2026-01-02 13:19:48');
+(19, 'josue@gmail.com', 'JOSUE', 'MARTINEZ', '', '2342342', 'LP', 'ORH+', 'MASCULINO', 'BOLIVIANO', '', '7878787878', NULL, '6767667', 'LOS PEDREGALES', 'url gp', 'josue@gmail.com', NULL, NULL, '$2y$12$yz3/g5IeCV2kjiTThseGlOE7XjWSuHY49CfoDCHdxc.mJkRCbUn8O', 'USUARIO', 2, 1, '2026-01-02', 1, NULL, '2026-01-02 13:19:48', '2026-01-14 14:33:33'),
+(20, 'mariag@gmail.com', 'MARIA', 'GONZALES', '', '34545435', 'LP', 'ORH+', 'FEMENINO', 'BOLIVIANO', '', '787878', NULL, '787878', 'LOS PEDREGALES', 'urlgps', 'mariag@gmail.com', NULL, NULL, '$2y$12$YoFgmTDvR/50Qqz3i9TKDe8pcy/vMzfDoSX7I/HvfQk2vCRkRe07e', 'EMPLEADO', NULL, 0, '2026-01-14', 1, NULL, '2026-01-14 14:21:24', '2026-01-14 14:21:24');
 
 --
 -- Índices para tablas volcadas
@@ -2658,13 +2702,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `ajustes`
 --
 ALTER TABLE `ajustes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `ajuste_reposicions`
 --
 ALTER TABLE `ajuste_reposicions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `categorias`
@@ -2718,13 +2762,13 @@ ALTER TABLE `devolucion_cliente_detalles`
 -- AUTO_INCREMENT de la tabla `devolucion_stocks`
 --
 ALTER TABLE `devolucion_stocks`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `devolucion_stock_detalles`
 --
 ALTER TABLE `devolucion_stock_detalles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `documentos`
@@ -2748,7 +2792,7 @@ ALTER TABLE `gastos`
 -- AUTO_INCREMENT de la tabla `historial_accions`
 --
 ALTER TABLE `historial_accions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=323;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=338;
 
 --
 -- AUTO_INCREMENT de la tabla `jobs`
@@ -2760,7 +2804,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT de la tabla `kardex_productos`
 --
 ALTER TABLE `kardex_productos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=172;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=180;
 
 --
 -- AUTO_INCREMENT de la tabla `marcas`
@@ -2838,7 +2882,7 @@ ALTER TABLE `parametro_sucursals`
 -- AUTO_INCREMENT de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
@@ -2886,13 +2930,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `solicitud_ingresos`
 --
 ALTER TABLE `solicitud_ingresos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `solicitud_ingreso_detalles`
 --
 ALTER TABLE `solicitud_ingreso_detalles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `sub_categorias`
@@ -2916,7 +2960,7 @@ ALTER TABLE `sucursal_productos`
 -- AUTO_INCREMENT de la tabla `transferencias`
 --
 ALTER TABLE `transferencias`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `transferencia_detalles`
@@ -2934,7 +2978,7 @@ ALTER TABLE `unidad_medidas`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Restricciones para tablas volcadas

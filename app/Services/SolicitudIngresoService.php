@@ -282,6 +282,9 @@ class SolicitudIngresoService
                     "cantidad" => $ajuste,
                     "motivo" => $item["motivo"],
                     "tipo" => "SOLICITUD DE INGRESO",
+                    "modelo" => "SolicitudIngreso",
+                    "modelo_id" => $solicitud_ingreso->id,
+                    "codigo" => $solicitud_ingreso->codigo ?? NULL,
                     "registro_id" => $solicitud_ingreso_detalle->id
                 ]);
             }

@@ -101,6 +101,9 @@ class AjusteService
             "motivo" => $datos["motivo"],
             "estado" => "NO REPUESTO",
             "tipo" => $datos["tipo"],
+            "modelo" => $datos["modelo"],
+            "modelo_id" => $datos["modelo_id"] ?? NULL,
+            "codigo" => $datos["codigo"] ?? NULL,
             "registro_id" => $datos["registro_id"] ?? NULL,
             "fecha" => date("Y-m-d")
         ]);
@@ -171,6 +174,10 @@ class AjusteService
             $this->realizarAjusteTransferencia($ajuste->registro_id, $ajuste->cantidad, $producto);
         }
 
+        if ($ajuste->tipo == 'ORDEN DE SALIDA') {
+            $this->realizarAjusteOrdenSalida($ajuste->registro_id, $ajuste->cantidad, $producto);
+        }
+
         $this->kardex_producto_service->registroEgreso("AJUSTE REPOSICIÓN", $producto, $ajuste->cantidad, $producto->precio, "EGRESO POR REPOSICIÓN DE AJUSTE", $almacen_ajuste->id, "AjusteReposicion", $ajuste_reposicion->id);
 
         // registrar accion
@@ -197,17 +204,17 @@ class AjusteService
         return true;
     }
 
-    // private function realizarAjusteOrdenSalida($registro_id, $cantidad, $producto)
-    // {
-    //     $almacen = Sucursal::where("almacen", 1)->get()->first();
-    //     if (!$almacen) {
-    //         throw new Exception("Error al actualizar el registro, no se encontró un Almacen");
-    //     }
+    private function realizarAjusteOrdenSalida($registro_id, $cantidad, $producto)
+    {
+        $almacen = Sucursal::where("almacen", 1)->get()->first();
+        if (!$almacen) {
+            throw new Exception("Error al actualizar el registro, no se encontró un Almacen");
+        }
 
-    //     $orden_salida_detalle = OrdenSalidaDetalle::findOrFail($registro_id);
-    //     $orden_salida = $orden_salida_detalle->orden_salida;
-    //     // REGISTRAR EGRESO
-    //     $this->kardex_producto_service->registroEgreso("ORDEN DE SALIDA", $producto, $cantidad, $producto->precio, "EGRESO POR REPOSICIÓN DE AJUSTE", $almacen->id, "OrdenSalidaDetalle", $registro_id);
-    //     return true;
-    // }
+        $orden_salida_detalle = OrdenSalidaDetalle::findOrFail($registro_id);
+        $orden_salida = $orden_salida_detalle->orden_salida;
+        // REGISTRAR EGRESO
+        $this->kardex_producto_service->registroEgreso("ORDEN DE SALIDA", $producto, $cantidad, $producto->precio, "EGRESO POR REPOSICIÓN DE AJUSTE", $almacen->id, "OrdenSalidaDetalle", $registro_id);
+        return true;
+    }
 }

@@ -30,9 +30,8 @@ class UserService
     public function listadoPaginado(int $length, int $page, string $search, array $columnsSerachLike = [], array $columnsFilter = [], array $columnsBetweenFilter = [], array $orderBy = []): LengthAwarePaginator
     {
         $users = User::with(["role"])->select("users.*")
-            ->join("roles", "roles.id", "=", "users.role_id")
+            ->leftjoin("roles", "roles.id", "=", "users.role_id")
             ->where("users.id", "!=", 1);
-        $users->where("users.tipo", "!=", "POSTULANTE");
 
         // Filtros exactos
         foreach ($columnsFilter as $key => $value) {
@@ -177,9 +176,9 @@ class UserService
             "correo" => $datos["correo"],
             "usuario" => $datos["correo"],
             "password" => $datos["ci"],
-            "role_id" => $datos["role_id"],
+            "role_id" => $datos["role_id"] ?? NULL,
             "tipo" => $datos["tipo"],
-            "acceso" => $datos["acceso"],
+            "acceso" => $datos["acceso"] ?? 0,
             "fecha_registro" => date("Y-m-d")
         ]);
 

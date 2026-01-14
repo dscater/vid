@@ -102,7 +102,7 @@ class UsuarioController extends Controller
 
     public function show(User $user)
     {
-        return response()->JSON($user->load("role"));
+        return response()->JSON($user->load("role", "documentos", "certificados"));
     }
 
     public function actualizaAcceso(User $user, Request $request)

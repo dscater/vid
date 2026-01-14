@@ -18,6 +18,9 @@ class Ajuste extends Model
         "motivo",
         "estado",
         "tipo",
+        "modelo",
+        "modelo_id",
+        "codigo",
         "registro_id",
         "fecha",
     ];

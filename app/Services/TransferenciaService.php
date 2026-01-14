@@ -257,6 +257,9 @@ class TransferenciaService
                     "cantidad" => $ajuste,
                     "motivo" => $item["motivo"],
                     "tipo" => "TRANSFERENCIA",
+                    "modelo" => "Transferencia",
+                    "modelo_id" => $transferencia->id,
+                    "codigo" => $transferencia->codigo,
                     "registro_id" => $transferencia_detalle->id
                 ]);
             }

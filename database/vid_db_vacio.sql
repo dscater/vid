@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 10-01-2026 a las 15:01:05
+-- Tiempo de generación: 14-01-2026 a las 14:57:11
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.2.22
 
@@ -35,7 +35,10 @@ CREATE TABLE `ajustes` (
   `cantidad` double NOT NULL,
   `motivo` varchar(900) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `estado` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tipo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `modelo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `modelo_id` bigint UNSIGNED DEFAULT NULL,
+  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `registro_id` bigint UNSIGNED DEFAULT NULL,
   `fecha` date DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
