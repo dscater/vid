@@ -285,4 +285,15 @@ class ProductoController extends Controller
             ]);
         }
     }
+
+    public function eliminarImagen(Producto $producto, Request $request)
+    {
+        $col = $request->col;
+        if ($producto[$col]) {
+            \File::delete(public_path("imgs/productos/" . $producto[$col]));
+            $producto[$col] = NULL;
+            $producto->save();
+        }
+        return response()->JSON(true);
+    }
 }

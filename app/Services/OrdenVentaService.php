@@ -57,7 +57,6 @@ class OrdenVentaService
             $orden_ventas->where("sucursal_id", Auth::user()->sucursal_asignada->id);
         }
 
-
         if (!empty($search)) {
             $orden_ventas->orWhere("codigo", "LIKE", "%$search%");
             $orden_ventas->orWhere("estado", "LIKE", "%$search%");

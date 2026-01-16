@@ -154,6 +154,11 @@ class ProductoService
             "unidad_medida_id" => $datos["unidad_medida_id"],
             "estado" => $datos["estado"],
         ]);
+
+        // cargar imagen
+        if (isset($datos["imagen"]) && !is_string($datos["imagen"])) {
+            $this->cargarImagen($producto, $datos["imagen"]);
+        }
         // registrar accion
         $this->historialAccionService->registrarAccion($this->modulo, "MODIFICACIÓN", "ACTUALIZÓ UN PRODUCTO", $old_producto, $producto);
 

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
@@ -70,7 +71,7 @@ class User extends Authenticatable implements JWTSubject
         "status",
     ];
 
-    protected $appends = ["permisos", "url_foto", "foto_b64", "full_name", "full_ci", "fecha_registro_t", "usuario_abrev", "sucursal_asignada"];
+    protected $appends = ["permisos", "url_foto", "url_carnet", "foto_b64", "full_name", "full_ci", "fecha_registro_t", "usuario_abrev", "sucursal_asignada", "txt_foto", "txt_carnet"];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -97,8 +98,21 @@ class User extends Authenticatable implements JWTSubject
 
     public function getSucursalAsignadaAttribute()
     {
-        $sucursal_asignada = Sucursal::where("user_id", Auth::user()->id)->get()->first();
-        return $sucursal_asignada;
+        $role = $this->role ? $this->role->nombre : '';
+        $es_vendedor = str_contains($role, "VENDEDOR");
+        $es_encargado = str_contains($role, "ENCARGADO");
+
+        if ($es_encargado) {
+            $sucursal_asignada = Sucursal::where("user_id", Auth::user()->id)->get()->first();
+            return $sucursal_asignada;
+        }
+
+        if ($es_vendedor) {
+            $sucursal_asignada = Sucursal::whereJsonContains('vendedores', $this->id)->get()->first();
+            return $sucursal_asignada;
+        }
+
+        return null;
     }
 
     public function getUsuarioAbrevAttribute()
@@ -130,6 +144,22 @@ class User extends Authenticatable implements JWTSubject
     public function getFullCiAttribute()
     {
         return $this->ci . ' ' . $this->ci_exp;
+    }
+    public function getTxtFotoAttribute()
+    {
+        return $this->foto ?? '';
+    }
+    public function getTxtCarnetAttribute()
+    {
+        return $this->carnet ?? '';
+    }
+
+    public function getUrlCarnetAttribute()
+    {
+        if ($this->foto) {
+            return asset("imgs/users/" . $this->carnet);
+        }
+        return "";
     }
 
     public function getUrlFotoAttribute()

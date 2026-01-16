@@ -49,6 +49,13 @@ class ModuloTableSeeder extends Seeder
             "descripcion" => "ELIMINAR USUARIOS"
         ]);
 
+        Modulo::create([
+            "modulo" => "Gestión de usuarios",
+            "nombre" => "usuarios.password",
+            "accion" => "CAMBIAR CONTRASEÑA",
+            "descripcion" => "CAMBIAR CONTRASEÑA DE USUARIOS"
+        ]);
+
         // ROLES Y PERMISOS
         Modulo::create([
             "modulo" => "Roles y Permisos",

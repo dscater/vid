@@ -107,6 +107,7 @@ class SucursalService
             "fono" => $datos["fono"],
             "correo" => $datos["correo"],
             "user_id" => $datos["user_id"],
+            "vendedores" => $datos["vendedores"],
             "estado" => $datos["estado"],
             "monto_dia" => $datos["monto_dia"],
         ]);
@@ -132,6 +133,7 @@ class SucursalService
             "fono" => $datos["fono"],
             "correo" => $datos["correo"],
             "user_id" => $datos["user_id"],
+            "vendedores" => $datos["vendedores"],
             "estado" => $datos["estado"],
             "monto_dia" => $datos["monto_dia"],
         ]);

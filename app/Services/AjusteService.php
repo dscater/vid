@@ -12,9 +12,9 @@ use App\Models\Sucursal;
 use App\Models\TransferenciaDetalle;
 use App\Models\User;
 use Exception;
-use Illuminate\Container\Attributes\Auth;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class AjusteService
@@ -48,6 +48,15 @@ class AjusteService
         $ajustes = Ajuste::select("ajustes.*")
             ->with(["producto:id,codigo,nombre", "sucursal", "oSucursalOrigen"])
             ->join("productos", "productos.id", "=", "ajustes.producto_id");
+
+
+        if (Auth::user()->sucursal_asignada) {
+            $ajustes->where(function ($q) {
+                $id = Auth::user()->sucursal_asignada->id;
+                $q->where('sucursal_id', $id)
+                    ->orWhere('sucursal_origen', $id);
+            });
+        }
 
         // Filtros exactos
         foreach ($columnsFilter as $key => $value) {

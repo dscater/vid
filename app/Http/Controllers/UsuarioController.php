@@ -27,6 +27,16 @@ class UsuarioController extends Controller
     public function listado(Request $request): JsonResponse
     {
         $usuarios = User::where("id", "!=", 1);
+        if (isset($request->usuarios) && $request->usuarios) {
+            $usuarios->where("tipo", "USUARIO");
+        }
+
+        if (isset($request->tipo) && $request->tipo) {
+            $tipo = $request->tipo;
+            $usuarios->whereHas("role", function ($query) use ($tipo) {
+                $query->where("nombre", "LIKE", "%$tipo%");
+            });
+        }
         $usuarios = $usuarios->get();
         return response()->JSON([
             "usuarios" => $usuarios
@@ -273,5 +283,16 @@ class UsuarioController extends Controller
                 'error' =>  $e->getMessage(),
             ]);
         }
+    }
+
+    public function eliminarFotoCarnet(User $user, Request $request)
+    {
+        $col = $request->col;
+        if ($user[$col]) {
+            \File::delete(public_path("imgs/users/" . $user[$col]));
+            $user[$col] = NULL;
+            $user->save();
+        }
+        return response()->JSON(true);
     }
 }

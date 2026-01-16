@@ -27,6 +27,7 @@ class SucursalUpdateRequest extends FormRequest
             "fono" => "required",
             "correo" => "nullable|email",
             "user_id" => "required",
+            "vendedores" => "required|array",
             "estado" => "boolean|in:0,1",
             "monto_dia" => "decimal:0,0"
         ];
@@ -40,6 +41,7 @@ class SucursalUpdateRequest extends FormRequest
             "fono.required" => "Debes completar este campo",
             "correo.required" => "Debes completar este campo",
             "user_id.required" => "Debes completar este campo",
+            "vendedores.required" => "Debes completar este campo",
             "monto_dia.decimal" => "Debes ingresar un valor númerico valido",
         ];
     }

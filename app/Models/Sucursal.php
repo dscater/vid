@@ -16,6 +16,7 @@ class Sucursal extends Model
         "fono",
         "correo",
         "user_id",
+        "vendedores",
         "almacen",
         "estado",
         "monto_dia"
@@ -24,6 +25,20 @@ class Sucursal extends Model
     protected $appends = [
         "estado_t"
     ];
+
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'vendedores' => 'array',
+        ];
+    }
+
 
     public function getEstadoTAttribute()
     {

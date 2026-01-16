@@ -25,7 +25,16 @@ class Producto extends Model
         "imagen",
     ];
 
-    protected $appends = ["url_imagen"];
+    protected $appends = ["url_imagen", "txt_imagen"];
+
+
+    public function getTxtImagenAttribute()
+    {
+        if ($this->imagen) {
+            return $this->imagen;
+        }
+        return "";
+    }
 
     public function getUrlImagenAttribute()
     {

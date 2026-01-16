@@ -78,6 +78,7 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get("usuarios/listado/byTipo", [UsuarioController::class, 'byTipo'])->name("usuarios.byTipo");
     Route::get("usuarios/show/{user}", [UsuarioController::class, 'show'])->name("usuarios.show");
     Route::put("usuarios/update/{user}", [UsuarioController::class, 'update'])->name("usuarios.update");
+    Route::put("usuarios/eliminarFotoCarnet/{user}", [UsuarioController::class, 'eliminarFotoCarnet'])->name("usuarios.eliminarFotoCarnet");
     Route::delete("usuarios/{user}", [UsuarioController::class, 'destroy'])->name("usuarios.destroy");
     Route::resource("usuarios", UsuarioController::class)->only(
         ["store"]
@@ -153,6 +154,7 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get("productos/api", [ProductoController::class, 'api'])->name("productos.api");
     Route::get("productos/paginado", [ProductoController::class, 'paginado'])->name("productos.paginado");
     Route::get("productos/listado", [ProductoController::class, 'listado'])->name("productos.listado");
+    Route::put("productos/eliminarImagen/{producto}", [ProductoController::class, 'eliminarImagen'])->name("productos.eliminarImagen");
     Route::resource("productos", ProductoController::class)->only(
         ["store", "edit", "show", "update", "destroy"]
     );

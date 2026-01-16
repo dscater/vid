@@ -184,12 +184,12 @@ class UserService
 
         // cargar foto
         if (isset($datos["foto"]) && !is_string($datos["foto"])) {
-            $this->cargarFoto($user, $datos["foto"]);
+            $this->cargarFoto($user, $datos["foto"], "foto");
         }
 
         // cargar carnet
         if (isset($datos["carnet"]) && !is_string($datos["carnet"])) {
-            $this->cargarFoto($user, $datos["carnet"]);
+            $this->cargarFoto($user, $datos["carnet"], "carnet");
         }
 
         // registrar certificados
@@ -248,12 +248,12 @@ class UserService
 
         // cargar foto
         if (isset($datos["foto"]) && !is_string($datos["foto"])) {
-            $this->cargarFoto($user, $datos["foto"]);
+            $this->cargarFoto($user, $datos["foto"], "foto");
         }
 
         // cargar carnet
         if (isset($datos["carnet"]) && !is_string($datos["carnet"])) {
-            $this->cargarFoto($user, $datos["carnet"]);
+            $this->cargarFoto($user, $datos["carnet"], "carnet");
         }
 
         // actualizar certificados
@@ -321,14 +321,14 @@ class UserService
      * @param UploadedFile $foto
      * @return void
      */
-    public function cargarFoto(User $user, UploadedFile $foto): void
+    public function cargarFoto(User $user, UploadedFile $foto, $col): void
     {
-        if ($user->foto) {
-            \File::delete(public_path("imgs/users/" . $user->foto));
+        if ($user[$col]) {
+            \File::delete(public_path("imgs/users/" . $user[$col]));
         }
 
-        $nombre = $user->id . time();
-        $user->foto = $this->cargarArchivoService->cargarArchivo($foto, public_path("imgs/users"), $nombre);
+        $nombre = $col . '_' . $user->id . time();
+        $user[$col] = $this->cargarArchivoService->cargarArchivo($foto, public_path("imgs/users"), $nombre);
         $user->save();
     }
 
