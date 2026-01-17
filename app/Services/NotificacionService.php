@@ -112,6 +112,20 @@ class NotificacionService
         return $notificacion;
     }
 
+    public function asignarNotificacionesDefecto($notificacion)
+    {
+        $users = User::whereIn("tipo", ["USUARIO", "ADMINISTRADOR"])
+            ->get();
+        foreach ($users as $user) {
+            $permisos = $user->permisos;
+            if ($permisos == '*' || (is_array($permisos) && in_array('notificacions.index', $permisos))) {
+                $user->notificacion_users()->create([
+                    "notificacion_id" => $notificacion->id
+                ]);
+            }
+        }
+    }
+
     public function asignarNotificaciones($sucursal_id = null, $notificacion)
     {
         $users = User::whereIn("tipo", ["USUARIO", "ADMINISTRADOR"])
@@ -122,7 +136,10 @@ class NotificacionService
                 if ($sucursal_id) {
                     // VERIFICAR SI EL USUARIO ES ENCARGADO DE LA SUCURSAL O ADMINISTRADOR
                     $sucursal = Sucursal::findOrFail($sucursal_id);
-                    if ($user->role_id == 1 || $user->role_id == 2 || $user->id == $sucursal->user_id) {
+                    $role = $user->role ? $user->role->nombre : '';
+                    $es_vendedor = str_contains($role, "VENDEDOR");
+                    $es_encargado = str_contains($role, "ENCARGADO");
+                    if ($es_vendedor || $es_encargado || $user->id == $sucursal->user_id) {
                         $user->notificacion_users()->create([
                             "notificacion_id" => $notificacion->id
                         ]);

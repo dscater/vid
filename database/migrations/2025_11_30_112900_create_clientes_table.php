@@ -25,10 +25,11 @@ return new class extends Migration
             $table->string("dir");
             $table->text("ubicacion");
             $table->string("ciudad");
-            $table->string("categoria")->default("");
-            $table->integer("rank")->nullable()->default(NULL);
+            $table->string("categoria")->default("")->nullable();
+            $table->integer("ranking")->nullable()->default(NULL);
             $table->double("score", 24, 4)->nullable()->default(NULL);
             $table->double("factor", 8, 4)->nullable()->default(NULL);
+            $table->double("total_credito", 24, 2)->nullable()->default(0);
             $table->json("contactos")->nullable();
             $table->integer("estado")->default(1);
             $table->integer("credito")->default(0);

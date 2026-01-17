@@ -5,10 +5,12 @@ namespace App\Services;
 use App\Services\HistorialAccionService;
 use App\Models\Cliente;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Container\Attributes\Auth;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class ClienteService
@@ -16,7 +18,7 @@ class ClienteService
 
     private $modulo = "CLIENTES";
 
-    public function __construct(private HistorialAccionService $historialAccionService) {}
+    public function __construct(private HistorialAccionService $historialAccionService, private NotificacionService $notificacion_service) {}
 
     public function listado(): Collection
     {
@@ -163,5 +165,25 @@ class ClienteService
         $this->historialAccionService->registrarAccion($this->modulo, "ELIMINACIÓN", "ELIMINÓ UN CLIENTE", $old_cliente);
 
         return true;
+    }
+
+    public function verificarCreditoClientes()
+    {
+        $fechaLimite = Carbon::now()->subDays(65)->toDateString();
+        $clientes = Cliente::where('credito', 1)
+            ->whereHas('orden_ventas', function ($q) use ($fechaLimite) {
+                $q->select('cliente_id')
+                    ->groupBy('cliente_id')
+                    ->havingRaw('MAX(fecha) <= ?', [$fechaLimite]);
+            })
+            ->get();
+        foreach ($clientes as $cliente) {
+            $notificacion = $this->notificacion_service->crear([
+                'descripcion' => "Ya pasaron 65 días que el cliente {$cliente->razon_social} no hizo una compra, se sugiere deshabilitar crédito del cliente",
+                'modulo'      => 'Cliente',
+                'modulo_id'   => $cliente->id,
+            ]);
+            $this->notificacion_service->asignarNotificacionesDefecto($notificacion);
+        }
     }
 }

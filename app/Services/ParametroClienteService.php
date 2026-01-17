@@ -114,6 +114,7 @@ class ParametroClienteService
             "score" => $resultado,
             "factor" => $factor
         ]);
+
         return $cliente;
     }
 
@@ -122,21 +123,21 @@ class ParametroClienteService
     {
         $clientes = Cliente::where("estado", 1)->orderBy("score", "desc")->get();
 
-        DB::update("UPDATE clientes SET rank = NULL, categoria = NULL");
+        DB::update("UPDATE clientes SET ranking = NULL, categoria = NULL");
 
         foreach ($clientes as $key => $cliente) {
             if (!$cliente->score || (float)$cliente->score <= 0) {
                 break;
             }
-            $rank = $key + 1;
+            $ranking = $key + 1;
             $categoria = "C";
-            if ($rank <= 15) {
+            if ($ranking <= 15) {
                 $categoria = "A";
-            } elseif ($rank <= 65) {
+            } elseif ($ranking <= 65) {
                 $categoria = "B";
             }
             $cliente->update([
-                "rank" => $key + 1,
+                "ranking" => $key + 1,
                 "categoria" => $categoria
             ]);
         }

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Jobs\RecalcularRankingClientes;
 use App\Models\HistorialAccion;
 use App\Models\Notificacion;
 use App\Models\NotificacionUser;
 use App\Models\User;
+use App\Services\ClienteService;
 use App\Services\NotificacionService;
+use App\Services\ParametroClienteService;
 use App\Services\ParametroNotificacionService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -22,7 +24,7 @@ use Inertia\Response as ResponseInertia;
 
 class NotificacionController extends Controller
 {
-    public function __construct(private NotificacionService $notificacionService) {}
+    public function __construct(private NotificacionService $notificacionService, private ClienteService $cliente_service, private ParametroClienteService $parametro_cliente_service) {}
 
     /**
      * Listado de notificacions sin ids: 1 y 2
@@ -45,6 +47,8 @@ class NotificacionController extends Controller
 
     public function listadoByUserNoVisto(): JsonResponse
     {
+        RecalcularRankingClientes::dispatch($this->parametro_cliente_service);
+        $this->cliente_service->verificarCreditoClientes();
         return response()->JSON([
             "notificacions" => $this->notificacionService->listadoByUserNoVisto(Auth::user()->id)
         ]);
