@@ -38,4 +38,12 @@ class ParametroClienteController extends Controller
             ]);
         }
     }
+
+    public function recalcularRanking()
+    {
+        ini_set('memory_limit', '1024M');
+        set_time_limit(-1);
+        $this->parametro_cliente_service->asignarRank();
+        return response()->JSON(true);
+    }
 }

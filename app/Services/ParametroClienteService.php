@@ -77,7 +77,13 @@ class ParametroClienteService
         $fecha365 = $hoy->copy()->subDays(365);
         $fecha65  = $hoy->copy()->subDays(65);
 
-        $ganancias365 = OrdenVenta::where("fecha", ">=", $fecha365)->sum("total_f");
+        $ganancias365 = DB::table('orden_venta_detalles as d')
+            ->join('productos as p', 'p.id', '=', 'd.producto_id')
+            ->join('orden_ventas as o', 'o.id', '=', 'd.orden_venta_id')
+            ->where('o.fecha', '>=', $fecha365)
+            ->where('o.cliente_id', $cliente->id)
+            ->selectRaw('SUM(d.subtotal_f - (d.cantidad * p.ppp)) as ganancia')
+            ->value('ganancia');
         $importe365 = OrdenVenta::where("cliente_id", $cliente->id)
             ->where("fecha", ">=", $fecha365)->sum("total_f");
         $importe65 = OrdenVenta::where("cliente_id", $cliente->id)
@@ -112,6 +118,7 @@ class ParametroClienteService
 
         $cliente->update([
             "score" => $resultado,
+            "total_credito" => $resultado,
             "factor" => $factor
         ]);
 
@@ -121,25 +128,35 @@ class ParametroClienteService
 
     public function asignarRank()
     {
-        $clientes = Cliente::where("estado", 1)->orderBy("score", "desc")->get();
+        DB::transaction(function () {
 
-        DB::update("UPDATE clientes SET ranking = NULL, categoria = NULL");
+            Cliente::where('estado', 1)
+                ->update([
+                    'ranking' => null,
+                    'categoria' => null,
+                ]);
 
-        foreach ($clientes as $key => $cliente) {
-            if (!$cliente->score || (float)$cliente->score <= 0) {
-                break;
+            $clientes = Cliente::where('estado', 1)
+                ->where('score', '>', 0)
+                ->orderByDesc('score')
+                ->get()
+                ->values();
+
+            foreach ($clientes as $index => $cliente) {
+
+                $posicion = $index + 1;
+
+                $categoria = match (true) {
+                    $posicion <= 15 => 'A',
+                    $posicion <= 65 => 'B',
+                    default => 'C',
+                };
+
+                $cliente->update([
+                    'ranking' => $posicion,
+                    'categoria' => $categoria,
+                ]);
             }
-            $ranking = $key + 1;
-            $categoria = "C";
-            if ($ranking <= 15) {
-                $categoria = "A";
-            } elseif ($ranking <= 65) {
-                $categoria = "B";
-            }
-            $cliente->update([
-                "ranking" => $key + 1,
-                "categoria" => $categoria
-            ]);
-        }
+        });
     }
 }

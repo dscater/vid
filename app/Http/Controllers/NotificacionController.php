@@ -47,7 +47,7 @@ class NotificacionController extends Controller
 
     public function listadoByUserNoVisto(): JsonResponse
     {
-        RecalcularRankingClientes::dispatch($this->parametro_cliente_service);
+        // RecalcularRankingClientes::dispatch($this->parametro_cliente_service);
         $this->cliente_service->verificarCreditoClientes();
         return response()->JSON([
             "notificacions" => $this->notificacionService->listadoByUserNoVisto(Auth::user()->id)

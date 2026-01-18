@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 16-01-2026 a las 22:51:07
+-- Tiempo de generación: 18-01-2026 a las 14:28:58
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.2.22
 
@@ -110,10 +110,11 @@ CREATE TABLE `clientes` (
   `dir` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `ubicacion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `ciudad` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `rank` int DEFAULT NULL,
-  `categoria` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `ranking` int DEFAULT NULL,
+  `categoria` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `score` double(24,4) DEFAULT NULL,
   `factor` double(8,4) DEFAULT NULL,
+  `total_credito` decimal(24,2) DEFAULT '0.00',
   `contactos` json DEFAULT NULL,
   `estado` int NOT NULL DEFAULT '1',
   `credito` int NOT NULL DEFAULT '0',
@@ -1068,8 +1069,7 @@ CREATE TABLE `sucursals` (
 
 INSERT INTO `sucursals` (`id`, `nombre`, `direccion`, `fono`, `correo`, `user_id`, `vendedores`, `almacen`, `estado`, `monto_dia`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (1, 'ALMACÉN CENTRAL', '', '', NULL, NULL, NULL, 1, 1, NULL, NULL, NULL, NULL),
-(2, 'AJUSTES', '', '', NULL, NULL, NULL, 2, 1, NULL, NULL, NULL, NULL),
-(3, 'AJUSTES', '', '', NULL, NULL, NULL, 2, 1, NULL, NULL, NULL, NULL);
+(2, 'AJUSTES', '', '', NULL, NULL, NULL, 2, 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1811,7 +1811,7 @@ ALTER TABLE `sub_categorias`
 -- AUTO_INCREMENT de la tabla `sucursals`
 --
 ALTER TABLE `sucursals`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `sucursal_productos`

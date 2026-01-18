@@ -171,6 +171,7 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     // parametro cliente
     Route::get("parametro_clientes", [ParametroClienteController::class, 'index'])->name("parametro_clientes.index");
     Route::post("parametro_clientes", [ParametroClienteController::class, 'store'])->name("parametro_clientes.store");
+    Route::post("parametro_clientes/recalcularRanking", [ParametroClienteController::class, 'recalcularRanking'])->name("parametro_clientes.recalcularRanking");
 
     // PROVEEDORES
     Route::get("proveedors/api", [ProveedorController::class, 'api'])->name("proveedors.api");

@@ -2,11 +2,13 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\RecalcularRankingClientes;
 use Illuminate\Console\Command;
 use App\Models\Sucursal;
 use App\Models\Producto;
 use App\Models\MovimientoHora;
 use App\Models\SucursalProducto;
+use App\Services\ParametroClienteService;
 use App\Services\ParametroSucursalService;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
@@ -30,7 +32,8 @@ class FinStocks extends Command
     protected $description = 'Registra el stock final de los productos de cada sucursal';
 
     public function __construct(
-        private ParametroSucursalService $parametroSucursalService
+        private ParametroSucursalService $parametroSucursalService,
+        private ParametroClienteService $parametro_cliente_service
     ) {
         parent::__construct();
     }
@@ -40,6 +43,7 @@ class FinStocks extends Command
      */
     public function handle(): int
     {
+        RecalcularRankingClientes::dispatch($this->parametro_cliente_service);
         Log::info("SE EJECUTO FINAL DE STOCKS");
         $parametro = $this->parametroSucursalService->getParametro();
         $horaFinal = Carbon::createFromFormat('H:i:s', $parametro->valor2);

@@ -69,7 +69,11 @@ class ClienteService
         // Ordenamiento
         foreach ($orderBy as $value) {
             if (isset($value[0], $value[1])) {
-                $clientes->orderBy($value[0], $value[1]);
+                if ($value[0] == 'ranking') {
+                    $clientes->orderByRaw('ranking IS NULL, ranking ASC')->get();
+                } else {
+                    $clientes->orderBy($value[0], $value[1]);
+                }
             }
         }
 
