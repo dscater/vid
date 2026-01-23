@@ -242,6 +242,7 @@ Route::middleware(['auth:api'])->prefix("admin")->group(function () {
     Route::get("proformas/paginado", [ProformaController::class, 'paginado'])->name("proformas.paginado");
     Route::get("proformas/listado", [ProformaController::class, 'listado'])->name("proformas.listado");
     Route::put("proformas/aprobar/{orden_venta}", [ProformaController::class, 'aprobar'])->name("proformas.aprobar");
+    Route::post("proformas/crearOrdenVenta", [ProformaController::class, 'crearOrdenVenta'])->name("proformas.crearOrdenVenta");
     Route::resource("proformas", ProformaController::class)->only(
         ["store", "edit", "show", "update", "destroy"]
     );

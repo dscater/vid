@@ -29,7 +29,7 @@ class OrdenVentaUpdateRequest extends FormRequest
             "hora" => "required",
             "descripcion" => "nullable",
             "cantidad_total" => "required",
-            "forma_pago" => "required",
+            // "forma_pago" => "required",
             "cs_f" => "required",
             "cancelado" => "required|decimal:0,2",
             "cambio" => "nullable|decimal:0,2",

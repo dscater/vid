@@ -120,13 +120,12 @@ class OrdenVentaService
 
             "con" => $datos["con"],
             "cancelado_c" => $datos["cancelado_c"],
-            "qr" => $datos["qr"],
-            "cancelado_qr" => $datos["cancelado_qr"],
-            "cre" => $datos["cre"],
-            "credito" => $datos["credito"],
-
+            "qr" => $datos["qr"] ?? 0,
+            "cancelado_qr" => $datos["cancelado_qr"] ?? NULL,
+            "cre" => $datos["cre"] ?? 0,
+            "credito" => $datos["credito"] ?? NULL,
             "cancelado" => $datos["cancelado"],
-            "cambio" => $datos["cambio"],
+            "cambio" => $datos["cambio"] ?? 0,
             "total" => $datos["total"],
             "total_st" => $datos["total_st"],
             "solicitud_descuento" => $datos["solicitud_descuento"],
@@ -134,8 +133,8 @@ class OrdenVentaService
             "monto_solicitud" => $datos["solicitud_descuento"] == 1 ? $datos["descuento"] : NULL,
             "descuento" => $datos["solicitud_descuento"] == 1 ? $datos["descuento"] : NULL,
             "total_f" => $datos["total_f"],
-            "estado" => $datos["solicitud_descuento"] == 1 ? "PENDIENTE" : "FINALIZADO",
-            "verificado" => $datos["solicitud_descuento"] == 1 ? 0 : 2,
+            "estado" => isset($datos["estado"]) ? $datos["estado"] : ($datos["solicitud_descuento"] == 1 ? "PENDIENTE" : "FINALIZADO"),
+            "verificado" => isset($datos["verificado"]) ? $datos["verificado"] : ($datos["solicitud_descuento"] == 1 ? 0 : 2),
             "user_id" => Auth::user()->id,
         ]);
 
@@ -220,7 +219,7 @@ class OrdenVentaService
             "hora" => $datos["hora"],
             "cantidad_total" => $datos["cantidad_total"],
             "cs_f" => $datos["cs_f"],
-            "forma_pago" => $datos["forma_pago"],
+            "forma_pago" => $datos["forma_pago"] ?? "",
 
             "con" => $datos["con"],
             "cancelado_c" => $datos["cancelado_c"],

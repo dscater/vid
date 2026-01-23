@@ -17,10 +17,12 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Validation\ValidationException;
 use App\library\numero_a_letras\src\NumeroALetras;
+use App\Models\ProformaDetalle;
+use App\Services\OrdenVentaService;
 
 class ProformaController extends Controller
 {
-    public function __construct(private ProformaService $proformaService) {}
+    public function __construct(private ProformaService $proformaService, private OrdenVentaService $orden_venta_service) {}
 
     public function sincronizar(Request $request)
     {
@@ -212,6 +214,83 @@ class ProformaController extends Controller
                 "sw" => true,
                 'message' => 'El registro se eliminó correctamente'
             ], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw ValidationException::withMessages([
+                'error' =>  $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function crearOrdenVenta(Request $request)
+    {
+        $proforma_detalle_id = $request->proforma_detalle_id;
+        $sucursal_id = $request->sucursal_id;
+
+        DB::beginTransaction();
+        try {
+
+            $proforma_detalle = ProformaDetalle::findOrFail($proforma_detalle_id);
+
+            // generar total de proforma_detalle->proforma_detalle_productos
+            $total = 0;
+            $orden_venta_detalles = [];
+            foreach ($proforma_detalle->proforma_detalle_productos as $pdp) {
+                if ($pdp->cantidad) {
+                    $subtotal = (float)$pdp->producto->precio * (float)$pdp->cantidad;
+                    $total += (float)$subtotal;
+                    $pdp->cantidad_entregada = $pdp->cantidad;
+                    $pdp->verificado = 1;
+                    $pdp->save();
+                    $orden_venta_detalles[] = [
+                        "producto_id" => $pdp->producto->id,
+                        "unidad_medida_id" => $pdp->producto->unidad_medida_id,
+                        "cantidad" => $pdp->cantidad,
+                        "precio" => $pdp->producto->precio,
+                        "subtotal" => $subtotal,
+                        "descuento" => 0,
+                        "subtotal_f" => $subtotal
+                    ];
+                }
+            }
+
+            $proforma_detalle->verificado = 1;
+            $proforma_detalle->estado = "ATENDIDO";
+            $proforma_detalle->cantidad_entregada = $proforma_detalle->cantidad;
+            $proforma_detalle->save();
+
+            $datos = [
+                "sucursal_id" => $sucursal_id,
+                "cliente_id" => $proforma_detalle->cliente_id,
+                "fecha" => date("Y-m-d"),
+                "hora" => date("H:i:s"),
+                "cantidad_total" => $proforma_detalle->cantidad,
+                "cs_f" => "CON FACTURA",
+                "forma_pago" => "",
+                "con" => 1,
+                "cancelado_c" => 0,
+                "qr" => 0,
+                "cancelado_qr" => 0,
+                "cre" => 0,
+                "credito" => 0,
+                "cancelado" => 0,
+                "total" => $total,
+                "total_st" => $total,
+                "solicitud_descuento" => 0,
+                "total_f" => $total,
+                "estado" => "EN ESPERA",
+                "verificado" => 5,
+                "user_id" => Auth::user()->id,
+                "orden_venta_detalles" => $orden_venta_detalles
+            ];
+
+            $orden_venta = $this->orden_venta_service->crear($datos);
+            DB::commit();
+            return response()->JSON([
+                "sw" => true,
+                "orden_venta" => $orden_venta,
+                "message" => "Proceso realizado con éxito"
+            ]);
         } catch (\Exception $e) {
             DB::rollBack();
             throw ValidationException::withMessages([

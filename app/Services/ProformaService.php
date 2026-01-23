@@ -108,6 +108,7 @@ class ProformaService
         ]);
 
 
+        $ids_proforma_productos = [];
         $ids_productos = [];
         foreach ($datos["proforma_productos"] as $item_producto) {
             $proforma_producto = ProformaProducto::create([
@@ -117,7 +118,8 @@ class ProformaService
                 "unidad_medida_id" => $item_producto["unidad_medida_id"],
                 "stock_actual" => $item_producto["stock_actual"],
             ]);
-            $ids_productos[] = $proforma_producto->id;
+            $ids_proforma_productos[] = $proforma_producto->id;
+            $ids_productos[] = $item_producto["producto_id"];
         }
 
         foreach ($datos["proforma_detalles"] as $item) {
@@ -136,8 +138,8 @@ class ProformaService
                 $proforma_detalle->proforma_detalle_productos()->create([
                     "proforma_id" => $proforma->id,
                     "proforma_detalle_id" => $proforma_detalle->id,
-                    "proforma_producto_id" => $ids_productos[$index],
-                    "producto_id" => $proforma_producto->producto_id,
+                    "proforma_producto_id" => $ids_proforma_productos[$index],
+                    "producto_id" => $ids_productos[$index],
                     "unidad_medida_id" => $proforma_producto->unidad_medida_id,
                     "cantidad" => $pdp["cantidad"],
                     "resta" => $pdp["cantidad"] ?? 0,
@@ -186,6 +188,7 @@ class ProformaService
             "total" => $datos["total"],
         ]);
 
+        $ids_proforma_productos = [];
         $ids_productos = [];
         foreach ($datos["proforma_productos"] as $item_producto) {
             $data_proforma_producto = [
@@ -202,7 +205,8 @@ class ProformaService
             } else {
                 $proforma_producto = ProformaProducto::create($data_proforma_producto);
             }
-            $ids_productos[] = $proforma_producto->id;
+            $ids_proforma_productos[] = $proforma_producto->id;
+            $ids_productos[] = $item_producto["producto_id"];
         }
 
         foreach ($datos["proforma_detalles"] as $item) {
@@ -229,8 +233,8 @@ class ProformaService
                 $data_detalle_producto = [
                     "proforma_id" => $proforma->id,
                     "proforma_detalle_id" => $proforma_detalle->id,
-                    "proforma_producto_id" => $ids_productos[$index],
-                    "producto_id" => $proforma_producto->producto_id,
+                    "proforma_producto_id" => $ids_proforma_productos[$index],
+                    "producto_id" => $ids_productos[$index],
                     "unidad_medida_id" => $proforma_producto->unidad_medida_id,
                     "cantidad" => $pdp["cantidad"],
                     "resta" => $pdp["cantidad"] ?? 0,

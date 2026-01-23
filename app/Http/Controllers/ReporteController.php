@@ -1059,6 +1059,7 @@ class ReporteController extends Controller
                         $query,
                     ) use ($fecha_ini, $fecha_fin, $item) {
                         $query->where('sucursal_id', $item->id);
+                        $query->where('verificado', 2);
                         $query->whereBetween('fecha', [$fecha_ini, $fecha_fin]);
                     })
                         ->where('producto_id', $producto->id)

@@ -166,7 +166,7 @@ class OrdenVentaController extends Controller
         $literal = ucfirst($literal) . "/100." . " Bolivianos";
 
         return response()->JSON([
-            "orden_venta" => $orden_venta->load(["orden_venta_detalles.producto:id,nombre", "orden_venta_detalles.unidad_medida:id,nombre", "cliente:id,razon_social,nit", "user:id,nombre,paterno,materno"]),
+            "orden_venta" => $orden_venta->load(["orden_venta_detalles.producto:id,codigo,nombre", "orden_venta_detalles.unidad_medida:id,nombre", "cliente:id,razon_social,nit", "user:id,nombre,paterno,materno"]),
             "literal" => $literal
         ]);
     }
@@ -271,6 +271,7 @@ class OrdenVentaController extends Controller
 
         $total_vendido = OrdenVenta::where("sucursal_id", $sucursal->id)
             ->where("fecha", $fecha)
+            ->where("verificado", 2)
             ->sum("total_f");
 
         return response()->JSON([

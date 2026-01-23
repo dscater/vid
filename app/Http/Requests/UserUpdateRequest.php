@@ -29,7 +29,7 @@ class UserUpdateRequest extends FormRequest
             "materno" => "nullable|min:1",
             "ci" => "required|numeric|digits_between:6,10|unique:users,ci," . $this->user->id,
             "ci_exp" => "required",
-            "grupo_san" => "required",
+            "grupo_san" => "nullable",
             "sexo" => "required",
             "nacionalidad" => "required",
             "profesion" => "nullable",

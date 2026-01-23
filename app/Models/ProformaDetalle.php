@@ -21,7 +21,6 @@ class ProformaDetalle extends Model
         "verificado"
     ];
 
-
     protected $appends = ["literal"];
 
 
