@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 18-01-2026 a las 14:25:17
+-- Tiempo de generación: 23-01-2026 a las 20:50:44
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.2.22
 
@@ -164,11 +164,11 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id`, `razon_social`, `tipo`, `nit`, `nombre_punto`, `nombre_prop`, `ci_prop`, `correo`, `cel`, `fono`, `dir`, `ubicacion`, `ciudad`, `ranking`, `categoria`, `score`, `factor`, `total_credito`, `contactos`, `estado`, `credito`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'CLIENTE 1 S.A. MOD', 'EMPRESA', '111111111111', 'PUNTO VENTA C 1', 'JUAN PEREZ', '121212121', 'juanperez@gmail.com', '6767676767', '22222', 'LOS PEDREGALES', '111111111', 'LA PAZ', 3, 'A', 12204.5400, 1.5000, 12204.54, '[{\"cel\": \"7777777\", \"fono\": \"6767676767\", \"nombre\": \"JUAN GONZALES\", \"observacion\": \"OBS. CONTACTO 1\"}, {\"cel\": \"7866786\", \"fono\": \"667567567\", \"nombre\": \"JORGE RAMIRES\", \"observacion\": null}]', 1, 1, NULL, '2025-12-03 15:46:45', '2026-01-18 14:24:53'),
-(2, 'CLIENTE 2', 'PERSONA', '1111111111111', 'CLIENTE 2 PV', 'MARIA MAMANI', '23123123', NULL, '657756', '222', 'LOS PEDREAGLES1', '111', 'EL ALTO', 1, 'A', 13045.7700, 1.5000, 0.00, '[{\"cel\": \"6757567\", \"fono\": \"222222\", \"nombre\": \"CONTACTO 1\", \"observacion\": null}]', 1, 0, NULL, '2025-12-03 15:52:12', '2026-01-18 14:24:53'),
-(3, 'CLIENTE 3', 'PERSONA', '1111111', 'PUNTO VENA 3', 'JUAN DOMINGUEZ', '1221121221', 'dominguez@gmail.com', '777777', '6767676767', 'LOS PEDREGALES', '1111', 'LA PAZ', 2, 'A', 12825.0800, 1.5000, 0.00, '[{\"cel\": \"767676767\", \"fono\": \"6767676767\", \"nombre\": \"JUAN\", \"observacion\": null}]', 1, 0, NULL, '2025-12-12 16:47:21', '2026-01-18 14:24:53'),
-(4, 'JUAN PEREZ', 'PERSONA', '123123', 'PUNTO VENTA JUAN PEREZ', 'JUAN PEREZ', '234234234', NULL, '67676767', '454554', 'LOS PEDREGALES', 'https://maps.app.goo.gl/77xPf84JiCv3SKm8A', 'LA PAZ', NULL, NULL, NULL, NULL, 0.00, '[{\"cel\": \"676767\", \"fono\": \"67676767\", \"nombre\": \"JUAN PEREZ\", \"observacion\": null}]', 1, 0, NULL, '2025-12-18 21:37:23', '2026-01-18 14:24:53'),
-(5, 'MARIO MARTINEZ', 'PERSONA', '12313123', 'PUNTO VENTA S.R.L', 'MARIO MARTINEZ', '324234234', NULL, '657567567', '56756767', 'LOS PEDREGALES', 'https://maps.app.goo.gl/MNdP3WZAChkwenQ38', 'LA PAZ', NULL, NULL, NULL, NULL, 0.00, '[{\"cel\": \"756765567\", \"fono\": \"657567\", \"nombre\": \"MARIO MARTINEZ\", \"observacion\": null}]', 1, 1, NULL, '2025-12-21 11:09:53', '2026-01-18 14:24:53');
+(1, 'CLIENTE 1 S.A. MOD', 'EMPRESA', '111111111111', 'PUNTO VENTA C 1', 'JUAN PEREZ', '121212121', 'juanperez@gmail.com', '6767676767', '22222', 'LOS PEDREGALES', '111111111', 'LA PAZ', 3, 'A', 16244.3200, 1.5000, 16244.32, '[{\"cel\": \"7777777\", \"fono\": \"6767676767\", \"nombre\": \"JUAN GONZALES\", \"observacion\": \"OBS. CONTACTO 1\"}, {\"cel\": \"7866786\", \"fono\": \"667567567\", \"nombre\": \"JORGE RAMIRES\", \"observacion\": null}]', 1, 1, NULL, '2025-12-03 15:46:45', '2026-01-23 20:20:05'),
+(2, 'CLIENTE 2', 'PERSONA', '1111111111111', 'CLIENTE 2 PV', 'MARIA MAMANI', '23123123', NULL, '657756', '222', 'LOS PEDREAGLES1', '111', 'EL ALTO', 1, 'A', 13045.7700, 1.5000, 0.00, '[{\"cel\": \"6757567\", \"fono\": \"222222\", \"nombre\": \"CONTACTO 1\", \"observacion\": null}]', 1, 0, NULL, '2025-12-03 15:52:12', '2026-01-18 14:32:07'),
+(3, 'CLIENTE 3', 'PERSONA', '1111111', 'PUNTO VENA 3', 'JUAN DOMINGUEZ', '1221121221', 'dominguez@gmail.com', '777777', '6767676767', 'LOS PEDREGALES', '1111', 'LA PAZ', 2, 'A', 12825.0800, 1.5000, 0.00, '[{\"cel\": \"767676767\", \"fono\": \"6767676767\", \"nombre\": \"JUAN\", \"observacion\": null}]', 1, 0, NULL, '2025-12-12 16:47:21', '2026-01-18 14:32:07'),
+(4, 'JUAN PEREZ', 'PERSONA', '123123', 'PUNTO VENTA JUAN PEREZ', 'JUAN PEREZ', '234234234', NULL, '67676767', '454554', 'LOS PEDREGALES', 'https://maps.app.goo.gl/77xPf84JiCv3SKm8A', 'LA PAZ', NULL, NULL, NULL, NULL, 0.00, '[{\"cel\": \"676767\", \"fono\": \"67676767\", \"nombre\": \"JUAN PEREZ\", \"observacion\": null}]', 1, 0, NULL, '2025-12-18 21:37:23', '2026-01-18 14:32:07'),
+(5, 'MARIO MARTINEZ', 'PERSONA', '12313123', 'PUNTO VENTA S.R.L', 'MARIO MARTINEZ', '324234234', NULL, '657567567', '56756767', 'LOS PEDREGALES', 'https://maps.app.goo.gl/MNdP3WZAChkwenQ38', 'LA PAZ', NULL, NULL, NULL, NULL, 0.00, '[{\"cel\": \"756765567\", \"fono\": \"657567\", \"nombre\": \"MARIO MARTINEZ\", \"observacion\": null}]', 1, 1, NULL, '2025-12-21 11:09:53', '2026-01-18 14:32:07');
 
 -- --------------------------------------------------------
 
@@ -965,7 +965,11 @@ INSERT INTO `historial_accions` (`id`, `user_id`, `accion`, `descripcion`, `dato
 (357, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN CLIENTE', '{\"id\": 1, \"cel\": \"6767676767\", \"dir\": \"LOS PEDREGALES\", \"nit\": \"111111111111\", \"fono\": \"22222\", \"rank\": 1, \"tipo\": \"EMPRESA\", \"score\": 16197.84, \"ciudad\": \"LA PAZ\", \"correo\": \"juanperez@gmail.com\", \"estado\": 1, \"factor\": 1.5, \"ci_prop\": \"121212121\", \"credito\": 0, \"categoria\": \"A\", \"contactos\": [{\"cel\": \"7777777\", \"fono\": \"6767676767\", \"nombre\": \"JUAN GONZALES\", \"observacion\": \"OBS. CONTACTO 1\"}, {\"cel\": \"7866786\", \"fono\": \"667567567\", \"nombre\": \"JORGE RAMIRES\", \"observacion\": null}], \"ubicacion\": \"111111111\", \"created_at\": \"2025-12-03T15:46:45.000000Z\", \"deleted_at\": null, \"updated_at\": \"2025-12-17T15:53:35.000000Z\", \"nombre_prop\": \"JUAN PEREZ\", \"nombre_punto\": \"PUNTO VENTA C 1\", \"razon_social\": \"CLIENTE 1 S.A. MOD\"}', '{\"id\": 1, \"cel\": \"6767676767\", \"dir\": \"LOS PEDREGALES\", \"nit\": \"111111111111\", \"fono\": \"22222\", \"rank\": 1, \"tipo\": \"EMPRESA\", \"score\": 16197.84, \"ciudad\": \"LA PAZ\", \"correo\": \"juanperez@gmail.com\", \"estado\": \"1\", \"factor\": 1.5, \"ci_prop\": \"121212121\", \"credito\": \"1\", \"categoria\": \"A\", \"contactos\": [{\"cel\": \"7777777\", \"fono\": \"6767676767\", \"nombre\": \"JUAN GONZALES\", \"observacion\": \"OBS. CONTACTO 1\"}, {\"cel\": \"7866786\", \"fono\": \"667567567\", \"nombre\": \"JORGE RAMIRES\", \"observacion\": null}], \"ubicacion\": \"111111111\", \"created_at\": \"2025-12-03T15:46:45.000000Z\", \"deleted_at\": null, \"updated_at\": \"2026-01-17T20:45:24.000000Z\", \"nombre_prop\": \"JUAN PEREZ\", \"nombre_punto\": \"PUNTO VENTA C 1\", \"razon_social\": \"CLIENTE 1 S.A. MOD\"}', 'CLIENTES', '2026-01-17', '16:45:24', '2026-01-17 20:45:24', '2026-01-17 20:45:24'),
 (358, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 60, \"qr\": 0, \"con\": 1, \"cre\": 0, \"nro\": 41, \"cs_f\": \"CON FACTURA\", \"hora\": \"17:33\", \"fecha\": \"2026-01-17\", \"total\": 295, \"cambio\": 0, \"codigo\": \"OV.41\", \"estado\": \"FINALIZADO\", \"credito\": 0, \"total_f\": 295, \"user_id\": 1, \"total_st\": 295, \"cancelado\": 295, \"descuento\": null, \"cliente_id\": 1, \"created_at\": \"2026-01-17T21:33:37.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2026-01-17T21:33:37.000000Z\", \"verificado\": 2, \"cancelado_c\": 295, \"sucursal_id\": 2, \"cancelado_qr\": 0, \"solicitud_sw\": null, \"cantidad_total\": 1, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2026-01-17', '17:33:37', '2026-01-17 21:33:37', '2026-01-17 21:33:37'),
 (359, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 61, \"qr\": 0, \"con\": 1, \"cre\": 0, \"nro\": 42, \"cs_f\": \"CON FACTURA\", \"hora\": \"10:02\", \"fecha\": \"2026-01-18\", \"total\": 295, \"cambio\": 0, \"codigo\": \"OV.42\", \"estado\": \"FINALIZADO\", \"credito\": 0, \"total_f\": 295, \"user_id\": 1, \"total_st\": 295, \"cancelado\": 295, \"descuento\": null, \"cliente_id\": 1, \"created_at\": \"2026-01-18T14:03:33.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2026-01-18T14:03:33.000000Z\", \"verificado\": 2, \"cancelado_c\": 295, \"sucursal_id\": 2, \"cancelado_qr\": 0, \"solicitud_sw\": null, \"cantidad_total\": 1, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2026-01-18', '10:03:33', '2026-01-18 14:03:33', '2026-01-18 14:03:33'),
-(360, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 62, \"qr\": 0, \"con\": 1, \"cre\": 0, \"nro\": 43, \"cs_f\": \"CON FACTURA\", \"hora\": \"10:04\", \"fecha\": \"2026-01-18\", \"total\": 295, \"cambio\": 0, \"codigo\": \"OV.43\", \"estado\": \"FINALIZADO\", \"credito\": 0, \"total_f\": 295, \"user_id\": 1, \"total_st\": 295, \"cancelado\": 295, \"descuento\": null, \"cliente_id\": 1, \"created_at\": \"2026-01-18T14:04:39.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2026-01-18T14:04:39.000000Z\", \"verificado\": 2, \"cancelado_c\": 295, \"sucursal_id\": 2, \"cancelado_qr\": 0, \"solicitud_sw\": null, \"cantidad_total\": 1, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2026-01-18', '10:04:39', '2026-01-18 14:04:39', '2026-01-18 14:04:39');
+(360, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 62, \"qr\": 0, \"con\": 1, \"cre\": 0, \"nro\": 43, \"cs_f\": \"CON FACTURA\", \"hora\": \"10:04\", \"fecha\": \"2026-01-18\", \"total\": 295, \"cambio\": 0, \"codigo\": \"OV.43\", \"estado\": \"FINALIZADO\", \"credito\": 0, \"total_f\": 295, \"user_id\": 1, \"total_st\": 295, \"cancelado\": 295, \"descuento\": null, \"cliente_id\": 1, \"created_at\": \"2026-01-18T14:04:39.000000Z\", \"forma_pago\": \"EFECTIVO\", \"updated_at\": \"2026-01-18T14:04:39.000000Z\", \"verificado\": 2, \"cancelado_c\": 295, \"sucursal_id\": 2, \"cancelado_qr\": 0, \"solicitud_sw\": null, \"cantidad_total\": 1, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2026-01-18', '10:04:39', '2026-01-18 14:04:39', '2026-01-18 14:04:39'),
+(361, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UN USUARIO', '{\"ci\": \"6766776\", \"id\": 24, \"cel\": \"656565665\", \"dir\": \"LOS PEDREGALES #2323\", \"fono\": null, \"foto\": null, \"sexo\": \"MASCULINO\", \"tipo\": \"USUARIO\", \"acceso\": 1, \"carnet\": null, \"ci_exp\": \"LP\", \"correo\": \"franco@gmail.com\", \"estado\": 1, \"nombre\": \"FRANCO\", \"cel_dom\": \"7676767\", \"materno\": \"\", \"paterno\": \"ORTIZ\", \"role_id\": 4, \"usuario\": \"franco@gmail.com\", \"grupo_san\": \"ORH+\", \"profesion\": \"\", \"ubicacion\": \"gps\", \"created_at\": \"2026-01-16T21:33:06.000000Z\", \"deleted_at\": null, \"documentos\": [], \"updated_at\": \"2026-01-16T22:00:53.000000Z\", \"certificados\": [], \"nacionalidad\": \"BOLIVIANO\", \"fecha_registro\": \"2026-01-16\"}', '{\"ci\": \"6766776\", \"id\": 24, \"cel\": \"656565665\", \"dir\": \"LOS PEDREGALES #2323\", \"fono\": null, \"foto\": null, \"sexo\": \"MASCULINO\", \"tipo\": \"USUARIO\", \"acceso\": \"1\", \"carnet\": null, \"ci_exp\": \"LP\", \"correo\": \"franco@gmail.com\", \"estado\": 1, \"nombre\": \"FRANCO\", \"cel_dom\": \"7676767\", \"materno\": \"\", \"paterno\": \"ORTIZ\", \"role_id\": \"4\", \"usuario\": \"franco@gmail.com\", \"grupo_san\": \"\", \"profesion\": \"\", \"ubicacion\": \"gps\", \"created_at\": \"2026-01-16T21:33:06.000000Z\", \"deleted_at\": null, \"documentos\": [], \"updated_at\": \"2026-01-23T19:00:46.000000Z\", \"certificados\": [], \"nacionalidad\": \"BOLIVIANO\", \"fecha_registro\": \"2026-01-23\"}', 'USUARIOS', '2026-01-23', '15:00:46', '2026-01-23 19:00:46', '2026-01-23 19:00:46'),
+(362, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA PROFORMA', '{\"id\": 1, \"nro\": 1, \"hora\": \"16:19\", \"fecha\": \"2026-01-23\", \"total\": null, \"codigo\": \"PF.1\", \"user_id\": 1, \"created_at\": \"2026-01-23T20:19:58.000000Z\", \"updated_at\": \"2026-01-23T20:19:58.000000Z\", \"sucursal_ids\": [2, 3], \"proforma_detalles\": [{\"id\": 1, \"saldo\": \"5909.00\", \"total\": \"5909.00\", \"estado\": \"PENDIENTE\", \"literal\": \"Cinco mil novecientos nueve   00/100. Bolivianos\", \"cantidad\": 20, \"cliente_id\": 1, \"created_at\": \"2026-01-23T20:19:58.000000Z\", \"deleted_at\": null, \"updated_at\": \"2026-01-23T20:19:58.000000Z\", \"verificado\": 0, \"proforma_id\": 1, \"cantidad_entregada\": 0}, {\"id\": 2, \"saldo\": \"2745.00\", \"total\": \"2745.00\", \"estado\": \"PENDIENTE\", \"literal\": \"Dos mil setecientos cuarenta y cinco   00/100. Bolivianos\", \"cantidad\": 9, \"cliente_id\": 2, \"created_at\": \"2026-01-23T20:19:58.000000Z\", \"deleted_at\": null, \"updated_at\": \"2026-01-23T20:19:58.000000Z\", \"verificado\": 0, \"proforma_id\": 1, \"cantidad_entregada\": 0}, {\"id\": 3, \"saldo\": \"3000.00\", \"total\": \"3000.00\", \"estado\": \"PENDIENTE\", \"literal\": \"Tres mil  00/100. Bolivianos\", \"cantidad\": 10, \"cliente_id\": 3, \"created_at\": \"2026-01-23T20:19:58.000000Z\", \"deleted_at\": null, \"updated_at\": \"2026-01-23T20:19:58.000000Z\", \"verificado\": 0, \"proforma_id\": 1, \"cantidad_entregada\": 0}], \"proforma_productos\": [{\"id\": 1, \"suma\": 0, \"precio\": \"300.00\", \"agregados\": 0, \"created_at\": \"2026-01-23T20:19:58.000000Z\", \"updated_at\": \"2026-01-23T20:19:58.000000Z\", \"producto_id\": 3, \"proforma_id\": 1, \"stock_actual\": 46, \"stock_actual_aux\": 46, \"unidad_medida_id\": 1}, {\"id\": 2, \"suma\": 0, \"precio\": \"345.00\", \"agregados\": 0, \"created_at\": \"2026-01-23T20:19:58.000000Z\", \"updated_at\": \"2026-01-23T20:19:58.000000Z\", \"producto_id\": 4, \"proforma_id\": 1, \"stock_actual\": 56, \"stock_actual_aux\": 56, \"unidad_medida_id\": 2}, {\"id\": 3, \"suma\": 0, \"precio\": \"97.00\", \"agregados\": 0, \"created_at\": \"2026-01-23T20:19:58.000000Z\", \"updated_at\": \"2026-01-23T20:19:58.000000Z\", \"producto_id\": 5, \"proforma_id\": 1, \"stock_actual\": 0, \"stock_actual_aux\": 0, \"unidad_medida_id\": 1}]}', NULL, 'PROFORMA', '2026-01-23', '16:19:58', '2026-01-23 20:19:58', '2026-01-23 20:19:58'),
+(363, 1, 'CREACIÓN', 'EL USUARIO admin REGISTRO UNA ORDEN DE VENTA', '{\"id\": 63, \"qr\": 0, \"con\": 1, \"cre\": 0, \"nro\": 44, \"cs_f\": \"CON FACTURA\", \"hora\": \"16:20:05\", \"fecha\": \"2026-01-23\", \"total\": 5909, \"cambio\": 0, \"codigo\": \"OV.44\", \"estado\": \"EN ESPERA\", \"credito\": 0, \"total_f\": 5909, \"user_id\": 1, \"total_st\": 5909, \"cancelado\": 0, \"descuento\": null, \"cliente_id\": 1, \"created_at\": \"2026-01-23T20:20:05.000000Z\", \"forma_pago\": \"\", \"updated_at\": \"2026-01-23T20:20:05.000000Z\", \"verificado\": 5, \"cancelado_c\": 0, \"sucursal_id\": \"2\", \"cancelado_qr\": 0, \"solicitud_sw\": null, \"cantidad_total\": 20, \"monto_solicitud\": null, \"solicitud_descuento\": 0}', NULL, 'ORDEN DE VENTA', '2026-01-23', '16:20:05', '2026-01-23 20:20:05', '2026-01-23 20:20:05'),
+(364, 1, 'MODIFICACIÓN', 'EL USUARIO admin ACTUALIZÓ UNA ORDEN DE VENTA', '{\"id\": 63, \"qr\": 0, \"con\": 1, \"cre\": 0, \"nro\": 44, \"cs_f\": \"CON FACTURA\", \"hora\": \"16:20:05\", \"fecha\": \"2026-01-23\", \"total\": \"5909.00\", \"cambio\": \"0.00\", \"codigo\": \"OV.44\", \"estado\": \"EN ESPERA\", \"credito\": \"0.00\", \"total_f\": \"5909.00\", \"user_ap\": null, \"user_id\": 1, \"total_st\": \"5909.00\", \"cancelado\": \"0.00\", \"descuento\": null, \"cliente_id\": 1, \"created_at\": \"2026-01-23T20:20:05.000000Z\", \"deleted_at\": null, \"forma_pago\": \"\", \"updated_at\": \"2026-01-23T20:20:05.000000Z\", \"verificado\": 5, \"cancelado_c\": \"0.00\", \"sucursal_id\": 2, \"cancelado_qr\": \"0.00\", \"solicitud_sw\": null, \"observaciones\": null, \"cantidad_total\": 20, \"monto_solicitud\": null, \"solicitud_descuento\": 0, \"orden_venta_detalles\": [{\"id\": 68, \"precio\": \"300.00\", \"cantidad\": 11, \"subtotal\": \"3300.00\", \"descuento\": \"0.00\", \"created_at\": \"2026-01-23T20:20:05.000000Z\", \"deleted_at\": null, \"subtotal_f\": \"3300.00\", \"updated_at\": \"2026-01-23T20:20:05.000000Z\", \"producto_id\": 3, \"orden_venta_id\": 63, \"unidad_medida_id\": 1}, {\"id\": 69, \"precio\": \"345.00\", \"cantidad\": 7, \"subtotal\": \"2415.00\", \"descuento\": \"0.00\", \"created_at\": \"2026-01-23T20:20:05.000000Z\", \"deleted_at\": null, \"subtotal_f\": \"2415.00\", \"updated_at\": \"2026-01-23T20:20:05.000000Z\", \"producto_id\": 4, \"orden_venta_id\": 63, \"unidad_medida_id\": 2}, {\"id\": 70, \"precio\": \"97.00\", \"cantidad\": 2, \"subtotal\": \"194.00\", \"descuento\": \"0.00\", \"created_at\": \"2026-01-23T20:20:05.000000Z\", \"deleted_at\": null, \"subtotal_f\": \"194.00\", \"updated_at\": \"2026-01-23T20:20:05.000000Z\", \"producto_id\": 5, \"orden_venta_id\": 63, \"unidad_medida_id\": 1}]}', '{\"id\": 63, \"qr\": 0, \"con\": 1, \"cre\": 0, \"nro\": 44, \"cs_f\": \"CON FACTURA\", \"hora\": \"16:20:05\", \"fecha\": \"2026-01-23\", \"total\": \"5909.00\", \"cambio\": 0, \"codigo\": \"OV.44\", \"estado\": \"FINALIZADO\", \"credito\": \"0.00\", \"total_f\": \"5909.00\", \"user_ap\": null, \"user_id\": 1, \"total_st\": 5909, \"cancelado\": 5909, \"descuento\": null, \"cliente_id\": 1, \"created_at\": \"2026-01-23T20:20:05.000000Z\", \"deleted_at\": null, \"forma_pago\": \"\", \"updated_at\": \"2026-01-23T20:21:45.000000Z\", \"verificado\": 2, \"cancelado_c\": 5909, \"sucursal_id\": 2, \"cancelado_qr\": \"0.00\", \"solicitud_sw\": null, \"observaciones\": null, \"cantidad_total\": 20, \"monto_solicitud\": null, \"solicitud_descuento\": 0, \"orden_venta_detalles\": [{\"id\": 68, \"precio\": \"300.00\", \"cantidad\": 11, \"subtotal\": \"3300.00\", \"descuento\": \"0.00\", \"created_at\": \"2026-01-23T20:20:05.000000Z\", \"deleted_at\": null, \"subtotal_f\": \"3300.00\", \"updated_at\": \"2026-01-23T20:20:05.000000Z\", \"producto_id\": 3, \"orden_venta_id\": 63, \"unidad_medida_id\": 1}, {\"id\": 69, \"precio\": \"345.00\", \"cantidad\": 7, \"subtotal\": \"2415.00\", \"descuento\": \"0.00\", \"created_at\": \"2026-01-23T20:20:05.000000Z\", \"deleted_at\": null, \"subtotal_f\": \"2415.00\", \"updated_at\": \"2026-01-23T20:20:05.000000Z\", \"producto_id\": 4, \"orden_venta_id\": 63, \"unidad_medida_id\": 2}, {\"id\": 70, \"precio\": \"97.00\", \"cantidad\": 2, \"subtotal\": \"194.00\", \"descuento\": \"0.00\", \"created_at\": \"2026-01-23T20:20:05.000000Z\", \"deleted_at\": null, \"subtotal_f\": \"194.00\", \"updated_at\": \"2026-01-23T20:20:05.000000Z\", \"producto_id\": 5, \"orden_venta_id\": 63, \"unidad_medida_id\": 1}]}', 'ORDEN DE VENTA', '2026-01-23', '16:21:45', '2026-01-23 20:21:45', '2026-01-23 20:21:45');
 
 -- --------------------------------------------------------
 
@@ -1045,7 +1049,14 @@ INSERT INTO `jobs` (`id`, `queue`, `payload`, `attempts`, `reserved_at`, `availa
 (163, 'default', '{\"uuid\":\"01fe58b2-51c3-4a72-adf4-ad9f9001889c\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1768746258, 1768746258),
 (164, 'default', '{\"uuid\":\"4a33d7e6-dd80-4541-a904-55812d6262db\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1768746260, 1768746260),
 (165, 'default', '{\"uuid\":\"45ef65cd-3e5c-48f7-a119-c3ccbaa3e7b1\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1768746276, 1768746276),
-(166, 'default', '{\"uuid\":\"5ccadd1e-dca8-4c0d-b561-c200b0bea6fc\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1768746293, 1768746293);
+(166, 'default', '{\"uuid\":\"5ccadd1e-dca8-4c0d-b561-c200b0bea6fc\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1768746293, 1768746293),
+(167, 'default', '{\"uuid\":\"f285fa7d-1f2d-4b82-90e1-c80d8a50dcc7\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1768746597, 1768746597),
+(168, 'default', '{\"uuid\":\"05edfd12-6916-4a96-97d5-408e107af13b\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1768746727, 1768746727),
+(169, 'default', '{\"uuid\":\"b107449c-f737-4e79-8f19-d5732f5b6f88\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1768746730, 1768746730),
+(170, 'default', '{\"uuid\":\"d9ebd98f-6b9a-4a67-9566-e088127abd62\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1768746730, 1768746730),
+(171, 'default', '{\"uuid\":\"f2cf8c8d-61ac-42a0-9845-93b5cd716f1c\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1768746731, 1768746731),
+(172, 'default', '{\"uuid\":\"35b611b9-d33f-42d5-a612-3a2a8464050a\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1768746732, 1768746732),
+(173, 'default', '{\"uuid\":\"e4445bc6-4bb4-48c6-9669-251cb7787052\",\"displayName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\RecalcularRankingClientes\",\"command\":\"O:34:\\\"App\\\\Jobs\\\\RecalcularRankingClientes\\\":1:{s:59:\\\"\\u0000App\\\\Jobs\\\\RecalcularRankingClientes\\u0000parametroClienteService\\\";O:36:\\\"App\\\\Services\\\\ParametroClienteService\\\":2:{s:44:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000modulo\\\";s:18:\\\"PARAMETRO CLIENTES\\\";s:60:\\\"\\u0000App\\\\Services\\\\ParametroClienteService\\u0000historialAccionService\\\";O:35:\\\"App\\\\Services\\\\HistorialAccionService\\\":1:{s:48:\\\"\\u0000App\\\\Services\\\\HistorialAccionService\\u0000descripcion\\\";s:11:\\\"EL USUARIO \\\";}}}\"}}', 0, NULL, 1768746804, 1768746804);
 
 -- --------------------------------------------------------
 
@@ -1237,7 +1248,10 @@ INSERT INTO `kardex_productos` (`id`, `sucursal_id`, `tipo_registro`, `registro_
 (179, 6, 'AJUSTE REPOSICIÓN', 5, 'AjusteReposicion', 3, 'EGRESO POR REPOSICIÓN DE AJUSTE', 300.00, 'EGRESO', NULL, 3, 2, 300.00, NULL, 900.00, 600.00, '2026-01-13', 1, 1, '2026-01-13 13:44:02', '2026-01-13 13:44:02'),
 (180, 2, 'ORDEN DE VENTA', 65, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 62, 300.00, NULL, 300.00, 18540.00, '2026-01-17', 1, 1, '2026-01-17 21:33:37', '2026-01-17 21:33:37'),
 (181, 2, 'ORDEN DE VENTA', 66, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 61, 300.00, NULL, 300.00, 18240.00, '2026-01-18', 1, 1, '2026-01-18 14:03:33', '2026-01-18 14:03:33'),
-(182, 2, 'ORDEN DE VENTA', 67, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 60, 300.00, NULL, 300.00, 17940.00, '2026-01-18', 1, 1, '2026-01-18 14:04:39', '2026-01-18 14:04:39');
+(182, 2, 'ORDEN DE VENTA', 67, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 1, 60, 300.00, NULL, 300.00, 17940.00, '2026-01-18', 1, 1, '2026-01-18 14:04:39', '2026-01-18 14:04:39'),
+(183, 2, 'ORDEN DE VENTA', 68, 'OrdenVentaDetalle', 3, 'EGRESO POR ORDEN DE VENTA', 300.00, 'EGRESO', NULL, 11, 49, 300.00, NULL, 3300.00, 14640.00, '2026-01-23', 1, 1, '2026-01-23 20:21:45', '2026-01-23 20:21:45'),
+(184, 2, 'ORDEN DE VENTA', 69, 'OrdenVentaDetalle', 4, 'EGRESO POR ORDEN DE VENTA', 345.00, 'EGRESO', NULL, 7, 53, 345.00, NULL, 2415.00, 18285.00, '2026-01-23', 1, 1, '2026-01-23 20:21:45', '2026-01-23 20:21:45'),
+(185, 2, 'ORDEN DE VENTA', 70, 'OrdenVentaDetalle', 5, 'EGRESO POR ORDEN DE VENTA', 97.00, 'EGRESO', NULL, 2, 0, 97.00, NULL, 194.00, 0.00, '2026-01-23', 1, 1, '2026-01-23 20:21:45', '2026-01-23 20:21:45');
 
 -- --------------------------------------------------------
 
@@ -1748,7 +1762,8 @@ INSERT INTO `orden_ventas` (`id`, `nro`, `codigo`, `sucursal_id`, `cliente_id`, 
 (59, 40, 'OV.40', 2, 1, '2025-12-17', '11:52:00', 1, 295.00, 295.00, 0, NULL, NULL, NULL, NULL, 295.00, 295.00, 1, 200.00, 1, 95.00, 0, 0.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'ANULADO', 4, 1, NULL, '2025-12-17 15:53:34', '2026-01-02 13:30:06'),
 (60, 41, 'OV.41', 2, 1, '2026-01-17', '17:33:00', 1, 295.00, 295.00, 0, NULL, NULL, NULL, NULL, 295.00, 295.00, 1, 295.00, 0, 0.00, 0, 0.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2026-01-17 21:33:37', '2026-01-17 21:33:37'),
 (61, 42, 'OV.42', 2, 1, '2026-01-18', '10:02:00', 1, 295.00, 295.00, 0, NULL, NULL, NULL, NULL, 295.00, 295.00, 1, 295.00, 0, 0.00, 0, 0.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2026-01-18 14:03:33', '2026-01-18 14:03:33'),
-(62, 43, 'OV.43', 2, 1, '2026-01-18', '10:04:00', 1, 295.00, 295.00, 0, NULL, NULL, NULL, NULL, 295.00, 295.00, 1, 295.00, 0, 0.00, 0, 0.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2026-01-18 14:04:39', '2026-01-18 14:04:39');
+(62, 43, 'OV.43', 2, 1, '2026-01-18', '10:04:00', 1, 295.00, 295.00, 0, NULL, NULL, NULL, NULL, 295.00, 295.00, 1, 295.00, 0, 0.00, 0, 0.00, 0.00, 'EFECTIVO', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2026-01-18 14:04:39', '2026-01-18 14:04:39'),
+(63, 44, 'OV.44', 2, 1, '2026-01-23', '16:20:05', 20, 5909.00, 5909.00, 0, NULL, NULL, NULL, NULL, 5909.00, 5909.00, 1, 5909.00, 0, 0.00, 0, 0.00, 0.00, '', 'CON FACTURA', NULL, 'FINALIZADO', 2, 1, NULL, '2026-01-23 20:20:05', '2026-01-23 20:21:45');
 
 -- --------------------------------------------------------
 
@@ -1825,7 +1840,10 @@ INSERT INTO `orden_venta_detalles` (`id`, `orden_venta_id`, `producto_id`, `unid
 (64, 59, 3, 1, 1, 300.00, 295.00, 5.00, 295.00, NULL, '2025-12-17 15:53:34', '2025-12-17 15:53:34'),
 (65, 60, 3, 1, 1, 300.00, 295.00, 5.00, 295.00, NULL, '2026-01-17 21:33:37', '2026-01-17 21:33:37'),
 (66, 61, 3, 1, 1, 300.00, 295.00, 5.00, 295.00, NULL, '2026-01-18 14:03:33', '2026-01-18 14:03:33'),
-(67, 62, 3, 1, 1, 300.00, 295.00, 5.00, 295.00, NULL, '2026-01-18 14:04:39', '2026-01-18 14:04:39');
+(67, 62, 3, 1, 1, 300.00, 295.00, 5.00, 295.00, NULL, '2026-01-18 14:04:39', '2026-01-18 14:04:39'),
+(68, 63, 3, 1, 11, 300.00, 3300.00, 0.00, 3300.00, NULL, '2026-01-23 20:20:05', '2026-01-23 20:20:05'),
+(69, 63, 4, 2, 7, 345.00, 2415.00, 0.00, 2415.00, NULL, '2026-01-23 20:20:05', '2026-01-23 20:20:05'),
+(70, 63, 5, 1, 2, 97.00, 194.00, 0.00, 194.00, NULL, '2026-01-23 20:20:05', '2026-01-23 20:20:05');
 
 -- --------------------------------------------------------
 
@@ -1916,7 +1934,10 @@ INSERT INTO `permisos` (`id`, `role_id`, `modulo_id`, `created_at`, `updated_at`
 (27, 3, 78, '2026-01-17 19:51:46', '2026-01-17 19:51:46'),
 (28, 3, 79, '2026-01-17 19:51:47', '2026-01-17 19:51:47'),
 (29, 3, 80, '2026-01-17 19:51:47', '2026-01-17 19:51:47'),
-(30, 4, 65, '2026-01-17 20:01:43', '2026-01-17 20:01:43');
+(30, 4, 65, '2026-01-17 20:01:43', '2026-01-17 20:01:43'),
+(31, 4, 78, '2026-01-19 17:32:43', '2026-01-19 17:32:43'),
+(32, 4, 79, '2026-01-19 17:32:44', '2026-01-19 17:32:44'),
+(33, 4, 80, '2026-01-19 17:32:44', '2026-01-19 17:32:44');
 
 -- --------------------------------------------------------
 
@@ -1980,8 +2001,7 @@ CREATE TABLE `proformas` (
 --
 
 INSERT INTO `proformas` (`id`, `nro`, `codigo`, `sucursal_ids`, `fecha`, `hora`, `cantidad_total`, `total`, `observaciones`, `user_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 'PF.1', '[2, 3]', '2025-12-19', '08:46:00', NULL, NULL, NULL, 1, NULL, '2025-12-19 12:46:57', '2025-12-19 15:54:22'),
-(2, 2, 'PF.2', '[2]', '2025-12-19', '09:02:00', NULL, NULL, NULL, 1, NULL, '2025-12-19 13:03:15', '2025-12-19 13:03:15');
+(1, 1, 'PF.1', '[2, 3]', '2026-01-23', '16:19:00', NULL, NULL, NULL, 1, NULL, '2026-01-23 20:19:58', '2026-01-23 20:19:58');
 
 -- --------------------------------------------------------
 
@@ -2009,11 +2029,9 @@ CREATE TABLE `proforma_detalles` (
 --
 
 INSERT INTO `proforma_detalles` (`id`, `proforma_id`, `cliente_id`, `cantidad`, `cantidad_entregada`, `total`, `saldo`, `estado`, `verificado`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 13, 0.00, 3697.00, 3697.00, 'PENDIENTE', 0, NULL, '2025-12-19 12:46:57', '2025-12-19 15:54:22'),
-(2, 1, 2, 1, 0.00, 345.00, 345.00, 'PENDIENTE', 0, NULL, '2025-12-19 12:46:57', '2025-12-19 15:54:22'),
-(3, 1, 3, 2, 0.00, 645.00, 645.00, 'PENDIENTE', 0, NULL, '2025-12-19 12:46:57', '2025-12-19 15:54:22'),
-(4, 1, 4, 3, 0.00, 990.00, 990.00, 'PENDIENTE', 0, NULL, '2025-12-19 12:48:54', '2025-12-19 15:54:22'),
-(5, 2, 1, 10, 0.00, 3000.00, 3000.00, 'PENDIENTE', 0, NULL, '2025-12-19 13:03:15', '2025-12-19 13:03:15');
+(1, 1, 1, 20, 20.00, 5909.00, 5909.00, 'ATENDIDO', 1, NULL, '2026-01-23 20:19:58', '2026-01-23 20:20:05'),
+(2, 1, 2, 9, 0.00, 2745.00, 2745.00, 'PENDIENTE', 0, NULL, '2026-01-23 20:19:58', '2026-01-23 20:19:58'),
+(3, 1, 3, 10, 0.00, 3000.00, 3000.00, 'PENDIENTE', 0, NULL, '2026-01-23 20:19:58', '2026-01-23 20:19:58');
 
 -- --------------------------------------------------------
 
@@ -2043,20 +2061,15 @@ CREATE TABLE `proforma_detalle_productos` (
 --
 
 INSERT INTO `proforma_detalle_productos` (`id`, `proforma_id`, `proforma_detalle_id`, `proforma_producto_id`, `producto_id`, `unidad_medida_id`, `cantidad`, `cantidad_entregada`, `resta`, `precio`, `subtotal`, `verificado`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 1, 5, 1, 12, 12, 12.00, 300.00, 3600.00, 1, '2025-12-19 12:46:57', '2025-12-19 15:54:22'),
-(2, 1, 1, 2, 5, 1, NULL, NULL, 0.00, NULL, NULL, 0, '2025-12-19 12:46:57', '2025-12-19 12:49:48'),
-(3, 1, 2, 1, 5, 1, NULL, NULL, 0.00, NULL, NULL, 0, '2025-12-19 12:46:57', '2025-12-19 12:49:48'),
-(4, 1, 2, 2, 5, 1, 1, NULL, 1.00, 345.00, 345.00, 0, '2025-12-19 12:46:57', '2025-12-19 15:54:22'),
-(5, 1, 3, 1, 5, 1, 1, 1, 1.00, 300.00, 300.00, 1, '2025-12-19 12:46:57', '2025-12-19 15:54:22'),
-(6, 1, 3, 2, 5, 1, 1, NULL, 1.00, 345.00, 345.00, 0, '2025-12-19 12:46:57', '2025-12-19 15:54:22'),
-(7, 1, 4, 1, 5, 1, 1, 0, 1.00, 300.00, 300.00, 0, '2025-12-19 12:48:54', '2025-12-19 15:54:22'),
-(8, 1, 4, 2, 5, 1, 2, 1, 2.00, 345.00, 690.00, 0, '2025-12-19 12:48:54', '2025-12-19 15:54:22'),
-(9, 1, 1, 3, 5, 1, 1, NULL, 1.00, 97.00, 97.00, 0, '2025-12-19 12:49:48', '2025-12-19 15:54:22'),
-(10, 1, 2, 3, 5, 1, NULL, NULL, 0.00, NULL, NULL, 0, '2025-12-19 12:49:48', '2025-12-19 12:49:48'),
-(11, 1, 3, 3, 5, 1, NULL, NULL, 0.00, 97.00, 97.00, 0, '2025-12-19 12:49:48', '2025-12-19 12:50:02'),
-(12, 1, 4, 3, 5, 1, NULL, NULL, 0.00, 97.00, 97.00, 0, '2025-12-19 12:49:48', '2025-12-19 13:39:38'),
-(13, 2, 5, 4, 4, 2, 10, NULL, 10.00, 300.00, 3000.00, 0, '2025-12-19 13:03:15', '2025-12-19 13:03:15'),
-(14, 2, 5, 5, 4, 2, NULL, NULL, 0.00, NULL, NULL, 0, '2025-12-19 13:03:15', '2025-12-19 13:03:15');
+(1, 1, 1, 1, 3, 1, 11, 11, 11.00, 300.00, 3300.00, 1, '2026-01-23 20:19:58', '2026-01-23 20:20:05'),
+(2, 1, 1, 2, 4, 1, 7, 7, 7.00, 345.00, 2415.00, 1, '2026-01-23 20:19:58', '2026-01-23 20:20:05'),
+(3, 1, 1, 3, 5, 1, 2, 2, 2.00, 97.00, 194.00, 1, '2026-01-23 20:19:58', '2026-01-23 20:20:05'),
+(4, 1, 2, 1, 3, 1, 8, NULL, 8.00, 300.00, 2400.00, 0, '2026-01-23 20:19:58', '2026-01-23 20:19:58'),
+(5, 1, 2, 2, 4, 1, 1, NULL, 1.00, 345.00, 345.00, 0, '2026-01-23 20:19:58', '2026-01-23 20:19:58'),
+(6, 1, 2, 3, 5, 1, NULL, NULL, 0.00, 97.00, NULL, 0, '2026-01-23 20:19:58', '2026-01-23 20:19:58'),
+(7, 1, 3, 1, 3, 1, 10, NULL, 10.00, 300.00, 3000.00, 0, '2026-01-23 20:19:58', '2026-01-23 20:19:58'),
+(8, 1, 3, 2, 4, 1, NULL, NULL, 0.00, 345.00, NULL, 0, '2026-01-23 20:19:58', '2026-01-23 20:19:58'),
+(9, 1, 3, 3, 5, 1, NULL, NULL, 0.00, 97.00, NULL, 0, '2026-01-23 20:19:58', '2026-01-23 20:19:58');
 
 -- --------------------------------------------------------
 
@@ -2082,11 +2095,9 @@ CREATE TABLE `proforma_productos` (
 --
 
 INSERT INTO `proforma_productos` (`id`, `proforma_id`, `producto_id`, `precio`, `unidad_medida_id`, `stock_actual`, `agregados`, `suma`, `created_at`, `updated_at`) VALUES
-(1, 1, 3, 300.00, 1, 79, 0.00, 0.00, '2025-12-19 12:46:57', '2025-12-19 15:54:22'),
-(2, 1, 4, 345.00, 2, 59, 0.00, 0.00, '2025-12-19 12:46:57', '2025-12-19 15:54:22'),
-(3, 1, 5, 97.00, 1, 2, 0.00, 0.00, '2025-12-19 12:49:48', '2025-12-19 15:54:22'),
-(4, 2, 3, 300.00, 1, 67, 0.00, 0.00, '2025-12-19 13:03:15', '2025-12-19 13:03:15'),
-(5, 2, 4, 345.00, 2, 59, 0.00, 0.00, '2025-12-19 13:03:15', '2025-12-19 13:03:24');
+(1, 1, 3, 300.00, 1, 46, 0.00, 0.00, '2026-01-23 20:19:58', '2026-01-23 20:19:58'),
+(2, 1, 4, 345.00, 2, 56, 0.00, 0.00, '2026-01-23 20:19:58', '2026-01-23 20:19:58'),
+(3, 1, 5, 97.00, 1, 0, 0.00, 0.00, '2026-01-23 20:19:58', '2026-01-23 20:19:58');
 
 -- --------------------------------------------------------
 
@@ -2338,12 +2349,12 @@ CREATE TABLE `sucursal_productos` (
 INSERT INTO `sucursal_productos` (`id`, `sucursal_id`, `producto_id`, `cantidad_ideal`, `cantidad_minima`, `stock_actual`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (1, 1, 3, 5, 5, 184, NULL, '2025-12-05 15:07:00', '2026-01-13 13:44:02'),
 (2, 1, 4, 0, 0, 150, NULL, '2025-12-05 15:07:00', '2026-01-06 20:06:34'),
-(4, 2, 3, 30, 6, 60, NULL, '2025-12-05 16:08:14', '2026-01-18 14:04:39'),
-(5, 2, 4, 2, 2, 60, NULL, '2025-12-05 16:14:58', '2026-01-02 13:32:17'),
+(4, 2, 3, 30, 6, 49, NULL, '2025-12-05 16:08:14', '2026-01-23 20:21:45'),
+(5, 2, 4, 2, 2, 53, NULL, '2025-12-05 16:14:58', '2026-01-23 20:21:45'),
 (6, 3, 3, 0, 0, 15, NULL, '2025-12-06 14:30:40', '2025-12-22 21:33:24'),
 (7, 3, 4, 0, 0, 4, NULL, '2025-12-06 14:31:33', '2025-12-09 21:53:43'),
 (8, 1, 5, 0, 0, 82, NULL, '2025-12-14 00:26:45', '2026-01-06 20:06:34'),
-(9, 2, 5, 0, 0, 2, NULL, '2025-12-14 00:26:45', '2025-12-14 00:26:45'),
+(9, 2, 5, 0, 0, 0, NULL, '2025-12-14 00:26:45', '2026-01-23 20:21:45'),
 (10, 4, 3, 0, 0, 19, NULL, '2025-12-14 00:34:12', '2025-12-14 00:34:12'),
 (11, 3, 5, 0, 0, 0, NULL, '2025-12-19 01:20:27', '2025-12-19 01:20:27'),
 (12, 4, 4, 0, 0, 0, NULL, '2025-12-19 12:13:50', '2025-12-19 12:13:50'),
@@ -2502,7 +2513,7 @@ INSERT INTO `users` (`id`, `usuario`, `nombre`, `paterno`, `materno`, `ci`, `ci_
 (21, 'sandra@gmail.com', 'SANDRA', 'MARTINEZ', '', '3434343', 'LP', 'ORH+', 'FEMENINO', 'BOLIVIANA', '', '787878787', NULL, '786767', 'LOS PEDREAGLES', 'gps', 'sandra@gmail.com', 'foto_211768590277.png', 'carnet_211768590277.jpeg', '$2y$12$..7RueZzUqKtNNEnTio42eMRKOvWeWzuo0a26mVnZ09jhCLGMCtse', 'USUARIO', 3, 1, '2026-01-16', 1, NULL, '2026-01-16 19:04:37', '2026-01-16 19:04:37'),
 (22, 'jorgecarv@gmail.com', 'JORGE', 'CARVAJAL', '', '78787878', 'LP', 'ORH+', 'MASCULINO', 'BOLIVIANO', '', '7878787887', NULL, '78676677', 'LOS OLIVOS', 'GPS', 'jorgecarv@gmail.com', NULL, NULL, '$2y$12$JoitjWqXlfuumhh9rY/tsuagV7l1NSYNpFkCZ4oEU5zBMRwOmZPoO', 'USUARIO', 4, 1, '2026-01-16', 1, NULL, '2026-01-16 21:31:13', '2026-01-16 21:31:13'),
 (23, 'marcelo@gmail.com', 'MARCELO', 'ARUQUIPA', '', '8787878', 'LP', 'ORH+', 'MASCULINO', 'BOLIVIANO', '', '767676767', NULL, '676667', 'LOS PEDREGALES', 'gps', 'marcelo@gmail.com', NULL, NULL, '$2y$12$x4uiV5t20YMpl.D/jPWiOeQMgO2o7W5UY6W/2zEGnZ6HzbG6vVOgO', 'USUARIO', 4, 1, '2026-01-16', 1, NULL, '2026-01-16 21:32:03', '2026-01-16 21:32:03'),
-(24, 'franco@gmail.com', 'FRANCO', 'ORTIZ', '', '6766776', 'LP', 'ORH+', 'MASCULINO', 'BOLIVIANO', '', '656565665', NULL, '7676767', 'LOS PEDREGALES #2323', 'gps', 'franco@gmail.com', NULL, NULL, '$2y$12$QeSp/VBl2JRUQcjFk/27ZO1y0EdHMMo6WeBn7Ue9Z53QyvWVQMQxm', 'USUARIO', 4, 1, '2026-01-16', 1, NULL, '2026-01-16 21:33:06', '2026-01-16 22:00:53');
+(24, 'franco@gmail.com', 'FRANCO', 'ORTIZ', '', '6766776', 'LP', '', 'MASCULINO', 'BOLIVIANO', '', '656565665', NULL, '7676767', 'LOS PEDREGALES #2323', 'gps', 'franco@gmail.com', NULL, NULL, '$2y$12$n5B80rnQs589H7qpvbR37.WnyNKm1kQPO2qClrzKQdZEea2WY67wG', 'USUARIO', 4, 1, '2026-01-23', 1, NULL, '2026-01-16 21:33:06', '2026-01-23 19:00:46');
 
 --
 -- Índices para tablas volcadas
@@ -2965,19 +2976,19 @@ ALTER TABLE `gastos`
 -- AUTO_INCREMENT de la tabla `historial_accions`
 --
 ALTER TABLE `historial_accions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=361;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=365;
 
 --
 -- AUTO_INCREMENT de la tabla `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=167;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=174;
 
 --
 -- AUTO_INCREMENT de la tabla `kardex_productos`
 --
 ALTER TABLE `kardex_productos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=183;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=186;
 
 --
 -- AUTO_INCREMENT de la tabla `marcas`
@@ -3031,13 +3042,13 @@ ALTER TABLE `orden_salida_detalles`
 -- AUTO_INCREMENT de la tabla `orden_ventas`
 --
 ALTER TABLE `orden_ventas`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT de la tabla `orden_venta_detalles`
 --
 ALTER TABLE `orden_venta_detalles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT de la tabla `parametro_clientes`
@@ -3055,7 +3066,7 @@ ALTER TABLE `parametro_sucursals`
 -- AUTO_INCREMENT de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
@@ -3067,25 +3078,25 @@ ALTER TABLE `productos`
 -- AUTO_INCREMENT de la tabla `proformas`
 --
 ALTER TABLE `proformas`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `proforma_detalles`
 --
 ALTER TABLE `proforma_detalles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `proforma_detalle_productos`
 --
 ALTER TABLE `proforma_detalle_productos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `proforma_productos`
 --
 ALTER TABLE `proforma_productos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedors`
