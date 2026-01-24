@@ -13,7 +13,9 @@ class DevolucionStockDetalle extends Model
     protected $fillable = [
         "devolucion_stock_id",
         "producto_id",
+        "cantidad_existente",
         "cantidad",
+        "cantidad_restante",
         "cantidad_fisica",
         "costo",
         "subtotal",

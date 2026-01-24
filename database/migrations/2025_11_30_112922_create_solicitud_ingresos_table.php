@@ -20,9 +20,9 @@ return new class extends Migration
             $table->time("hora_ingreso");
             $table->date("fecha_sis");
             $table->time("hora_sis");
-            $table->string("cs_f");
-            $table->decimal("tipo_cambio", 24, 2);
-            $table->decimal("gastos", 24, 2);
+            $table->string("cs_f")->nullable();
+            $table->decimal("tipo_cambio", 24, 2)->nullable();
+            $table->decimal("gastos", 24, 2)->nullable();
             $table->text("observaciones")->nullable();
             $table->text("descripcion")->nullable();
             $table->double("cantidad_total", 8, 2);

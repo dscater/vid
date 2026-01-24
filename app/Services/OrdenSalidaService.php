@@ -216,7 +216,7 @@ class OrdenSalidaService
             }
 
             // DESCONTAR STOCK ALMACEN
-            $this->kardex_producto_service->registroEgreso("ORDEN DE SALIDA", $producto, $item["cantidad_fisica"], $producto->precio, "EGRESO POR ORDEN DE SALIDA", $almacen->id, "OrdenSalidaDetalle", $orden_salida_detalle->id);
+            $this->kardex_producto_service->registroEgreso("ORDEN DE SALIDA", $producto, $item["cantidad"], $producto->precio, "EGRESO POR ORDEN DE SALIDA", $almacen->id, "OrdenSalidaDetalle", $orden_salida_detalle->id);
 
             // INCREMENTAR STOCK DE SUCURSAL DESTINO
             $this->kardex_producto_service->registroIngreso($orden_salida->sucursal_id, "ORDEN DE SALIDA", $producto, $item["cantidad_fisica"], $producto->precio, "INGRESO POR ORDEN DE SALIDA", "OrdenSalidaDetalle", $orden_salida_detalle->id);

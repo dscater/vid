@@ -38,6 +38,7 @@ class OrdenVentaUpdateRequest extends FormRequest
             "solicitud_descuento" => "nullable",
             "solicitud_sw" => "nullable",
             "monto_solicitud" => "nullable",
+            "descuento_sugerido" => "nullable",
             "descuento" => "nullable",
 
             "con" => "boolean",
@@ -48,6 +49,8 @@ class OrdenVentaUpdateRequest extends FormRequest
             "credito" => "required|decimal:0,2",
 
             "total_f" => "required",
+            "foto" => "nullable",
+            "foto64" => "required",
             "orden_venta_detalles" => ["required", new OrdenVentaDetalleRule()],
             "eliminados_detalles" => "nullable",
         ];

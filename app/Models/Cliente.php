@@ -34,8 +34,15 @@ class Cliente extends Model
     ];
 
     protected $appends = [
-        "estado_t"
+        "estado_t",
+        "ventas_65"
     ];
+
+    public function getVentas65Attribute()
+    {
+        return $this->orden_ventas()->where('created_at', '>=', now()->subDays(65))
+            ->where("verificado", 2)->sum('total_f');
+    }
 
     public function getEstadoTAttribute()
     {

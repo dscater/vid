@@ -22,14 +22,15 @@ class UnidadMedidaStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "nombre" => "required"
+            "nombre" => "required|unique:unidad_medidas,nombre"
         ];
     }
 
     public function messages(): array
     {
         return [
-            "nombre.required" => "Debes completar este campo"
+            "nombre.required" => "Debes completar este campo",
+            "nombre.unique" => "Esta unidad de medida ya existe"
         ];
     }
 }

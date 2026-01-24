@@ -37,6 +37,14 @@ class OrdenVentaController extends Controller
             $registro = $request->orden_venta;
             $cuenta_cobrar = $request->cuenta_cobrar;
             Cache::lock('ordenVentaStore', 10)->block(5, function () use ($registro, $cuenta_cobrar) {
+
+                // obtener el archivo de foto si existe
+                if (isset($registro["foto64"])) {
+                    $registro["foto"] = $this->orden_ventaService->prepararFotoOffline($registro["foto64"]);
+                }
+
+                // crear la orden de venta
+                $registro["verificado"] = 2;
                 $orden_venta = $this->orden_ventaService->crear($registro);
                 if ($cuenta_cobrar) {
                     // $nueva_cuenta_cobrar = $this->cuenta_cobrar_service->nuevo($orden_venta);

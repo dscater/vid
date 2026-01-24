@@ -25,9 +25,19 @@ class Producto extends Model
         "imagen",
     ];
 
-    protected $appends = ["url_imagen", "txt_imagen"];
+    protected $appends = ["url_imagen", "imagen64", "txt_imagen"];
 
-
+    public function getImagen64Attribute()
+    {
+        $path = public_path("imgs/productos/" . $this->imagen);
+        if (!$this->imagen || !file_exists($path)) {
+            $path = public_path("imgs/productos/default.png");
+        }
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        return $base64;
+    }
     public function getTxtImagenAttribute()
     {
         if ($this->imagen) {

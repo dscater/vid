@@ -25,6 +25,9 @@ class SolicitudIngresoAprobarCostosRequest extends FormRequest
     {
         return [
             "verificado" => "required",
+            "cs_f" => "required",
+            "tipo_cambio" => "required",
+            "gastos" => "required",
             "total" => "required",
             "solicitud_ingreso_detalles" => ["required", new SolicitudIngresoAprobarCostosRule()],
         ];
@@ -32,6 +35,10 @@ class SolicitudIngresoAprobarCostosRequest extends FormRequest
 
     public function messages(): array
     {
-        return [];
+        return [
+            "cs_f" => "Debes completar este campo",
+            "tipo_cambio" => "Debes completar este campo",
+            "gastos" => "Debes completar este campo",
+        ];
     }
 }

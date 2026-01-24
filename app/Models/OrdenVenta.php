@@ -25,6 +25,7 @@ class OrdenVenta extends Model
         "solicitud_sw",
         "user_ap",
         "monto_solicitud",
+        "descuento_sugerido",
         "descuento",
         "total_f",
         "con",
@@ -40,10 +41,31 @@ class OrdenVenta extends Model
         "observaciones",
         "estado", // para controlar:PENDIENTE, APROBADO, FINALIZADO, RECHAZADO, ANULADO, EN ESPERA
         "verificado", // 0:PENDIENTE, 1: APROBADO, 2: FINALIZADO, 3: RECHAZADO, 4: ANULADO, 5: EN ESPERA
+        "foto",
         "user_id",
     ];
 
-    protected $appends = ["fecha_t", "hora_t", "fecha_c", "fecha_ct"];
+    protected $appends = ["fecha_t", "hora_t", "fecha_c", "fecha_ct", "url_foto", "foto64"];
+
+    public function getUrlFotoAttribute()
+    {
+        if ($this->foto) {
+            return asset("imgs/orden_ventas/" . $this->foto);
+        }
+        return asset("imgs/orden_ventas/default.png");
+    }
+
+    public function getFoto64Attribute()
+    {
+        $path = public_path("imgs/orden_ventas/" . $this->foto);
+        if (!$this->foto || !file_exists($path)) {
+            $path = public_path("imgs/orden_ventas/default.png");
+        }
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        return $base64;
+    }
 
     public function getLiteralTxtAttribute()
     {

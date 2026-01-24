@@ -38,6 +38,7 @@ class OrdenVentaStoreRequest extends FormRequest
             "solicitud_descuento" => "nullable",
             "solicitud_sw" => "nullable",
             "monto_solicitud" => "nullable",
+            "descuento_sugerido" => "nullable",
             "descuento" => "nullable",
 
             "con" => "boolean",
@@ -50,6 +51,8 @@ class OrdenVentaStoreRequest extends FormRequest
             "total_f" => "required",
             "orden_venta_detalles" => ["required", new OrdenVentaDetalleRule()],
             "eliminados_detalles" => "nullable",
+            "foto" => "nullable",
+            "foto64" => "required",
         ];
     }
 

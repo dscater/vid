@@ -97,9 +97,9 @@ class SolicitudIngresoService
             "hora_ingreso" => $datos["hora_ingreso"],
             "fecha_sis" => date("Y-m-d"),
             "hora_sis" => date("H:i"),
-            "cs_f" => $datos["cs_f"],
-            "tipo_cambio" => $datos["tipo_cambio"],
-            "gastos" => $datos["gastos"],
+            // "cs_f" => $datos["cs_f"],
+            // "tipo_cambio" => $datos["tipo_cambio"],
+            // "gastos" => $datos["gastos"],
             "observaciones" => mb_strtoupper($datos["observaciones"]),
             "descripcion" => mb_strtoupper($datos["descripcion"]),
             "cantidad_total" => $datos["cantidad_total"],
@@ -152,9 +152,9 @@ class SolicitudIngresoService
             "hora_ingreso" => $datos["hora_ingreso"],
             "fecha_sis" => date("Y-m-d"),
             "hora_sis" => date("H:i"),
-            "cs_f" => $datos["cs_f"],
-            "tipo_cambio" => $datos["tipo_cambio"],
-            "gastos" => $datos["gastos"],
+            // "cs_f" => $datos["cs_f"],
+            // "tipo_cambio" => $datos["tipo_cambio"],
+            // "gastos" => $datos["gastos"],
             "observaciones" => mb_strtoupper($datos["observaciones"]),
             "descripcion" => mb_strtoupper($datos["descripcion"]),
             "cantidad_total" => $datos["cantidad_total"],
@@ -241,6 +241,9 @@ class SolicitudIngresoService
         $old_solicitud_ingreso = clone $solicitud_ingreso;
         $old_solicitud_ingreso->loadMissing(["solicitud_ingreso_detalles"]);
         $solicitud_ingreso->update([
+            "cs_f" => $datos["cs_f"],
+            "tipo_cambio" => $datos["tipo_cambio"],
+            "gastos" => $datos["gastos"],
             "total" => $datos["total"],
             "verificado" => 3,
         ]);

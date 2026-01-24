@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger("devolucion_stock_id");
             $table->unsignedBigInteger("producto_id");
+            $table->double("cantidad_existente", 8, 2);
             $table->double("cantidad", 8, 2);
+            $table->double("cantidad_restante", 8, 2);
             $table->double("cantidad_fisica", 8, 2);
             $table->decimal("costo", 24, 2);
             $table->decimal("subtotal", 24, 2);

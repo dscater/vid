@@ -110,7 +110,9 @@ class DevolucionStockService
         foreach ($datos["devolucion_stock_detalles"] as $item) {
             $devolucion_stock->devolucion_stock_detalles()->create([
                 "producto_id" => $item["producto_id"],
+                "cantidad_existente" => $item["cantidad_existente"],
                 "cantidad" => $item["cantidad"],
+                "cantidad_restante" => $item["cantidad_restante"],
                 "cantidad_fisica" => $item["cantidad"],
                 "costo" => $item["costo"],
                 "subtotal" => $item["subtotal"],
@@ -222,7 +224,7 @@ class DevolucionStockService
             }
 
             // DESCONTAR STOCK SUCURSAL
-            $this->kardex_producto_service->registroEgreso("DEVOLUCIÓN DE STOCK", $producto, $item["cantidad_fisica"], $producto->precio, "EGRESO POR DEVOLUCIÓN DE STOCK", $devolucion_stock->sucursal_id, "DevolucionStockDetalle", $devolucion_stock_detalle->id);
+            $this->kardex_producto_service->registroEgreso("DEVOLUCIÓN DE STOCK", $producto, $item["cantidad"], $producto->precio, "EGRESO POR DEVOLUCIÓN DE STOCK", $devolucion_stock->sucursal_id, "DevolucionStockDetalle", $devolucion_stock_detalle->id);
 
             // INCREMENTAR STOCK DEL ALMACEN CANTIDAD FISISCA
             $this->kardex_producto_service->registroIngreso($almacen->id, "DEVOLUCIÓN DE STOCK", $producto, $item["cantidad_fisica"], $producto->precio, "INGRESO POR DEVOLUCIÓN DE STOCK", "DevolucionStockDetalle", $devolucion_stock_detalle->id);

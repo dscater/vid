@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer("solicitud_sw")->default(0)->nullable();
             $table->unsignedBigInteger("user_ap")->nullable();
             $table->decimal("monto_solicitud", 24, 2)->default(0)->nullable();
+            $table->decimal("descuento_sugerido", 24, 2)->default(0)->nullable();
             $table->decimal("descuento", 24, 2)->default(0)->nullable();
             $table->decimal("total_f", 24, 2);
             $table->integer("con")->default(0);
@@ -41,6 +42,7 @@ return new class extends Migration
             $table->text("observaciones")->nullable();
             $table->string("estado"); // para controlar:PENDIENTE, APROBADO, FINALIZADO, RECHAZADO
             $table->integer("verificado")->default(0); // 0:PENDIENTE, 1: APROBADO, 2: FINALIZADO, 3: RECHAZADO
+            $table->string("foto", 255)->nullable();
             $table->unsignedBigInteger("user_id");
             $table->softDeletes();
             $table->timestamps();

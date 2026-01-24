@@ -200,7 +200,7 @@ class AjusteService
         $devolucion_stock_detalle = DevolucionStockDetalle::findOrFail($registro_id);
         $devolucion_stock = $devolucion_stock_detalle->devolucion_stock;
         // REGISTRAR EGRESO
-        $this->kardex_producto_service->registroEgreso("DEVOLUCIÓN DE STOCK", $producto, $cantidad, $producto->precio, "EGRESO POR REPOSICIÓN DE AJUSTE", $devolucion_stock->sucursal_id, "DevolucionStockDetalle", $registro_id);
+        // $this->kardex_producto_service->registroEgreso("DEVOLUCIÓN DE STOCK", $producto, $cantidad, $producto->precio, "EGRESO POR REPOSICIÓN DE AJUSTE", $devolucion_stock->sucursal_id, "DevolucionStockDetalle", $registro_id);
         return true;
     }
 
@@ -209,7 +209,7 @@ class AjusteService
         $transferencia_detalle = TransferenciaDetalle::findOrFail($registro_id);
         $transferencia = $transferencia_detalle->transferencia;
         // REGISTRAR EGRESO
-        $this->kardex_producto_service->registroEgreso("TRANSFERENCIA", $producto, $cantidad, $producto->precio, "EGRESO POR REPOSICIÓN DE AJUSTE", $transferencia->sucursal_id, "TransferenciaDetalle", $registro_id);
+        // $this->kardex_producto_service->registroEgreso("TRANSFERENCIA", $producto, $cantidad, $producto->precio, "EGRESO POR REPOSICIÓN DE AJUSTE", $transferencia->sucursal_id, "TransferenciaDetalle", $registro_id);
         return true;
     }
 
@@ -223,7 +223,7 @@ class AjusteService
         $orden_salida_detalle = OrdenSalidaDetalle::findOrFail($registro_id);
         $orden_salida = $orden_salida_detalle->orden_salida;
         // REGISTRAR EGRESO
-        $this->kardex_producto_service->registroEgreso("ORDEN DE SALIDA", $producto, $cantidad, $producto->precio, "EGRESO POR REPOSICIÓN DE AJUSTE", $almacen->id, "OrdenSalidaDetalle", $registro_id);
+        // $this->kardex_producto_service->registroEgreso("ORDEN DE SALIDA", $producto, $cantidad, $producto->precio, "EGRESO POR REPOSICIÓN DE AJUSTE", $almacen->id, "OrdenSalidaDetalle", $registro_id);
         return true;
     }
 }

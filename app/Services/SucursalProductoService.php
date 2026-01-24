@@ -46,6 +46,17 @@ class SucursalProductoService
         return $sucursal_productos;
     }
 
+    public function listaProductosExistentesConStock($sucursal_id): Collection
+    {
+        $sucursal_productos = SucursalProducto::with(["producto", "sucursal"])
+            ->select("sucursal_productos.*")
+            ->join("productos", "productos.id", "=", "sucursal_productos.producto_id")
+            ->where("stock_actual", ">", 0)
+            ->where("sucursal_id", "=", $sucursal_id)
+            ->get();
+        return $sucursal_productos;
+    }
+
 
     public function listadoSucursales(): Collection
     {

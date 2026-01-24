@@ -239,7 +239,7 @@ class TransferenciaService
             }
 
             // DESCONTAR STOCK SUCURSAL
-            $this->kardex_producto_service->registroEgreso("TRANSFERENCIA", $producto, $item["cantidad_fisica"], $producto->precio, "EGRESO POR TRANSFERENCIA", $transferencia->sucursal_id, "TransferenciaDetalle", $transferencia_detalle->id);
+            $this->kardex_producto_service->registroEgreso("TRANSFERENCIA", $producto, $item["cantidad"], $producto->precio, "EGRESO POR TRANSFERENCIA", $transferencia->sucursal_id, "TransferenciaDetalle", $transferencia_detalle->id);
 
             // INCREMENTAR STOCK DEL ALMACEN
             $this->kardex_producto_service->registroIngreso($transferencia->sucursal_destino, "TRANSFERENCIA", $producto, $item["cantidad_fisica"], $producto->precio, "INGRESO POR TRANSFERENCIA", "TransferenciaDetalle", $transferencia_detalle->id);

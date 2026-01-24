@@ -31,6 +31,13 @@ class SucursalProductoController extends Controller
         ]);
     }
 
+    public function listaProductosExistentesConStock(Request $request)
+    {
+        return response()->JSON([
+            "sucursal_productos" => $this->sucursalProductoService->listaProductosExistentesConStock($request->sucursal_id ?? 0)
+        ]);
+    }
+
     public function listadoSucursales(Request $request): JsonResponse
     {
         return response()->JSON([

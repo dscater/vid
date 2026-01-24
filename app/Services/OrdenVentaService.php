@@ -12,13 +12,16 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class OrdenVentaService
 {
     private $modulo = "ORDEN DE VENTA";
     public function __construct(
+        private  CargarArchivoService $cargarArchivoService,
         private HistorialAccionService $historialAccionService,
         private KardexProductoService $kardex_producto_service,
         private SucursalProductoService $sucursal_producto_service,
@@ -116,7 +119,7 @@ class OrdenVentaService
             "hora" => $datos["hora"],
             "cantidad_total" => $datos["cantidad_total"],
             "cs_f" => $datos["cs_f"],
-            "forma_pago" => $datos["forma_pago"],
+            "forma_pago" => $datos["forma_pago"] ?? "",
 
             "con" => $datos["con"],
             "cancelado_c" => $datos["cancelado_c"],
@@ -131,12 +134,29 @@ class OrdenVentaService
             "solicitud_descuento" => $datos["solicitud_descuento"],
             "solicitud_sw" => $datos["solicitud_descuento"] == 1 ? 0 : NULL,
             "monto_solicitud" => $datos["solicitud_descuento"] == 1 ? $datos["descuento"] : NULL,
-            "descuento" => $datos["solicitud_descuento"] == 1 ? $datos["descuento"] : NULL,
+            "descuento_sugerido" => $datos["descuento_sugerido"] ?? 0,
+            "descuento" => $datos["descuento"] ?? 0,
             "total_f" => $datos["total_f"],
             "estado" => isset($datos["estado"]) ? $datos["estado"] : ($datos["solicitud_descuento"] == 1 ? "PENDIENTE" : "FINALIZADO"),
             "verificado" => isset($datos["verificado"]) ? $datos["verificado"] : ($datos["solicitud_descuento"] == 1 ? 0 : 2),
             "user_id" => Auth::user()->id,
         ]);
+
+        if ($orden_venta->descuento > $orden_venta->descuento_sugerido) {
+            $orden_venta->verificado = 0;
+            $orden_venta->solicitud_descuento = 1;
+            $orden_venta->solicitud_sw = 0;
+            $orden_venta->estado = "PENDIENTE";
+            $orden_venta->save();
+            Log::debug("AAAAAAAAAAAAAAAAAAAA");
+        } else {
+            $orden_venta->verificado = 2;
+            $orden_venta->solicitud_descuento = 1;
+            $orden_venta->solicitud_sw = 1;
+            $orden_venta->estado = "FINALIZADO";
+            $orden_venta->save();
+            Log::debug("BBBBBBBBBBBBBBBBBBBBB");
+        }
 
         foreach ($datos["orden_venta_detalles"] as $item) {
             $orden_venta_detalle = $orden_venta->orden_venta_detalles()->create([
@@ -183,6 +203,12 @@ class OrdenVentaService
 
         // registrar accion
         $this->historialAccionService->registrarAccion($this->modulo, "CREACIÓN", "REGISTRO UNA ORDEN DE VENTA", $orden_venta);
+
+        // cargar foto
+        if (isset($datos["foto64"]) && $datos["foto64"]) {
+            $datos["foto"] = $this->prepararFotoOffline($datos["foto64"]);
+            $this->cargarFoto($orden_venta, $datos["foto"], "foto");
+        }
 
         // PARAMETRO CLIENTE
         $this->parametro_cliente_service->verificarRankCliente($orden_venta->cliente_id);
@@ -233,7 +259,8 @@ class OrdenVentaService
             "total" => $datos["total"],
             "total_st" => $datos["total_st"],
             "monto_solicitud" => $datos["solicitud_descuento"] == 1 ? $datos["descuento"] : NULL,
-            "descuento" => $datos["solicitud_descuento"] == 1 ? $datos["descuento"] : NULL,
+            "descuento_sugerido" => $datos["descuento_sugerido"] ?? 0,
+            "descuento" => $datos["descuento"] ?? 0,
             "total_f" => $datos["total_f"],
             "estado" => $datos["solicitud_descuento"] == 1 && $orden_venta->solicitud_sw == 0 ? "PENDIENTE" : "FINALIZADO",
             "verificado" => $datos["solicitud_descuento"] == 1 && $orden_venta->solicitud_sw == 0 ?  0 : 2,
@@ -355,5 +382,38 @@ class OrdenVentaService
         // registrar accion
         $this->historialAccionService->registrarAccion($this->modulo, "ELIMINACIÓN", "ELIMINÓ UNA ORDEN DE VENTA", $old_orden_venta, null, ["orden_venta_detalles"]);
         return true;
+    }
+
+    public function cargarFoto(OrdenVenta $orden_venta, UploadedFile $foto, $col): void
+    {
+        if ($orden_venta[$col]) {
+            \File::delete(public_path("imgs/orden_ventas/" . $orden_venta[$col]));
+        }
+
+        $nombre = $col . '_' . $orden_venta->id . time();
+        $orden_venta[$col] = $this->cargarArchivoService->cargarArchivo($foto, public_path("imgs/orden_ventas"), $nombre);
+        $orden_venta->save();
+    }
+
+    public function prepararFotoOffline($foto64)
+    {
+        if (!preg_match('/^data:image\/(\w+);base64,/', $foto64, $type)) {
+            throw new \Exception('Formato de imagen inválido');
+        }
+
+        $extension = $type[1];
+        $base64 = substr($foto64, strpos($foto64, ',') + 1);
+        $image = base64_decode($base64);
+        $tmpFile = sys_get_temp_dir() . '/' . Str::uuid() . '.' . $extension;
+
+        file_put_contents($tmpFile, $image);
+
+        return new UploadedFile(
+            $tmpFile,
+            basename($tmpFile),
+            "image/{$extension}",
+            null,
+            true // 👈 archivo "test" (no viene de HTTP)
+        );
     }
 }
